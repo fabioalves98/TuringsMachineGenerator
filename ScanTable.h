@@ -2,17 +2,22 @@
 #define SCANTABLE_H
 
 #include <iostream>
+#include <vector>
 
 typedef std::string string;
 
 class ScanTable {
 public:
 	ScanTable(string txt);
+	void printStates();
 private:
-	char *states;
-	char *symbols;
+	void processInfo(string line);
+	void processTable(string line);
+	struct action;
+	std::vector<char> states; // container
+	std::vector<char> symbols; // container
 	char blanckSym;
-	char *inpSymbols;
+	std::vector<char> inpSymbols; // container
 	// Trans Function
 	char inState;
 	char haltState;

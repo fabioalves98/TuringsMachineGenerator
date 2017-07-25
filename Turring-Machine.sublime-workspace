@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"pro",
+				"processInfo"
+			],
+			[
 				"wrtie",
 				"writer"
 			],
@@ -131,7 +135,7 @@
 			"file": "Generator.cpp",
 			"settings":
 			{
-				"buffer_size": 81,
+				"buffer_size": 144,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -140,7 +144,7 @@
 			"file": "ScanTable.h",
 			"settings":
 			{
-				"buffer_size": 293,
+				"buffer_size": 488,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.h"
@@ -150,7 +154,7 @@
 			"file": "ScanTable.cpp",
 			"settings":
 			{
-				"buffer_size": 723,
+				"buffer_size": 1759,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.cpp"
@@ -160,7 +164,7 @@
 			"file": "table.txt",
 			"settings":
 			{
-				"buffer_size": 105,
+				"buffer_size": 109,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "table.txt"
@@ -353,6 +357,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"hello",
 			"5",
 			"reader",
 			"laranja",
@@ -397,15 +402,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 81,
+						"buffer_size": 144,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19,
-								19
+								131,
+								131
 							]
 						],
 						"settings":
@@ -425,21 +430,22 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 293,
+						"buffer_size": 488,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8,
-								19
+								269,
+								269
 							]
 						],
 						"settings":
 						{
 							"auto_name": "ScanTable.h",
-							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage"
+							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -454,24 +460,25 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 723,
+						"buffer_size": 1759,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								462,
-								462
+								1304,
+								1304
 							]
 						],
 						"settings":
 						{
 							"auto_name": "ScanTable.cpp",
-							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage"
+							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 54.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -489,15 +496,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 105,
+						"buffer_size": 109,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								29,
-								29
+								100,
+								100
 							]
 						],
 						"settings":
