@@ -135,7 +135,7 @@
 			"file": "Generator.cpp",
 			"settings":
 			{
-				"buffer_size": 144,
+				"buffer_size": 213,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -144,7 +144,7 @@
 			"file": "ScanTable.h",
 			"settings":
 			{
-				"buffer_size": 488,
+				"buffer_size": 672,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.h"
@@ -154,7 +154,7 @@
 			"file": "ScanTable.cpp",
 			"settings":
 			{
-				"buffer_size": 1759,
+				"buffer_size": 2776,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.cpp"
@@ -357,6 +357,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"action",
+			"x",
+			"states",
 			"hello",
 			"5",
 			"reader",
@@ -393,7 +396,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -402,15 +405,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 144,
+						"buffer_size": 213,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								131,
-								131
+								200,
+								200
 							]
 						],
 						"settings":
@@ -421,7 +424,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -430,15 +433,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 488,
+						"buffer_size": 672,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								269,
-								269
+								270,
+								270
 							]
 						],
 						"settings":
@@ -460,15 +463,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1759,
+						"buffer_size": 2776,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1304,
-								1304
+								1155,
+								1155
 							]
 						],
 						"settings":
@@ -478,10 +481,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 486.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
