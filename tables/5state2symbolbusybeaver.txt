@@ -1,0 +1,9 @@
+begin_info
+bs: 0
+is: A
+fs: H
+begin_table
+  \    A    B    C    D    E
+  0   1RB  1RC  1RD  1LA  1RH
+  1   1LC  1RB  0LE  1LD  0LA
+end_table

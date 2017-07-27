@@ -9,6 +9,8 @@
 #include <sstream>
 #include <time.h>
 #include <iterator>
+#include <dirent.h>
+#include <sys/stat.h>
 
 using std::string;
 using std::vector;
@@ -17,10 +19,10 @@ using std::unordered_map;
 
 class Machine {
 public:
-	void scanTable(string txt);
+	void scanTable();
 	void printStates();
 	void printSymbols();
-	void printElems();
+	void printTable();
 	void start();
 	struct action {
 		char wSymbol;
@@ -30,7 +32,7 @@ public:
 private:
 	void processInfo(string line);
 	void processTable(string line);
-	void printTape();
+	void printTape(char state, int begin, int end);
 	vector<char> states;
 	vector<char> symbols;
 	list<char> tape;
