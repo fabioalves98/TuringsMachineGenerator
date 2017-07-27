@@ -1,13 +1,14 @@
 #include <iostream>
-#include "ScanTable.h"
-#include <unordered_map>
+#include "Machine.h"
 
 using namespace std;
 
 int main() {
-	ScanTable table("table.txt");
+	Machine table;
+	table.scanTable("table.txt");
 	table.printStates();
 	table.printSymbols();
 	table.printElems();
+	table.start();
 	return 0;
 }

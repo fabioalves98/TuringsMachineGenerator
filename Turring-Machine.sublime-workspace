@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"sym",
+				"symbol"
+			],
+			[
+				"print",
+				"printTape"
+			],
+			[
+				"tape",
+				"tapeSize"
+			],
+			[
+				"cout",
+				"count"
+			],
+			[
 				"pro",
 				"processInfo"
 			],
@@ -135,26 +151,26 @@
 			"file": "Generator.cpp",
 			"settings":
 			{
-				"buffer_size": 213,
+				"buffer_size": 218,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "ScanTable.h",
+			"file": "Machine.h",
 			"settings":
 			{
-				"buffer_size": 672,
+				"buffer_size": 743,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.h"
 			}
 		},
 		{
-			"file": "ScanTable.cpp",
+			"file": "Machine.cpp",
 			"settings":
 			{
-				"buffer_size": 2776,
+				"buffer_size": 3516,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.cpp"
@@ -280,6 +296,7 @@
 	],
 	"file_history":
 	[
+		"/home/fabio/Desktop/test.cpp",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/Machine.cpp",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/Machine.h",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/table.conf",
@@ -357,6 +374,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ScanTable",
+			"SCANTABLE_H",
 			"action",
 			"x",
 			"states",
@@ -405,15 +424,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 213,
+						"buffer_size": 218,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								200,
-								200
+								19,
+								19
 							]
 						],
 						"settings":
@@ -429,19 +448,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "ScanTable.h",
+					"file": "Machine.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 672,
+						"buffer_size": 743,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								270,
-								270
+								191,
+								191
 							]
 						],
 						"settings":
@@ -454,24 +473,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "ScanTable.cpp",
+					"file": "Machine.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2776,
+						"buffer_size": 3516,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1155,
-								1155
+								2443,
+								2443
 							]
 						],
 						"settings":
@@ -481,10 +500,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 486.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -506,8 +525,8 @@
 						"selection":
 						[
 							[
-								100,
-								100
+								109,
+								109
 							]
 						],
 						"settings":
@@ -554,7 +573,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.822299651568,
 			1.0
 		],
 		"rows":
