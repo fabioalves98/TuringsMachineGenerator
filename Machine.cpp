@@ -1,12 +1,9 @@
 #include "Machine.h"
 
-using namespace std;
-
-string getIndex(unordered_map<string, string> table, int sy, int st);
 string chooseTable();
 bool changeState(string line, bool *i, bool *t);
 void removeSpaces(string *line);
-void drawTable(unordered_map<string, string> table, int sy, int st);
+void drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols);
 void wait(double seconds);
 template <class T> string makeKey(T st, T sy);
 
@@ -46,43 +43,70 @@ void Machine::createTable() {
 	cout << "Number os Symbols: ";
 	cin >> nSy;
 	unordered_map<string, string> table;
-	table["00"] = "\\";
-	drawTable(table, nSy, nSt);
-    for (int i = 0; i <= nSy; i++) {
-    	for (int j = 0; j <= nSt; j++) {
-    		if ((i == 0) && (j == 0)) continue;
-    		string key =  makeKey(j, i);
-    		if (i == 0) {
-				cout << "Enter State(" << j << "/" << nSt << "): ";
-				string state;
-				cin >> state;
-				table[key] = state;
-    		}
-    		else {
-    			if (j == 0) {
-    				cout << "Enter Symbol: ";
-    				string symbol;
-    				cin >> symbol;
-    				table[key] = symbol;
-    			}
-    			else {
-    				cout << "Enter " << getIndex(table, i, j) << ":\n";
-    				cout << "Write Symbol: "; 
-    				string symbol;
-    				cin >> symbol;
-    				cout << "Move Tape(R/L): ";
-    				string move; 
-    				cin >> move;
-    				cout << "Change State: ";
-    				string state;
-    				cin >> state;
-    				table[key] = symbol + move + state;
-    			}
-    		}
-    	}
-    	drawTable(table, nSy, nSt);
+	vector<string> sts(nSt, " ");
+	vector<string> sybs(nSy, " ");
+    drawTable(table, sts, sybs);
+    for (int i = 0; i < nSt; i++) {
+    	cout << "Enter State(" << i+1 << "/" << nSt << "): ";
+		string state;
+		cin >> state;
+		sts[i] = state;
     }
-	//ofstream create("tables/" + name);
+    drawTable(table, sts, sybs);
+    for (int i = 0; i < nSy; i++) {
+    	cout << "Enter Symbol(" << i+1 << "/" << nSy << "): ";
+		string symbol;
+		cin >> symbol;
+		sybs[i] = symbol;
+    }
+    drawTable(table, sts, sybs);
+    for (int i = 0; i < nSy; i++) {
+    	for (int j = 0; j < nSt; j++) {
+    		string index = sts[j] + sybs[i];
+    		cout << "Enter " << index << ":\n";
+    		cout << "Write Symbol: "; 
+			string symbol;
+			cin >> symbol;
+			cout << "Move Tape(R/L): ";
+			string move; 
+			cin >> move;
+			cout << "Change State: ";
+			string state;
+			cin >> state;
+			table[index] = symbol + move + state;
+    	}
+    	drawTable(table, sts, sybs);
+    }
+    cout << "Blanck Symbol: ";
+    string bs;
+    cin >> bs;
+    cout << "Initial State: ";
+    string is;
+    cin >> is;
+    cout << "Final State: ";
+    string fs;
+    cin >> fs;
+	ofstream create("tables/" + name + ".txt");
+	create << "begin_info\n";
+	create << "bs: " + bs << endl;
+	create << "is: " + is << endl;
+	create << "fs: " + fs << endl;
+	create << "begin_table\n";
+	create << "  \\  ";
+	for (int i = 0; i < sts.size(); ++i) {
+		create << "  " + sts[i] + "  ";
+	}
+	create << endl;
+	for (int i = 0; i < sybs.size(); i++) {
+		create << "  "  + sybs[i] + "  ";
+		for (int j = 0; j < sts.size(); j++) {
+			string index = sts[j] + sybs[i];
+			create << " " << table[index] << " ";
+		}
+		create << endl;
+	}
+	create << "end_table";
+	create.close();
 }
 
 void Machine::printStates() {
@@ -232,6 +256,7 @@ string getIndex(unordered_map<string, string> table, int sy, int st) {
 }
 
 string chooseTable() {
+	cout << "\nList of Tables\n";
 	DIR *dir;
 	struct dirent *entry;
 	string dir_name = "tables";
@@ -281,40 +306,29 @@ void removeSpaces(string *line) {
 	}
 }
 
-void drawTable(unordered_map <string, string> table, int sy, int st){
-	cout << "Table:\n";
-	int numHifen = 5 + st*6;
-	string sep = "";
-	for (int i = numHifen; i > 0; i--) sep += "-";
-	cout << sep << endl;
-	for (int i = 0; i <= sy; i++) {
-		cout << "|";
-		for (int j = 0; j <= st; j++) {
-			string key = makeKey(j, i);
-			if ((i == 0) && (j != 0)) {
-				if (table.find(key) != table.end()) {
-					cout << "  " << table[key] << "  |";
-				}
-				else {
-					cout << "     |";
-				}
+void drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols){
+	cout << "\nTable:\n";
+	int numHifen = 5 + states.size()*6;
+	string strHifen = "";
+	for (int i = numHifen; i > 0; i--) strHifen += "-";
+	cout << strHifen << endl;
+	cout << "| \\ |";
+	for (int i = 0; i < states.size(); i++) cout << "  " << states[i] << "  |";
+	cout << endl << strHifen << endl;
+	for (int i = 0; i < symbols.size(); i++) {
+		cout << "| " << symbols[i] << " |";
+		for (int j = 0; j < states.size(); j++) {
+			string index = states[j] + symbols[i];
+			if (table.find(index) != table.end()) {
+				cout << " " << table[index] << " |";
 			}
 			else {
-				if (table.find(key) != table.end()) {
-					cout << " " << table[key] << " |";
-				}
-				else {
-					if (j == 0) {
-						cout << "   |";
-					}
-					else {
-						cout << "     |";
-					}
-				}
+				cout << "     |";
 			}
 		}
-		cout << endl << sep << endl;
+		cout << endl << strHifen << endl;
 	}
+	cout << endl;
 }
 
 void wait(double seconds) {

@@ -12,10 +12,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
-using std::string;
-using std::vector;
-using std::list;
-using std::unordered_map;
+using namespace std;
 
 class Machine {
 public:

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"sym",
+				"symbols"
+			],
+			[
+				"begin",
+				"begin_table"
+			],
+			[
 				"get",
 				"getIndex"
 			],
@@ -18,14 +26,6 @@
 			[
 				"dir",
 				"dir_name"
-			],
-			[
-				"sym",
-				"symbols"
-			],
-			[
-				"begin",
-				"begin_it"
 			],
 			[
 				"push",
@@ -175,7 +175,7 @@
 			"file": "Generator.cpp",
 			"settings":
 			{
-				"buffer_size": 420,
+				"buffer_size": 380,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -184,7 +184,7 @@
 			"file": "Machine.h",
 			"settings":
 			{
-				"buffer_size": 826,
+				"buffer_size": 766,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.h"
@@ -194,7 +194,7 @@
 			"file": "Machine.cpp",
 			"settings":
 			{
-				"buffer_size": 7267,
+				"buffer_size": 7955,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.cpp"
@@ -204,7 +204,7 @@
 			"file": "tables/.table.conf",
 			"settings":
 			{
-				"buffer_size": 496,
+				"buffer_size": 487,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -320,6 +320,7 @@
 	],
 	"file_history":
 	[
+		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/ola.txt",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/n-",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/personalized.txt",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/3state2symbolbusybeaver.txt",
@@ -405,6 +406,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"symbols",
+			"states",
+			"i",
+			"key",
 			"i",
 			"strHifen",
 			"symbol",
@@ -455,7 +460,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -464,15 +469,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 420,
+						"buffer_size": 380,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								156,
-								156
+								96,
+								96
 							]
 						],
 						"settings":
@@ -493,15 +498,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 826,
+						"buffer_size": 766,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								380,
-								380
+								234,
+								234
 							]
 						],
 						"settings":
@@ -514,7 +519,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -523,15 +528,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7267,
+						"buffer_size": 7955,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5409,
-								5409
+								2269,
+								2269
 							]
 						],
 						"settings":
@@ -541,27 +546,33 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3924.0,
+						"translation.y": 1278.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
 					"buffer": 3,
 					"file": "tables/.table.conf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 496,
+						"buffer_size": 487,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								253,
-								253
+								68,
+								68
 							]
 						],
 						"settings":
@@ -574,14 +585,9 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				}
-			]
-		},
-		{
-			"sheets":
-			[
 			]
 		}
 	],
