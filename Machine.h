@@ -20,6 +20,7 @@ using std::unordered_map;
 class Machine {
 public:
 	void scanTable();
+	void createTable();
 	void printStates();
 	void printSymbols();
 	void printTable();

@@ -2,11 +2,13 @@
 
 using namespace std;
 
+string getIndex(unordered_map<string, string> table, int sy, int st);
 string chooseTable();
 bool changeState(string line, bool *i, bool *t);
 void removeSpaces(string *line);
+void drawTable(unordered_map<string, string> table, int sy, int st);
 void wait(double seconds);
-string makeKey(char st, char sy);
+template <class T> string makeKey(T st, T sy);
 
 void Machine::scanTable() {
 	string file = "tables/" + chooseTable();
@@ -34,6 +36,55 @@ void Machine::scanTable() {
 	scanner.close();
 }
 
+void Machine::createTable() {
+	string name;
+	cout << "Table Name: ";
+	cin >> name;
+	int nSt, nSy;
+	cout << "Number os States: ";
+	cin >> nSt;
+	cout << "Number os Symbols: ";
+	cin >> nSy;
+	unordered_map<string, string> table;
+	table["00"] = "\\";
+	drawTable(table, nSy, nSt);
+    for (int i = 0; i <= nSy; i++) {
+    	for (int j = 0; j <= nSt; j++) {
+    		if ((i == 0) && (j == 0)) continue;
+    		string key =  makeKey(j, i);
+    		if (i == 0) {
+				cout << "Enter State(" << j << "/" << nSt << "): ";
+				string state;
+				cin >> state;
+				table[key] = state;
+    		}
+    		else {
+    			if (j == 0) {
+    				cout << "Enter Symbol: ";
+    				string symbol;
+    				cin >> symbol;
+    				table[key] = symbol;
+    			}
+    			else {
+    				cout << "Enter " << getIndex(table, i, j) << ":\n";
+    				cout << "Write Symbol: "; 
+    				string symbol;
+    				cin >> symbol;
+    				cout << "Move Tape(R/L): ";
+    				string move; 
+    				cin >> move;
+    				cout << "Change State: ";
+    				string state;
+    				cin >> state;
+    				table[key] = symbol + move + state;
+    			}
+    		}
+    	}
+    	drawTable(table, nSy, nSt);
+    }
+	//ofstream create("tables/" + name);
+}
+
 void Machine::printStates() {
 	cout << "States: ";
 	for (auto it = states.begin(); it != states.end(); it++) {
@@ -51,7 +102,7 @@ void Machine::printSymbols() {
 }
 
 void Machine::printTable() {
-	cout << "Table: \n";
+	cout << "Table:\n";
 	int numHifen = 5 + states.size()*6;
 	string strHifen = "";
 	for (int i = numHifen; i > 0; i--) strHifen += "-";
@@ -124,7 +175,7 @@ void Machine::start() {
 	int count = 0;
 	printTape(pState, start, end);
 	do {
-		//wait(0.2);
+		wait(0.2);
 		char symbol = *head;
 		string key = makeKey(pState, symbol);
 		action move = transFunct[key];
@@ -174,6 +225,12 @@ void Machine::printTape(char state, int begin, int end) {
 	cout << endl;
 }
 
+string getIndex(unordered_map<string, string> table, int sy, int st) {
+	string state = table[makeKey(st, 0)];
+	string symbol = table[makeKey(0, sy)];
+	return state + symbol;
+}
+
 string chooseTable() {
 	DIR *dir;
 	struct dirent *entry;
@@ -187,9 +244,7 @@ string chooseTable() {
 			listOfTables.push_back(file);
 			count++;
 			cout << "[" << count << "]" << " - " << file << endl;
-			
 		}
-		
 	}
 	closedir(dir);
 	cout << "Choose the table you would like to simulate (0-" << count << "): ";
@@ -226,13 +281,49 @@ void removeSpaces(string *line) {
 	}
 }
 
+void drawTable(unordered_map <string, string> table, int sy, int st){
+	cout << "Table:\n";
+	int numHifen = 5 + st*6;
+	string sep = "";
+	for (int i = numHifen; i > 0; i--) sep += "-";
+	cout << sep << endl;
+	for (int i = 0; i <= sy; i++) {
+		cout << "|";
+		for (int j = 0; j <= st; j++) {
+			string key = makeKey(j, i);
+			if ((i == 0) && (j != 0)) {
+				if (table.find(key) != table.end()) {
+					cout << "  " << table[key] << "  |";
+				}
+				else {
+					cout << "     |";
+				}
+			}
+			else {
+				if (table.find(key) != table.end()) {
+					cout << " " << table[key] << " |";
+				}
+				else {
+					if (j == 0) {
+						cout << "   |";
+					}
+					else {
+						cout << "     |";
+					}
+				}
+			}
+		}
+		cout << endl << sep << endl;
+	}
+}
+
 void wait(double seconds) {
 	clock_t endwait;
 	endwait = clock() + seconds * CLOCKS_PER_SEC;
 	while (clock() < endwait) {}
 }
 
-string makeKey(char st, char sy) {
+template <class T> string makeKey(T st, T sy) {
 	string key;
 	stringstream ss;
 	ss << st << sy;

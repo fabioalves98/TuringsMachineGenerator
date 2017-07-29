@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"get",
+				"getIndex"
+			],
+			[
+				"tabl",
+				"tableWidth"
+			],
+			[
 				"li",
 				"listOfTables"
 			],
@@ -88,10 +96,6 @@
 				"MyClass"
 			],
 			[
-				"get",
-				"getConString"
-			],
-			[
 				"obj",
 				"obj2"
 			],
@@ -171,7 +175,7 @@
 			"file": "Generator.cpp",
 			"settings":
 			{
-				"buffer_size": 398,
+				"buffer_size": 420,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -180,7 +184,7 @@
 			"file": "Machine.h",
 			"settings":
 			{
-				"buffer_size": 805,
+				"buffer_size": 826,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.h"
@@ -190,10 +194,19 @@
 			"file": "Machine.cpp",
 			"settings":
 			{
-				"buffer_size": 5016,
+				"buffer_size": 7267,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "ScanTable.cpp"
+			}
+		},
+		{
+			"file": "tables/.table.conf",
+			"settings":
+			{
+				"buffer_size": 496,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -307,6 +320,7 @@
 	],
 	"file_history":
 	[
+		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/n-",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/personalized.txt",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/3state2symbolbusybeaver.txt",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/4state2symbolbusybeaver.txt",
@@ -391,6 +405,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"i",
+			"strHifen",
+			"symbol",
+			"state",
+			"char",
 			"path",
 			"i",
 			"begin",
@@ -436,7 +455,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -445,26 +464,27 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 398,
+						"buffer_size": 420,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								94,
-								94
+								156,
+								156
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage"
+							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -473,15 +493,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 805,
+						"buffer_size": 826,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								233,
-								233
+								380,
+								380
 							]
 						],
 						"settings":
@@ -494,7 +514,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -503,15 +523,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5016,
+						"buffer_size": 7267,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2709,
-								2709
+								5409,
+								5409
 							]
 						],
 						"settings":
@@ -521,10 +541,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
+						"translation.y": 3924.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "tables/.table.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 496,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								253,
+								253
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 5,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]

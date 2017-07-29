@@ -6,6 +6,7 @@ using namespace std;
 int main() {
 	cout << "Turring's Machine Generator\n";
 	Machine table;
+	table.createTable();
 	table.scanTable();
 	table.printStates();
 	table.printSymbols();
