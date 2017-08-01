@@ -1,6 +1,7 @@
 #include "Machine.h"
 
 string chooseTable();
+void createTable();
 bool changeState(string line, bool *i, bool *t);
 void removeSpaces(string *line);
 void drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols);
@@ -31,82 +32,6 @@ void Machine::scanTable() {
 		}
 	}
 	scanner.close();
-}
-
-void Machine::createTable() {
-	string name;
-	cout << "Table Name: ";
-	cin >> name;
-	int nSt, nSy;
-	cout << "Number os States: ";
-	cin >> nSt;
-	cout << "Number os Symbols: ";
-	cin >> nSy;
-	unordered_map<string, string> table;
-	vector<string> sts(nSt, " ");
-	vector<string> sybs(nSy, " ");
-    drawTable(table, sts, sybs);
-    for (int i = 0; i < nSt; i++) {
-    	cout << "Enter State(" << i+1 << "/" << nSt << "): ";
-		string state;
-		cin >> state;
-		sts[i] = state;
-    }
-    drawTable(table, sts, sybs);
-    for (int i = 0; i < nSy; i++) {
-    	cout << "Enter Symbol(" << i+1 << "/" << nSy << "): ";
-		string symbol;
-		cin >> symbol;
-		sybs[i] = symbol;
-    }
-    drawTable(table, sts, sybs);
-    for (int i = 0; i < nSy; i++) {
-    	for (int j = 0; j < nSt; j++) {
-    		string index = sts[j] + sybs[i];
-    		cout << "Enter " << index << ":\n";
-    		cout << "Write Symbol: "; 
-			string symbol;
-			cin >> symbol;
-			cout << "Move Tape(R/L): ";
-			string move; 
-			cin >> move;
-			cout << "Change State: ";
-			string state;
-			cin >> state;
-			table[index] = symbol + move + state;
-    	}
-    	drawTable(table, sts, sybs);
-    }
-    cout << "Blanck Symbol: ";
-    string bs;
-    cin >> bs;
-    cout << "Initial State: ";
-    string is;
-    cin >> is;
-    cout << "Final State: ";
-    string fs;
-    cin >> fs;
-	ofstream create("tables/" + name + ".txt");
-	create << "begin_info\n";
-	create << "bs: " + bs << endl;
-	create << "is: " + is << endl;
-	create << "fs: " + fs << endl;
-	create << "begin_table\n";
-	create << "  \\  ";
-	for (int i = 0; i < sts.size(); ++i) {
-		create << "  " + sts[i] + "  ";
-	}
-	create << endl;
-	for (int i = 0; i < sybs.size(); i++) {
-		create << "  "  + sybs[i] + "  ";
-		for (int j = 0; j < sts.size(); j++) {
-			string index = sts[j] + sybs[i];
-			create << " " << table[index] << " ";
-		}
-		create << endl;
-	}
-	create << "end_table";
-	create.close();
 }
 
 void Machine::printStates() {
@@ -272,10 +197,264 @@ string chooseTable() {
 		}
 	}
 	closedir(dir);
-	cout << "Choose the table you would like to simulate (0-" << count << "): ";
-	int table;
-	cin >> table;
-	return listOfTables[table];
+	do {
+		cout << "Choose the table to simulated (0-" << count << ") os create a new one (C): ";
+		string table;
+		getline(cin, table);
+		boost::to_upper(table);
+		if (table.length() == 1) {
+			if (isdigit(table[0])) {
+				int index = stoi(table);
+				if ((index >= 0) && (index <= count)) {
+					return listOfTables[index];
+				}
+				else {
+					cout << "Insert numbers between 0-" << count << endl;
+				}
+			}
+			else if (table == "C") {
+				createTable();
+				return chooseTable();
+			}
+			else{
+				cout << "Wrong Input\n";
+			}
+		}
+		else {
+			cout << "Wrong Input\n";
+		}
+	}
+	while (true);
+}
+
+void createTable() {
+	string name;
+	cout << "Table Name: ";
+	getline(cin, name);
+	int nSt, nSy;
+	bool wrong = true;
+	do {
+		string s_nSt, s_nSy;
+		cout << "Number os States: ";
+		getline(cin, s_nSt);
+		cout << "Number os Symbols: ";
+		getline(cin, s_nSy);
+		if ((s_nSt.length() == 1) && (s_nSy.length() == 1)) {
+			if ((isdigit(s_nSt[0])) && isdigit(s_nSy[0])) {
+				if ((stoi(s_nSt) != 0) && (stoi(s_nSy) != 0)) {
+					nSt = stoi(s_nSt);
+					nSy = stoi(s_nSy);
+					wrong = false;
+				}
+				else {
+					cout << "Number must be higher than 0\n";
+				}
+			}
+			else {
+				cout << "Please enter numbers between 0-9\n";
+			}
+		}
+		else {
+			cout << "Please enter numbers between 0-9\n";
+		}
+	}
+	while (wrong);
+	unordered_map<string, string> table;
+	vector<string> sts(nSt, " ");
+	vector<string> sybs(nSy, " ");
+	string bs;
+	string is;
+	string fs;
+    drawTable(table, sts, sybs);
+    for (int i = 0; i < nSt; i++) {
+    	wrong = true;
+    	do {
+    		cout << "Enter State(" << i+1 << "/" << nSt << "): ";
+			string state;
+			getline(cin, state);
+			if (state.length() == 1) {
+				if (isalpha(state[0])) {
+					if (find(sts.begin(), sts.end(), state) == sts.end()) {
+						boost::to_upper(state);
+						sts[i] = state;
+						wrong = false;
+					}
+					else {
+						cout << "That state already exists\n";
+					}
+				}
+				else {
+					cout << "Please enter an alphabetic character\n";
+				}
+			}
+			else {
+				cout << "Please enter an alphabetic character\n";
+			}
+    	}
+    	while (wrong);
+    }
+    wrong = true;
+	do {
+	    cout << "Final State: ";
+	    getline(cin, fs);
+	    if (fs.length() == 1) {
+			if (isalpha(fs[0])) {
+				wrong = false;
+			}
+			else {
+				cout << "Please enter an alphabetic character\n";
+			}
+		}
+		else {
+			cout << "Please enter an alphabetic character\n";
+		}
+    }
+    while (wrong);
+    drawTable(table, sts, sybs);
+    for (int i = 0; i < nSy; i++) {
+    	wrong = true;
+    	do {
+    		cout << "Enter Symbol(" << i+1 << "/" << nSy << "): ";
+			string symbol;
+			getline(cin, symbol);
+	    	if (symbol.length() == 1) {
+				if (isalnum(symbol[0])) {
+					if (find(sybs.begin(), sybs.end(), symbol) == sybs.end()) {
+						boost::to_lower(symbol);
+						sybs[i] = symbol;
+						wrong = false;
+					}
+					else {
+						cout << "That symbol already exists\n";
+					}
+				}
+				else {
+					cout << "Please enter an alphanumeric character\n";
+				}
+			}
+			else {
+				cout << "Please enter an alphanumeric character\n";
+			}
+    	}
+    	while (wrong);	
+    }
+    drawTable(table, sts, sybs);
+	while (wrong);
+    for (int i = 0; i < nSy; i++) {
+    	for (int j = 0; j < nSt; j++) {
+    		string index = sts[j] + sybs[i];
+    		string symbol, move, state;
+    		cout << "Enter " << index << ":\n";
+    		wrong = true;
+    		do {
+	    		cout << "Write Symbol: "; 
+				getline(cin, symbol);
+				boost::to_lower(symbol);
+				if (symbol.length() == 1) {
+					if (find(sybs.begin(), sybs.end(), symbol) != sybs.end()) {
+						wrong = false;
+					}
+					else {
+						cout << "That symbol is not specified in the table\n";
+					}
+				}
+				else {
+					cout << "Please enter an alphanumeric character\n";
+				}
+			}
+			while (wrong);
+			wrong = true;
+			do {
+				cout << "Move Tape(R/L): "; 
+				getline(cin, move);
+				boost::to_upper(move);
+				if ((move == "R") || (move == "L")) {
+					wrong = false;
+				}
+				else {
+					cout << "Pleas enter either R or L\n";
+				}
+			}
+			while (wrong);
+			wrong = true;
+			do {
+				cout << "Change State: ";
+				getline(cin, state);
+				boost::to_upper(state);
+				if (state.length() == 1) {
+					if ((find(sts.begin(), sts.end(), state) != sts.end()) || (state == fs)) {
+						wrong = false;
+					}
+					else {
+						cout << "That state is not specified in the table\n";
+					}
+				}
+				else {
+					cout << "Please enter an alphabetic character\n";
+				}
+			
+			}
+			while (wrong);
+			table[index] = symbol + move + state;
+    	}
+    	drawTable(table, sts, sybs);
+    }
+    wrong = true;
+    do {
+	    cout << "Blanck Symbol: ";
+   		getline(cin, bs);
+   		boost::to_lower(bs);
+		if (bs.length() == 1) {
+			if (find(sybs.begin(), sybs.end(), bs) != sybs.end()) {
+				wrong = false;
+			}
+			else {
+				cout << "That symbol is not specified in the table\n";
+			}
+		}
+		else {
+			cout << "Please enter an alphanumeric character\n";
+		}
+    }
+	while (wrong);
+	wrong = true;
+	do {
+	    cout << "Initial State: ";
+	    getline(cin, is);
+		if (is.length() == 1) {
+			if (find(sts.begin(), sts.end(), is) != sts.end()) {
+				wrong = false;
+			}
+			else {
+				cout << "That state is not specified in the table\n";
+			}
+		}
+		else {
+			cout << "Please enter an alphabetic character\n";
+		}
+    }
+	while (wrong);
+	ofstream create("tables/" + name + ".txt");
+	create << "begin_info\n";
+	create << "bs: " + bs << endl;
+	create << "is: " + is << endl;
+	create << "fs: " + fs << endl;
+	create << "begin_table\n";
+	create << "  \\  ";
+	for (int i = 0; i < sts.size(); ++i) {
+		create << "  " + sts[i] + "  ";
+	}
+	create << endl;
+	for (int i = 0; i < sybs.size(); i++) {
+		create << "  "  + sybs[i] + "  ";
+		for (int j = 0; j < sts.size(); j++) {
+			string index = sts[j] + sybs[i];
+			create << " " << table[index] << " ";
+		}
+		create << endl;
+	}
+	create << "end_table";
+	create.close();
 }
 
 bool changeState(string line, bool *i, bool *t) {

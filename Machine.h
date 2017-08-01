@@ -11,13 +11,13 @@
 #include <iterator>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
 class Machine {
 public:
 	void scanTable();
-	void createTable();
 	void printStates();
 	void printSymbols();
 	void printTable();
