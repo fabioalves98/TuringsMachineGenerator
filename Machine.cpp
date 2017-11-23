@@ -1,11 +1,5 @@
 #include "Machine.h"
 
-string chooseTable();
-void createTable();
-bool changeState(string line, bool *i, bool *t);
-void removeSpaces(string *line);
-void drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols);
-void wait(double seconds);
 template <class T> string makeKey(T st, T sy);
 
 void Machine::scanTable() {
@@ -87,7 +81,7 @@ void Machine::processInfo(string line) {
 }
 
 void Machine::processTable(string line){
-	if (line[0] == '\\') {
+	if (line[0] == '*') {
 		line = line.substr(1);
 		for (int i = 0; i < line.length(); ++i) {
 			states.push_back(line[i]);
@@ -124,7 +118,7 @@ void Machine::start() {
 	int count = 0;
 	printTape(pState, start, end);
 	do {
-		wait(0.2);
+		//wait(0.2);
 		char symbol = *head;
 		string key = makeKey(pState, symbol);
 		action move = transFunct[key];
@@ -174,13 +168,7 @@ void Machine::printTape(char state, int begin, int end) {
 	cout << endl;
 }
 
-string getIndex(unordered_map<string, string> table, int sy, int st) {
-	string state = table[makeKey(st, 0)];
-	string symbol = table[makeKey(0, sy)];
-	return state + symbol;
-}
-
-string chooseTable() {
+string Machine::chooseTable() {
 	cout << "\nList of Tables\n";
 	DIR *dir;
 	struct dirent *entry;
@@ -227,7 +215,7 @@ string chooseTable() {
 	while (true);
 }
 
-void createTable() {
+void Machine::createTable() {
 	string name;
 	cout << "Table Name: ";
 	getline(cin, name);
@@ -457,7 +445,7 @@ void createTable() {
 	create.close();
 }
 
-bool changeState(string line, bool *i, bool *t) {
+bool Machine::changeState(string line, bool *i, bool *t) {
 	if (line == "begin_info") {
 		*i = true;
 		return true;
@@ -473,7 +461,7 @@ bool changeState(string line, bool *i, bool *t) {
 	}
 }
 
-void removeSpaces(string *line) {
+void Machine::removeSpaces(string *line) {
 	while(true){
 		size_t pos = line->find(" ");
 		if (pos != string::npos) {
@@ -485,7 +473,7 @@ void removeSpaces(string *line) {
 	}
 }
 
-void drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols){
+void Machine::drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols){
 	cout << "\nTable:\n";
 	int numHifen = 5 + states.size()*6;
 	string strHifen = "";
@@ -510,7 +498,7 @@ void drawTable(unordered_map<string, string> table, vector<string> states, vecto
 	cout << endl;
 }
 
-void wait(double seconds) {
+void Machine::wait(double seconds) {
 	clock_t endwait;
 	endwait = clock() + seconds * CLOCKS_PER_SEC;
 	while (clock() < endwait) {}

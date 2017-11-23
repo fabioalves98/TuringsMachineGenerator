@@ -28,9 +28,15 @@ public:
 		char nState;
 	};
 private:
+	string chooseTable();
+	void createTable();
+	void drawTable(unordered_map<string, string> table, vector<string> states, vector<string> symbols);
+	bool changeState(string line, bool *i, bool *t);
 	void processInfo(string line);
 	void processTable(string line);
 	void printTape(char state, int begin, int end);
+	void removeSpaces(string *line);
+	void wait(double seconds);
 	vector<char> states;
 	vector<char> symbols;
 	list<char> tape;

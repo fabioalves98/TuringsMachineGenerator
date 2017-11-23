@@ -3,7 +3,7 @@ bs: 0
 is: A
 fs: H
 begin_table
-  \    A    B    C
+  *    A    B    C
   0   1RB  0RC  1LC
   1   1RH  1RB  1LA
 end_table

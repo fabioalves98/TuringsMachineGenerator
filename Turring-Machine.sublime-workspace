@@ -188,40 +188,10 @@
 	"buffers":
 	[
 		{
-			"file": "Generator.cpp",
-			"settings":
-			{
-				"buffer_size": 356,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Machine.h",
-			"settings":
-			{
-				"buffer_size": 783,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "ScanTable.h"
-			}
-		},
-		{
 			"file": "Machine.cpp",
 			"settings":
 			{
-				"buffer_size": 11780,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "ScanTable.cpp"
-			}
-		},
-		{
-			"file": "tables/.table.conf",
-			"settings":
-			{
-				"buffer_size": 487,
-				"encoding": "UTF-8",
+				"buffer_size": 11407,
 				"line_ending": "Unix"
 			}
 		}
@@ -331,11 +301,22 @@
 	},
 	"expanded_folders":
 	[
-		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator",
-		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables"
+		"/home/fabio/Mega/Bolsa/Turings-Machine-Simulator"
 	],
 	"file_history":
 	[
+		"/C/Mega/2Ano/P3/Eclipse/src/aula8_1/JogoDoGalo.java",
+		"/C/Mega/Bolsa/Turings-Machine-Simulator/tables/3state2symbolbusybeaver.txt",
+		"/C/Mega/Bolsa/Turings-Machine-Simulator/Machine.cpp",
+		"/C/Mega/Bolsa/Turings-Machine-Simulator/Generator.cpp",
+		"/C/Mega/Bolsa/Turings-Machine-Simulator/Machine.h",
+		"/C/Mega/Bolsa/Turings-Machine-Simulator/tables/.table.conf",
+		"/home/fabio/.bashrc",
+		"/home/fabio/Mega/1Ano/Programacao II/Aula 5/Programas/E1/p42.java",
+		"/home/fabio/Mega/1Ano/Programacao II/Aula 5/Programas/E1/GuessGame.java",
+		"/home/fabio/Downloads/Game of Thrones - 07x06 - Death Is the Enemy.leakedversion.Portuguese.srt",
+		"/home/fabio/Desktop/PC Upgrade.txt",
+		"/home/fabio/Downloads/Game.of.Thrones.S07E04.The.Spoils.of.War.1080p.AMZN.WEB-DL.DDP5.1.H.264-GoT[ettv]/Game.of.Thrones.S07E04.The.Spoils.of.War.1080p.AMZN.WEB-DL.DDP5.1.H.264-GoT[ettv].srt",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/ola.txt",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/n-",
 		"/home/fabio/Mega/Bolsa/Turings-Machine-Generator/tables/personalized.txt",
@@ -367,7 +348,6 @@
 		"/home/fabio/Mega/Bolsa/C++/Polymorphism/Ninja.h",
 		"/home/fabio/Mega/Bolsa/C++/Polymorphism/Enemy.cpp",
 		"/home/fabio/Mega/Bolsa/C++/Polymorphism/Enemy.h",
-		"/home/fabio/.bashrc",
 		"/home/fabio/-bashrc",
 		"/home/fabio/Mega/Bolsa/C++/Inheritance/Daughter.h",
 		"/home/fabio/Mega/Bolsa/C++/Composition/Person.cpp",
@@ -403,12 +383,11 @@
 		"/home/fabio/Secretaria-do-DETI_Bolsas-de-Investigaçao_7-de-Julho.txt",
 		"/home/fabio/Mega/Programacao II/Aula 11/Programas/E1/E1.java",
 		"/home/fabio/Mega/Laboratorios de Informatica/P1/Projeto/script/carousel.js",
-		"/home/fabio/Documents/react/first-proj/albums/.eslintrc",
-		"/home/fabio/Desktop/PC Upgrade.txt"
+		"/home/fabio/Documents/react/first-proj/albums/.eslintrc"
 	],
 	"find":
 	{
-		"height": 70.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
@@ -422,6 +401,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"getIndex",
+			"get",
 			"state",
 			"symbol",
 			"sybs",
@@ -485,58 +466,28 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Generator.cpp",
-					"semi_transient": false,
+					"file": "Machine.cpp",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 356,
+						"buffer_size": 11407,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								76,
-								76
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Machine.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 783,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								337,
-								337
-							]
-						],
-						"settings":
-						{
-							"auto_name": "ScanTable.h",
 							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
@@ -545,72 +496,6 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Machine.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11780,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								8742,
-								8742
-							]
-						],
-						"settings":
-						{
-							"auto_name": "ScanTable.cpp",
-							"syntax": "Packages/C++ Starting Kit/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 3,
-					"file": "tables/.table.conf",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 487,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								68,
-								68
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 5,
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -633,18 +518,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.685830429733,
 			1.0
 		],
 		"rows":
@@ -666,7 +544,7 @@
 	"project": "Turring-Machine.sublime-project",
 	"replace":
 	{
-		"height": 114.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -704,7 +582,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 198.0,
+	"side_bar_width": 182.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
