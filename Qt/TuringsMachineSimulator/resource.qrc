@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/rec">
+        <file>icons/table.png</file>
+    </qresource>
+</RCC>

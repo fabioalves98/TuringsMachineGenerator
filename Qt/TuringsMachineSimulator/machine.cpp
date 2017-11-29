@@ -103,6 +103,22 @@ void Machine::start() {
     qDebug() << "Machine Halted after " << count << " moves";
 }
 
+QVector<QChar>* Machine::getStates() {
+    return &states;
+}
+
+QVector<QChar>* Machine::getSymbols() {
+    return &symbols;
+}
+
+QString Machine::funct(QChar st, QChar sy) {
+    QString key = makeKey(st, sy);
+    action move = transFunct.value(key);
+    QString toReturn;
+    toReturn.append(move.wSymbol).append(move.mTape).append(move.nState);
+    return toReturn;
+}
+
 void Machine::printTape(QChar st, int begin, int end) {
     auto begin_it = tape.begin();
     auto end_it = tape.begin();

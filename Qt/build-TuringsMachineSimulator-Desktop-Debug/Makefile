@@ -53,12 +53,14 @@ OBJECTS_DIR   = ./
 SOURCES       = ../TuringsMachineSimulator/main.cpp \
 		../TuringsMachineSimulator/mainwindow.cpp \
 		../TuringsMachineSimulator/usermachines.cpp \
-		../TuringsMachineSimulator/machine.cpp moc_mainwindow.cpp \
+		../TuringsMachineSimulator/machine.cpp qrc_resource.cpp \
+		moc_mainwindow.cpp \
 		moc_usermachines.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		usermachines.o \
 		machine.o \
+		qrc_resource.o \
 		moc_mainwindow.o \
 		moc_usermachines.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -179,6 +181,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		../TuringsMachineSimulator/.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -333,6 +336,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -353,6 +357,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		../TuringsMachineSimulator/TuringsMachineSimulator.pro \
+		../TuringsMachineSimulator/resource.qrc \
 		/usr/lib/libQt5Widgets.prl \
 		/usr/lib/libQt5Gui.prl \
 		/usr/lib/libQt5Core.prl
@@ -475,6 +480,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -495,6 +501,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 /usr/lib/qt/mkspecs/features/yacc.prf:
 /usr/lib/qt/mkspecs/features/lex.prf:
 ../TuringsMachineSimulator/TuringsMachineSimulator.pro:
+../TuringsMachineSimulator/resource.qrc:
 /usr/lib/libQt5Widgets.prl:
 /usr/lib/libQt5Gui.prl:
 /usr/lib/libQt5Core.prl:
@@ -512,6 +519,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../TuringsMachineSimulator/resource.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../TuringsMachineSimulator/mainwindow.h ../TuringsMachineSimulator/usermachines.h ../TuringsMachineSimulator/machine.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/mainwindow.cpp ../TuringsMachineSimulator/usermachines.cpp ../TuringsMachineSimulator/machine.cpp $(DISTDIR)/
@@ -539,8 +547,14 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resource.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_resource.cpp
+qrc_resource.cpp: ../TuringsMachineSimulator/resource.qrc \
+		/usr/bin/rcc \
+		../TuringsMachineSimulator/icons/table.png
+	/usr/bin/rcc -name resource ../TuringsMachineSimulator/resource.qrc -o qrc_resource.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -582,7 +596,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -606,6 +620,9 @@ machine.o: ../TuringsMachineSimulator/machine.cpp ../TuringsMachineSimulator/mac
 		../TuringsMachineSimulator/mainwindow.h \
 		../TuringsMachineSimulator/usermachines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o machine.o ../TuringsMachineSimulator/machine.cpp
+
+qrc_resource.o: qrc_resource.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

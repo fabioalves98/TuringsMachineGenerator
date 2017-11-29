@@ -37,3 +37,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     usermachines.ui
+
+RESOURCES += \
+    resource.qrc

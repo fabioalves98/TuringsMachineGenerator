@@ -10,6 +10,9 @@ class Machine
 public:
     Machine(QString fileName);
     void start();
+    QVector<QChar> *getStates();
+    QVector<QChar> *getSymbols();
+    QString funct(QChar State, QChar Symbol);
     static void verifyTable(QString fileName);
 private:
     bool changeState(QString line, bool *i, bool *t);
