@@ -13,17 +13,19 @@ UserMachines::~UserMachines()
     delete ui;
 }
 
-void UserMachines::on_fileOpener_clicked()
+void UserMachines::on_addTableBt_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)");
-    Machine lol(fileName);
-    test = &lol;
+    QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)"));
+    //QString fileName = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)");
+    //Machine lol(tableFile);
+    test = new Machine(tableFile);
     QListWidgetItem *newTable = new QListWidgetItem;
-    newTable->setText(fileName);
+    QFileInfo fileInfo(*tableFile);
+    newTable->setText(fileInfo.baseName());
     newTable->setFont(QFont("Meiryo", 10));
     newTable->setIcon(QIcon(":/rec/icons/table.png"));
-    ui->tableList->addItem(newTable);
-    ui->tableList->setIconSize(QSize(20, 20));
+    ui->tablesList->addItem(newTable);
+    ui->tablesList->setIconSize(QSize(20, 20));
 
     QVector<QChar> *symbols = test->getSymbols();
     QVector<QChar> *states = test->getStates();
@@ -49,5 +51,66 @@ void UserMachines::on_fileOpener_clicked()
     }
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //test->start();
+
+    QStringList properties;
+    properties << "Name: " << "Symbols: " << "States: " << "Blanck Symbol: " << "Inicial State: " << "Halt State: ";
+    for (QString prop : properties) {
+        QListWidgetItem *newProI = new QListWidgetItem;
+        QWidget *newPropW = new QWidget;
+        QHBoxLayout *layout = new QHBoxLayout;
+        QLabel *propName = new QLabel;
+        propName->setText(prop);
+        propName->setFont(QFont("Meiryo", 10, QFont::Bold));
+        layout->addWidget(propName);
+        QLabel *propValue = new QLabel;
+        switch(properties.indexOf(prop)) {
+            case 0: {
+                propValue->setText(fileInfo.baseName());
+                break;
+            }
+            case 1: {
+                QString *symbolsStr = new QString;
+                for (QChar symbol : *symbols) {
+                    symbolsStr->append(symbol);
+                    symbolsStr->append((" "));
+                }
+                propValue->setText(*symbolsStr);
+                break;
+            }
+            case 2: {
+                QString *statesStr = new QString;
+                for (QChar state : *states) {
+                    statesStr->append(state);
+                    statesStr->append((" "));
+                }
+                propValue->setText(*statesStr);
+                break;
+            }
+            case 3: {
+                QString bSym(test->getBlanckSym());
+                propValue->setText(bSym);
+                break;
+            }
+            case 4: {
+                QString iSt(test->getInitState());
+                propValue->setText(iSt);
+                break;
+            }
+            case 5: {
+                QString hSt(test->getHaltState());
+                propValue->setText(hSt);
+                break;
+            }
+        }
+        layout->addWidget(propValue, Qt::AlignLeft);
+        newPropW->setLayout(layout);
+        newPropW->show();
+        ui->propList->addItem(newProI);
+        ui->propList->setItemWidget(newProI, newPropW);
+    }
+}
+
+void UserMachines::on_simBt_clicked() {
+    test->reset();
+    test->start();
 }

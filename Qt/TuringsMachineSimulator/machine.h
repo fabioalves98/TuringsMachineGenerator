@@ -8,12 +8,18 @@
 class Machine
 {
 public:
-    Machine(QString fileName);
+    Machine(QFile *fileName);
     void start();
+    void reset();
+    QLinkedList<QChar> getTape();
+    QChar getBlanckSym();
+    QChar getInitState();
+    QChar getHaltState();
     QVector<QChar> *getStates();
     QVector<QChar> *getSymbols();
     QString funct(QChar State, QChar Symbol);
     static void verifyTable(QString fileName);
+    
 private:
     bool changeState(QString line, bool *i, bool *t);
     void removeSpaces(QString *line);
@@ -32,7 +38,7 @@ private:
     QMap<QString, action> transFunct;
     QString fileName;
     QChar blanckSym;
-    QChar inState;
+    QChar initState;
     QChar haltState;
 };
 

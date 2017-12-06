@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QDir>
+#include <QLayout>
 #include "machine.h"
 
 namespace Ui {
@@ -19,7 +20,8 @@ public:
     ~UserMachines();
 
 private slots:
-    void on_fileOpener_clicked();
+    void on_addTableBt_clicked();
+    void on_simBt_clicked();
 
 private:
     Ui::UserMachines *ui;

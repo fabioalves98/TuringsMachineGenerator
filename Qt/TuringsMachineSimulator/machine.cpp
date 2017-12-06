@@ -1,15 +1,14 @@
 #include "machine.h"
-#include "mainwindow.h"
 
-Machine::Machine(QString fName) {
-    fileName = fName;
-    QFile tableFile(fileName);
-    if (!tableFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+Machine::Machine(QFile *tableFile) {
+    //fileName = fName;
+    //QFile tableFile(fileName);
+    if (!tableFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Error Opening Table File" << endl;
         return;
     }
     bool info = false, table = false;
-    QTextStream in(&tableFile);
+    QTextStream in(tableFile);
     while (!in.atEnd()) {
         QString line = in.readLine();
         qDebug() << line << endl;
@@ -31,7 +30,7 @@ Machine::Machine(QString fName) {
         }
         qDebug() << line << endl;
     }
-    qDebug() << blanckSym << inState << haltState;
+    qDebug() << blanckSym << initState << haltState;
     qDebug() << "States";
     for (QChar s : states) {
         qDebug() << s;
@@ -57,7 +56,7 @@ void Machine::start() {
     for (int i = 0; i < 21; i++) {
         tape.append(blanckSym);
     }
-    QChar pState = inState;
+    QChar pState = initState;
     QLinkedList<QChar>::iterator head = tape.begin();
     //QMutableLinkedListIterator<QChar> head(tape);
     std::advance(head, tapeSize/2);
@@ -97,10 +96,31 @@ void Machine::start() {
         }
         pState = move.nState;
         count++;
+        //debugTape();
         printTape(pState, start, end);
     } while (pState != haltState);
     qDebug() << "Tape Size: " << tape.size() << endl;
     qDebug() << "Machine Halted after " << count << " moves";
+}
+
+void Machine::reset() {
+    tape.clear();
+}
+
+QLinkedList<QChar> Machine::getTape() {
+    return tape;
+}
+
+QChar Machine::getBlanckSym() {
+    return blanckSym;
+}
+
+QChar Machine::getInitState() {
+    return initState;
+}
+
+QChar Machine::getHaltState() {
+    return haltState;
 }
 
 QVector<QChar>* Machine::getStates() {
@@ -166,7 +186,7 @@ void Machine::processInfo(QString line) {
         blanckSym = line.at(3);
     }
     else if (type == "is") {
-        inState = line.at(3);
+        initState = line.at(3);
     }
     else if (type == "fs") {
         haltState = line.at(3);
