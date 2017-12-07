@@ -13,11 +13,24 @@ UserMachines::~UserMachines()
     delete ui;
 }
 
+void UserMachines::start()
+{
+    QList<int> sizes = ui->splitter->sizes();
+    sizes[0] = (int)ui->splitter->width()*0.7;
+    ui->splitter->setSizes(sizes);
+
+    sizes = ui->splitter_2->sizes();
+    sizes[1] = (int)ui->splitter_2->height()*0.7;
+    ui->splitter_2->setSizes(sizes);
+
+    sizes = ui->splitter_3->sizes();
+    sizes[0] = (int)ui->splitter_3->width()*0.2;
+    ui->splitter_3->setSizes(sizes);
+}
+
 void UserMachines::on_addTableBt_clicked()
 {
     QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)"));
-    //QString fileName = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)");
-    //Machine lol(tableFile);
     test = new Machine(tableFile);
     QListWidgetItem *newTable = new QListWidgetItem;
     QFileInfo fileInfo(*tableFile);
@@ -54,6 +67,7 @@ void UserMachines::on_addTableBt_clicked()
 
     QStringList properties;
     properties << "Name: " << "Symbols: " << "States: " << "Blanck Symbol: " << "Inicial State: " << "Halt State: ";
+    ui->propList->clear();
     for (QString prop : properties) {
         QListWidgetItem *newProI = new QListWidgetItem;
         QWidget *newPropW = new QWidget;
@@ -105,12 +119,61 @@ void UserMachines::on_addTableBt_clicked()
         layout->addWidget(propValue, Qt::AlignLeft);
         newPropW->setLayout(layout);
         newPropW->show();
+        newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
         ui->propList->addItem(newProI);
         ui->propList->setItemWidget(newProI, newPropW);
+
+        ui->simList->clear();
     }
 }
 
-void UserMachines::on_simBt_clicked() {
+void UserMachines::on_simBt_clicked()
+{
+    ui->simList->clear();
     test->reset();
     test->start();
+
+    std::list<QChar> tape;
+    QString tapeStr;
+    while (!test->halted()) {
+        QThread::msleep(100);
+        QCoreApplication::processEvents();
+        tape = test->advance();
+        int offset = test->getTapeHeadOffset();
+        tapeStr = "";
+        for (QChar sym : tape) {
+            tapeStr.append("[");
+            tapeStr.append(sym);
+            tapeStr.append("]");
+        }
+        if (tape.size() % 2 == 0) {
+            tapeStr.append("   ");
+        }
+        if (offset > 0) {
+            for (int i = 0; i < abs(offset); i++) {
+                tapeStr.prepend("      ");
+            }
+        }
+        else if (offset < 0) {
+            for (int i = 0; i < abs(offset); i++) {
+                tapeStr.append("      ");
+            }
+        }
+        QListWidgetItem *newTapeI = new QListWidgetItem;
+        QLabel *tableText = new QLabel;
+        tableText->setText(tapeStr);
+        tableText->setFont(QFont("Courier", 11, QFont::Bold));
+        tableText->setAlignment(Qt::AlignCenter);
+        newTapeI->setSizeHint(tableText->sizeHint());
+        newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        ui->simList->addItem(newTapeI);
+        ui->simList->setItemWidget(newTapeI, tableText);
+        ui->simList->scrollToBottom();
+    }
+}
+
+void UserMachines::resizeEvent(QResizeEvent *event)
+{
+    update();
+    QWidget::resizeEvent(event);
 }

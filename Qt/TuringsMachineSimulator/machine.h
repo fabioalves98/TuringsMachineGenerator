@@ -11,7 +11,10 @@ public:
     Machine(QFile *fileName);
     void start();
     void reset();
-    QLinkedList<QChar> getTape();
+    std::list<QChar> advance();
+    bool halted();
+    std::list<QChar> getTape();
+    int getTapeHeadOffset();
     QChar getBlanckSym();
     QChar getInitState();
     QChar getHaltState();
@@ -34,12 +37,16 @@ private:
     };
     QVector<QChar> states;
     QVector<QChar> symbols;
-    QLinkedList<QChar> tape;
+    std::list<QChar> tape;
     QMap<QString, action> transFunct;
     QString fileName;
     QChar blanckSym;
     QChar initState;
     QChar haltState;
+
+    QChar pState;
+    std::list<QChar>::iterator head;
+    int startP, endP, count;
 };
 
 #endif // MACHINE_H

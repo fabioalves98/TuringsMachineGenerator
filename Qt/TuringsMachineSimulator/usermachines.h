@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QLayout>
+#include <QThread>
 #include "machine.h"
 
 namespace Ui {
@@ -17,7 +18,11 @@ class UserMachines : public QMainWindow
 
 public:
     explicit UserMachines(QWidget *parent = 0);
+    void start();
     ~UserMachines();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void on_addTableBt_clicked();

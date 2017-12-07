@@ -1,8 +1,6 @@
 #include "machine.h"
 
 Machine::Machine(QFile *tableFile) {
-    //fileName = fName;
-    //QFile tableFile(fileName);
     if (!tableFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Error Opening Table File" << endl;
         return;
@@ -47,68 +45,71 @@ Machine::Machine(QFile *tableFile) {
             qDebug() << key << aux.wSymbol << aux.mTape << aux.nState;
         }
     }
-    //this->start();
 }
 
 void Machine::start() {
     qDebug() << "Simulation";
-    int tapeSize = 21;
-    for (int i = 0; i < 21; i++) {
+    int tapeSize = 3;
+    tape.assign(3, blanckSym);
+    /*for (int i = 0; i < tapeSize; i++) {
         tape.append(blanckSym);
-    }
-    QChar pState = initState;
-    QLinkedList<QChar>::iterator head = tape.begin();
-    //QMutableLinkedListIterator<QChar> head(tape);
-    std::advance(head, tapeSize/2);
-    /*for (int i = 0; i < tape.size()/2; i++) {
-       head.next();
     }*/
-    int start = 0, end = tapeSize;
-    int count = 0;
-    printTape(pState, start, end);
-    do {
-        //wait(0.2);
-        QChar symbol = *head;
-        //QChar symbol = head.value();
-        QString key = makeKey(pState, symbol);
-        action move = transFunct[key];
-        //head.setValue(move.wSymbol);
-        *head = move.wSymbol;
-        if (move.mTape == 'R') {
-            if (start == 0){
-                tape.push_front(blanckSym);
-            }
-            else{
-                start--;
-                end--;
-            }
-            //head.previous();
-            head = std::prev(head);
-        }
-        else {
-            start++;
-            end++;
-            //head.next();
-            head = std::next(head);
-            if (tape.size() < end) {
-                tape.push_back(blanckSym);
-            }
-        }
-        pState = move.nState;
-        count++;
-        //debugTape();
-        printTape(pState, start, end);
-    } while (pState != haltState);
-    qDebug() << "Tape Size: " << tape.size() << endl;
-    qDebug() << "Machine Halted after " << count << " moves";
+    pState = initState;
+    head = tape.begin();
+    std::advance(head, tapeSize/2);
+    startP = 0;
+    endP = tapeSize;
+    count = 0;
+    printTape(pState, 0, tape.size());
 }
 
 void Machine::reset() {
     tape.clear();
 }
 
-QLinkedList<QChar> Machine::getTape() {
+std::list<QChar> Machine::advance() {
+    QChar symbol = *head;
+    QString key = makeKey(pState, symbol);
+    qDebug() << key;
+    action move = transFunct[key];
+    *head = move.wSymbol;
+    if (move.mTape == 'R') {
+        if (startP == 0){
+            tape.push_front(blanckSym);
+        }
+        else{
+            startP--;
+            endP--;
+        }
+        head = std::prev(head);
+    }
+    else {
+        startP++;
+        endP++;
+        head = std::next(head);
+        if (tape.size() < endP) {
+            tape.push_back(blanckSym);
+        }
+    }
+    pState = move.nState;
+    count++;
+    qDebug() << move.wSymbol << " " << move.mTape << " " << move.nState;
+    qDebug() << getTapeHeadOffset();
+    printTape(pState, 0, tape.size());
     return tape;
+}
+
+bool Machine::halted() {
+    return pState==haltState;
+}
+
+std::list<QChar> Machine::getTape() {
+    return tape;
+}
+
+int Machine::getTapeHeadOffset() {
+    int index = tape.size()/2 - std::distance(tape.begin(), head);
+    return index;
 }
 
 QChar Machine::getBlanckSym() {
@@ -123,11 +124,11 @@ QChar Machine::getHaltState() {
     return haltState;
 }
 
-QVector<QChar>* Machine::getStates() {
+QVector<QChar> *Machine::getStates() {
     return &states;
 }
 
-QVector<QChar>* Machine::getSymbols() {
+QVector<QChar> *Machine::getSymbols() {
     return &symbols;
 }
 
@@ -145,6 +146,8 @@ void Machine::printTape(QChar st, int begin, int end) {
     std::advance(begin_it, begin);
     std::advance(end_it, end);
     QString toPrint;
+    toPrint.append(QString::number(count));
+    toPrint.append(" - ");
     toPrint.append(" ");
     toPrint.append(st);
     toPrint.append(" ");

@@ -19,6 +19,7 @@ void MainWindow::on_userWindow_clicked()
 {
     ui->stackedWidget->insertWidget(1, &usrMach);
     ui->stackedWidget->setCurrentIndex(1);
+    usrMach.start();
     this->setWindowTitle("User's Machines");
 }
 
