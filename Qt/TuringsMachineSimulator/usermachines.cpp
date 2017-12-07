@@ -26,120 +26,43 @@ void UserMachines::start()
     sizes = ui->splitter_3->sizes();
     sizes[0] = (int)ui->splitter_3->width()*0.2;
     ui->splitter_3->setSizes(sizes);
+
+    connect(ui->tablesList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
+}
+
+void UserMachines::resizeEvent(QResizeEvent *event)
+{
+    update();
+    QWidget::resizeEvent(event);
 }
 
 void UserMachines::on_addTableBt_clicked()
 {
+    // Initialize new Table, and display it
     QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)"));
-    test = new Machine(tableFile);
-    QListWidgetItem *newTable = new QListWidgetItem;
-    QFileInfo fileInfo(*tableFile);
-    newTable->setText(fileInfo.baseName());
-    newTable->setFont(QFont("Meiryo", 10));
-    newTable->setIcon(QIcon(":/rec/icons/table.png"));
-    ui->tablesList->addItem(newTable);
+    MachineInfo *machI = new MachineInfo(tableFile);
+    listMach.append(machI);
+    displayMach(listMach.back());
+    current = listMach.back()->getMachine();
+
+    // Get the name of the table, list it in the TablesList
+    ui->tablesList->addItem(listMach.back()->getTableListItem());
     ui->tablesList->setIconSize(QSize(20, 20));
-
-    QVector<QChar> *symbols = test->getSymbols();
-    QVector<QChar> *states = test->getStates();
-    ui->tableView->setRowCount(symbols->size());
-    ui->tableView->setColumnCount(states->size());
-    for (int i = 0; i < symbols->size(); i++) {
-        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/symbols->size());
-        QTableWidgetItem *item = new QTableWidgetItem(symbols->value(i));
-        ui->tableView->setVerticalHeaderItem(i, item);
-    }
-    for (int i = 0; i < states->size(); i++) {
-        ui->tableView->setColumnWidth(i, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/states->size());
-        QTableWidgetItem *item = new QTableWidgetItem(states->value(i));
-        ui->tableView->setHorizontalHeaderItem(i, item);
-    }
-    for (int i = 0; i < symbols->size(); i++) {
-        for (int j = 0; j < states->size(); j++) {
-            QTableWidgetItem *item = new QTableWidgetItem(test->funct(states->value(j), symbols->value(i)));
-            item->setTextAlignment(Qt::AlignCenter);
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-            ui->tableView->setItem(i, j, item);
-        }
-    }
-    ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    QStringList properties;
-    properties << "Name: " << "Symbols: " << "States: " << "Blanck Symbol: " << "Inicial State: " << "Halt State: ";
-    ui->propList->clear();
-    for (QString prop : properties) {
-        QListWidgetItem *newProI = new QListWidgetItem;
-        QWidget *newPropW = new QWidget;
-        QHBoxLayout *layout = new QHBoxLayout;
-        QLabel *propName = new QLabel;
-        propName->setText(prop);
-        propName->setFont(QFont("Meiryo", 10, QFont::Bold));
-        layout->addWidget(propName);
-        QLabel *propValue = new QLabel;
-        switch(properties.indexOf(prop)) {
-            case 0: {
-                propValue->setText(fileInfo.baseName());
-                break;
-            }
-            case 1: {
-                QString *symbolsStr = new QString;
-                for (QChar symbol : *symbols) {
-                    symbolsStr->append(symbol);
-                    symbolsStr->append((" "));
-                }
-                propValue->setText(*symbolsStr);
-                break;
-            }
-            case 2: {
-                QString *statesStr = new QString;
-                for (QChar state : *states) {
-                    statesStr->append(state);
-                    statesStr->append((" "));
-                }
-                propValue->setText(*statesStr);
-                break;
-            }
-            case 3: {
-                QString bSym(test->getBlanckSym());
-                propValue->setText(bSym);
-                break;
-            }
-            case 4: {
-                QString iSt(test->getInitState());
-                propValue->setText(iSt);
-                break;
-            }
-            case 5: {
-                QString hSt(test->getHaltState());
-                propValue->setText(hSt);
-                break;
-            }
-        }
-        layout->addWidget(propValue, Qt::AlignLeft);
-        newPropW->setLayout(layout);
-        newPropW->show();
-        newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-        ui->propList->addItem(newProI);
-        ui->propList->setItemWidget(newProI, newPropW);
-
-        ui->simList->clear();
-    }
 }
 
 void UserMachines::on_simBt_clicked()
 {
     ui->simList->clear();
-    test->reset();
-    test->start();
+    current->reset();
+    current->start();
 
     std::list<QChar> tape;
     QString tapeStr;
-    while (!test->halted()) {
+    while (!current->halted()) {
         QThread::msleep(100);
         QCoreApplication::processEvents();
-        tape = test->advance();
-        int offset = test->getTapeHeadOffset();
+        tape = current->advance();
+        int offset = current->getTapeHeadOffset();
         tapeStr = "";
         for (QChar sym : tape) {
             tapeStr.append("[");
@@ -172,8 +95,54 @@ void UserMachines::on_simBt_clicked()
     }
 }
 
-void UserMachines::resizeEvent(QResizeEvent *event)
-{
-    update();
-    QWidget::resizeEvent(event);
+void UserMachines::getMachToDispay(QListWidgetItem *item) {
+    qDebug() << item->text();
+    QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)"));
+    //listMach.append(new MachineInfo(tableFile));
+    MachineInfo *lol = new MachineInfo(tableFile);
+    listMach.append(lol);
+    //MachineInfo *lol = listMach.back();
+    displayMach(listMach.back());
+    //current = listMach.at(0)->getMachine();
+    /*for (int i = 0; i < listMach.size(); i++) {
+        qDebug() << listMach.at(i)->getTableListItem()->text();
+        if (listMach.at(i)->getTableListItem()->text() == item->text()) {
+            displayMach(listMach.at(i));
+            break;
+        }
+    }*/
+}
+
+void UserMachines::displayMach(MachineInfo *toDisplay) {
+    // Get the states, symbols and instructions, fill a table with them
+    QVector<QTableWidgetItem*> *vTableHeader = toDisplay->getVTableHeader();
+    QVector<QTableWidgetItem*> *hTableHeader = toDisplay->getHTableHeader();
+    QVector<QTableWidgetItem*> *tableElems = toDisplay->getTableElems();
+    ui->tableView->setRowCount(vTableHeader->size());
+    ui->tableView->setColumnCount(hTableHeader->size());
+    for (int i = 0, k = 0; i < vTableHeader->size(); i++) {
+        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/vTableHeader->size());
+        ui->tableView->setVerticalHeaderItem(i, vTableHeader->at(i));
+        for (int j = 0; j < hTableHeader->size(); j++, k++) {
+            if (i == 0) {
+                ui->tableView->setColumnWidth(j, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/hTableHeader->size());
+                ui->tableView->setHorizontalHeaderItem(j, hTableHeader->at(j));
+            }
+            ui->tableView->setItem(i, j, tableElems->at(k));
+        }
+    }
+    ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    // Get the remaining properties, and fill the PropertiesList
+    ui->propList->clear();
+    QVector<QWidget*> *listWidgets = toDisplay->getTableProp();
+    for (int i = 0; i < listWidgets->size(); i++) {
+        QListWidgetItem *newProI = new QListWidgetItem;
+        listWidgets->at(i)->show();
+        ui->propList->addItem(newProI);
+        ui->propList->setItemWidget(newProI, listWidgets->at(i));
+    }
+    //Clear the Simulation View
+    ui->simList->clear();
 }

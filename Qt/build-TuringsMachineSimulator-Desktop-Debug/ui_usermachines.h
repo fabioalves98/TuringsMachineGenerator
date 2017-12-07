@@ -53,8 +53,8 @@ public:
     QVBoxLayout *Simulation;
     QLabel *simLabel;
     QListWidget *simList;
-    QPushButton *simBt;
     QPushButton *addTableBt;
+    QPushButton *simBt;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -169,16 +169,16 @@ public:
 
         verticalLayout->addWidget(splitter_3);
 
+        addTableBt = new QPushButton(centralwidget);
+        addTableBt->setObjectName(QStringLiteral("addTableBt"));
+
+        verticalLayout->addWidget(addTableBt);
+
         simBt = new QPushButton(centralwidget);
         simBt->setObjectName(QStringLiteral("simBt"));
         simBt->setMinimumSize(QSize(0, 0));
 
         verticalLayout->addWidget(simBt);
-
-        addTableBt = new QPushButton(centralwidget);
-        addTableBt->setObjectName(QStringLiteral("addTableBt"));
-
-        verticalLayout->addWidget(addTableBt);
 
         UserMachines->setCentralWidget(centralwidget);
         menubar = new QMenuBar(UserMachines);
@@ -208,8 +208,8 @@ public:
         tableLabel->setText(QApplication::translate("UserMachines", "Table's Specification", Q_NULLPTR));
         propLabel->setText(QApplication::translate("UserMachines", "Table's Properties", Q_NULLPTR));
         simLabel->setText(QApplication::translate("UserMachines", "Table's Simulation", Q_NULLPTR));
-        simBt->setText(QApplication::translate("UserMachines", "Simulate", Q_NULLPTR));
         addTableBt->setText(QApplication::translate("UserMachines", "Add Table", Q_NULLPTR));
+        simBt->setText(QApplication::translate("UserMachines", "Simulate", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("UserMachines", "File", Q_NULLPTR));
         toolBar->setWindowTitle(QApplication::translate("UserMachines", "toolBar", Q_NULLPTR));
     } // retranslateUi

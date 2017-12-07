@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     usermachines.cpp \
-    machine.cpp
+    machine.cpp \
+    machineinfo.cpp
 
 HEADERS += \
         mainwindow.h \
     usermachines.h \
-    machine.h
+    machine.h \
+    machineinfo.h
 
 FORMS += \
         mainwindow.ui \

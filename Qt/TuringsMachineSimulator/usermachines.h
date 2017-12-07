@@ -6,7 +6,9 @@
 #include <QDir>
 #include <QLayout>
 #include <QThread>
+#include <QListWidget>
 #include "machine.h"
+#include "machineinfo.h"
 
 namespace Ui {
 class UserMachines;
@@ -27,10 +29,13 @@ protected:
 private slots:
     void on_addTableBt_clicked();
     void on_simBt_clicked();
+    void getMachToDispay(QListWidgetItem* item);
 
 private:
+    void displayMach(MachineInfo* toDisplay);
     Ui::UserMachines *ui;
-    Machine *test;
+    Machine *current;
+    QVector<MachineInfo*> listMach;
 };
 
 #endif // USERMACHINES_H
