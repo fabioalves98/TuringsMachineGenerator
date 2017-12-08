@@ -6,6 +6,7 @@ UserMachines::UserMachines(QWidget *parent) :
     ui(new Ui::UserMachines)
 {
     ui->setupUi(this);
+    tableIsLoaded = false;
 }
 
 UserMachines::~UserMachines()
@@ -27,31 +28,45 @@ void UserMachines::start()
     sizes[0] = (int)ui->splitter_3->width()*0.2;
     ui->splitter_3->setSizes(sizes);
 
-    connect(ui->tablesList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
+    connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
+    connect(ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->splitter_2, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->splitter_3, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
 }
 
 void UserMachines::resizeEvent(QResizeEvent *event)
 {
+    resizeTable();
     update();
     QWidget::resizeEvent(event);
 }
 
 void UserMachines::on_addTableBt_clicked()
 {
+    haltSim = true;
     // Initialize new Table, and display it
     QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)"));
     MachineInfo *machI = new MachineInfo(tableFile);
-    listMach.append(machI);
-    displayMach(listMach.back());
-    current = listMach.back()->getMachine();
-
-    // Get the name of the table, list it in the TablesList
-    ui->tablesList->addItem(listMach.back()->getTableListItem());
-    ui->tablesList->setIconSize(QSize(20, 20));
+    bool contains = false;
+    foreach (MachineInfo *mach, listMach) {
+        if (mach->getFileInfo()->absoluteFilePath() == machI->getFileInfo()->absoluteFilePath()) {
+            contains = true;
+        }
+    }
+    if (!contains) {
+        listMach.append(machI);
+        // Get the name of the table, list it in the TablesList
+        ui->tablesList->addItem(listMach.back()->getTableListItem());
+        ui->tablesList->setIconSize(QSize(20, 20));
+    }
+    displayMach(machI);
+    tableIsLoaded = true;
+    current = machI->getMachine();
 }
 
 void UserMachines::on_simBt_clicked()
 {
+    if (!tableIsLoaded) return;
     haltSim = false;
     ui->simList->clear();
     current->reset();
@@ -91,6 +106,10 @@ void UserMachines::on_simBt_clicked()
         ui->simList->addItem(newTapeI);
         ui->simList->setItemWidget(newTapeI, tableText);
         ui->simList->scrollToBottom();
+        QScrollBar *bar = ui->simList->horizontalScrollBar();
+        bar->setValue((bar->maximum() + bar->minimum())/2);
+        bar->update();
+        ui->simList->update();
         QThread::msleep(100);
         QCoreApplication::processEvents();
     }
@@ -132,7 +151,7 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
     // Get the remaining properties, and fill the PropertiesList
     ui->propList->clear();
     QStringList properties;
-    properties << "Name: " << "Symbols: " << "States: " << "Blanck Symbol: " << "Inicial State: " << "Halt State: ";
+    properties << " Name: " << " Symbols: " << " States: " << " Blanck Symbol: " << " Inicial State: " << " Halt State: ";
     for (QString prop : properties) {
         QListWidgetItem *newProI = new QListWidgetItem;
         QWidget *newProW = new QWidget;
@@ -182,11 +201,26 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
             }
         }
         layout->addWidget(propValue, Qt::AlignLeft);
+        layout->setMargin(1);
         newProW->setLayout(layout);
-        newProW->show();
+        newProI->setSizeHint(QSize(0, 25));
+        newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
         ui->propList->addItem(newProI);
         ui->propList->setItemWidget(newProI, newProW);
     }
     //Clear the Simulation View*/
     ui->simList->clear();
+}
+
+void UserMachines::resizeTable() {
+    if (tableIsLoaded) {
+        int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
+        int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
+        for (int i = 0; i < ui->tableView->rowCount(); i++) {
+            ui->tableView->setRowHeight(i, rowHeigth);
+        }
+        for (int i = 0; i < ui->tableView->columnCount(); i++) {
+            ui->tableView->setColumnWidth(i, columnWidth);
+        }
+    }
 }

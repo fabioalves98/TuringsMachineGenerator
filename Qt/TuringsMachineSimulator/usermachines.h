@@ -7,6 +7,7 @@
 #include <QLayout>
 #include <QThread>
 #include <QListWidget>
+#include <QScrollBar>
 #include "machine.h"
 #include "machineinfo.h"
 
@@ -30,6 +31,7 @@ private slots:
     void on_addTableBt_clicked();
     void on_simBt_clicked();
     void getMachToDispay(QListWidgetItem* item);
+    void resizeTable();
 
 private:
     void displayMach(MachineInfo* toDisplay);
@@ -37,6 +39,7 @@ private:
     Machine *current;
     QVector<MachineInfo*> listMach;
     bool haltSim;
+    bool tableIsLoaded;
 };
 
 #endif // USERMACHINES_H
