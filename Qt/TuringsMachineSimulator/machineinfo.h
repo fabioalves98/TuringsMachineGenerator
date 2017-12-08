@@ -22,7 +22,6 @@ public:
     QVector<QTableWidgetItem*> *getHTableHeader();
     QVector<QTableWidgetItem*> *getVTableHeader();
     QVector<QTableWidgetItem*> *getTableElems();
-    QVector<QWidget*> *getTableProp();
 signals:
 
 public slots:
@@ -37,7 +36,6 @@ private:
     QVector<QTableWidgetItem*> vTableHeader;
     QVector<QTableWidgetItem*> hTableHeader;
     QVector<QTableWidgetItem*> tableElems;
-
     QVector<QWidget*> tableProp;
 };
 

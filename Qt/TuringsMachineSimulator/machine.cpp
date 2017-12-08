@@ -9,7 +9,7 @@ Machine::Machine(QFile *tableFile) {
     QTextStream in(tableFile);
     while (!in.atEnd()) {
         QString line = in.readLine();
-        qDebug() << line << endl;
+        //qDebug() << line << endl;
         if (changeState(line, &info, &table)) {
             continue;
         }
@@ -26,51 +26,55 @@ Machine::Machine(QFile *tableFile) {
                 break;
             }
         }
-        qDebug() << line << endl;
+        //qDebug() << line << endl;
     }
-    qDebug() << blanckSym << initState << haltState;
-    qDebug() << "States";
+    /*qDebug() << blanckSym << initState << haltState;
+    //qDebug() << "States";
     for (QChar s : states) {
-        qDebug() << s;
+        //qDebug() << s;
     }
-    qDebug() << "Symbols";
+    //qDebug() << "Symbols";
     for (QChar s : symbols) {
-        qDebug() << s;
+        //qDebug() << s;
     }
-    qDebug() << "Table";
+    //qDebug() << "Table";
     for (QChar st : states) {
         for (QChar sy : symbols) {
             QString key = makeKey(st, sy);
             action aux = transFunct.value(key);
-            qDebug() << key << aux.wSymbol << aux.mTape << aux.nState;
+            //qDebug() << key << aux.wSymbol << aux.mTape << aux.nState;
         }
-    }
+    }*/
 }
 
 void Machine::start() {
-    qDebug() << "Simulation";
     int tapeSize = 3;
     tape.assign(3, blanckSym);
-    /*for (int i = 0; i < tapeSize; i++) {
-        tape.append(blanckSym);
-    }*/
     pState = initState;
     head = tape.begin();
     std::advance(head, tapeSize/2);
     startP = 0;
     endP = tapeSize;
     count = 0;
-    printTape(pState, 0, tape.size());
+    //printTape(pState, 0, tape.size());
 }
 
 void Machine::reset() {
     tape.clear();
 }
 
+bool Machine::halted() {
+    return pState==haltState;
+}
+
+void Machine::halt() {
+    pState = haltState;
+}
+
 std::list<QChar> Machine::advance() {
     QChar symbol = *head;
     QString key = makeKey(pState, symbol);
-    qDebug() << key;
+    //qDebug() << key;
     action move = transFunct[key];
     *head = move.wSymbol;
     if (move.mTape == 'R') {
@@ -93,14 +97,10 @@ std::list<QChar> Machine::advance() {
     }
     pState = move.nState;
     count++;
-    qDebug() << move.wSymbol << " " << move.mTape << " " << move.nState;
-    qDebug() << getTapeHeadOffset();
-    printTape(pState, 0, tape.size());
+    //qDebug() << move.wSymbol << " " << move.mTape << " " << move.nState;
+    //qDebug() << getTapeHeadOffset();
+    //printTape(pState, 0, tape.size());
     return tape;
-}
-
-bool Machine::halted() {
-    return pState==haltState;
 }
 
 std::list<QChar> Machine::getTape() {

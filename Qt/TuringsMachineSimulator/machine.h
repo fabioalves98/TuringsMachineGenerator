@@ -11,8 +11,9 @@ public:
     Machine(QFile *fileName);
     void start();
     void reset();
-    std::list<QChar> advance();
     bool halted();
+    void halt();
+    std::list<QChar> advance();
     std::list<QChar> getTape();
     int getTapeHeadOffset();
     QChar getBlanckSym();

@@ -36,6 +36,7 @@ private:
     Ui::UserMachines *ui;
     Machine *current;
     QVector<MachineInfo*> listMach;
+    bool haltSim;
 };
 
 #endif // USERMACHINES_H
