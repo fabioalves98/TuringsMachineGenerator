@@ -45,7 +45,7 @@ void UserMachines::on_addTableBt_clicked()
 {
     haltSim = true;
     // Initialize new Table, and display it
-    QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/Turings-Machine-Simulator/C++/tables", "Text Files (*.txt);;All Files(*)"));
+    QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)"));
     MachineInfo *machI = new MachineInfo(tableFile);
     bool contains = false;
     foreach (MachineInfo *mach, listMach) {
@@ -79,9 +79,9 @@ void UserMachines::on_simBt_clicked()
         int offset = current->getTapeHeadOffset();
         tapeStr = "";
         for (QChar sym : tape) {
-            tapeStr.append("[");
+            tapeStr.append("|");
             tapeStr.append(sym);
-            tapeStr.append("]");
+            tapeStr.append("|");
         }
         if (tape.size() % 2 == 0) {
             tapeStr.append("   ");
@@ -99,7 +99,7 @@ void UserMachines::on_simBt_clicked()
         QListWidgetItem *newTapeI = new QListWidgetItem;
         QLabel *tableText = new QLabel;
         tableText->setText(tapeStr);
-        tableText->setFont(QFont("Courier", 11, QFont::Bold));
+        tableText->setFont(QFont("Courier", 12, QFont::Bold));
         tableText->setAlignment(Qt::AlignCenter);
         newTapeI->setSizeHint(tableText->sizeHint());
         newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -158,7 +158,7 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
         QHBoxLayout *layout = new QHBoxLayout;
         QLabel *propName = new QLabel;
         propName->setText(prop);
-        propName->setFont(QFont("Meiryo", 10, QFont::Bold));
+        propName->setFont(QFont("Meiryo", 11, QFont::Bold));
         layout->addWidget(propName);
         QLabel *propValue = new QLabel;
         switch(properties.indexOf(prop)) {
@@ -200,8 +200,9 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
                 break;
             }
         }
+        propValue->setFont(QFont("Meiryo", 11));
         layout->addWidget(propValue, Qt::AlignLeft);
-        layout->setMargin(1);
+        layout->setMargin(0);
         newProW->setLayout(layout);
         newProI->setSizeHint(QSize(0, 25));
         newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
