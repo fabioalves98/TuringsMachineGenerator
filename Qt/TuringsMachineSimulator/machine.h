@@ -23,7 +23,7 @@ public:
     QVector<QChar> *getSymbols();
     QString funct(QChar State, QChar Symbol);
     static void verifyTable(QString fileName);
-    
+
 private:
     bool changeState(QString line, bool *i, bool *t);
     void removeSpaces(QString *line);

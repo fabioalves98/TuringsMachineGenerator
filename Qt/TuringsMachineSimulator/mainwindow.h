@@ -23,6 +23,7 @@ private slots:
     void on_userWindow_clicked();
 
 private:
+    void closeEvent(QCloseEvent *event);
     Ui::MainWindow *ui;
     UserMachines usrMach;
 };

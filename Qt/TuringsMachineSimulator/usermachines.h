@@ -8,6 +8,7 @@
 #include <QThread>
 #include <QListWidget>
 #include <QScrollBar>
+#include <QCloseEvent>
 #include "machine.h"
 #include "machineinfo.h"
 
@@ -22,6 +23,7 @@ class UserMachines : public QMainWindow
 public:
     explicit UserMachines(QWidget *parent = 0);
     void start();
+    void close();
     ~UserMachines();
 
 protected:
@@ -32,6 +34,11 @@ private slots:
     void on_simBt_clicked();
     void getMachToDispay(QListWidgetItem* item);
     void resizeTable();
+    void on_stopBt_clicked();
+    void on_pauseBt_clicked();
+    void on_contBt_clicked();
+
+    void on_randTableBt_clicked();
 
 private:
     void displayMach(MachineInfo* toDisplay);
@@ -39,6 +46,7 @@ private:
     Machine *current;
     QVector<MachineInfo*> listMach;
     bool haltSim;
+    bool pauseSim;
     bool tableIsLoaded;
 };
 

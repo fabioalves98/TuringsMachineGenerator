@@ -29,3 +29,8 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     update();
     QWidget::resizeEvent(event);
 }
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    usrMach.close();
+    QWidget::closeEvent(event);
+}

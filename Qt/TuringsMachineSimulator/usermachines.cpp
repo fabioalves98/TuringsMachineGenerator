@@ -34,6 +34,11 @@ void UserMachines::start()
     connect(ui->splitter_3, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
 }
 
+void UserMachines::close() {
+    pauseSim = false;
+    haltSim = true;
+}
+
 void UserMachines::resizeEvent(QResizeEvent *event)
 {
     resizeTable();
@@ -68,6 +73,7 @@ void UserMachines::on_simBt_clicked()
 {
     if (!tableIsLoaded) return;
     haltSim = false;
+    pauseSim = false;
     ui->simList->clear();
     current->reset();
     current->start();
@@ -75,6 +81,10 @@ void UserMachines::on_simBt_clicked()
     std::list<QChar> tape;
     QString tapeStr;
     while (!current->halted() && !haltSim) {
+        if (pauseSim) {
+            QCoreApplication::processEvents();
+            continue;
+        }
         tape = current->advance();
         int offset = current->getTapeHeadOffset();
         tapeStr = "";
@@ -110,8 +120,12 @@ void UserMachines::on_simBt_clicked()
         bar->setValue((bar->maximum() + bar->minimum())/2);
         bar->update();
         ui->simList->update();
-        QThread::msleep(100);
-        QCoreApplication::processEvents();
+        /*QThread::msleep(200);
+        QCoreApplication::processEvents();*/
+        for (int i = 0; i < 100; i++) {
+            QThread::msleep(1);
+            QCoreApplication::processEvents();
+        }
     }
 }
 
@@ -224,4 +238,24 @@ void UserMachines::resizeTable() {
             ui->tableView->setColumnWidth(i, columnWidth);
         }
     }
+}
+
+void UserMachines::on_stopBt_clicked()
+{
+    haltSim = true;
+}
+
+void UserMachines::on_pauseBt_clicked()
+{
+    pauseSim = true;
+}
+
+void UserMachines::on_contBt_clicked()
+{
+    pauseSim = false;
+}
+
+void UserMachines::on_randTableBt_clicked()
+{
+
 }
