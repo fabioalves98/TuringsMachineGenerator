@@ -54,19 +54,23 @@ SOURCES       = ../TuringsMachineSimulator/main.cpp \
 		../TuringsMachineSimulator/mainwindow.cpp \
 		../TuringsMachineSimulator/machine.cpp \
 		../TuringsMachineSimulator/machineinfo.cpp \
-		../TuringsMachineSimulator/usermachines.cpp qrc_resource.cpp \
+		../TuringsMachineSimulator/usermachines.cpp \
+		../TuringsMachineSimulator/randommachines.cpp qrc_resource.cpp \
 		moc_mainwindow.cpp \
 		moc_machineinfo.cpp \
-		moc_usermachines.cpp
+		moc_usermachines.cpp \
+		moc_randommachines.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		machine.o \
 		machineinfo.o \
 		usermachines.o \
+		randommachines.o \
 		qrc_resource.o \
 		moc_mainwindow.o \
 		moc_machineinfo.o \
-		moc_usermachines.o
+		moc_usermachines.o \
+		moc_randommachines.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -225,6 +229,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		../TuringsMachineSimulator/.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -247,11 +252,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		../TuringsMachineSimulator/TuringsMachineSimulator.pro ../TuringsMachineSimulator/mainwindow.h \
 		../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/machineinfo.h \
-		../TuringsMachineSimulator/usermachines.h ../TuringsMachineSimulator/main.cpp \
+		../TuringsMachineSimulator/usermachines.h \
+		../TuringsMachineSimulator/randommachines.h ../TuringsMachineSimulator/main.cpp \
 		../TuringsMachineSimulator/mainwindow.cpp \
 		../TuringsMachineSimulator/machine.cpp \
 		../TuringsMachineSimulator/machineinfo.cpp \
-		../TuringsMachineSimulator/usermachines.cpp
+		../TuringsMachineSimulator/usermachines.cpp \
+		../TuringsMachineSimulator/randommachines.cpp
 QMAKE_TARGET  = TuringsMachineSimulator
 DESTDIR       = 
 TARGET        = TuringsMachineSimulator
@@ -260,7 +267,7 @@ TARGET        = TuringsMachineSimulator
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_usermachines.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_usermachines.h ui_randommachines.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -421,6 +428,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -604,6 +612,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -644,9 +653,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../TuringsMachineSimulator/resource.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../TuringsMachineSimulator/mainwindow.h ../TuringsMachineSimulator/machine.h ../TuringsMachineSimulator/machineinfo.h ../TuringsMachineSimulator/usermachines.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/mainwindow.cpp ../TuringsMachineSimulator/machine.cpp ../TuringsMachineSimulator/machineinfo.cpp ../TuringsMachineSimulator/usermachines.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../TuringsMachineSimulator/mainwindow.ui ../TuringsMachineSimulator/usermachines.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../TuringsMachineSimulator/mainwindow.h ../TuringsMachineSimulator/machine.h ../TuringsMachineSimulator/machineinfo.h ../TuringsMachineSimulator/usermachines.h ../TuringsMachineSimulator/randommachines.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/mainwindow.cpp ../TuringsMachineSimulator/machine.cpp ../TuringsMachineSimulator/machineinfo.cpp ../TuringsMachineSimulator/usermachines.cpp ../TuringsMachineSimulator/randommachines.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../TuringsMachineSimulator/mainwindow.ui ../TuringsMachineSimulator/usermachines.ui ../TuringsMachineSimulator/randommachines.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -684,10 +693,14 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_machineinfo.cpp moc_usermachines.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_machineinfo.cpp moc_usermachines.cpp moc_randommachines.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_machineinfo.cpp moc_usermachines.cpp
-moc_mainwindow.cpp: ../TuringsMachineSimulator/mainwindow.h \
+	-$(DEL_FILE) moc_mainwindow.cpp moc_machineinfo.cpp moc_usermachines.cpp moc_randommachines.cpp
+moc_mainwindow.cpp: ../TuringsMachineSimulator/usermachines.h \
+		../TuringsMachineSimulator/machine.h \
+		../TuringsMachineSimulator/machineinfo.h \
+		../TuringsMachineSimulator/randommachines.h \
+		../TuringsMachineSimulator/mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/mainwindow.h -o moc_mainwindow.cpp
@@ -700,16 +713,22 @@ moc_machineinfo.cpp: ../TuringsMachineSimulator/machine.h \
 
 moc_usermachines.cpp: ../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/machineinfo.h \
+		../TuringsMachineSimulator/randommachines.h \
 		../TuringsMachineSimulator/usermachines.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/usermachines.h -o moc_usermachines.cpp
 
+moc_randommachines.cpp: ../TuringsMachineSimulator/randommachines.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/randommachines.h -o moc_randommachines.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_usermachines.h
+compiler_uic_make_all: ui_mainwindow.h ui_usermachines.h ui_randommachines.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_usermachines.h
+	-$(DEL_FILE) ui_mainwindow.h ui_usermachines.h ui_randommachines.h
 ui_mainwindow.h: ../TuringsMachineSimulator/mainwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic ../TuringsMachineSimulator/mainwindow.ui -o ui_mainwindow.h
@@ -717,6 +736,10 @@ ui_mainwindow.h: ../TuringsMachineSimulator/mainwindow.ui \
 ui_usermachines.h: ../TuringsMachineSimulator/usermachines.ui \
 		/usr/bin/uic
 	/usr/bin/uic ../TuringsMachineSimulator/usermachines.ui -o ui_usermachines.h
+
+ui_randommachines.h: ../TuringsMachineSimulator/randommachines.ui \
+		/usr/bin/uic
+	/usr/bin/uic ../TuringsMachineSimulator/randommachines.ui -o ui_randommachines.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -728,10 +751,18 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/mainwindow.h
+main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/mainwindow.h \
+		../TuringsMachineSimulator/usermachines.h \
+		../TuringsMachineSimulator/machine.h \
+		../TuringsMachineSimulator/machineinfo.h \
+		../TuringsMachineSimulator/randommachines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../TuringsMachineSimulator/main.cpp
 
 mainwindow.o: ../TuringsMachineSimulator/mainwindow.cpp ../TuringsMachineSimulator/mainwindow.h \
+		../TuringsMachineSimulator/usermachines.h \
+		../TuringsMachineSimulator/machine.h \
+		../TuringsMachineSimulator/machineinfo.h \
+		../TuringsMachineSimulator/randommachines.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../TuringsMachineSimulator/mainwindow.cpp
 
@@ -745,8 +776,13 @@ machineinfo.o: ../TuringsMachineSimulator/machineinfo.cpp ../TuringsMachineSimul
 usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMachineSimulator/usermachines.h \
 		../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/machineinfo.h \
+		../TuringsMachineSimulator/randommachines.h \
 		ui_usermachines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usermachines.o ../TuringsMachineSimulator/usermachines.cpp
+
+randommachines.o: ../TuringsMachineSimulator/randommachines.cpp ../TuringsMachineSimulator/randommachines.h \
+		ui_randommachines.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o randommachines.o ../TuringsMachineSimulator/randommachines.cpp
 
 qrc_resource.o: qrc_resource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
@@ -759,6 +795,9 @@ moc_machineinfo.o: moc_machineinfo.cpp
 
 moc_usermachines.o: moc_usermachines.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_usermachines.o moc_usermachines.cpp
+
+moc_randommachines.o: moc_randommachines.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_randommachines.o moc_randommachines.cpp
 
 ####### Install
 

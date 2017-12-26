@@ -11,6 +11,7 @@
 #include <QCloseEvent>
 #include "machine.h"
 #include "machineinfo.h"
+#include "randommachines.h"
 
 namespace Ui {
 class UserMachines;

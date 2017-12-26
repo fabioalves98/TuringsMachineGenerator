@@ -28,17 +28,20 @@ SOURCES += \
         mainwindow.cpp \
     machine.cpp \
     machineinfo.cpp \
-    usermachines.cpp
+    usermachines.cpp \
+    randommachines.cpp
 
 HEADERS += \
         mainwindow.h \
     machine.h \
     machineinfo.h \
-    usermachines.h
+    usermachines.h \
+    randommachines.h
 
 FORMS += \
         mainwindow.ui \
-    usermachines.ui
+    usermachines.ui \
+    randommachines.ui
 
 RESOURCES += \
     resource.qrc
