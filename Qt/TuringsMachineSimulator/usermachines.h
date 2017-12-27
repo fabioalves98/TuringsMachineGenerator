@@ -38,7 +38,6 @@ private slots:
     void on_stopBt_clicked();
     void on_pauseBt_clicked();
     void on_contBt_clicked();
-
     void on_randTableBt_clicked();
 
 private:

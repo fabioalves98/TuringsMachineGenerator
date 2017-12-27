@@ -257,7 +257,6 @@ void UserMachines::on_contBt_clicked()
 
 void UserMachines::on_randTableBt_clicked()
 {
-    qDebug() << "lol";
     RandomMachines *rand = new RandomMachines;
     rand->show();
 }
