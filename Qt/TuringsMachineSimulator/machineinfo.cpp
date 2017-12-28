@@ -26,7 +26,7 @@ MachineInfo::MachineInfo(QFile *file, QWidget *parent) : QWidget(parent)
             item->setFont(QFont("Meiryo", 15));
             item->setTextColor(QColor(Qt::white));
             item->setTextAlignment(Qt::AlignCenter);
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+            //item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
             tableElems.append(item);
         }
     }
@@ -58,7 +58,7 @@ MachineInfo::MachineInfo(QString *name, QVector<QChar> *states, QVector<QChar> *
             item->setFont(QFont("Meiryo", 15));
             item->setTextColor(QColor(Qt::white));
             item->setTextAlignment(Qt::AlignCenter);
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+            //item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
             tableElems.append(item);
         }
     }

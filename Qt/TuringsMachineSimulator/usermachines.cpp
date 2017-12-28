@@ -69,7 +69,8 @@ void UserMachines::on_addTableBt_clicked()
     }
     displayMach(machI);
     tableIsLoaded = true;
-    current = machI->getMachine();
+    currentI = machI;
+    currentM = currentI->getMachine();
     enSimButtons("TableLoaded");
 }
 
@@ -80,8 +81,8 @@ void UserMachines::on_simBt_clicked()
     haltSim = false;
     pauseSim = false;
     ui->simList->clear();
-    current->reset();
-    current->start();
+    currentM->reset();
+    currentM->start();
 
     std::list<QChar> tape;
     QString tapeStr;
@@ -90,8 +91,8 @@ void UserMachines::on_simBt_clicked()
             QCoreApplication::processEvents();
             continue;
         }
-        tape = current->getTape();
-        int offset = current->getTapeHeadOffset();
+        tape = currentM->getTape();
+        int offset = currentM->getTapeHeadOffset();
         tapeStr = "";
         for (QChar sym : tape) {
             tapeStr.append("|");
@@ -129,10 +130,10 @@ void UserMachines::on_simBt_clicked()
             QThread::msleep(1);
             QCoreApplication::processEvents();
         }
-        if (current->halted() || haltSim) {
+        if (currentM->halted() || haltSim) {
             break;
         }
-        current->advance();
+        currentM->advance();
     }
     while (true);
     enSimButtons("TableLoaded");
@@ -143,7 +144,8 @@ void UserMachines::getMachToDispay(QListWidgetItem *item) {
     for (int i = 0; i < listMach.size(); i++) {
         if (listMach.at(i)->getTableListItem()->text() == item->text()) {
             displayMach(listMach.at(i));
-            current = listMach.at(i)->getMachine();
+            currentI = listMach.at(i);
+            currentM = currentI->getMachine();
             break;
         }
     }
@@ -165,6 +167,7 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
                 ui->tableView->setHorizontalHeaderItem(j, hHeader);
             }
             QTableWidgetItem *tableItem = new QTableWidgetItem(*toDisplay->getTableElems()->at(k));
+            tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
             ui->tableView->setItem(i, j, tableItem);
         }
     }
@@ -327,6 +330,14 @@ void UserMachines::on_randTableBt_clicked()
     ui->tablesList->setIconSize(QSize(20, 20));
     displayMach(randMach);
     tableIsLoaded = true;
-    current = randMach->getMachine();
+    currentI = randMach;
+    currentM = currentI->getMachine();
     enSimButtons("TableLoaded");
+}
+
+void UserMachines::on_editTableBt_clicked()
+{
+    EditMachines *edit = new EditMachines(currentI);
+    edit->show();
+    edit->loadTable();
 }

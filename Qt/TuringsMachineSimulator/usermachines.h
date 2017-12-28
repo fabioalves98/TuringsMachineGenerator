@@ -12,6 +12,7 @@
 #include "machine.h"
 #include "machineinfo.h"
 #include "randommachines.h"
+#include "editmachines.h"
 
 namespace Ui {
 class UserMachines;
@@ -39,13 +40,15 @@ private slots:
     void on_pauseBt_clicked();
     void on_contBt_clicked();
     void on_randTableBt_clicked();
+    void on_editTableBt_clicked();
 
 private:
     void displayMach(MachineInfo* toDisplay);
     void enSimButtons(QString state);
     QStringList states;
     Ui::UserMachines *ui;
-    Machine *current;
+    Machine *currentM;
+    MachineInfo *currentI;
     QVector<MachineInfo*> listMach;
     bool haltSim;
     bool pauseSim;

@@ -29,19 +29,22 @@ SOURCES += \
     machine.cpp \
     machineinfo.cpp \
     usermachines.cpp \
-    randommachines.cpp
+    randommachines.cpp \
+    editmachines.cpp
 
 HEADERS += \
         mainwindow.h \
     machine.h \
     machineinfo.h \
     usermachines.h \
-    randommachines.h
+    randommachines.h \
+    editmachines.h
 
 FORMS += \
         mainwindow.ui \
     usermachines.ui \
-    randommachines.ui
+    randommachines.ui \
+    editmachines.ui
 
 RESOURCES += \
     resource.qrc

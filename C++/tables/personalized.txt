@@ -1,9 +1,9 @@
 begin_info
-bs: 0
-is: A
+bs: o
+is: X
 fs: H
 begin_table
-  *    A    B    C
-  0   1RB  1RC  1LA
-  1   1LB  1LC  1RH
+  *    X    P    T
+  o   xRP  xRT  xLX
+  x   xLP  xLT  xRH
 end_table
