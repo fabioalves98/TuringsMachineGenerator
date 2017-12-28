@@ -42,6 +42,8 @@ private slots:
 
 private:
     void displayMach(MachineInfo* toDisplay);
+    void enSimButtons(QString state);
+    QStringList states;
     Ui::UserMachines *ui;
     Machine *current;
     QVector<MachineInfo*> listMach;

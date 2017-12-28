@@ -15,7 +15,7 @@ public:
     void reset();
     bool halted();
     void halt();
-    std::list<QChar> advance();
+    void advance();
     std::list<QChar> getTape();
     int getTapeHeadOffset();
     QString getFileName();

@@ -75,7 +75,7 @@ void Machine::halt() {
     pState = haltState;
 }
 
-std::list<QChar> Machine::advance() {
+void Machine::advance() {
     QChar symbol = *head;
     QString key = makeKey(pState, symbol);
     //qDebug() << key;
@@ -104,7 +104,7 @@ std::list<QChar> Machine::advance() {
     //qDebug() << move.wSymbol << " " << move.mTape << " " << move.nState;
     //qDebug() << getTapeHeadOffset();
     //printTape(pState, 0, tape.size());
-    return tape;
+    //return tape;
 }
 
 std::list<QChar> Machine::getTape() {

@@ -36,6 +36,7 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
             }
             states->append(abc.at(i));
             QTableWidgetItem *hHeader = new QTableWidgetItem(QString(abc.at(i)));
+            hHeader->setFont(QFont("Meiryo", 12));
             ui->randTable->setHorizontalHeaderItem(i, hHeader);
         }
     }
@@ -56,6 +57,7 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
             }
             symbols->append(QString::number(i).at(0));
             QTableWidgetItem *vHeader = new QTableWidgetItem(QString::number(i));
+            vHeader->setFont(QFont("Meiryo", 12));
             ui->randTable->setVerticalHeaderItem(i, vHeader);
         }
     }
@@ -80,7 +82,7 @@ void RandomMachines::on_randBut_clicked()
             }
             haltAct--;
             QTableWidgetItem *tbAction = new QTableWidgetItem(action);
-            tbAction->setFont(QFont("Meiryo", 15));
+            tbAction->setFont(QFont("Meiryo", 16));
             tbAction->setTextColor(QColor(Qt::white));
             tbAction->setTextAlignment(Qt::AlignCenter);
             tbAction->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);

@@ -28,6 +28,9 @@ void UserMachines::start()
     sizes[0] = (int)ui->splitter_3->width()*0.2;
     ui->splitter_3->setSizes(sizes);
 
+    states << "Init" << "TableLoaded" << "Sim" << "Pause";
+    enSimButtons("Init");
+
     connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
     connect(ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->splitter_2, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
@@ -67,11 +70,13 @@ void UserMachines::on_addTableBt_clicked()
     displayMach(machI);
     tableIsLoaded = true;
     current = machI->getMachine();
+    enSimButtons("TableLoaded");
 }
 
 void UserMachines::on_simBt_clicked()
 {
     if (!tableIsLoaded) return;
+    enSimButtons("Sim");
     haltSim = false;
     pauseSim = false;
     ui->simList->clear();
@@ -80,12 +85,12 @@ void UserMachines::on_simBt_clicked()
 
     std::list<QChar> tape;
     QString tapeStr;
-    while (!current->halted() && !haltSim) {
+    do {
         if (pauseSim) {
             QCoreApplication::processEvents();
             continue;
         }
-        tape = current->advance();
+        tape = current->getTape();
         int offset = current->getTapeHeadOffset();
         tapeStr = "";
         for (QChar sym : tape) {
@@ -124,7 +129,13 @@ void UserMachines::on_simBt_clicked()
             QThread::msleep(1);
             QCoreApplication::processEvents();
         }
+        if (current->halted() || haltSim) {
+            break;
+        }
+        current->advance();
     }
+    while (true);
+    enSimButtons("TableLoaded");
 }
 
 void UserMachines::getMachToDispay(QListWidgetItem *item) {
@@ -238,18 +249,66 @@ void UserMachines::resizeTable() {
     }
 }
 
+void UserMachines::enSimButtons(QString state) {
+    switch(states.indexOf(state)) {
+        case 0: {
+            ui->addTableBt->setEnabled(true);
+            ui->editTableBt->setEnabled(false);
+            ui->randTableBt->setEnabled(true);
+            ui->simBt->setEnabled(false);
+            ui->pauseBt->setEnabled(false);
+            ui->contBt->setEnabled(false);
+            ui->stopBt->setEnabled(false);
+            break;
+        }
+        case 1: {
+            ui->addTableBt->setEnabled(true);
+            ui->editTableBt->setEnabled(true);
+            ui->randTableBt->setEnabled(true);
+            ui->simBt->setEnabled(true);
+            ui->pauseBt->setEnabled(false);
+            ui->contBt->setEnabled(false);
+            ui->stopBt->setEnabled(false);
+            break;
+        }
+        case 2: {
+            ui->addTableBt->setEnabled(false);
+            ui->editTableBt->setEnabled(false);
+            ui->randTableBt->setEnabled(false);
+            ui->simBt->setEnabled(false);
+            ui->pauseBt->setEnabled(true);
+            ui->contBt->setEnabled(false);
+            ui->stopBt->setEnabled(true);
+            break;
+        }
+        case 3: {
+            ui->addTableBt->setEnabled(false);
+            ui->editTableBt->setEnabled(false);
+            ui->randTableBt->setEnabled(false);
+            ui->simBt->setEnabled(false);
+            ui->pauseBt->setEnabled(false);
+            ui->contBt->setEnabled(true);
+            ui->stopBt->setEnabled(true);
+            break;
+        }
+    }
+}
+
 void UserMachines::on_stopBt_clicked()
 {
+    enSimButtons("TableLoaded");
     haltSim = true;
 }
 
 void UserMachines::on_pauseBt_clicked()
 {
+    enSimButtons("Pause");
     pauseSim = true;
 }
 
 void UserMachines::on_contBt_clicked()
 {
+    enSimButtons("Sim");
     pauseSim = false;
 }
 
@@ -269,4 +328,5 @@ void UserMachines::on_randTableBt_clicked()
     displayMach(randMach);
     tableIsLoaded = true;
     current = randMach->getMachine();
+    enSimButtons("TableLoaded");
 }
