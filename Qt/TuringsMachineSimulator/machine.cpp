@@ -140,6 +140,20 @@ QVector<QChar> *Machine::getSymbols() {
     return &symbols;
 }
 
+void Machine::setTransFunct(QMap<QString, QString> *tFunct) {
+    for (QChar st : states) {
+        for (QChar sy : symbols) {
+            QString key = makeKey(st, sy);
+            QString move = tFunct->value(key);
+            action act;
+            act.wSymbol = move.at(0);
+            act.mTape = move.at(1);
+            act.nState = move.at(2);
+            transFunct.insert(key, act);
+        }
+    }
+}
+
 QString Machine::funct(QChar st, QChar sy) {
     QString key = makeKey(st, sy);
     action move = transFunct.value(key);

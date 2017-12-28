@@ -337,7 +337,5 @@ void UserMachines::on_randTableBt_clicked()
 
 void UserMachines::on_editTableBt_clicked()
 {
-    EditMachines *edit = new EditMachines(currentI);
-    edit->show();
-    edit->loadTable();
+
 }

@@ -15,16 +15,20 @@ class EditMachines : public QMainWindow
 public:
     explicit EditMachines(MachineInfo *toEdit, QWidget *parent = 0);
     void loadTable();
+    bool isReady();
+    MachineInfo *getEditMach();
     ~EditMachines();
 
 private slots:
     void on_tableView_cellClicked(int row, int column);
     void on_changeBut_clicked();
+    void on_saveBut_clicked();
 
 private:
     void fillComBoxes();
     Ui::EditMachines *ui;
     MachineInfo *mach;
+    bool ready;
 };
 
 #endif // EDITMACHINES_H

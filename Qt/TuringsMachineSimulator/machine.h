@@ -24,6 +24,7 @@ public:
     QChar getHaltState();
     QVector<QChar> *getStates();
     QVector<QChar> *getSymbols();
+    void setTransFunct(QMap<QString, QString> *tFunct);
     QString funct(QChar State, QChar Symbol);
     static void verifyTable(QString fileName);
 

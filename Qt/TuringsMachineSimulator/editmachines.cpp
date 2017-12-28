@@ -8,6 +8,7 @@ EditMachines::EditMachines(MachineInfo *toEdit, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Table Edition");
+    ready = false;
 }
 
 EditMachines::~EditMachines()
@@ -60,6 +61,13 @@ void EditMachines::on_tableView_cellClicked(int row, int column)
 
 void EditMachines::on_changeBut_clicked()
 {
+    QString act;
+    act.append(ui->writeCBox->itemText(ui->writeCBox->currentIndex()));
+    act.append(ui->moveCBox->itemText(ui->moveCBox->currentIndex()).at(0));
+    act.append(ui->nextCBox->itemText(ui->nextCBox->currentIndex()));
+    foreach(QTableWidgetItem *cell, ui->tableView->selectedItems()) {
+        cell->setText(act);
+    }
     ui->tableView->clearSelection();
 }
 
@@ -75,4 +83,30 @@ void EditMachines::fillComBoxes() {
     foreach (QChar st, *mach->getMachine()->getStates()) {
         ui->nextCBox->addItem(st);
     }
+    ui->nextCBox->addItem(QChar('H'));
+}
+
+void EditMachines::on_saveBut_clicked()
+{
+    QMap<QString, QString> tFunct;
+    QVector<QChar> *states = mach->getMachine()->getStates();
+    QVector<QChar> *symbols = mach->getMachine()->getSymbols();
+    for (int i = 0; i < symbols->size(); i++) {
+        for (int j = 0; j < states->size(); j++) {
+            QString key;
+            key.append(states->at(j));
+            key.append(symbols->at(i));
+            tFunct.insert(key, ui->tableView->item(i, j)->text());
+        }
+    }
+    mach->setTransFunct(&tFunct);
+    ready = true;
+}
+
+bool EditMachines::isReady() {
+    return ready;
+}
+
+MachineInfo *EditMachines::getEditMach() {
+    return mach;
 }

@@ -15,6 +15,7 @@ class MachineInfo : public QWidget
 public:
     explicit MachineInfo(QFile *file, QWidget *parent = nullptr);
     explicit MachineInfo(QString *name, QVector<QChar> *states, QVector<QChar> *symbols, QMap<QString, QString> *transFunct, QWidget *parent = nullptr);
+    void setTransFunct(QMap<QString, QString> *tFunct);
     Machine *getMachine();
     QString getFileName();
     QListWidgetItem *getTableListItem();
@@ -27,6 +28,7 @@ signals:
 public slots:
 
 private:
+    void genInfo();
     Machine *tMach;
     QVector<QChar> *symbols;
     QVector<QChar> *states;
