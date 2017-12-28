@@ -3,12 +3,14 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QDir>
 #include <QLinkedList>
 
 class Machine
 {
 public:
     Machine(QFile *fileName);
+    Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct);
     void start();
     void reset();
     bool halted();
@@ -16,6 +18,7 @@ public:
     std::list<QChar> advance();
     std::list<QChar> getTape();
     int getTapeHeadOffset();
+    QString getFileName();
     QChar getBlanckSym();
     QChar getInitState();
     QChar getHaltState();

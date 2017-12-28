@@ -21,6 +21,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -31,6 +32,9 @@ class Ui_RandomMachines
 public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *nameLabel;
+    QTextEdit *nameEdit;
     QHBoxLayout *horizontalLayout_4;
     QHBoxLayout *horizontalLayout;
     QLabel *stLabel;
@@ -42,7 +46,9 @@ public:
     QSpinBox *sySel;
     QSpacerItem *horizontalSpacer_2;
     QTableWidget *randTable;
+    QHBoxLayout *horizontalLayout_5;
     QPushButton *randBut;
+    QPushButton *saveBut;
 
     void setupUi(QMainWindow *RandomMachines)
     {
@@ -53,14 +59,34 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        nameLabel = new QLabel(centralwidget);
+        nameLabel->setObjectName(QStringLiteral("nameLabel"));
+        nameLabel->setMaximumSize(QSize(16777215, 27));
+        QFont font;
+        font.setPointSize(14);
+        nameLabel->setFont(font);
+        nameLabel->setFrameShape(QFrame::Panel);
+        nameLabel->setFrameShadow(QFrame::Raised);
+
+        horizontalLayout_6->addWidget(nameLabel);
+
+        nameEdit = new QTextEdit(centralwidget);
+        nameEdit->setObjectName(QStringLiteral("nameEdit"));
+        nameEdit->setMaximumSize(QSize(16777215, 27));
+
+        horizontalLayout_6->addWidget(nameEdit);
+
+
+        verticalLayout->addLayout(horizontalLayout_6);
+
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         stLabel = new QLabel(centralwidget);
         stLabel->setObjectName(QStringLiteral("stLabel"));
-        QFont font;
-        font.setPointSize(14);
         stLabel->setFont(font);
         stLabel->setFrameShape(QFrame::Panel);
         stLabel->setFrameShadow(QFrame::Raised);
@@ -119,10 +145,20 @@ public:
 
         verticalLayout->addWidget(randTable);
 
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         randBut = new QPushButton(centralwidget);
         randBut->setObjectName(QStringLiteral("randBut"));
 
-        verticalLayout->addWidget(randBut);
+        horizontalLayout_5->addWidget(randBut);
+
+        saveBut = new QPushButton(centralwidget);
+        saveBut->setObjectName(QStringLiteral("saveBut"));
+
+        horizontalLayout_5->addWidget(saveBut);
+
+
+        verticalLayout->addLayout(horizontalLayout_5);
 
         RandomMachines->setCentralWidget(centralwidget);
 
@@ -134,9 +170,11 @@ public:
     void retranslateUi(QMainWindow *RandomMachines)
     {
         RandomMachines->setWindowTitle(QApplication::translate("RandomMachines", "MainWindow", Q_NULLPTR));
+        nameLabel->setText(QApplication::translate("RandomMachines", "Name", Q_NULLPTR));
         stLabel->setText(QApplication::translate("RandomMachines", "States", Q_NULLPTR));
         syLabel->setText(QApplication::translate("RandomMachines", "Symbols", Q_NULLPTR));
         randBut->setText(QApplication::translate("RandomMachines", "Random", Q_NULLPTR));
+        saveBut->setText(QApplication::translate("RandomMachines", "Save Table", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -5,6 +5,8 @@ Machine::Machine(QFile *tableFile) {
         qDebug() << "Error Opening Table File" << endl;
         return;
     }
+    QFileInfo *tableInfo = new QFileInfo(*tableFile);
+    fileName = tableInfo->baseName();
     bool info = false, table = false;
     QTextStream in(tableFile);
     while (!in.atEnd()) {
@@ -26,25 +28,27 @@ Machine::Machine(QFile *tableFile) {
                 break;
             }
         }
-        //qDebug() << line << endl;
     }
-    /*qDebug() << blanckSym << initState << haltState;
-    //qDebug() << "States";
-    for (QChar s : states) {
-        //qDebug() << s;
-    }
-    //qDebug() << "Symbols";
-    for (QChar s : symbols) {
-        //qDebug() << s;
-    }
-    //qDebug() << "Table";
+}
+
+Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct) {
+    fileName = *name;
+    states = *sts;
+    symbols = *syms;
     for (QChar st : states) {
         for (QChar sy : symbols) {
             QString key = makeKey(st, sy);
-            action aux = transFunct.value(key);
-            //qDebug() << key << aux.wSymbol << aux.mTape << aux.nState;
+            QString move = tFunct->value(key);
+            action act;
+            act.wSymbol = move.at(0);
+            act.mTape = move.at(1);
+            act.nState = move.at(2);
+            transFunct.insert(key, act);
         }
-    }*/
+    }
+    blanckSym = symbols.at(0);
+    initState = states.at(0);
+    haltState = 'H';
 }
 
 void Machine::start() {
@@ -110,6 +114,10 @@ std::list<QChar> Machine::getTape() {
 int Machine::getTapeHeadOffset() {
     int index = tape.size()/2 - std::distance(tape.begin(), head);
     return index;
+}
+
+QString Machine::getFileName() {
+    return fileName;
 }
 
 QChar Machine::getBlanckSym() {

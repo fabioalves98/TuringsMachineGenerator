@@ -67,8 +67,8 @@ void RandomMachines::on_randBut_clicked()
     if ((states->size() != 0) && (symbols->size() != 0)) {
         haltAct = qrand() % (states->size() * symbols->size());
     }
-    for (int i = 0; i < states->size(); i++) {
-        for (int j = 0; j < symbols->size(); j++) {
+    for (int i = 0; i < symbols->size(); i++) {
+        for (int j = 0; j < states->size(); j++) {
             QString action;
             action.append(symbols->at(qrand()%symbols->size()));
             action.append((qrand()%2 == 1) ? "R" : "L");
@@ -84,7 +84,32 @@ void RandomMachines::on_randBut_clicked()
             tbAction->setTextColor(QColor(Qt::white));
             tbAction->setTextAlignment(Qt::AlignCenter);
             tbAction->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-            ui->randTable->setItem(j, i, tbAction);
+            ui->randTable->setItem(i, j, tbAction);
         }
     }
 }
+
+void RandomMachines::on_saveBut_clicked()
+{
+    QMap<QString, QString> transFunct;
+    for (int i = 0; i < symbols->size(); i++) {
+        for (int j = 0; j < states->size(); j++) {
+            QString key;
+            key.append(states->at(j));
+            key.append(symbols->at(i));
+            transFunct.insert(key, ui->randTable->item(i, j)->text());
+        }
+    }
+    QString name = ui->nameEdit->toPlainText();
+    randMach = new MachineInfo(&name, states, symbols, &transFunct);
+    ready = true;
+}
+
+bool RandomMachines::isReady() {
+    return ready;
+}
+
+MachineInfo *RandomMachines::getRandMach() {
+    return randMach;
+}
+

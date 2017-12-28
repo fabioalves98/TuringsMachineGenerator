@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QFileDialog>
-#include <QDir>
 #include <QListWidget>
 #include <QTableWidget>
 #include <QLayout>
@@ -15,8 +14,9 @@ class MachineInfo : public QWidget
     Q_OBJECT
 public:
     explicit MachineInfo(QFile *file, QWidget *parent = nullptr);
+    explicit MachineInfo(QString *name, QVector<QChar> *states, QVector<QChar> *symbols, QMap<QString, QString> *transFunct, QWidget *parent = nullptr);
     Machine *getMachine();
-    QFileInfo *getFileInfo();
+    QString getFileName();
     QListWidgetItem *getTableListItem();
 
     QVector<QTableWidgetItem*> *getHTableHeader();
@@ -30,7 +30,6 @@ private:
     Machine *tMach;
     QVector<QChar> *symbols;
     QVector<QChar> *states;
-    QFileInfo *tableInfo;
     QListWidgetItem *tableItem;
 
     QVector<QTableWidgetItem*> vTableHeader;

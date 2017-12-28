@@ -54,7 +54,7 @@ void UserMachines::on_addTableBt_clicked()
     MachineInfo *machI = new MachineInfo(tableFile);
     bool contains = false;
     foreach (MachineInfo *mach, listMach) {
-        if (mach->getFileInfo()->absoluteFilePath() == machI->getFileInfo()->absoluteFilePath()) {
+        if (mach->getFileName() == machI->getFileName()) {
             contains = true;
         }
     }
@@ -120,8 +120,6 @@ void UserMachines::on_simBt_clicked()
         bar->setValue((bar->maximum() + bar->minimum())/2);
         bar->update();
         ui->simList->update();
-        /*QThread::msleep(200);
-        QCoreApplication::processEvents();*/
         for (int i = 0; i < 100; i++) {
             QThread::msleep(1);
             QCoreApplication::processEvents();
@@ -177,7 +175,7 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
         QLabel *propValue = new QLabel;
         switch(properties.indexOf(prop)) {
             case 0: {
-                propValue->setText(toDisplay->getFileInfo()->baseName());
+                propValue->setText(toDisplay->getFileName());
                 break;
             }
             case 1: {
@@ -259,4 +257,16 @@ void UserMachines::on_randTableBt_clicked()
 {
     RandomMachines *rand = new RandomMachines;
     rand->show();
+    while (!rand->isReady()) {
+            QThread::msleep(1);
+            QCoreApplication::processEvents();
+    }
+    MachineInfo *randMach = rand->getRandMach();
+    rand->close();
+    listMach.append(randMach);
+    ui->tablesList->addItem(listMach.back()->getTableListItem());
+    ui->tablesList->setIconSize(QSize(20, 20));
+    displayMach(randMach);
+    tableIsLoaded = true;
+    current = randMach->getMachine();
 }
