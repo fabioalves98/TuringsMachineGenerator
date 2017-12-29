@@ -14,6 +14,7 @@ RandomMachines::RandomMachines(QWidget *parent) :
     symbols = new QVector<QChar>;
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
+    ui->saveBut->setEnabled(false);
 }
 
 RandomMachines::~RandomMachines()
@@ -89,10 +90,17 @@ void RandomMachines::on_randBut_clicked()
             ui->randTable->setItem(i, j, tbAction);
         }
     }
+    ui->saveBut->setEnabled(true);
 }
 
 void RandomMachines::on_saveBut_clicked()
 {
+    if (ui->nameEdit->toPlainText() == nullptr) {
+        QPalette p = ui->nameEdit->palette();
+        p.setColor(QPalette::Base, QColor(255, 0, 0, 100));
+        ui->nameEdit->setPalette(p);
+        return;
+    }
     QMap<QString, QString> transFunct;
     for (int i = 0; i < symbols->size(); i++) {
         for (int j = 0; j < states->size(); j++) {

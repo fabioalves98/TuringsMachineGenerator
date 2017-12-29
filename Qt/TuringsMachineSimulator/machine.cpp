@@ -101,10 +101,10 @@ void Machine::advance() {
     }
     pState = move.nState;
     count++;
-    //qDebug() << move.wSymbol << " " << move.mTape << " " << move.nState;
-    //qDebug() << getTapeHeadOffset();
-    //printTape(pState, 0, tape.size());
-    //return tape;
+}
+
+QChar Machine::getCurrentState() {
+    return pState;
 }
 
 std::list<QChar> Machine::getTape() {

@@ -16,25 +16,33 @@ UserMachines::~UserMachines()
 
 void UserMachines::start()
 {
-    QList<int> sizes = ui->splitter->sizes();
-    sizes[0] = (int)ui->splitter->width()*0.7;
-    ui->splitter->setSizes(sizes);
-
-    sizes = ui->splitter_2->sizes();
-    sizes[1] = (int)ui->splitter_2->height()*0.7;
-    ui->splitter_2->setSizes(sizes);
-
-    sizes = ui->splitter_3->sizes();
-    sizes[0] = (int)ui->splitter_3->width()*0.2;
-    ui->splitter_3->setSizes(sizes);
+    // Setting the size of the table list container
+    QList<int> sizes = ui->listSplit->sizes();
+    sizes[0] = (int)ui->listSplit->width()*0.2;
+    ui->listSplit->setSizes(sizes);
+    // Setting the size of the simulation container
+    sizes = ui->tableSplit->sizes();
+    sizes[1] = (int)ui->tableSplit->height()*0.7;
+    ui->tableSplit->setSizes(sizes);
+    // Setting the size of the table view container
+    sizes = ui->specSplit->sizes();
+    sizes[0] = (int)ui->specSplit->width()*0.7;
+    ui->specSplit->setSizes(sizes);
+    // Setting the size of the states container
+    sizes = ui->simSplit->sizes();
+    sizes[0] = (int)ui->simSplit->width()*0.1;
+    sizes[1] = (int)ui->simSplit->width() - sizes[0];
+    ui->simSplit->setSizes(sizes);
 
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
     enSimButtons("Init");
 
     connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
-    connect(ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
-    connect(ui->splitter_2, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
-    connect(ui->splitter_3, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->listSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));
 }
 
 void UserMachines::close() {
@@ -53,12 +61,15 @@ void UserMachines::on_addTableBt_clicked()
 {
     haltSim = true;
     // Initialize new Table, and display it
-    QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)"));
-    Machine *machI = new Machine(tableFile);
-    displayMach(machI);
-    tableIsLoaded = true;
-    current = machI;
-    enSimButtons("TableLoaded");
+    QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)");
+    if (!(fileD == nullptr)) {
+        QFile *tableFile = new QFile(fileD);
+        Machine *machI = new Machine(tableFile);
+        displayMach(machI);
+        tableIsLoaded = true;
+        current = machI;
+        enSimButtons("TableLoaded");
+    }
 }
 
 void UserMachines::on_simBt_clicked()
@@ -99,6 +110,18 @@ void UserMachines::on_simBt_clicked()
                 tapeStr.append("      ");
             }
         }
+        // Add State
+        QListWidgetItem *newStateI = new QListWidgetItem;
+        QLabel *stateText = new QLabel;
+        stateText->setText(current->getCurrentState());
+        stateText->setFont(QFont("Courier", 12, QFont::Bold));
+        stateText->setAlignment(Qt::AlignCenter);
+        newStateI->setSizeHint(stateText->sizeHint());
+        newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        ui->stateList->addItem(newStateI);
+        ui->stateList->setItemWidget(newStateI, stateText);
+        ui->stateList->scrollToBottom();
+        // Add Tape Value
         QListWidgetItem *newTapeI = new QListWidgetItem;
         QLabel *tableText = new QLabel;
         tableText->setText(tapeStr);
@@ -246,6 +269,7 @@ void UserMachines::displayMach(Machine *toDisplay) {
     }
     //Clear the Simulation View*/
     ui->simList->clear();
+    ui->stateList->clear();
 }
 
 void UserMachines::resizeTable() {
@@ -331,6 +355,9 @@ void UserMachines::on_randTableBt_clicked()
     while (!rand->isReady()) {
             QThread::msleep(1);
             QCoreApplication::processEvents();
+            if (!rand->isVisible()) {
+                return;
+            }
     }
     Machine *randMach = rand->getRandMach();
     rand->close();
@@ -342,5 +369,24 @@ void UserMachines::on_randTableBt_clicked()
 
 void UserMachines::on_editTableBt_clicked()
 {
-
+    EditMachines *edit = new EditMachines(current);
+    edit->show();
+    edit->loadTable();
+    while (!edit->isReady()) {
+            QThread::msleep(1);
+            QCoreApplication::processEvents();
+            if (!edit->isVisible()) {
+                return;
+            }
+    }
+    current = edit->getEditMach();
+    for (int i = 0; i < listMach.size(); i++) {
+        if (listMach.at(i)->getFileName() == current->getFileName()) {
+            listMach.replace(i, current);
+        }
+    }
+    edit->close();
+    displayMach(current);
+    tableIsLoaded = true;
+    enSimButtons("TableLoaded");
 }

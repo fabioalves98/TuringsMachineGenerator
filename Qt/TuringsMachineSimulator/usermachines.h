@@ -10,7 +10,6 @@
 #include <QScrollBar>
 #include <QCloseEvent>
 #include "machine.h"
-#include "machineinfo.h"
 #include "randommachines.h"
 #include "editmachines.h"
 

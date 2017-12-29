@@ -16,6 +16,7 @@ public:
     bool halted();
     void halt();
     void advance();
+    QChar getCurrentState();
     std::list<QChar> getTape();
     int getTapeHeadOffset();
     QString getFileName();

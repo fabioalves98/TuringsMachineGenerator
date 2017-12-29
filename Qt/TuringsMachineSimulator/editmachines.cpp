@@ -17,33 +17,40 @@ EditMachines::~EditMachines()
 }
 
 void EditMachines::loadTable() {
-    /*ui->tableView->setRowCount(mach->getVTableHeader()->size());
-    ui->tableView->setColumnCount(mach->getHTableHeader()->size());
-    for (int i = 0, k = 0; i < mach->getVTableHeader()->size(); i++) {
-        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/mach->getVTableHeader()->size());
-        QTableWidgetItem *vHeader = new QTableWidgetItem(*mach->getVTableHeader()->at(i));
+    QVector<QChar> *symbols = mach->getSymbols();
+    QVector<QChar> *states = mach->getStates();
+    ui->tableView->setRowCount(symbols->size());
+    ui->tableView->setColumnCount(states->size());
+    for (int i = 0, k = 0; i < symbols->size(); i++) {
+        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/symbols->size());
+        QTableWidgetItem *vHeader = new QTableWidgetItem(symbols->at(i));
+        vHeader->setFont(QFont("Meiryo", 11));
         ui->tableView->setVerticalHeaderItem(i, vHeader);
-        for (int j = 0; j < mach->getHTableHeader()->size(); j++, k++) {
+        for (int j = 0; j < states->size(); j++, k++) {
             if (i == 0) {
-                ui->tableView->setColumnWidth(j, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/mach->getHTableHeader()->size());
-                QTableWidgetItem *hHeader = new QTableWidgetItem(*mach->getHTableHeader()->at(j));
+                ui->tableView->setColumnWidth(j, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/states->size());
+                QTableWidgetItem *hHeader = new QTableWidgetItem(states->at(j));
+                hHeader->setFont(QFont("Meiryo", 11));
                 ui->tableView->setHorizontalHeaderItem(j, hHeader);
             }
-            QTableWidgetItem *tableItem = new QTableWidgetItem(*mach->getTableElems()->at(k));
+            QTableWidgetItem *tableItem = new QTableWidgetItem(mach->funct(states->value(j), symbols->value(i)));
+            tableItem->setFont(QFont("Meiryo", 15));
+            tableItem->setTextColor(QColor(Qt::white));
+            tableItem->setTextAlignment(Qt::AlignCenter);
             tableItem->setFlags(tableItem->flags() ^ Qt::ItemIsEditable);
             ui->tableView->setItem(i, j, tableItem);
         }
     }
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    fillComBoxes();*/
+    fillComBoxes();
 }
 
 void EditMachines::on_tableView_cellClicked(int row, int column)
 {
-    /*QString act = ui->tableView->item(row, column)->text();
-    QVector<QChar> *states = mach->getMachine()->getStates();
-    QVector<QChar> *symbols = mach->getMachine()->getSymbols();
+    QString act = ui->tableView->item(row, column)->text();
+    QVector<QChar> *states = mach->getStates();
+    QVector<QChar> *symbols = mach->getSymbols();
     for (int i = 0; i < symbols->size(); i++) {
         if (act[0] == symbols->at(i)) {
             ui->writeCBox->setCurrentIndex(i);
@@ -56,41 +63,38 @@ void EditMachines::on_tableView_cellClicked(int row, int column)
             ui->nextCBox->setCurrentIndex(i);
             break;
         }
-    }*/
+    }
 }
 
 void EditMachines::on_changeBut_clicked()
 {
-    /*QString act;
+    QString act;
     act.append(ui->writeCBox->itemText(ui->writeCBox->currentIndex()));
     act.append(ui->moveCBox->itemText(ui->moveCBox->currentIndex()).at(0));
     act.append(ui->nextCBox->itemText(ui->nextCBox->currentIndex()));
     foreach(QTableWidgetItem *cell, ui->tableView->selectedItems()) {
         cell->setText(act);
     }
-    ui->tableView->clearSelection();*/
+    ui->tableView->clearSelection();
 }
 
 void EditMachines::fillComBoxes() {
-    /*ui->writeCBox->clear();
-    ui->moveCBox->clear();
-    ui->nextCBox->clear();
-    foreach (QChar sym, *mach->getMachine()->getSymbols()) {
+    foreach (QChar sym, *mach->getSymbols()) {
         ui->writeCBox->addItem(sym);
     }
     ui->moveCBox->addItem("Left");
     ui->moveCBox->addItem("Right");
-    foreach (QChar st, *mach->getMachine()->getStates()) {
+    foreach (QChar st, *mach->getStates()) {
         ui->nextCBox->addItem(st);
     }
-    ui->nextCBox->addItem(QChar('H'));*/
+    ui->nextCBox->addItem(QChar('H'));
 }
 
 void EditMachines::on_saveBut_clicked()
 {
-    /*QMap<QString, QString> tFunct;
-    QVector<QChar> *states = mach->getMachine()->getStates();
-    QVector<QChar> *symbols = mach->getMachine()->getSymbols();
+    QMap<QString, QString> tFunct;
+    QVector<QChar> *states = mach->getStates();
+    QVector<QChar> *symbols = mach->getSymbols();
     for (int i = 0; i < symbols->size(); i++) {
         for (int j = 0; j < states->size(); j++) {
             QString key;
@@ -100,7 +104,7 @@ void EditMachines::on_saveBut_clicked()
         }
     }
     mach->setTransFunct(&tFunct);
-    ready = true;*/
+    ready = true;
 }
 
 bool EditMachines::isReady() {
