@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QTime>
 #include <QtGlobal>
-#include "machineinfo.h"
+#include "machine.h"
 
 namespace Ui {
 class RandomMachines;
@@ -18,7 +18,7 @@ class RandomMachines : public QMainWindow
 public:
     explicit RandomMachines(QWidget *parent = 0);
     bool isReady();
-    MachineInfo *getRandMach();
+    Machine *getRandMach();
     ~RandomMachines();
 
 private slots:
@@ -32,7 +32,7 @@ private:
     QString abc;
     QVector<QChar> *states;
     QVector<QChar> *symbols;
-    MachineInfo *randMach;
+    Machine *randMach;
     bool ready = false;
 };
 

@@ -54,23 +54,10 @@ void UserMachines::on_addTableBt_clicked()
     haltSim = true;
     // Initialize new Table, and display it
     QFile *tableFile = new QFile(QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)"));
-    MachineInfo *machI = new MachineInfo(tableFile);
-    bool contains = false;
-    foreach (MachineInfo *mach, listMach) {
-        if (mach->getFileName() == machI->getFileName()) {
-            contains = true;
-        }
-    }
-    if (!contains) {
-        listMach.append(machI);
-        // Get the name of the table, list it in the TablesList
-        ui->tablesList->addItem(listMach.back()->getTableListItem());
-        ui->tablesList->setIconSize(QSize(20, 20));
-    }
+    Machine *machI = new Machine(tableFile);
     displayMach(machI);
     tableIsLoaded = true;
-    currentI = machI;
-    currentM = currentI->getMachine();
+    current = machI;
     enSimButtons("TableLoaded");
 }
 
@@ -81,8 +68,8 @@ void UserMachines::on_simBt_clicked()
     haltSim = false;
     pauseSim = false;
     ui->simList->clear();
-    currentM->reset();
-    currentM->start();
+    current->reset();
+    current->start();
 
     std::list<QChar> tape;
     QString tapeStr;
@@ -91,8 +78,8 @@ void UserMachines::on_simBt_clicked()
             QCoreApplication::processEvents();
             continue;
         }
-        tape = currentM->getTape();
-        int offset = currentM->getTapeHeadOffset();
+        tape = current->getTape();
+        int offset = current->getTapeHeadOffset();
         tapeStr = "";
         for (QChar sym : tape) {
             tapeStr.append("|");
@@ -130,10 +117,10 @@ void UserMachines::on_simBt_clicked()
             QThread::msleep(1);
             QCoreApplication::processEvents();
         }
-        if (currentM->halted() || haltSim) {
+        if (current->halted() || haltSim) {
             break;
         }
-        currentM->advance();
+        current->advance();
     }
     while (true);
     enSimButtons("TableLoaded");
@@ -142,31 +129,53 @@ void UserMachines::on_simBt_clicked()
 void UserMachines::getMachToDispay(QListWidgetItem *item) {
     haltSim = true;
     for (int i = 0; i < listMach.size(); i++) {
-        if (listMach.at(i)->getTableListItem()->text() == item->text()) {
+        if (listMach.at(i)->getFileName() == item->text()) {
             displayMach(listMach.at(i));
-            currentI = listMach.at(i);
-            currentM = currentI->getMachine();
+            current = listMach.at(i);
             break;
         }
     }
 }
 
-void UserMachines::displayMach(MachineInfo *toDisplay) {
+void UserMachines::displayMach(Machine *toDisplay) {
+    // Get the name of the table, list it in the TablesList
+    bool contains = false;
+    foreach (Machine *mach, listMach) {
+        if (mach->getFileName() == toDisplay->getFileName()) {
+            contains = true;
+        }
+    }
+    if (!contains) {
+        listMach.append(toDisplay);
+        QListWidgetItem *tableItem = new QListWidgetItem;
+        tableItem->setText(toDisplay->getFileName());
+        tableItem->setFont(QFont("Meiryo", 11));
+        tableItem->setIcon(QIcon(":/rec/icons/table.png"));
+        ui->tablesList->addItem(tableItem);
+        ui->tablesList->setIconSize(QSize(20, 20));
+    }
     // Get the states, symbols and instructions, fill a table with them
     ui->tableView->clear();
-    ui->tableView->setRowCount(toDisplay->getVTableHeader()->size());
-    ui->tableView->setColumnCount(toDisplay->getHTableHeader()->size());
-    for (int i = 0, k = 0; i < toDisplay->getVTableHeader()->size(); i++) {
-        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/toDisplay->getVTableHeader()->size());
-        QTableWidgetItem *vHeader = new QTableWidgetItem(*toDisplay->getVTableHeader()->at(i));
+    QVector<QChar> *symbols = toDisplay->getSymbols();
+    QVector<QChar> *states = toDisplay->getStates();
+    ui->tableView->setRowCount(symbols->size());
+    ui->tableView->setColumnCount(states->size());
+    for (int i = 0, k = 0; i < symbols->size(); i++) {
+        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/symbols->size());
+        QTableWidgetItem *vHeader = new QTableWidgetItem(symbols->at(i));
+        vHeader->setFont(QFont("Meiryo", 11));
         ui->tableView->setVerticalHeaderItem(i, vHeader);
-        for (int j = 0; j < toDisplay->getHTableHeader()->size(); j++, k++) {
+        for (int j = 0; j < states->size(); j++, k++) {
             if (i == 0) {
-                ui->tableView->setColumnWidth(j, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/toDisplay->getHTableHeader()->size());
-                QTableWidgetItem *hHeader = new QTableWidgetItem(*toDisplay->getHTableHeader()->at(j));
+                ui->tableView->setColumnWidth(j, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/states->size());
+                QTableWidgetItem *hHeader = new QTableWidgetItem(states->at(j));
+                hHeader->setFont(QFont("Meiryo", 11));
                 ui->tableView->setHorizontalHeaderItem(j, hHeader);
             }
-            QTableWidgetItem *tableItem = new QTableWidgetItem(*toDisplay->getTableElems()->at(k));
+            QTableWidgetItem *tableItem = new QTableWidgetItem(toDisplay->funct(states->value(j), symbols->value(i)));
+            tableItem->setFont(QFont("Meiryo", 15));
+            tableItem->setTextColor(QColor(Qt::white));
+            tableItem->setTextAlignment(Qt::AlignCenter);
             tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
             ui->tableView->setItem(i, j, tableItem);
         }
@@ -194,7 +203,7 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
             }
             case 1: {
                 QString *symbolsStr = new QString;
-                for (QChar symbol : *toDisplay->getMachine()->getSymbols()) {
+                for (QChar symbol : *toDisplay->getSymbols()) {
                     symbolsStr->append(symbol);
                     symbolsStr->append((" "));
                 }
@@ -203,7 +212,7 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
             }
             case 2: {
                 QString *statesStr = new QString;
-                for (QChar state : *toDisplay->getMachine()->getStates()) {
+                for (QChar state : *toDisplay->getStates()) {
                     statesStr->append(state);
                     statesStr->append((" "));
                 }
@@ -211,17 +220,17 @@ void UserMachines::displayMach(MachineInfo *toDisplay) {
                 break;
             }
             case 3: {
-                QString bSym(toDisplay->getMachine()->getBlanckSym());
+                QString bSym(toDisplay->getBlanckSym());
                 propValue->setText(bSym);
                 break;
             }
             case 4: {
-                QString iSt(toDisplay->getMachine()->getInitState());
+                QString iSt(toDisplay->getInitState());
                 propValue->setText(iSt);
                 break;
             }
             case 5: {
-                QString hSt(toDisplay->getMachine()->getHaltState());
+                QString hSt(toDisplay->getHaltState());
                 propValue->setText(hSt);
                 break;
             }
@@ -323,15 +332,11 @@ void UserMachines::on_randTableBt_clicked()
             QThread::msleep(1);
             QCoreApplication::processEvents();
     }
-    MachineInfo *randMach = rand->getRandMach();
+    Machine *randMach = rand->getRandMach();
     rand->close();
-    listMach.append(randMach);
-    ui->tablesList->addItem(listMach.back()->getTableListItem());
-    ui->tablesList->setIconSize(QSize(20, 20));
     displayMach(randMach);
     tableIsLoaded = true;
-    currentI = randMach;
-    currentM = currentI->getMachine();
+    current = randMach;
     enSimButtons("TableLoaded");
 }
 

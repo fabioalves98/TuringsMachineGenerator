@@ -1,7 +1,7 @@
 #include "editmachines.h"
 #include "ui_editmachines.h"
 
-EditMachines::EditMachines(MachineInfo *toEdit, QWidget *parent) :
+EditMachines::EditMachines(Machine *toEdit, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::EditMachines),
     mach(toEdit)
@@ -17,7 +17,7 @@ EditMachines::~EditMachines()
 }
 
 void EditMachines::loadTable() {
-    ui->tableView->setRowCount(mach->getVTableHeader()->size());
+    /*ui->tableView->setRowCount(mach->getVTableHeader()->size());
     ui->tableView->setColumnCount(mach->getHTableHeader()->size());
     for (int i = 0, k = 0; i < mach->getVTableHeader()->size(); i++) {
         ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/mach->getVTableHeader()->size());
@@ -36,12 +36,12 @@ void EditMachines::loadTable() {
     }
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    fillComBoxes();
+    fillComBoxes();*/
 }
 
 void EditMachines::on_tableView_cellClicked(int row, int column)
 {
-    QString act = ui->tableView->item(row, column)->text();
+    /*QString act = ui->tableView->item(row, column)->text();
     QVector<QChar> *states = mach->getMachine()->getStates();
     QVector<QChar> *symbols = mach->getMachine()->getSymbols();
     for (int i = 0; i < symbols->size(); i++) {
@@ -56,23 +56,23 @@ void EditMachines::on_tableView_cellClicked(int row, int column)
             ui->nextCBox->setCurrentIndex(i);
             break;
         }
-    }
+    }*/
 }
 
 void EditMachines::on_changeBut_clicked()
 {
-    QString act;
+    /*QString act;
     act.append(ui->writeCBox->itemText(ui->writeCBox->currentIndex()));
     act.append(ui->moveCBox->itemText(ui->moveCBox->currentIndex()).at(0));
     act.append(ui->nextCBox->itemText(ui->nextCBox->currentIndex()));
     foreach(QTableWidgetItem *cell, ui->tableView->selectedItems()) {
         cell->setText(act);
     }
-    ui->tableView->clearSelection();
+    ui->tableView->clearSelection();*/
 }
 
 void EditMachines::fillComBoxes() {
-    ui->writeCBox->clear();
+    /*ui->writeCBox->clear();
     ui->moveCBox->clear();
     ui->nextCBox->clear();
     foreach (QChar sym, *mach->getMachine()->getSymbols()) {
@@ -83,12 +83,12 @@ void EditMachines::fillComBoxes() {
     foreach (QChar st, *mach->getMachine()->getStates()) {
         ui->nextCBox->addItem(st);
     }
-    ui->nextCBox->addItem(QChar('H'));
+    ui->nextCBox->addItem(QChar('H'));*/
 }
 
 void EditMachines::on_saveBut_clicked()
 {
-    QMap<QString, QString> tFunct;
+    /*QMap<QString, QString> tFunct;
     QVector<QChar> *states = mach->getMachine()->getStates();
     QVector<QChar> *symbols = mach->getMachine()->getSymbols();
     for (int i = 0; i < symbols->size(); i++) {
@@ -100,13 +100,13 @@ void EditMachines::on_saveBut_clicked()
         }
     }
     mach->setTransFunct(&tFunct);
-    ready = true;
+    ready = true;*/
 }
 
 bool EditMachines::isReady() {
     return ready;
 }
 
-MachineInfo *EditMachines::getEditMach() {
+Machine *EditMachines::getEditMach() {
     return mach;
 }

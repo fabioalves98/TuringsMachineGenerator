@@ -43,13 +43,12 @@ private slots:
     void on_editTableBt_clicked();
 
 private:
-    void displayMach(MachineInfo* toDisplay);
+    void displayMach(Machine* toDisplay);
     void enSimButtons(QString state);
     QStringList states;
     Ui::UserMachines *ui;
-    Machine *currentM;
-    MachineInfo *currentI;
-    QVector<MachineInfo*> listMach;
+    Machine *current;
+    QVector<Machine*> listMach;
     bool haltSim;
     bool pauseSim;
     bool tableIsLoaded;

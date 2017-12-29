@@ -27,7 +27,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     machine.cpp \
-    machineinfo.cpp \
     usermachines.cpp \
     randommachines.cpp \
     editmachines.cpp
@@ -35,7 +34,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     machine.h \
-    machineinfo.h \
     usermachines.h \
     randommachines.h \
     editmachines.h

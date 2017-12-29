@@ -103,7 +103,7 @@ void RandomMachines::on_saveBut_clicked()
         }
     }
     QString name = ui->nameEdit->toPlainText();
-    randMach = new MachineInfo(&name, states, symbols, &transFunct);
+    randMach = new Machine(&name, states, symbols, &transFunct);
     ready = true;
 }
 
@@ -111,7 +111,7 @@ bool RandomMachines::isReady() {
     return ready;
 }
 
-MachineInfo *RandomMachines::getRandMach() {
+Machine *RandomMachines::getRandMach() {
     return randMach;
 }
 

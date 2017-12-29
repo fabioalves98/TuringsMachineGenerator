@@ -2,7 +2,7 @@
 #define EDITMACHINES_H
 
 #include <QMainWindow>
-#include "machineinfo.h"
+#include "machine.h"
 
 namespace Ui {
 class EditMachines;
@@ -13,10 +13,10 @@ class EditMachines : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit EditMachines(MachineInfo *toEdit, QWidget *parent = 0);
+    explicit EditMachines(Machine *toEdit, QWidget *parent = 0);
     void loadTable();
     bool isReady();
-    MachineInfo *getEditMach();
+    Machine *getEditMach();
     ~EditMachines();
 
 private slots:
@@ -27,7 +27,7 @@ private slots:
 private:
     void fillComBoxes();
     Ui::EditMachines *ui;
-    MachineInfo *mach;
+    Machine *mach;
     bool ready;
 };
 
