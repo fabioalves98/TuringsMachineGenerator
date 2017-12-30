@@ -86,8 +86,14 @@ void UserMachines::on_simBt_clicked()
     QString tapeStr;
     do {
         if (pauseSim) {
+            QThread::msleep(10);
             QCoreApplication::processEvents();
-            continue;
+            if (haltSim) {
+                break;
+            }
+            else {
+                continue;
+            }
         }
         tape = current->getTape();
         int offset = current->getTapeHeadOffset();
@@ -136,8 +142,8 @@ void UserMachines::on_simBt_clicked()
         bar->setValue((bar->maximum() + bar->minimum())/2);
         bar->update();
         ui->simList->update();
-        for (int i = 0; i < 100; i++) {
-            QThread::msleep(1);
+        for (int i = 0; i < 10; i++) {
+            QThread::msleep(10);
             QCoreApplication::processEvents();
         }
         if (current->halted() || haltSim) {
@@ -353,7 +359,7 @@ void UserMachines::on_randTableBt_clicked()
     RandomMachines *rand = new RandomMachines;
     rand->show();
     while (!rand->isReady()) {
-            QThread::msleep(1);
+            QThread::msleep(10);
             QCoreApplication::processEvents();
             if (!rand->isVisible()) {
                 return;
@@ -373,7 +379,7 @@ void UserMachines::on_editTableBt_clicked()
     edit->show();
     edit->loadTable();
     while (!edit->isReady()) {
-            QThread::msleep(1);
+            QThread::msleep(10);
             QCoreApplication::processEvents();
             if (!edit->isVisible()) {
                 return;
