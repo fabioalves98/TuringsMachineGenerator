@@ -41,6 +41,32 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
             ui->randTable->setHorizontalHeaderItem(i, hHeader);
         }
     }
+    clearStLayout();
+    for (int i = 0; i < arg1; i++) {
+        QLineEdit *lEdit = new QLineEdit;
+        lEdit->setMaximumHeight(ui->stSel->height());
+        lEdit->setMaximumWidth(ui->stSel->width());
+        lEdit->setAlignment(Qt::AlignCenter);
+        lEdit->setPlaceholderText(abc.at(i));
+        QSignalMapper *sigMap = new QSignalMapper(this);
+        connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
+        sigMap->setMapping(lEdit, i);
+        connect(sigMap, SIGNAL(mapped(int)), SLOT(changeHorHeader(int)));
+        ui->stLayout->addWidget(lEdit);
+    }
+}
+
+void RandomMachines::changeHorHeader(int st) {
+   QString state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
+   ui->randTable->setHorizontalHeaderItem(st, new QTableWidgetItem(state));
+}
+
+void RandomMachines::clearStLayout() {
+    QLayoutItem *item;
+    while((item = ui->stLayout->takeAt(0))) {
+        delete item->widget();
+        delete item;
+    }
 }
 
 void RandomMachines::on_sySel_valueChanged(int arg1)
@@ -61,6 +87,31 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
             vHeader->setFont(QFont("Meiryo", 12));
             ui->randTable->setVerticalHeaderItem(i, vHeader);
         }
+    }
+    clearSyLayout();
+    for (int i = 0; i < arg1; i++) {
+        QLineEdit *lEdit = new QLineEdit;
+        lEdit->setMaximumHeight(ui->sySel->height());
+        lEdit->setMaximumWidth(ui->sySel->width());
+        lEdit->setAlignment(Qt::AlignCenter);
+        lEdit->setPlaceholderText(QString::number(i));
+        QSignalMapper *sigMap = new QSignalMapper(this);
+        connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
+        sigMap->setMapping(lEdit, i);
+        connect(sigMap, SIGNAL(mapped(int)), SLOT(changeVerHeader(int)));
+        ui->syLayout->addWidget(lEdit);
+    }
+}
+
+void RandomMachines::changeVerHeader(int sy) {
+    QString symbol = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
+    ui->randTable->setVerticalHeaderItem(sy, new QTableWidgetItem(symbol));}
+
+void RandomMachines::clearSyLayout() {
+    QLayoutItem *item;
+    while((item = ui->syLayout->takeAt(0))) {
+        delete item->widget();
+        delete item;
     }
 }
 
@@ -122,4 +173,3 @@ bool RandomMachines::isReady() {
 Machine *RandomMachines::getRandMach() {
     return randMach;
 }
-

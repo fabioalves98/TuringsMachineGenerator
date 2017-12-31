@@ -31,19 +31,21 @@ class Ui_RandomMachines
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_6;
+    QVBoxLayout *verticalLayout;
     QLabel *nameLabel;
-    QTextEdit *nameEdit;
-    QHBoxLayout *horizontalLayout_4;
-    QHBoxLayout *horizontalLayout;
     QLabel *stLabel;
-    QSpinBox *stSel;
-    QSpacerItem *horizontalSpacer;
-    QHBoxLayout *horizontalLayout_3;
-    QHBoxLayout *horizontalLayout_2;
     QLabel *syLabel;
+    QVBoxLayout *verticalLayout_2;
+    QTextEdit *nameEdit;
+    QHBoxLayout *horizontalLayout_3;
+    QSpinBox *stSel;
+    QHBoxLayout *stLayout;
+    QSpacerItem *horizontalSpacer;
+    QHBoxLayout *horizontalLayout_4;
     QSpinBox *sySel;
+    QHBoxLayout *syLayout;
     QSpacerItem *horizontalSpacer_2;
     QTableWidget *randTable;
     QHBoxLayout *horizontalLayout_5;
@@ -57,61 +59,32 @@ public:
         RandomMachines->resize(800, 600);
         centralwidget = new QWidget(RandomMachines);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout_3 = new QVBoxLayout(centralwidget);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         nameLabel = new QLabel(centralwidget);
         nameLabel->setObjectName(QStringLiteral("nameLabel"));
-        nameLabel->setMaximumSize(QSize(16777215, 27));
+        nameLabel->setMaximumSize(QSize(60, 27));
         QFont font;
         font.setPointSize(14);
         nameLabel->setFont(font);
         nameLabel->setFrameShape(QFrame::Panel);
         nameLabel->setFrameShadow(QFrame::Raised);
 
-        horizontalLayout_6->addWidget(nameLabel);
+        verticalLayout->addWidget(nameLabel);
 
-        nameEdit = new QTextEdit(centralwidget);
-        nameEdit->setObjectName(QStringLiteral("nameEdit"));
-        nameEdit->setMaximumSize(QSize(16777215, 27));
-
-        horizontalLayout_6->addWidget(nameEdit);
-
-
-        verticalLayout->addLayout(horizontalLayout_6);
-
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         stLabel = new QLabel(centralwidget);
         stLabel->setObjectName(QStringLiteral("stLabel"));
+        stLabel->setMaximumSize(QSize(64, 27));
         stLabel->setFont(font);
         stLabel->setFrameShape(QFrame::Panel);
         stLabel->setFrameShadow(QFrame::Raised);
 
-        horizontalLayout->addWidget(stLabel);
+        verticalLayout->addWidget(stLabel);
 
-        stSel = new QSpinBox(centralwidget);
-        stSel->setObjectName(QStringLiteral("stSel"));
-
-        horizontalLayout->addWidget(stSel);
-
-
-        horizontalLayout_4->addLayout(horizontalLayout);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer);
-
-
-        verticalLayout->addLayout(horizontalLayout_4);
-
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         syLabel = new QLabel(centralwidget);
         syLabel->setObjectName(QStringLiteral("syLabel"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -119,31 +92,74 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(syLabel->sizePolicy().hasHeightForWidth());
         syLabel->setSizePolicy(sizePolicy);
+        syLabel->setMaximumSize(QSize(82, 27));
         syLabel->setFont(font);
         syLabel->setFrameShape(QFrame::Panel);
         syLabel->setFrameShadow(QFrame::Raised);
 
-        horizontalLayout_2->addWidget(syLabel);
+        verticalLayout->addWidget(syLabel);
 
+
+        horizontalLayout_6->addLayout(verticalLayout);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        nameEdit = new QTextEdit(centralwidget);
+        nameEdit->setObjectName(QStringLiteral("nameEdit"));
+        nameEdit->setMaximumSize(QSize(16777215, 27));
+
+        verticalLayout_2->addWidget(nameEdit);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        stSel = new QSpinBox(centralwidget);
+        stSel->setObjectName(QStringLiteral("stSel"));
+        stSel->setMaximumSize(QSize(46, 26));
+
+        horizontalLayout_3->addWidget(stSel);
+
+        stLayout = new QHBoxLayout();
+        stLayout->setObjectName(QStringLiteral("stLayout"));
+
+        horizontalLayout_3->addLayout(stLayout);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_3);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         sySel = new QSpinBox(centralwidget);
         sySel->setObjectName(QStringLiteral("sySel"));
+        sySel->setMaximumSize(QSize(46, 26));
 
-        horizontalLayout_2->addWidget(sySel);
+        horizontalLayout_4->addWidget(sySel);
 
+        syLayout = new QHBoxLayout();
+        syLayout->setObjectName(QStringLiteral("syLayout"));
 
-        horizontalLayout_3->addLayout(horizontalLayout_2);
+        horizontalLayout_4->addLayout(syLayout);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_2);
+        horizontalLayout_4->addItem(horizontalSpacer_2);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout_2->addLayout(horizontalLayout_4);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_2);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_6);
 
         randTable = new QTableWidget(centralwidget);
         randTable->setObjectName(QStringLiteral("randTable"));
 
-        verticalLayout->addWidget(randTable);
+        verticalLayout_3->addWidget(randTable);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
@@ -158,7 +174,7 @@ public:
         horizontalLayout_5->addWidget(saveBut);
 
 
-        verticalLayout->addLayout(horizontalLayout_5);
+        verticalLayout_3->addLayout(horizontalLayout_5);
 
         RandomMachines->setCentralWidget(centralwidget);
 

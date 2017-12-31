@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QTime>
 #include <QtGlobal>
+#include <QLineEdit>
+#include <QSignalMapper>
 #include "machine.h"
 
 namespace Ui {
@@ -23,11 +25,15 @@ public:
 
 private slots:
     void on_stSel_valueChanged(int arg1);
+    void changeHorHeader(int st);
+    void changeVerHeader(int sy);
     void on_sySel_valueChanged(int arg1);
     void on_randBut_clicked();
     void on_saveBut_clicked();
 
 private:
+    void clearStLayout();
+    void clearSyLayout();
     Ui::RandomMachines *ui;
     QString abc;
     QVector<QChar> *states;
