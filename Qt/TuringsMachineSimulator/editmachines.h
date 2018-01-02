@@ -2,6 +2,7 @@
 #define EDITMACHINES_H
 
 #include <QMainWindow>
+#include <QScrollBar>
 #include "machine.h"
 
 namespace Ui {
@@ -19,6 +20,9 @@ public:
     Machine *getEditMach();
     ~EditMachines();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void on_tableView_cellClicked(int row, int column);
     void on_changeBut_clicked();
@@ -26,8 +30,10 @@ private slots:
 
 private:
     void fillComBoxes();
+    void resizeTable();
     Ui::EditMachines *ui;
     Machine *mach;
+    bool tableIsLoaded;
     bool ready;
 };
 

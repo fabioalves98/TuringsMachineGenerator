@@ -8,12 +8,23 @@ EditMachines::EditMachines(Machine *toEdit, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Table Edition");
+    ui->tableView->verticalScrollBar()->setEnabled(false);
+    ui->tableView->horizontalScrollBar()->setEnabled(false);
+    tableIsLoaded = false;
     ready = false;
+    ui->saveBut->setEnabled(false);
 }
 
 EditMachines::~EditMachines()
 {
     delete ui;
+}
+
+void EditMachines::resizeEvent(QResizeEvent *event)
+{
+    resizeTable();
+    update();
+    QWidget::resizeEvent(event);
 }
 
 void EditMachines::loadTable() {
@@ -44,6 +55,36 @@ void EditMachines::loadTable() {
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     fillComBoxes();
+    tableIsLoaded = true;
+    resizeTable();
+}
+
+void EditMachines::resizeTable() {
+    if (tableIsLoaded) {
+        int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
+        int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
+        int horExccess = (ui->tableView->width() - ui->tableView->verticalHeader()->width()) - ui->tableView->columnCount()*columnWidth;
+        int verExccess = (ui->tableView->height() - ui->tableView->horizontalHeader()->height()) - ui->tableView->rowCount()*rowHeigth;
+        for (int i = 0; i < ui->tableView->rowCount(); i++) {
+            if (verExccess > 2) {
+                ui->tableView->setRowHeight(i, rowHeigth + 1);
+                verExccess--;
+            }
+            else {
+                ui->tableView->setRowHeight(i, rowHeigth);
+            }
+
+        }
+        for (int i = 0; i < ui->tableView->columnCount(); i++) {
+            if (horExccess > 2) {
+                ui->tableView->setColumnWidth(i, columnWidth + 1);
+                horExccess--;
+            }
+            else {
+                ui->tableView->setColumnWidth(i, columnWidth);
+            }
+        }
+    }
 }
 
 void EditMachines::on_tableView_cellClicked(int row, int column)
@@ -76,6 +117,7 @@ void EditMachines::on_changeBut_clicked()
         cell->setText(act);
     }
     ui->tableView->clearSelection();
+    ui->saveBut->setEnabled(true);
 }
 
 void EditMachines::fillComBoxes() {

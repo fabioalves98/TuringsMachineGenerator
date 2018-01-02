@@ -17,6 +17,7 @@ public:
     void halt();
     void advance();
     QChar getCurrentState();
+    QChar getCurrentSymbol();
     std::list<QChar> getTape();
     int getTapeHeadOffset();
     QString getFileName();
@@ -51,6 +52,7 @@ private:
     QChar haltState;
 
     QChar pState;
+    QChar cSymbol;
     std::list<QChar>::iterator head;
     int startP, endP, count;
 };

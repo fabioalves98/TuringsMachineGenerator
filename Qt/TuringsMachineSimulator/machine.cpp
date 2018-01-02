@@ -55,6 +55,7 @@ void Machine::start() {
     int tapeSize = 3;
     tape.assign(3, blanckSym);
     pState = initState;
+    cSymbol = blanckSym;
     head = tape.begin();
     std::advance(head, tapeSize/2);
     startP = 0;
@@ -75,9 +76,8 @@ void Machine::halt() {
 }
 
 void Machine::advance() {
-    QChar symbol = *head;
-    QString key = makeKey(pState, symbol);
-    //qDebug() << key;
+    cSymbol = *head;
+    QString key = makeKey(pState, cSymbol);
     action move = transFunct[key];
     *head = move.wSymbol;
     if (move.mTape == 'R') {
@@ -104,6 +104,10 @@ void Machine::advance() {
 
 QChar Machine::getCurrentState() {
     return pState;
+}
+
+QChar Machine::getCurrentSymbol() {
+    return cSymbol;
 }
 
 std::list<QChar> Machine::getTape() {

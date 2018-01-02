@@ -34,6 +34,9 @@ void UserMachines::start()
     sizes[1] = (int)ui->simSplit->width() - sizes[0];
     ui->simSplit->setSizes(sizes);
 
+    ui->tableView->verticalScrollBar()->setEnabled(false);
+    ui->tableView->horizontalScrollBar()->setEnabled(false);
+
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
     enSimButtons("Init");
 
@@ -117,6 +120,14 @@ void UserMachines::on_simBt_clicked()
                 tapeStr.append("      ");
             }
         }
+        // Select state and symbol in table
+        int st = current->getStates()->indexOf(current->getCurrentState());
+        int sy = current->getSymbols()->indexOf(current->getCurrentSymbol());
+        if (st >= 0) {
+            ui->tableView->clearSelection();
+            QModelIndex model = ui->tableView->model()->index(sy, st);
+            ui->tableView->selectionModel()->select(model, QItemSelectionModel::Select);
+        }
         // Add State
         QListWidgetItem *newStateI = new QListWidgetItem;
         QLabel *stateText = new QLabel;
@@ -185,19 +196,18 @@ void UserMachines::displayMach(Machine *toDisplay) {
         ui->tablesList->setIconSize(QSize(20, 20));
     }
     // Get the states, symbols and instructions, fill a table with them
+    tableIsLoaded = true;
     ui->tableView->clear();
     QVector<QChar> *symbols = toDisplay->getSymbols();
     QVector<QChar> *states = toDisplay->getStates();
     ui->tableView->setRowCount(symbols->size());
     ui->tableView->setColumnCount(states->size());
     for (int i = 0, k = 0; i < symbols->size(); i++) {
-        ui->tableView->setRowHeight(i, (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/symbols->size());
         QTableWidgetItem *vHeader = new QTableWidgetItem(symbols->at(i));
         vHeader->setFont(QFont("Meiryo", 11));
         ui->tableView->setVerticalHeaderItem(i, vHeader);
         for (int j = 0; j < states->size(); j++, k++) {
             if (i == 0) {
-                ui->tableView->setColumnWidth(j, (ui->tableView->width() - ui->tableView->verticalHeader()->width())/states->size());
                 QTableWidgetItem *hHeader = new QTableWidgetItem(states->at(j));
                 hHeader->setFont(QFont("Meiryo", 11));
                 ui->tableView->setHorizontalHeaderItem(j, hHeader);
@@ -212,6 +222,7 @@ void UserMachines::displayMach(Machine *toDisplay) {
     }
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    resizeTable();
 
     // Get the remaining properties, and fill the PropertiesList
     ui->propList->clear();
@@ -283,11 +294,26 @@ void UserMachines::resizeTable() {
     if (tableIsLoaded) {
         int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
         int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
+        int horExccess = (ui->tableView->width() - ui->tableView->verticalHeader()->width()) - ui->tableView->columnCount()*columnWidth;
+        int verExccess = (ui->tableView->height() - ui->tableView->horizontalHeader()->height()) - ui->tableView->rowCount()*rowHeigth;
         for (int i = 0; i < ui->tableView->rowCount(); i++) {
-            ui->tableView->setRowHeight(i, rowHeigth);
+            if (verExccess > 1) {
+                ui->tableView->setRowHeight(i, rowHeigth + 1);
+                verExccess--;
+            }
+            else {
+                ui->tableView->setRowHeight(i, rowHeigth);
+            }
+
         }
         for (int i = 0; i < ui->tableView->columnCount(); i++) {
-            ui->tableView->setColumnWidth(i, columnWidth);
+            if (horExccess > 1) {
+                ui->tableView->setColumnWidth(i, columnWidth + 1);
+                horExccess--;
+            }
+            else {
+                ui->tableView->setColumnWidth(i, columnWidth);
+            }
         }
     }
 }
@@ -357,19 +383,21 @@ void UserMachines::on_contBt_clicked()
 
 void UserMachines::on_randTableBt_clicked()
 {
+    this->setEnabled(false);
     RandomMachines *rand = new RandomMachines;
     rand->show();
     while (!rand->isReady()) {
             QThread::msleep(10);
             QCoreApplication::processEvents();
             if (!rand->isVisible()) {
+                this->setEnabled(true);
                 return;
             }
     }
+    this->setEnabled(true);
     Machine *randMach = rand->getRandMach();
     rand->close();
     displayMach(randMach);
-    tableIsLoaded = true;
     current = randMach;
     enSimButtons("TableLoaded");
 }
@@ -394,6 +422,5 @@ void UserMachines::on_editTableBt_clicked()
     }
     edit->close();
     displayMach(current);
-    tableIsLoaded = true;
     enSimButtons("TableLoaded");
 }

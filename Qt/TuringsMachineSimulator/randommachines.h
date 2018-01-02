@@ -4,9 +4,11 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QTime>
+#include <QThread>
 #include <QtGlobal>
 #include <QLineEdit>
 #include <QSignalMapper>
+#include <QScrollBar>
 #include "machine.h"
 
 namespace Ui {
@@ -23,6 +25,9 @@ public:
     Machine *getRandMach();
     ~RandomMachines();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void on_stSel_valueChanged(int arg1);
     void on_sySel_valueChanged(int arg1);
@@ -38,11 +43,13 @@ private:
     void clearStLayout();
     void clearSyLayout();
     void changeButState();
+    void resizeTable();
     Ui::RandomMachines *ui;
     QString abc;
     QVector<QChar> *states;
     QVector<QChar> *symbols;
     Machine *randMach;
+    bool resizable = false;
     bool generated = false;
     bool ready = false;
     int prevState = 0;

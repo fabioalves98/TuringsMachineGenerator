@@ -15,11 +15,23 @@ RandomMachines::RandomMachines(QWidget *parent) :
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
     changeButState();
+    resizable = true;
+    ui->randTable->verticalScrollBar()->setEnabled(false);
+    ui->randTable->horizontalScrollBar()->setEnabled(false);
+    this->on_stSel_valueChanged(0);
+    this->on_sySel_valueChanged(0);
 }
 
 RandomMachines::~RandomMachines()
 {
     delete ui;
+}
+
+void RandomMachines::resizeEvent(QResizeEvent *event)
+{
+    resizeTable();
+    update();
+    QWidget::resizeEvent(event);
 }
 
 void RandomMachines::on_stSel_valueChanged(int arg1)
@@ -30,12 +42,6 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
     ui->randTable->setColumnCount(arg1);
     if (arg1 != 0) {
         for (int i = 0; i < arg1; i++) {
-            if (ui->randTable->rowCount() == 0) {
-                ui->randTable->setColumnWidth(i, ui->randTable->width()/arg1);
-            }
-            else {
-                ui->randTable->setColumnWidth(i, (ui->randTable->width() - ui->randTable->verticalHeader()->width())/arg1);
-            }
             QString st;
             if (i > prevState || prevState == 0) {
                 st.append(abc.at(i));
@@ -64,6 +70,7 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
     prevState = arg1 - 1;
     changeButState();
     generated = false;
+    resizeTable();
 }
 
 void RandomMachines::changeHorHeader(int st) {
@@ -87,12 +94,6 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
     ui->randTable->setRowCount(arg1);
     if (arg1 != 0) {
         for (int i = 0; i < arg1; i++) {
-            if (ui->randTable->columnCount() == 0) {
-                ui->randTable->setRowHeight(i, ui->randTable->height()/arg1);
-            }
-            else {
-                ui->randTable->setRowHeight(i, (ui->randTable->height() - ui->randTable->horizontalHeader()->height())/arg1);
-            }
             QString sy;
             if (i > prevSymbol || prevSymbol == 0) {
                 sy.append(QString::number(i));
@@ -118,9 +119,13 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
             ui->syLayout->addWidget(lEdit);
         }
     }
+    if (prevSymbol == - 1) {
+        QCoreApplication::processEvents();
+    }
     prevSymbol = arg1 - 1;
     changeButState();
     generated = false;
+    resizeTable();
 }
 
 void RandomMachines::changeVerHeader(int sy) {
@@ -133,6 +138,67 @@ void RandomMachines::clearSyLayout() {
     while((item = ui->syLayout->takeAt(0))) {
         delete item->widget();
         delete item;
+    }
+}
+
+void RandomMachines::resizeTable() {
+    if (resizable) {
+        if (ui->randTable->rowCount() == 0 && ui->randTable->columnCount() == 0) {
+            return;
+        }
+        else if (ui->randTable->rowCount() == 0) {
+            int columnWidth = ui->randTable->width()/ui->randTable->columnCount();
+            int horExccess = ui->randTable->width() - ui->randTable->columnCount()*columnWidth;
+            for (int i = 0; i < ui->randTable->columnCount(); i++) {
+                if (horExccess > 1) {
+                    ui->randTable->setColumnWidth(i, columnWidth + 1);
+                    horExccess--;
+                }
+                else {
+                    ui->randTable->setColumnWidth(i, columnWidth);
+                }
+            }
+        }
+        else if (ui->randTable->columnCount() == 0) {
+            int rowHeigth = ui->randTable->height()/ui->randTable->rowCount();
+            int verExccess = ui->randTable->height() - ui->randTable->rowCount()*rowHeigth;
+            for (int i = 0; i < ui->randTable->rowCount(); i++) {
+                if (verExccess > 1) {
+                    ui->randTable->setRowHeight(i, rowHeigth + 1);
+                    verExccess--;
+                }
+                else {
+                    ui->randTable->setRowHeight(i, rowHeigth);
+                }
+            }
+        }
+        else {
+            if (ui->randTable->rowCount() == 1 || ui->randTable->columnCount() == 1) {
+                //QCoreApplication::processEvents();
+            }
+            int rowHeigth = (ui->randTable->height() - ui->randTable->horizontalHeader()->height())/ui->randTable->rowCount();
+            int columnWidth = (ui->randTable->width() - ui->randTable->verticalHeader()->width())/ui->randTable->columnCount();
+            int horExccess = (ui->randTable->width() - ui->randTable->verticalHeader()->width()) - ui->randTable->columnCount()*columnWidth;
+            int verExccess = (ui->randTable->height() - ui->randTable->horizontalHeader()->height()) - ui->randTable->rowCount()*rowHeigth;
+            for (int i = 0; i < ui->randTable->rowCount(); i++) {
+                if (verExccess > 1) {
+                    ui->randTable->setRowHeight(i, rowHeigth + 1);
+                    verExccess--;
+                }
+                else {
+                    ui->randTable->setRowHeight(i, rowHeigth);
+                }
+            }
+            for (int i = 0; i < ui->randTable->columnCount(); i++) {
+                if (horExccess > 1) {
+                    ui->randTable->setColumnWidth(i, columnWidth + 1);
+                    horExccess--;
+                }
+                else {
+                    ui->randTable->setColumnWidth(i, columnWidth);
+                }
+            }
+        }
     }
 }
 
