@@ -10,7 +10,7 @@ class Machine
 {
 public:
     Machine(QFile *fileName);
-    Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct);
+    Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt);
     void start();
     void reset();
     bool halted();

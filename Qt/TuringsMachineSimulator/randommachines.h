@@ -25,21 +25,28 @@ public:
 
 private slots:
     void on_stSel_valueChanged(int arg1);
+    void on_sySel_valueChanged(int arg1);
     void changeHorHeader(int st);
     void changeVerHeader(int sy);
-    void on_sySel_valueChanged(int arg1);
+    void headersChanged();
     void on_randBut_clicked();
     void on_saveBut_clicked();
+    void on_nameEdit_textChanged();
+    void on_haltStEdit_textChanged();
 
 private:
     void clearStLayout();
     void clearSyLayout();
+    void changeButState();
     Ui::RandomMachines *ui;
     QString abc;
     QVector<QChar> *states;
     QVector<QChar> *symbols;
     Machine *randMach;
+    bool generated = false;
     bool ready = false;
+    int prevState = 0;
+    int prevSymbol = 0;
 };
 
 #endif // RANDOMMACHINES_H

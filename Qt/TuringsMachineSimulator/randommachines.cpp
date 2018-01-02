@@ -14,7 +14,7 @@ RandomMachines::RandomMachines(QWidget *parent) :
     symbols = new QVector<QChar>;
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-    ui->saveBut->setEnabled(false);
+    changeButState();
 }
 
 RandomMachines::~RandomMachines()
@@ -25,9 +25,10 @@ RandomMachines::~RandomMachines()
 void RandomMachines::on_stSel_valueChanged(int arg1)
 {
     ui->randTable->clearContents();
+    ui->initStCBox->clear();
+    clearStLayout();
     ui->randTable->setColumnCount(arg1);
     if (arg1 != 0) {
-        states->clear();
         for (int i = 0; i < arg1; i++) {
             if (ui->randTable->rowCount() == 0) {
                 ui->randTable->setColumnWidth(i, ui->randTable->width()/arg1);
@@ -35,30 +36,39 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
             else {
                 ui->randTable->setColumnWidth(i, (ui->randTable->width() - ui->randTable->verticalHeader()->width())/arg1);
             }
-            states->append(abc.at(i));
-            QTableWidgetItem *hHeader = new QTableWidgetItem(QString(abc.at(i)));
+            QString st;
+            if (i > prevState || prevState == 0) {
+                st.append(abc.at(i));
+            }
+            else {
+                st.append(ui->randTable->horizontalHeaderItem(i)->text());
+            }
+            ui->initStCBox->addItem(st);
+            QTableWidgetItem *hHeader = new QTableWidgetItem(st);
             hHeader->setFont(QFont("Meiryo", 12));
             ui->randTable->setHorizontalHeaderItem(i, hHeader);
+
+            QLineEdit *lEdit = new QLineEdit;
+            lEdit->setMaximumHeight(ui->stSel->height());
+            lEdit->setMaximumWidth(ui->stSel->width());
+            lEdit->setAlignment(Qt::AlignCenter);
+            lEdit->setPlaceholderText(ui->randTable->horizontalHeaderItem(i)->text());
+            QSignalMapper *sigMap = new QSignalMapper(this);
+            connect(lEdit, SIGNAL(textChanged(QString)), this, SLOT(headersChanged()));
+            connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
+            sigMap->setMapping(lEdit, i);
+            connect(sigMap, SIGNAL(mapped(int)), SLOT(changeHorHeader(int)));
+            ui->stLayout->addWidget(lEdit);
         }
     }
-    clearStLayout();
-    for (int i = 0; i < arg1; i++) {
-        QLineEdit *lEdit = new QLineEdit;
-        lEdit->setMaximumHeight(ui->stSel->height());
-        lEdit->setMaximumWidth(ui->stSel->width());
-        lEdit->setAlignment(Qt::AlignCenter);
-        lEdit->setPlaceholderText(abc.at(i));
-        QSignalMapper *sigMap = new QSignalMapper(this);
-        connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
-        sigMap->setMapping(lEdit, i);
-        connect(sigMap, SIGNAL(mapped(int)), SLOT(changeHorHeader(int)));
-        ui->stLayout->addWidget(lEdit);
-    }
+    prevState = arg1 - 1;
+    changeButState();
+    generated = false;
 }
 
 void RandomMachines::changeHorHeader(int st) {
    QString state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
-   ui->randTable->setHorizontalHeaderItem(st, new QTableWidgetItem(state));
+   ui->randTable->horizontalHeaderItem(st)->setText(state);
 }
 
 void RandomMachines::clearStLayout() {
@@ -72,9 +82,10 @@ void RandomMachines::clearStLayout() {
 void RandomMachines::on_sySel_valueChanged(int arg1)
 {
     ui->randTable->clearContents();
+    ui->blanckSyCBox->clear();
+    clearSyLayout();
     ui->randTable->setRowCount(arg1);
     if (arg1 != 0) {
-        symbols->clear();
         for (int i = 0; i < arg1; i++) {
             if (ui->randTable->columnCount() == 0) {
                 ui->randTable->setRowHeight(i, ui->randTable->height()/arg1);
@@ -82,30 +93,40 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
             else {
                 ui->randTable->setRowHeight(i, (ui->randTable->height() - ui->randTable->horizontalHeader()->height())/arg1);
             }
-            symbols->append(QString::number(i).at(0));
-            QTableWidgetItem *vHeader = new QTableWidgetItem(QString::number(i));
+            QString sy;
+            if (i > prevSymbol || prevSymbol == 0) {
+                sy.append(QString::number(i));
+            }
+            else {
+                sy.append(ui->randTable->verticalHeaderItem(i)->text());
+            }
+            ui->blanckSyCBox->addItem(sy);
+            QTableWidgetItem *vHeader = new QTableWidgetItem(sy);
             vHeader->setFont(QFont("Meiryo", 12));
             ui->randTable->setVerticalHeaderItem(i, vHeader);
+
+            QLineEdit *lEdit = new QLineEdit;
+            lEdit->setMaximumHeight(ui->sySel->height());
+            lEdit->setMaximumWidth(ui->sySel->width());
+            lEdit->setAlignment(Qt::AlignCenter);
+            lEdit->setPlaceholderText(ui->randTable->verticalHeaderItem(i)->text());
+            QSignalMapper *sigMap = new QSignalMapper(this);
+            connect(lEdit, SIGNAL(textChanged(QString)), this, SLOT(headersChanged()));
+            connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
+            sigMap->setMapping(lEdit, i);
+            connect(sigMap, SIGNAL(mapped(int)), SLOT(changeVerHeader(int)));
+            ui->syLayout->addWidget(lEdit);
         }
     }
-    clearSyLayout();
-    for (int i = 0; i < arg1; i++) {
-        QLineEdit *lEdit = new QLineEdit;
-        lEdit->setMaximumHeight(ui->sySel->height());
-        lEdit->setMaximumWidth(ui->sySel->width());
-        lEdit->setAlignment(Qt::AlignCenter);
-        lEdit->setPlaceholderText(QString::number(i));
-        QSignalMapper *sigMap = new QSignalMapper(this);
-        connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
-        sigMap->setMapping(lEdit, i);
-        connect(sigMap, SIGNAL(mapped(int)), SLOT(changeVerHeader(int)));
-        ui->syLayout->addWidget(lEdit);
-    }
+    prevSymbol = arg1 - 1;
+    changeButState();
+    generated = false;
 }
 
 void RandomMachines::changeVerHeader(int sy) {
     QString symbol = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
-    ui->randTable->setVerticalHeaderItem(sy, new QTableWidgetItem(symbol));}
+    ui->randTable->verticalHeaderItem(sy)->setText(symbol);
+}
 
 void RandomMachines::clearSyLayout() {
     QLayoutItem *item;
@@ -115,11 +136,35 @@ void RandomMachines::clearSyLayout() {
     }
 }
 
+void RandomMachines::headersChanged() {
+    generated = false;
+    changeButState();
+}
+
+void RandomMachines::on_nameEdit_textChanged()
+{
+    changeButState();
+}
+
+void RandomMachines::on_haltStEdit_textChanged()
+{
+    generated = false;
+    changeButState();
+}
+
 void RandomMachines::on_randBut_clicked()
 {
     int haltAct;
     if ((states->size() != 0) && (symbols->size() != 0)) {
         haltAct = qrand() % (states->size() * symbols->size());
+    }
+    states->clear();
+    symbols->clear();
+    for (int i = 0; i < ui->randTable->columnCount(); i++) {
+        states->append(ui->randTable->horizontalHeaderItem(i)->text().at(0));
+    }
+    for (int i = 0; i < ui->randTable->rowCount(); i++) {
+        symbols->append(ui->randTable->verticalHeaderItem(i)->text().at(0));
     }
     for (int i = 0; i < symbols->size(); i++) {
         for (int j = 0; j < states->size(); j++) {
@@ -130,7 +175,7 @@ void RandomMachines::on_randBut_clicked()
                 action.append(states->at(qrand()%states->size()));
             }
             else {
-                action.append("H");
+                action.append((ui->haltStEdit->text() == "" ? ui->haltStEdit->placeholderText() : ui->haltStEdit->text()));
             }
             haltAct--;
             QTableWidgetItem *tbAction = new QTableWidgetItem(action);
@@ -141,17 +186,27 @@ void RandomMachines::on_randBut_clicked()
             ui->randTable->setItem(i, j, tbAction);
         }
     }
+    generated = true;
+    changeButState();
+}
+
+void RandomMachines::changeButState() {
+    ui->randBut->setEnabled(true);
     ui->saveBut->setEnabled(true);
+    if (ui->stSel->text() == "" || ui->sySel->text() == "" || ui->stSel->text() == "0" || ui->sySel->text() == "0") {
+        ui->randBut->setEnabled(false);
+        ui->saveBut->setEnabled(false);
+    }
+    if (ui->nameEdit->toPlainText() == "") {
+        ui->saveBut->setEnabled(false);
+    }
+    if (!generated) {
+        ui->saveBut->setEnabled(false);
+    }
 }
 
 void RandomMachines::on_saveBut_clicked()
 {
-    if (ui->nameEdit->toPlainText() == nullptr) {
-        QPalette p = ui->nameEdit->palette();
-        p.setColor(QPalette::Base, QColor(255, 0, 0, 100));
-        ui->nameEdit->setPalette(p);
-        return;
-    }
     QMap<QString, QString> transFunct;
     for (int i = 0; i < symbols->size(); i++) {
         for (int j = 0; j < states->size(); j++) {
@@ -162,7 +217,10 @@ void RandomMachines::on_saveBut_clicked()
         }
     }
     QString name = ui->nameEdit->toPlainText();
-    randMach = new Machine(&name, states, symbols, &transFunct);
+    QChar initState = ui->initStCBox->currentText().at(0);
+    QChar blanckSymbol = ui->blanckSyCBox->currentText().at(0);
+    QChar haltState = (ui->haltStEdit->text() == "" ? ui->haltStEdit->placeholderText().at(0) : ui->haltStEdit->text().at(0));
+    randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, haltState);
     ready = true;
 }
 

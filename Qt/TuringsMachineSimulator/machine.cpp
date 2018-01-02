@@ -31,7 +31,7 @@ Machine::Machine(QFile *tableFile) {
     }
 }
 
-Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct) {
+Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt) {
     fileName = *name;
     states = *sts;
     symbols = *syms;
@@ -46,9 +46,9 @@ Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<
             transFunct.insert(key, act);
         }
     }
-    blanckSym = symbols.at(0);
-    initState = states.at(0);
-    haltState = 'H';
+    blanckSym = bSy;
+    initState = iSt;
+    haltState = hSt;
 }
 
 void Machine::start() {
@@ -60,7 +60,6 @@ void Machine::start() {
     startP = 0;
     endP = tapeSize;
     count = 0;
-    //printTape(pState, 0, tape.size());
 }
 
 void Machine::reset() {

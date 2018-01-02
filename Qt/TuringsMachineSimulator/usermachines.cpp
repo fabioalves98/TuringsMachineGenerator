@@ -79,6 +79,7 @@ void UserMachines::on_simBt_clicked()
     haltSim = false;
     pauseSim = false;
     ui->simList->clear();
+    ui->stateList->clear();
     current->reset();
     current->start();
 
