@@ -220,10 +220,6 @@ void RandomMachines::on_haltStEdit_textChanged()
 
 void RandomMachines::on_randBut_clicked()
 {
-    int haltAct;
-    if ((states->size() != 0) && (symbols->size() != 0)) {
-        haltAct = qrand() % (states->size() * symbols->size());
-    }
     states->clear();
     symbols->clear();
     for (int i = 0; i < ui->randTable->columnCount(); i++) {
@@ -231,6 +227,10 @@ void RandomMachines::on_randBut_clicked()
     }
     for (int i = 0; i < ui->randTable->rowCount(); i++) {
         symbols->append(ui->randTable->verticalHeaderItem(i)->text().at(0));
+    }
+    int haltAct;
+    if ((states->size() != 0) && (symbols->size() != 0)) {
+        haltAct = qrand() % (states->size() * symbols->size());
     }
     for (int i = 0; i < symbols->size(); i++) {
         for (int j = 0; j < states->size(); j++) {

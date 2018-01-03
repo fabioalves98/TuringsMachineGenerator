@@ -12,6 +12,7 @@
 #include "machine.h"
 #include "randommachines.h"
 #include "editmachines.h"
+#include "machinesimulation.h"
 
 namespace Ui {
 class UserMachines;
@@ -42,11 +43,10 @@ private slots:
     void on_editTableBt_clicked();
 
 private:
-    void displayMach(Machine* toDisplay);
+    void addMachine(Machine* toAdd);
     void enSimButtons(QString state);
     QStringList states;
     Ui::UserMachines *ui;
-    Machine *current;
     QVector<Machine*> listMach;
     bool haltSim;
     bool pauseSim;

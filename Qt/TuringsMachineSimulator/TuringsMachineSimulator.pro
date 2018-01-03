@@ -29,20 +29,23 @@ SOURCES += \
     machine.cpp \
     usermachines.cpp \
     randommachines.cpp \
-    editmachines.cpp
+    editmachines.cpp \
+    machinesimulation.cpp
 
 HEADERS += \
         mainwindow.h \
     machine.h \
     usermachines.h \
     randommachines.h \
-    editmachines.h
+    editmachines.h \
+    machinesimulation.h
 
 FORMS += \
         mainwindow.ui \
     usermachines.ui \
     randommachines.ui \
-    editmachines.ui
+    editmachines.ui \
+    machinesimulation.ui
 
 RESOURCES += \
     resource.qrc

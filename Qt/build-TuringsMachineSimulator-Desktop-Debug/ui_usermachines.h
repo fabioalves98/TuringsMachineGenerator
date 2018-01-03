@@ -20,7 +20,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSplitter>
-#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -30,31 +30,15 @@ class Ui_UserMachines
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *verticalLayout;
     QSplitter *listSplit;
     QWidget *layoutWidget;
     QVBoxLayout *Tables;
     QLabel *tablesLabel;
     QListWidget *tablesList;
-    QSplitter *tableSplit;
-    QSplitter *specSplit;
-    QWidget *layoutWidget1;
-    QVBoxLayout *Specs;
-    QLabel *tableLabel;
-    QTableWidget *tableView;
-    QWidget *layoutWidget2;
-    QVBoxLayout *Properties;
-    QLabel *propLabel;
-    QListWidget *propList;
-    QSplitter *simSplit;
-    QWidget *layoutWidget3;
-    QVBoxLayout *States;
-    QLabel *stateLabel;
-    QListWidget *stateList;
-    QWidget *layoutWidget4;
-    QVBoxLayout *Tape;
-    QLabel *simLabel;
-    QListWidget *simList;
+    QStackedWidget *tableSim;
+    QWidget *page;
+    QWidget *page_2;
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
     QPushButton *editTableBt;
@@ -75,8 +59,8 @@ public:
 "}"));
         centralwidget = new QWidget(UserMachines);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout_6 = new QVBoxLayout(centralwidget);
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        verticalLayout = new QVBoxLayout(centralwidget);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         listSplit = new QSplitter(centralwidget);
         listSplit->setObjectName(QStringLiteral("listSplit"));
         listSplit->setOrientation(Qt::Horizontal);
@@ -106,108 +90,17 @@ public:
         Tables->addWidget(tablesList);
 
         listSplit->addWidget(layoutWidget);
-        tableSplit = new QSplitter(listSplit);
-        tableSplit->setObjectName(QStringLiteral("tableSplit"));
-        tableSplit->setOrientation(Qt::Vertical);
-        specSplit = new QSplitter(tableSplit);
-        specSplit->setObjectName(QStringLiteral("specSplit"));
-        specSplit->setOrientation(Qt::Horizontal);
-        layoutWidget1 = new QWidget(specSplit);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        Specs = new QVBoxLayout(layoutWidget1);
-        Specs->setSpacing(0);
-        Specs->setObjectName(QStringLiteral("Specs"));
-        Specs->setContentsMargins(0, 0, 0, 0);
-        tableLabel = new QLabel(layoutWidget1);
-        tableLabel->setObjectName(QStringLiteral("tableLabel"));
-        tableLabel->setFont(font);
-        tableLabel->setFrameShape(QFrame::Panel);
-        tableLabel->setFrameShadow(QFrame::Raised);
-        tableLabel->setAlignment(Qt::AlignCenter);
-        tableLabel->setMargin(3);
+        tableSim = new QStackedWidget(listSplit);
+        tableSim->setObjectName(QStringLiteral("tableSim"));
+        page = new QWidget();
+        page->setObjectName(QStringLiteral("page"));
+        tableSim->addWidget(page);
+        page_2 = new QWidget();
+        page_2->setObjectName(QStringLiteral("page_2"));
+        tableSim->addWidget(page_2);
+        listSplit->addWidget(tableSim);
 
-        Specs->addWidget(tableLabel);
-
-        tableView = new QTableWidget(layoutWidget1);
-        tableView->setObjectName(QStringLiteral("tableView"));
-
-        Specs->addWidget(tableView);
-
-        specSplit->addWidget(layoutWidget1);
-        layoutWidget2 = new QWidget(specSplit);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        Properties = new QVBoxLayout(layoutWidget2);
-        Properties->setSpacing(0);
-        Properties->setObjectName(QStringLiteral("Properties"));
-        Properties->setContentsMargins(0, 0, 0, 0);
-        propLabel = new QLabel(layoutWidget2);
-        propLabel->setObjectName(QStringLiteral("propLabel"));
-        propLabel->setFont(font);
-        propLabel->setFrameShape(QFrame::Panel);
-        propLabel->setFrameShadow(QFrame::Raised);
-        propLabel->setAlignment(Qt::AlignCenter);
-        propLabel->setMargin(3);
-
-        Properties->addWidget(propLabel);
-
-        propList = new QListWidget(layoutWidget2);
-        propList->setObjectName(QStringLiteral("propList"));
-
-        Properties->addWidget(propList);
-
-        specSplit->addWidget(layoutWidget2);
-        tableSplit->addWidget(specSplit);
-        simSplit = new QSplitter(tableSplit);
-        simSplit->setObjectName(QStringLiteral("simSplit"));
-        simSplit->setOrientation(Qt::Horizontal);
-        layoutWidget3 = new QWidget(simSplit);
-        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
-        States = new QVBoxLayout(layoutWidget3);
-        States->setSpacing(0);
-        States->setObjectName(QStringLiteral("States"));
-        States->setContentsMargins(0, 0, 0, 0);
-        stateLabel = new QLabel(layoutWidget3);
-        stateLabel->setObjectName(QStringLiteral("stateLabel"));
-        stateLabel->setMinimumSize(QSize(0, 36));
-        stateLabel->setFont(font);
-        stateLabel->setFrameShape(QFrame::Panel);
-        stateLabel->setFrameShadow(QFrame::Raised);
-        stateLabel->setAlignment(Qt::AlignCenter);
-
-        States->addWidget(stateLabel);
-
-        stateList = new QListWidget(layoutWidget3);
-        stateList->setObjectName(QStringLiteral("stateList"));
-
-        States->addWidget(stateList);
-
-        simSplit->addWidget(layoutWidget3);
-        layoutWidget4 = new QWidget(simSplit);
-        layoutWidget4->setObjectName(QStringLiteral("layoutWidget4"));
-        Tape = new QVBoxLayout(layoutWidget4);
-        Tape->setSpacing(0);
-        Tape->setObjectName(QStringLiteral("Tape"));
-        Tape->setContentsMargins(0, 0, 0, 0);
-        simLabel = new QLabel(layoutWidget4);
-        simLabel->setObjectName(QStringLiteral("simLabel"));
-        simLabel->setFont(font);
-        simLabel->setFrameShape(QFrame::Panel);
-        simLabel->setFrameShadow(QFrame::Raised);
-        simLabel->setAlignment(Qt::AlignCenter);
-        simLabel->setMargin(3);
-
-        Tape->addWidget(simLabel);
-
-        simList = new QListWidget(layoutWidget4);
-        simList->setObjectName(QStringLiteral("simList"));
-
-        Tape->addWidget(simList);
-
-        simSplit->addWidget(layoutWidget4);
-        tableSplit->addWidget(simSplit);
-        listSplit->addWidget(tableSplit);
-
-        verticalLayout_6->addWidget(listSplit);
+        verticalLayout->addWidget(listSplit);
 
         tableCtrlLt = new QHBoxLayout();
         tableCtrlLt->setObjectName(QStringLiteral("tableCtrlLt"));
@@ -232,7 +125,7 @@ public:
         tableCtrlLt->addWidget(randTableBt);
 
 
-        verticalLayout_6->addLayout(tableCtrlLt);
+        verticalLayout->addLayout(tableCtrlLt);
 
         simCtrlLt = new QHBoxLayout();
         simCtrlLt->setObjectName(QStringLiteral("simCtrlLt"));
@@ -262,7 +155,7 @@ public:
         simCtrlLt->addWidget(stopBt);
 
 
-        verticalLayout_6->addLayout(simCtrlLt);
+        verticalLayout->addLayout(simCtrlLt);
 
         UserMachines->setCentralWidget(centralwidget);
 
@@ -275,10 +168,6 @@ public:
     {
         UserMachines->setWindowTitle(QApplication::translate("UserMachines", "MainWindow", Q_NULLPTR));
         tablesLabel->setText(QApplication::translate("UserMachines", "Machine's Tables", Q_NULLPTR));
-        tableLabel->setText(QApplication::translate("UserMachines", "Table's Specification", Q_NULLPTR));
-        propLabel->setText(QApplication::translate("UserMachines", "Table's Properties", Q_NULLPTR));
-        stateLabel->setText(QApplication::translate("UserMachines", "States", Q_NULLPTR));
-        simLabel->setText(QApplication::translate("UserMachines", "Table's Simulation", Q_NULLPTR));
         addTableBt->setText(QApplication::translate("UserMachines", "Add Table", Q_NULLPTR));
         editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", Q_NULLPTR));
         randTableBt->setText(QApplication::translate("UserMachines", "Add Random Table", Q_NULLPTR));

@@ -19,8 +19,16 @@ void UserMachines::start()
     // Setting the size of the table list container
     QList<int> sizes = ui->listSplit->sizes();
     sizes[0] = (int)ui->listSplit->width()*0.2;
+    sizes[1] = (int)ui->listSplit->width()*0.8;
     ui->listSplit->setSizes(sizes);
-    // Setting the size of the simulation container
+    // Setting the default display
+    MachineSimulation *newMach = new MachineSimulation(nullptr);
+    ui->tableSim->insertWidget(0, newMach);
+    ui->tableSim->setCurrentIndex(0);
+    newMach->start();
+    newMach->setEnabled(false);
+
+    /*// Setting the size of the simulation container
     sizes = ui->tableSplit->sizes();
     sizes[1] = (int)ui->tableSplit->height()*0.7;
     ui->tableSplit->setSizes(sizes);
@@ -35,17 +43,17 @@ void UserMachines::start()
     ui->simSplit->setSizes(sizes);
 
     ui->tableView->verticalScrollBar()->setEnabled(false);
-    ui->tableView->horizontalScrollBar()->setEnabled(false);
+    ui->tableView->horizontalScrollBar()->setEnabled(false);*/
 
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
     enSimButtons("Init");
 
     connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
-    connect(ui->listSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    /*connect(ui->listSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
-    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));*/
 }
 
 void UserMachines::close() {
@@ -67,17 +75,23 @@ void UserMachines::on_addTableBt_clicked()
     QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)");
     if (!(fileD == nullptr)) {
         QFile *tableFile = new QFile(fileD);
-        Machine *machI = new Machine(tableFile);
-        displayMach(machI);
-        tableIsLoaded = true;
-        current = machI;
+        Machine *mach = new Machine(tableFile);
+        addMachine(mach);
+        MachineSimulation *sim = new MachineSimulation(mach);
+        ui->tableSim->insertWidget(listMach.size(), sim);
+        ui->tableSim->setCurrentIndex(listMach.size());
+        sim->start();
+        sim->display();
         enSimButtons("TableLoaded");
     }
 }
 
 void UserMachines::on_simBt_clicked()
 {
-    if (!tableIsLoaded) return;
+    //enSimButtons("Sim");
+    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->simulate();
+    //enSimButtons("TableLoaded");
+    /*if (!tableIsLoaded) return;
     enSimButtons("Sim");
     haltSim = false;
     pauseSim = false;
@@ -164,39 +178,38 @@ void UserMachines::on_simBt_clicked()
         current->advance();
     }
     while (true);
-    enSimButtons("TableLoaded");
+    enSimButtons("TableLoaded");*/
 }
 
 void UserMachines::getMachToDispay(QListWidgetItem *item) {
     haltSim = true;
     for (int i = 0; i < listMach.size(); i++) {
         if (listMach.at(i)->getFileName() == item->text()) {
-            displayMach(listMach.at(i));
-            current = listMach.at(i);
+            ui->tableSim->setCurrentIndex(i + 1);
             break;
         }
     }
 }
 
-void UserMachines::displayMach(Machine *toDisplay) {
+void UserMachines::addMachine(Machine *toAdd) {
     // Get the name of the table, list it in the TablesList
     bool contains = false;
     foreach (Machine *mach, listMach) {
-        if (mach->getFileName() == toDisplay->getFileName()) {
+        if (mach->getFileName() == toAdd->getFileName()) {
             contains = true;
         }
     }
     if (!contains) {
-        listMach.append(toDisplay);
+        listMach.append(toAdd);
         QListWidgetItem *tableItem = new QListWidgetItem;
-        tableItem->setText(toDisplay->getFileName());
+        tableItem->setText(toAdd->getFileName());
         tableItem->setFont(QFont("Meiryo", 11));
         tableItem->setIcon(QIcon(":/rec/icons/table.png"));
         ui->tablesList->addItem(tableItem);
         ui->tablesList->setIconSize(QSize(20, 20));
     }
     // Get the states, symbols and instructions, fill a table with them
-    tableIsLoaded = true;
+    /*tableIsLoaded = true;
     ui->tableView->clear();
     QVector<QChar> *symbols = toDisplay->getSymbols();
     QVector<QChar> *states = toDisplay->getStates();
@@ -285,13 +298,13 @@ void UserMachines::displayMach(Machine *toDisplay) {
         ui->propList->addItem(newProI);
         ui->propList->setItemWidget(newProI, newProW);
     }
-    //Clear the Simulation View*/
+    //Clear the Simulation View
     ui->simList->clear();
-    ui->stateList->clear();
+    ui->stateList->clear();*/
 }
 
 void UserMachines::resizeTable() {
-    if (tableIsLoaded) {
+    /*if (tableIsLoaded) {
         int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
         int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
         int horExccess = (ui->tableView->width() - ui->tableView->verticalHeader()->width()) - ui->tableView->columnCount()*columnWidth;
@@ -315,7 +328,7 @@ void UserMachines::resizeTable() {
                 ui->tableView->setColumnWidth(i, columnWidth);
             }
         }
-    }
+    }*/
 }
 
 void UserMachines::enSimButtons(QString state) {
@@ -383,7 +396,7 @@ void UserMachines::on_contBt_clicked()
 
 void UserMachines::on_randTableBt_clicked()
 {
-    this->setEnabled(false);
+    /*this->setEnabled(false);
     RandomMachines *rand = new RandomMachines;
     rand->show();
     while (!rand->isReady()) {
@@ -399,12 +412,12 @@ void UserMachines::on_randTableBt_clicked()
     rand->close();
     displayMach(randMach);
     current = randMach;
-    enSimButtons("TableLoaded");
+    enSimButtons("TableLoaded");*/
 }
 
 void UserMachines::on_editTableBt_clicked()
 {
-    EditMachines *edit = new EditMachines(current);
+    /*EditMachines *edit = new EditMachines(current);
     edit->show();
     edit->loadTable();
     while (!edit->isReady()) {
@@ -422,5 +435,5 @@ void UserMachines::on_editTableBt_clicked()
     }
     edit->close();
     displayMach(current);
-    enSimButtons("TableLoaded");
+    enSimButtons("TableLoaded");*/
 }
