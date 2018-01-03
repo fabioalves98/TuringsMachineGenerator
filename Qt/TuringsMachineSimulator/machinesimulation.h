@@ -19,6 +19,10 @@ public:
     void start();
     void display();
     void simulate();
+    void pause();
+    void cont();
+    void stop();
+    QString getState();
     ~MachineSimulation();
 
 private slots:
@@ -27,6 +31,7 @@ private slots:
 private:
     Ui::MachineSimulation *ui;
     Machine *mach;
+    QString state;
     bool haltSim;
     bool pauseSim;
     bool tableIsLoaded;

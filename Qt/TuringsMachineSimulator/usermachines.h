@@ -35,7 +35,6 @@ private slots:
     void on_addTableBt_clicked();
     void on_simBt_clicked();
     void getMachToDispay(QListWidgetItem* item);
-    void resizeTable();
     void on_stopBt_clicked();
     void on_pauseBt_clicked();
     void on_contBt_clicked();

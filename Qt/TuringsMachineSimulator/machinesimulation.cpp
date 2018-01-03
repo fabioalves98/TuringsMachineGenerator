@@ -35,7 +35,6 @@ void MachineSimulation::start() {
 void MachineSimulation::display() {
     // Get the states, symbols and instructions, fill a table with them
     tableIsLoaded = true;
-    //ui->tableView->clear();
     QVector<QChar> *symbols = mach->getSymbols();
     QVector<QChar> *states = mach->getStates();
     ui->tableView->setRowCount(symbols->size());
@@ -63,7 +62,6 @@ void MachineSimulation::display() {
     resizeTable();
 
     // Get the remaining properties, and fill the PropertiesList
-    //ui->propList->clear();
     QStringList properties;
     properties << " Name: " << " Symbols: " << " States: " << " Blanck Symbol: " << " Inicial State: " << " Halt State: ";
     for (QString prop : properties) {
@@ -123,9 +121,7 @@ void MachineSimulation::display() {
         ui->propList->addItem(newProI);
         ui->propList->setItemWidget(newProI, newProW);
     }
-    //Clear the Simulation View
-    //ui->simList->clear();
-    //ui->stateList->clear();
+    state = "TableLoaded";
 }
 
 void MachineSimulation::resizeTable() {
@@ -158,6 +154,7 @@ void MachineSimulation::resizeTable() {
 
 void MachineSimulation::simulate() {
     if (!tableIsLoaded) return;
+    state = "Sim";
     haltSim = false;
     pauseSim = false;
     ui->simList->clear();
@@ -243,4 +240,24 @@ void MachineSimulation::simulate() {
         mach->advance();
     }
     while (true);
+    state = "TableLoaded";
+}
+
+void MachineSimulation::pause() {
+    state = "Pause";
+    pauseSim = true;
+}
+
+void MachineSimulation::cont() {
+    state = "Sim";
+    pauseSim = false;
+}
+
+void MachineSimulation::stop() {
+    state = "TableLoaded";
+    haltSim = true;
+}
+
+QString MachineSimulation::getState() {
+    return state;
 }
