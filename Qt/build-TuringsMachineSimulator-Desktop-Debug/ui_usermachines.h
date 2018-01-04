@@ -37,8 +37,6 @@ public:
     QLabel *tablesLabel;
     QListWidget *tablesList;
     QStackedWidget *tableSim;
-    QWidget *page;
-    QWidget *page_2;
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
     QPushButton *editTableBt;
@@ -92,12 +90,6 @@ public:
         listSplit->addWidget(layoutWidget);
         tableSim = new QStackedWidget(listSplit);
         tableSim->setObjectName(QStringLiteral("tableSim"));
-        page = new QWidget();
-        page->setObjectName(QStringLiteral("page"));
-        tableSim->addWidget(page);
-        page_2 = new QWidget();
-        page_2->setObjectName(QStringLiteral("page_2"));
-        tableSim->addWidget(page_2);
         listSplit->addWidget(tableSim);
 
         verticalLayout->addWidget(listSplit);

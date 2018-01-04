@@ -30,11 +30,23 @@ void MachineSimulation::start() {
     sizes[0] = (int)ui->simSplit->width()*0.1;
     sizes[1] = (int)ui->simSplit->width()*0.9;
     ui->simSplit->setSizes(sizes);
+
+    ui->tableView->verticalScrollBar()->setEnabled(false);
+    ui->tableView->horizontalScrollBar()->setEnabled(false);
+
+    connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+    connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));
+}
+
+void MachineSimulation::setMachine(Machine *mach) {
+    this->mach = mach;
 }
 
 void MachineSimulation::display() {
+    ui->tableView->clear();
     // Get the states, symbols and instructions, fill a table with them
-    tableIsLoaded = true;
     QVector<QChar> *symbols = mach->getSymbols();
     QVector<QChar> *states = mach->getStates();
     ui->tableView->setRowCount(symbols->size());
@@ -59,8 +71,8 @@ void MachineSimulation::display() {
     }
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    resizeTable();
 
+    ui->propList->clear();
     // Get the remaining properties, and fill the PropertiesList
     QStringList properties;
     properties << " Name: " << " Symbols: " << " States: " << " Blanck Symbol: " << " Inicial State: " << " Halt State: ";
@@ -121,7 +133,16 @@ void MachineSimulation::display() {
         ui->propList->addItem(newProI);
         ui->propList->setItemWidget(newProI, newProW);
     }
+    tableIsLoaded = true;
+    resizeTable();
     state = "TableLoaded";
+}
+
+void MachineSimulation::resizeEvent(QResizeEvent *event)
+{
+    resizeTable();
+    update();
+    QWidget::resizeEvent(event);
 }
 
 void MachineSimulation::resizeTable() {

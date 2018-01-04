@@ -16,6 +16,7 @@ class MachineSimulation : public QMainWindow
 
 public:
     explicit MachineSimulation(Machine *mach, QWidget *parent = 0);
+    void setMachine(Machine * mach);
     void start();
     void display();
     void simulate();
@@ -24,6 +25,9 @@ public:
     void stop();
     QString getState();
     ~MachineSimulation();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void resizeTable();
@@ -34,7 +38,7 @@ private:
     QString state;
     bool haltSim;
     bool pauseSim;
-    bool tableIsLoaded;
+    bool tableIsLoaded = false;
 };
 
 #endif // MACHINESIMULATION_H

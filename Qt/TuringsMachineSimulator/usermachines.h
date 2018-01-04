@@ -29,7 +29,7 @@ public:
     ~UserMachines();
 
 protected:
-    void resizeEvent(QResizeEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void on_addTableBt_clicked();
@@ -47,9 +47,6 @@ private:
     QStringList states;
     Ui::UserMachines *ui;
     QVector<Machine*> listMach;
-    bool haltSim;
-    bool pauseSim;
-    bool tableIsLoaded;
 };
 
 #endif // USERMACHINES_H

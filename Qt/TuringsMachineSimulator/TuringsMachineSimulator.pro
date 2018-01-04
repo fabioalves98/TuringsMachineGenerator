@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
     machine.cpp \
     usermachines.cpp \
     randommachines.cpp \
@@ -33,7 +32,6 @@ SOURCES += \
     machinesimulation.cpp
 
 HEADERS += \
-        mainwindow.h \
     machine.h \
     usermachines.h \
     randommachines.h \
@@ -41,7 +39,6 @@ HEADERS += \
     machinesimulation.h
 
 FORMS += \
-        mainwindow.ui \
     usermachines.ui \
     randommachines.ui \
     editmachines.ui \

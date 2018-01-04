@@ -6,7 +6,6 @@ UserMachines::UserMachines(QWidget *parent) :
     ui(new Ui::UserMachines)
 {
     ui->setupUi(this);
-    tableIsLoaded = false;
 }
 
 UserMachines::~UserMachines()
@@ -28,49 +27,25 @@ void UserMachines::start()
     newMach->start();
     newMach->setEnabled(false);
 
-    /*// Setting the size of the simulation container
-    sizes = ui->tableSplit->sizes();
-    sizes[1] = (int)ui->tableSplit->height()*0.7;
-    ui->tableSplit->setSizes(sizes);
-    // Setting the size of the table view container
-    sizes = ui->specSplit->sizes();
-    sizes[0] = (int)ui->specSplit->width()*0.7;
-    ui->specSplit->setSizes(sizes);
-    // Setting the size of the states container
-    sizes = ui->simSplit->sizes();
-    sizes[0] = (int)ui->simSplit->width()*0.1;
-    sizes[1] = (int)ui->simSplit->width() - sizes[0];
-    ui->simSplit->setSizes(sizes);
-
-    ui->tableView->verticalScrollBar()->setEnabled(false);
-    ui->tableView->horizontalScrollBar()->setEnabled(false);*/
-
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
     enSimButtons("Init");
 
     connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
-    /*connect(ui->listSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
-    connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
-    connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
-    connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
-    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));*/
+}
+
+void UserMachines::closeEvent(QCloseEvent *event) {
+    close();
+    QWidget::closeEvent(event);
 }
 
 void UserMachines::close() {
-    pauseSim = false;
-    haltSim = true;
-}
-
-void UserMachines::resizeEvent(QResizeEvent *event)
-{
-    //resizeTable();
-    update();
-    QWidget::resizeEvent(event);
+    for (int i = 1; i < ui->tableSim->count(); i++) {
+        dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->stop();
+    }
 }
 
 void UserMachines::on_addTableBt_clicked()
 {
-    haltSim = true;
     // Initialize new Table, and display it
     QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)");
     if (!(fileD == nullptr)) {
@@ -89,20 +64,12 @@ void UserMachines::on_addTableBt_clicked()
 void UserMachines::on_simBt_clicked()
 {
     MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    enSimButtons("Sim");
     toSim->simulate();
-    qDebug() << toSim->getState();
-    enSimButtons(toSim->getState());
-    while (toSim->getState() == "Sim") {
-        for (int i = 0; i < 10; i++) {
-            QThread::msleep(10);
-            QCoreApplication::processEvents();
-        }
-    }
     enSimButtons(toSim->getState());
 }
 
 void UserMachines::getMachToDispay(QListWidgetItem *item) {
-    haltSim = true;
     for (int i = 0; i < listMach.size(); i++) {
         if (listMach.at(i)->getFileName() == item->text()) {
             ui->tableSim->setCurrentIndex(i + 1);
@@ -154,9 +121,9 @@ void UserMachines::enSimButtons(QString state) {
             break;
         }
         case 2: {
-            ui->addTableBt->setEnabled(false);
+            ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(false);
-            ui->randTableBt->setEnabled(false);
+            ui->randTableBt->setEnabled(true);
             ui->simBt->setEnabled(false);
             ui->pauseBt->setEnabled(true);
             ui->contBt->setEnabled(false);
@@ -178,22 +145,28 @@ void UserMachines::enSimButtons(QString state) {
 
 void UserMachines::on_stopBt_clicked()
 {
-    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->stop();
+    MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    toStop->stop();
+    enSimButtons(toStop->getState());
 }
 
 void UserMachines::on_pauseBt_clicked()
 {
-    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->pause();
+    MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    toPause->pause();
+    enSimButtons(toPause->getState());
 }
 
 void UserMachines::on_contBt_clicked()
 {
-    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->cont();
+    MachineSimulation *toCont = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    toCont->cont();
+    enSimButtons(toCont->getState());
 }
 
 void UserMachines::on_randTableBt_clicked()
 {
-    /*this->setEnabled(false);
+    //this->setEnabled(false);
     RandomMachines *rand = new RandomMachines;
     rand->show();
     while (!rand->isReady()) {
@@ -207,14 +180,19 @@ void UserMachines::on_randTableBt_clicked()
     this->setEnabled(true);
     Machine *randMach = rand->getRandMach();
     rand->close();
-    displayMach(randMach);
-    current = randMach;
-    enSimButtons("TableLoaded");*/
+    addMachine(randMach);
+    MachineSimulation *sim = new MachineSimulation(randMach);
+    ui->tableSim->insertWidget(listMach.size(), sim);
+    ui->tableSim->setCurrentIndex(listMach.size());
+    sim->start();
+    sim->display();
+    enSimButtons(sim->getState());
 }
 
 void UserMachines::on_editTableBt_clicked()
 {
-    /*EditMachines *edit = new EditMachines(current);
+    //this->setEnabled(false);
+    EditMachines *edit = new EditMachines(listMach.at(ui->tableSim->currentIndex() - 1));
     edit->show();
     edit->loadTable();
     while (!edit->isReady()) {
@@ -224,13 +202,14 @@ void UserMachines::on_editTableBt_clicked()
                 return;
             }
     }
-    current = edit->getEditMach();
+    Machine *edited = edit->getEditMach();
     for (int i = 0; i < listMach.size(); i++) {
-        if (listMach.at(i)->getFileName() == current->getFileName()) {
-            listMach.replace(i, current);
+        if (listMach.at(i)->getFileName() == edited->getFileName()) {
+            listMach.replace(i, edited);
         }
     }
     edit->close();
-    displayMach(current);
-    enSimButtons("TableLoaded");*/
+    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setMachine(edited);
+    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->display();
+    enSimButtons("TableLoaded");
 }
