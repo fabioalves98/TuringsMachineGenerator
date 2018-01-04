@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CONCURRENT_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../TuringsMachineSimulator -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/qt/mkspecs/linux-g++
+INCPATH       = -I../TuringsMachineSimulator -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtConcurrent -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = TuringsMachineSimulator1.0.0
 DISTDIR = /home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/build-TuringsMachineSimulator-Desktop-Debug/.tmp/TuringsMachineSimulator1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Concurrent -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -452,6 +452,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 		../TuringsMachineSimulator/resource.qrc \
 		/usr/lib/libQt5Widgets.prl \
 		/usr/lib/libQt5Gui.prl \
+		/usr/lib/libQt5Concurrent.prl \
 		/usr/lib/libQt5Core.prl
 	$(QMAKE) -o Makefile ../TuringsMachineSimulator/TuringsMachineSimulator.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 /usr/lib/qt/mkspecs/features/spec_pre.prf:
@@ -636,6 +637,7 @@ Makefile: ../TuringsMachineSimulator/TuringsMachineSimulator.pro /usr/lib/qt/mks
 ../TuringsMachineSimulator/resource.qrc:
 /usr/lib/libQt5Widgets.prl:
 /usr/lib/libQt5Gui.prl:
+/usr/lib/libQt5Concurrent.prl:
 /usr/lib/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../TuringsMachineSimulator/TuringsMachineSimulator.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -703,25 +705,25 @@ moc_usermachines.cpp: ../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/usermachines.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/usermachines.h -o moc_usermachines.cpp
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/usermachines.h -o moc_usermachines.cpp
 
 moc_randommachines.cpp: ../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/randommachines.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/randommachines.h -o moc_randommachines.cpp
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/randommachines.h -o moc_randommachines.cpp
 
 moc_editmachines.cpp: ../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/editmachines.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/editmachines.h -o moc_editmachines.cpp
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/editmachines.h -o moc_editmachines.cpp
 
 moc_machinesimulation.cpp: ../TuringsMachineSimulator/machine.h \
 		../TuringsMachineSimulator/machinesimulation.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/machinesimulation.h -o moc_machinesimulation.cpp
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/fabio/Mega/Bolsa/TuringsMachineGenerator/Qt/TuringsMachineSimulator -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include ../TuringsMachineSimulator/machinesimulation.h -o moc_machinesimulation.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:

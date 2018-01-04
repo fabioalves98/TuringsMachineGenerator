@@ -187,7 +187,7 @@ void MachineSimulation::simulate() {
     QString tapeStr;
     do {
         if (pauseSim) {
-            QThread::msleep(10);
+            //QThread::msleep(10);
             QCoreApplication::processEvents();
             if (haltSim) {
                 break;
@@ -217,8 +217,9 @@ void MachineSimulation::simulate() {
                 tapeStr.append("      ");
             }
         }
+        qDebug() << tapeStr;
         // Select state and symbol in table
-        int st = mach->getStates()->indexOf(mach->getCurrentState());
+        /*int st = mach->getStates()->indexOf(mach->getCurrentState());
         int sy = mach->getSymbols()->indexOf(mach->getCurrentSymbol());
         if (st >= 0) {
             ui->tableView->clearSelection();
@@ -250,9 +251,9 @@ void MachineSimulation::simulate() {
         QScrollBar *bar = ui->simList->horizontalScrollBar();
         bar->setValue((bar->maximum() + bar->minimum())/2);
         bar->update();
-        ui->simList->update();
+        ui->simList->update();*/
         for (int i = 0; i < 10; i++) {
-            QThread::msleep(10);
+            QThread::msleep(50);
             QCoreApplication::processEvents();
         }
         if (mach->halted() || haltSim) {

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QThread>
 #include <QScrollBar>
+#include <QtConcurrent>
 #include "machine.h"
 
 namespace Ui {
