@@ -72,7 +72,7 @@ static const uint qt_meta_data_MachineSimulation[] = {
        4,    1,   57,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   60,    2, 0x08 /* Private */,
+       5,    0,   60,    2, 0x0a /* Public */,
        6,    2,   61,    2, 0x08 /* Private */,
        9,    1,   66,    2, 0x08 /* Private */,
       11,    1,   69,    2, 0x08 /* Private */,

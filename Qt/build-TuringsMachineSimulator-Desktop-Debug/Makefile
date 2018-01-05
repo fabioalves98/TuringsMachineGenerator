@@ -756,7 +756,11 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: ../TuringsMachineSimulator/main.cpp 
+main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/usermachines.h \
+		../TuringsMachineSimulator/machine.h \
+		../TuringsMachineSimulator/randommachines.h \
+		../TuringsMachineSimulator/editmachines.h \
+		../TuringsMachineSimulator/machinesimulation.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../TuringsMachineSimulator/main.cpp
 
 machine.o: ../TuringsMachineSimulator/machine.cpp ../TuringsMachineSimulator/machine.h

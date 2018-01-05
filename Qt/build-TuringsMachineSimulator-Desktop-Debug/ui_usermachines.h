@@ -41,7 +41,8 @@ public:
     QPushButton *addTableBt;
     QPushButton *editTableBt;
     QPushButton *randTableBt;
-    QHBoxLayout *simCtrlLt;
+    QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout;
     QPushButton *simBt;
     QPushButton *pauseBt;
     QPushButton *contBt;
@@ -119,35 +120,40 @@ public:
 
         verticalLayout->addLayout(tableCtrlLt);
 
-        simCtrlLt = new QHBoxLayout();
-        simCtrlLt->setObjectName(QStringLiteral("simCtrlLt"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         simBt = new QPushButton(centralwidget);
         simBt->setObjectName(QStringLiteral("simBt"));
         simBt->setMinimumSize(QSize(0, 0));
         simBt->setFont(font1);
 
-        simCtrlLt->addWidget(simBt);
+        horizontalLayout->addWidget(simBt);
+
+
+        horizontalLayout_2->addLayout(horizontalLayout);
 
         pauseBt = new QPushButton(centralwidget);
         pauseBt->setObjectName(QStringLiteral("pauseBt"));
         pauseBt->setFont(font1);
 
-        simCtrlLt->addWidget(pauseBt);
+        horizontalLayout_2->addWidget(pauseBt);
 
         contBt = new QPushButton(centralwidget);
         contBt->setObjectName(QStringLiteral("contBt"));
         contBt->setFont(font1);
 
-        simCtrlLt->addWidget(contBt);
+        horizontalLayout_2->addWidget(contBt);
 
         stopBt = new QPushButton(centralwidget);
         stopBt->setObjectName(QStringLiteral("stopBt"));
         stopBt->setFont(font1);
 
-        simCtrlLt->addWidget(stopBt);
+        horizontalLayout_2->addWidget(stopBt);
 
 
-        verticalLayout->addLayout(simCtrlLt);
+        verticalLayout->addLayout(horizontalLayout_2);
 
         UserMachines->setCentralWidget(centralwidget);
 

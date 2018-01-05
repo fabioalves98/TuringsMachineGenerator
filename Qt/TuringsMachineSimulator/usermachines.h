@@ -9,6 +9,7 @@
 #include <QListWidget>
 #include <QScrollBar>
 #include <QCloseEvent>
+#include <QCheckBox>
 #include "machine.h"
 #include "randommachines.h"
 #include "editmachines.h"
@@ -34,6 +35,7 @@ protected:
 private slots:
     void on_addTableBt_clicked();
     void on_simBt_clicked();
+    void finishSim(QString tableName);
     void getMachToDispay(QListWidgetItem* item);
     void on_stopBt_clicked();
     void on_pauseBt_clicked();
@@ -42,10 +44,11 @@ private slots:
     void on_editTableBt_clicked();
 
 private:
-    void addMachine(Machine* toAdd);
+    bool addMachine(Machine* toAdd);
     void enSimButtons(QString state);
-    QStringList states;
     Ui::UserMachines *ui;
+    QStringList states;
+    QString selected;
     QVector<Machine*> listMach;
 };
 

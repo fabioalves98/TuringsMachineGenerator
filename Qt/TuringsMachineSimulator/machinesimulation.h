@@ -27,6 +27,9 @@ public:
     QString getState();
     ~MachineSimulation();
 
+public slots:
+    void resizeTable();
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
@@ -36,7 +39,6 @@ signals:
     void insertTapeSgn(QString);
 
 private slots:
-    void resizeTable();
     void selectTableCellSlt(int st, int sy);
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
