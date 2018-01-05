@@ -38,6 +38,10 @@ void MachineSimulation::start() {
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
     connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));
+
+    connect(this, SIGNAL(insertTapeSgn(QString)), this, SLOT(insertTapeSlt(QString)));
+    connect(this, SIGNAL(insertStateSgn(QString)), this, SLOT(insertStateSlt(QString)));
+    connect(this, SIGNAL(selectTableCellSgn(int,int)), this, SLOT(selectTableCellSlt(int,int)));
 }
 
 void MachineSimulation::setMachine(Machine *mach) {
@@ -187,7 +191,7 @@ void MachineSimulation::simulate() {
     QString tapeStr;
     do {
         if (pauseSim) {
-            //QThread::msleep(10);
+            QThread::msleep(10);
             QCoreApplication::processEvents();
             if (haltSim) {
                 break;
@@ -217,43 +221,15 @@ void MachineSimulation::simulate() {
                 tapeStr.append("      ");
             }
         }
-        qDebug() << tapeStr;
-        // Select state and symbol in table
-        /*int st = mach->getStates()->indexOf(mach->getCurrentState());
+        int st = mach->getStates()->indexOf(mach->getCurrentState());
         int sy = mach->getSymbols()->indexOf(mach->getCurrentSymbol());
-        if (st >= 0) {
-            ui->tableView->clearSelection();
-            QModelIndex model = ui->tableView->model()->index(sy, st);
-            ui->tableView->selectionModel()->select(model, QItemSelectionModel::Select);
-        }
-        // Add State
-        QListWidgetItem *newStateI = new QListWidgetItem;
-        QLabel *stateText = new QLabel;
-        stateText->setText(mach->getCurrentState());
-        stateText->setFont(QFont("Courier", 12, QFont::Bold));
-        stateText->setAlignment(Qt::AlignCenter);
-        newStateI->setSizeHint(stateText->sizeHint());
-        newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-        ui->stateList->addItem(newStateI);
-        ui->stateList->setItemWidget(newStateI, stateText);
-        ui->stateList->scrollToBottom();
-        // Add Tape Value
-        QListWidgetItem *newTapeI = new QListWidgetItem;
-        QLabel *tableText = new QLabel;
-        tableText->setText(tapeStr);
-        tableText->setFont(QFont("Courier", 12, QFont::Bold));
-        tableText->setAlignment(Qt::AlignCenter);
-        newTapeI->setSizeHint(tableText->sizeHint());
-        newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-        ui->simList->addItem(newTapeI);
-        ui->simList->setItemWidget(newTapeI, tableText);
-        ui->simList->scrollToBottom();
-        QScrollBar *bar = ui->simList->horizontalScrollBar();
-        bar->setValue((bar->maximum() + bar->minimum())/2);
-        bar->update();
-        ui->simList->update();*/
+
+        emit selectTableCellSgn(st, sy);
+        emit insertStateSgn(mach->getCurrentState());
+        emit insertTapeSgn(tapeStr);
+
         for (int i = 0; i < 10; i++) {
-            QThread::msleep(50);
+            QThread::msleep(10);
             QCoreApplication::processEvents();
         }
         if (mach->halted() || haltSim) {
@@ -263,6 +239,44 @@ void MachineSimulation::simulate() {
     }
     while (true);
     state = "TableLoaded";
+}
+
+void MachineSimulation::selectTableCellSlt(int st, int sy) {
+    if (st >= 0) {
+        ui->tableView->clearSelection();
+        QModelIndex model = ui->tableView->model()->index(sy, st);
+        ui->tableView->selectionModel()->select(model, QItemSelectionModel::Select);
+    }
+}
+
+void MachineSimulation::insertStateSlt(QString state) {
+    QListWidgetItem *newStateI = new QListWidgetItem;
+    QLabel *stateText = new QLabel;
+    stateText->setText(state);
+    stateText->setFont(QFont("Courier", 12, QFont::Bold));
+    stateText->setAlignment(Qt::AlignCenter);
+    newStateI->setSizeHint(stateText->sizeHint());
+    newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+    ui->stateList->addItem(newStateI);
+    ui->stateList->setItemWidget(newStateI, stateText);
+    ui->stateList->scrollToBottom();
+}
+
+void MachineSimulation::insertTapeSlt(QString toUpdate) {
+    QListWidgetItem *newTapeI = new QListWidgetItem;
+    QLabel *tableText = new QLabel;
+    tableText->setText(toUpdate);
+    tableText->setFont(QFont("Courier", 12, QFont::Bold));
+    tableText->setAlignment(Qt::AlignCenter);
+    newTapeI->setSizeHint(tableText->sizeHint());
+    newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+    ui->simList->addItem(newTapeI);
+    ui->simList->setItemWidget(newTapeI, tableText);
+    ui->simList->scrollToBottom();
+    QScrollBar *bar = ui->simList->horizontalScrollBar();
+    bar->setValue((bar->maximum() + bar->minimum())/2);
+    bar->update();
+    ui->simList->update();
 }
 
 void MachineSimulation::pause() {

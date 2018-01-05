@@ -66,8 +66,6 @@ void UserMachines::on_simBt_clicked()
     MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     enSimButtons("Sim");
     QFuture<void> fut = QtConcurrent::run(toSim, &MachineSimulation::simulate);
-    //toSim->simulate();
-    enSimButtons(toSim->getState());
 }
 
 void UserMachines::getMachToDispay(QListWidgetItem *item) {
