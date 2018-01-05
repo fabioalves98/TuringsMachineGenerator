@@ -71,6 +71,14 @@ void UserMachines::on_simBt_clicked()
             itemsChecked = true;
             dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->stop();
             QThread::msleep(20);
+            QCoreApplication::processEvents();
+
+            QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->clear();
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setMovie(loading);
+            loading->setScaledSize(QSize(20, 20));
+            loading->start();
+
             MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1));
 
             QFutureWatcher<void> *watcher = new QFutureWatcher<void>;
@@ -88,6 +96,15 @@ void UserMachines::on_simBt_clicked()
 }
 
 void UserMachines::finishSim(QString tableName) {
+    for (int i = 0; i < listMach.size(); i++) {
+        if (listMach.at(i)->getFileName() == tableName) {
+            QPixmap icon(":/rec/icons/check");
+            icon = icon.scaled(20, 20);
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->clear();
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setPixmap(icon);
+            break;
+        }
+    }
     if (selected == tableName) {
         enSimButtons("TableLoaded");
     }
@@ -131,6 +148,13 @@ bool UserMachines::addMachine(Machine *toAdd) {
         QCheckBox *check = new QCheckBox;
         layout->addWidget(check);
 
+        QLabel *label = new QLabel;
+        QPixmap icon(":/rec/icons/question");
+        icon = icon.scaled(20, 20);
+        label->setPixmap(icon);
+        layout->addWidget(label);
+
+        layout->addSpacing(3);
         layout->setMargin(0);
 
         widget->setLayout(layout);

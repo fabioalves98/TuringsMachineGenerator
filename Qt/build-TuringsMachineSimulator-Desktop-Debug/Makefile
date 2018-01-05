@@ -686,7 +686,11 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_resource.cpp
 qrc_resource.cpp: ../TuringsMachineSimulator/resource.qrc \
 		/usr/bin/rcc \
-		../TuringsMachineSimulator/icons/table.png
+		../TuringsMachineSimulator/icons/spinner.gif \
+		../TuringsMachineSimulator/icons/question.png \
+		../TuringsMachineSimulator/icons/table.png \
+		../TuringsMachineSimulator/icons/cancel.png \
+		../TuringsMachineSimulator/icons/check.png
 	/usr/bin/rcc -name resource ../TuringsMachineSimulator/resource.qrc -o qrc_resource.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

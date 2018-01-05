@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/rec">
         <file>icons/table.png</file>
+        <file>icons/spinner.gif</file>
+        <file>icons/question.png</file>
+        <file>icons/check.png</file>
+        <file>icons/cancel.png</file>
     </qresource>
 </RCC>

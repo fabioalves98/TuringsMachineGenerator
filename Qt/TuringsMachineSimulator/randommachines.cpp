@@ -173,9 +173,6 @@ void RandomMachines::resizeTable() {
             }
         }
         else {
-            if (ui->randTable->rowCount() == 1 || ui->randTable->columnCount() == 1) {
-                //QCoreApplication::processEvents();
-            }
             int rowHeigth = (ui->randTable->height() - ui->randTable->horizontalHeader()->height())/ui->randTable->rowCount();
             int columnWidth = (ui->randTable->width() - ui->randTable->verticalHeader()->width())/ui->randTable->columnCount();
             int horExccess = (ui->randTable->width() - ui->randTable->verticalHeader()->width()) - ui->randTable->columnCount()*columnWidth;

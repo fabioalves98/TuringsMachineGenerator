@@ -10,6 +10,7 @@
 #include <QScrollBar>
 #include <QCloseEvent>
 #include <QCheckBox>
+#include <QMovie>
 #include "machine.h"
 #include "randommachines.h"
 #include "editmachines.h"
