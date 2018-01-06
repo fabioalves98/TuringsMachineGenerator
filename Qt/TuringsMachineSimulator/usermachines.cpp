@@ -63,13 +63,30 @@ void UserMachines::on_addTableBt_clicked()
     }
 }
 
+void UserMachines::on_uselAllBt_clicked()
+{
+    for (int i = 0; i < ui->tablesList->count(); i++) {
+        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
+    }
+}
+
+void UserMachines::on_selAllBt_clicked()
+{
+    for (int i = 0; i < ui->tablesList->count(); i++) {
+        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
+    }
+}
+
 void UserMachines::on_simBt_clicked()
 {
-    bool itemsChecked = false;
-    listWatcher.clear();
+    int index = ui->tableSim->currentIndex() - 1;
+    if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(2)->widget())->isChecked()) {
+        enSimButtons("Sim");
+    }
     for (int i = 0; i < ui->tablesList->count(); i++) {
         if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
-            itemsChecked = true;
+            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
+            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setEnabled(false);
             dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->stop();
             QThread::msleep(20);
             QCoreApplication::processEvents();
@@ -85,7 +102,6 @@ void UserMachines::on_simBt_clicked()
             QFutureWatcher<void> *watcher = new QFutureWatcher<void>;
             QFuture<void> fut = QtConcurrent::run(toSim, &MachineSimulation::simulate);
             watcher->setFuture(fut);
-            listWatcher.append(watcher);
 
             QSignalMapper *sigMap = new QSignalMapper(this);
             connect(watcher, SIGNAL(finished()), sigMap, SLOT(map()));
@@ -94,13 +110,20 @@ void UserMachines::on_simBt_clicked()
             connect(sigMap, SIGNAL(mapped(QString)), this, SLOT(finishSim(QString)));
         }
     }
-    if (itemsChecked) enSimButtons("Sim");
 }
 
-void UserMachines::finishSim(QString tableName) {
+void UserMachines::finishSim(QString tableName) {    
     for (int i = 0; i < listMach.size(); i++) {
         if (listMach.at(i)->getFileName() == tableName) {
-            QPixmap icon(":/rec/icons/check");
+            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setEnabled(true);
+            delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->movie();
+            QPixmap icon;
+            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->halted()) {
+                icon.load(":/rec/icons/check");
+            }
+            else {
+                icon.load(":/rec/icons/question");
+            }
             icon = icon.scaled(20, 20);
             dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->clear();
             dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setPixmap(icon);
@@ -180,8 +203,11 @@ void UserMachines::enSimButtons(QString state) {
         case 0: {
             ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(false);
-            ui->randTableBt->setEnabled(true);
+            ui->cRandTableBt->setEnabled(true);
+            ui->qRandTableBt->setEnabled(true);
             ui->simBt->setEnabled(false);
+            ui->selAllBt->setEnabled(false);
+            ui->uselAllBt->setEnabled(false);
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
@@ -190,8 +216,11 @@ void UserMachines::enSimButtons(QString state) {
         case 1: {
             ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(true);
-            ui->randTableBt->setEnabled(true);
+            ui->cRandTableBt->setEnabled(true);
+            ui->qRandTableBt->setEnabled(true);
             ui->simBt->setEnabled(true);
+            ui->selAllBt->setEnabled(true);
+            ui->uselAllBt->setEnabled(true);
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
@@ -200,8 +229,11 @@ void UserMachines::enSimButtons(QString state) {
         case 2: {
             ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(false);
-            ui->randTableBt->setEnabled(true);
-            ui->simBt->setEnabled(false);
+            ui->cRandTableBt->setEnabled(true);
+            ui->qRandTableBt->setEnabled(true);
+            ui->simBt->setEnabled(true);
+            ui->selAllBt->setEnabled(true);
+            ui->uselAllBt->setEnabled(true);
             ui->pauseBt->setEnabled(true);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(true);
@@ -210,8 +242,11 @@ void UserMachines::enSimButtons(QString state) {
         case 3: {
             ui->addTableBt->setEnabled(false);
             ui->editTableBt->setEnabled(false);
-            ui->randTableBt->setEnabled(false);
-            ui->simBt->setEnabled(false);
+            ui->cRandTableBt->setEnabled(true);
+            ui->qRandTableBt->setEnabled(true);
+            ui->simBt->setEnabled(true);
+            ui->selAllBt->setEnabled(true);
+            ui->uselAllBt->setEnabled(true);
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(true);
             ui->stopBt->setEnabled(true);
@@ -225,10 +260,7 @@ void UserMachines::on_stopBt_clicked()
     MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toStop->stop();
     int index = ui->tableSim->currentIndex() - 1;
-    QPixmap icon(":/rec/icons/cancel");
-    icon = icon.scaled(20, 20);
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setPixmap(icon);
+    dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(2)->widget())->setEnabled(true);
     enSimButtons(toStop->getState());
 }
 
@@ -237,6 +269,7 @@ void UserMachines::on_pauseBt_clicked()
     MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toPause->pause();
     int index = ui->tableSim->currentIndex() - 1;
+    delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->movie();
     QPixmap icon(":/rec/icons/pause");
     icon = icon.scaled(20, 20);
     dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
@@ -259,9 +292,8 @@ void UserMachines::on_contBt_clicked()
 
 }
 
-void UserMachines::on_randTableBt_clicked()
+void UserMachines::on_cRandTableBt_clicked()
 {
-    //this->setEnabled(false);
     RandomMachines *rand = new RandomMachines;
     rand->show();
     while (!rand->isReady()) {
@@ -284,9 +316,14 @@ void UserMachines::on_randTableBt_clicked()
     enSimButtons(sim->getState());
 }
 
+void UserMachines::on_qRandTableBt_clicked()
+{
+    RandomMachines *rand = new RandomMachines;
+    rand->quick();
+}
+
 void UserMachines::on_editTableBt_clicked()
 {
-    //this->setEnabled(false);
     EditMachines *edit = new EditMachines(listMach.at(ui->tableSim->currentIndex() - 1));
     edit->show();
     edit->loadTable();

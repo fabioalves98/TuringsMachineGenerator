@@ -34,6 +34,9 @@ void MachineSimulation::start() {
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
 
+    ui->stateList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->simList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
     connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
@@ -182,6 +185,7 @@ void MachineSimulation::simulate() {
     state = "Sim";
     haltSim = false;
     pauseSim = false;
+    halts = false;
     ui->simList->clear();
     ui->stateList->clear();
     mach->reset();
@@ -233,7 +237,7 @@ void MachineSimulation::simulate() {
             QCoreApplication::processEvents();
             if (mach->halted()) {
                 state = "TableLoaded";
-                halted = true;
+                halts = true;
                 return;
             }
             if (haltSim) {
@@ -265,6 +269,9 @@ void MachineSimulation::insertStateSlt(QString state) {
     ui->stateList->addItem(newStateI);
     ui->stateList->setItemWidget(newStateI, stateText);
     ui->stateList->scrollToBottom();
+    QScrollBar *bar = ui->stateList->horizontalScrollBar();
+    bar->setValue((bar->maximum() + bar->minimum())/2);
+    bar->update();
 }
 
 void MachineSimulation::insertTapeSlt(QString toUpdate) {
@@ -297,6 +304,10 @@ void MachineSimulation::cont() {
 void MachineSimulation::stop() {
     state = "TableLoaded";
     haltSim = true;
+}
+
+bool MachineSimulation::halted() {
+    return halts;
 }
 
 QString MachineSimulation::getState() {

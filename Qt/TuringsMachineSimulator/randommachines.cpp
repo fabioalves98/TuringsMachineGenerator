@@ -34,6 +34,10 @@ void RandomMachines::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
+void RandomMachines::quick() {
+
+}
+
 void RandomMachines::on_stSel_valueChanged(int arg1)
 {
     ui->randTable->clearContents();
@@ -76,6 +80,7 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
 void RandomMachines::changeHorHeader(int st) {
    QString state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
    ui->randTable->horizontalHeaderItem(st)->setText(state);
+   ui->initStCBox->setItemText(st, state);
 }
 
 void RandomMachines::clearStLayout() {
@@ -131,6 +136,7 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
 void RandomMachines::changeVerHeader(int sy) {
     QString symbol = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
     ui->randTable->verticalHeaderItem(sy)->setText(symbol);
+    ui->blanckSyCBox->setItemText(sy, symbol);
 }
 
 void RandomMachines::clearSyLayout() {

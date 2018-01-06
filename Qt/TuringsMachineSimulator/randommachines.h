@@ -21,6 +21,7 @@ class RandomMachines : public QMainWindow
 
 public:
     explicit RandomMachines(QWidget *parent = 0);
+    void quick();
     bool isReady();
     Machine *getRandMach();
     ~RandomMachines();

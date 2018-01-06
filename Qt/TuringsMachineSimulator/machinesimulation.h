@@ -24,6 +24,7 @@ public:
     void pause();
     void cont();
     void stop();
+    bool halted();
     QString getState();
     ~MachineSimulation();
 
@@ -49,7 +50,7 @@ private:
     QString state;
     bool haltSim;
     bool pauseSim;
-    bool halted = false;
+    bool halts;
     bool tableIsLoaded = false;
 };
 

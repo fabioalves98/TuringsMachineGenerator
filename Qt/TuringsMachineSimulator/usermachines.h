@@ -36,13 +36,17 @@ protected:
 private slots:
     void on_addTableBt_clicked();
     void on_simBt_clicked();
+    void on_uselAllBt_clicked();
+    void on_selAllBt_clicked();
     void finishSim(QString tableName);
     void getMachToDispay(QListWidgetItem* item);
     void on_stopBt_clicked();
     void on_pauseBt_clicked();
     void on_contBt_clicked();
-    void on_randTableBt_clicked();
+    void on_cRandTableBt_clicked();
     void on_editTableBt_clicked();
+
+    void on_qRandTableBt_clicked();
 
 private:
     bool addMachine(Machine* toAdd);
@@ -51,7 +55,6 @@ private:
     QStringList states;
     QString selected;
     QVector<Machine*> listMach;
-    QVector<QFutureWatcher<void>*> listWatcher;
 };
 
 #endif // USERMACHINES_H

@@ -30,23 +30,29 @@ class Ui_UserMachines
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_4;
     QSplitter *listSplit;
     QWidget *layoutWidget;
-    QVBoxLayout *Tables;
+    QVBoxLayout *verticalLayout_3;
+    QVBoxLayout *verticalLayout_2;
+    QVBoxLayout *verticalLayout;
     QLabel *tablesLabel;
     QListWidget *tablesList;
-    QStackedWidget *tableSim;
-    QHBoxLayout *tableCtrlLt;
-    QPushButton *addTableBt;
-    QPushButton *editTableBt;
-    QPushButton *randTableBt;
     QHBoxLayout *horizontalLayout_2;
-    QHBoxLayout *horizontalLayout;
+    QPushButton *uselAllBt;
+    QPushButton *selAllBt;
     QPushButton *simBt;
+    QStackedWidget *tableSim;
+    QHBoxLayout *horizontalLayout;
     QPushButton *pauseBt;
     QPushButton *contBt;
     QPushButton *stopBt;
+    QHBoxLayout *tableCtrlLt;
+    QPushButton *addTableBt;
+    QPushButton *editTableBt;
+    QPushButton *qRandTableBt;
+    QPushButton *cRandTableBt;
+    QPushButton *settingsBt;
 
     void setupUi(QMainWindow *UserMachines)
     {
@@ -58,17 +64,23 @@ public:
 "}"));
         centralwidget = new QWidget(UserMachines);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout_4 = new QVBoxLayout(centralwidget);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         listSplit = new QSplitter(centralwidget);
         listSplit->setObjectName(QStringLiteral("listSplit"));
         listSplit->setOrientation(Qt::Horizontal);
         layoutWidget = new QWidget(listSplit);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        Tables = new QVBoxLayout(layoutWidget);
-        Tables->setSpacing(0);
-        Tables->setObjectName(QStringLiteral("Tables"));
-        Tables->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_3 = new QVBoxLayout(layoutWidget);
+        verticalLayout_3->setSpacing(2);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(2);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(0);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         tablesLabel = new QLabel(layoutWidget);
         tablesLabel->setObjectName(QStringLiteral("tablesLabel"));
         tablesLabel->setEnabled(true);
@@ -80,80 +92,112 @@ public:
         tablesLabel->setAlignment(Qt::AlignCenter);
         tablesLabel->setMargin(3);
 
-        Tables->addWidget(tablesLabel);
+        verticalLayout->addWidget(tablesLabel);
 
         tablesList = new QListWidget(layoutWidget);
         tablesList->setObjectName(QStringLiteral("tablesList"));
         tablesList->setStyleSheet(QStringLiteral(""));
 
-        Tables->addWidget(tablesList);
+        verticalLayout->addWidget(tablesList);
+
+
+        verticalLayout_2->addLayout(verticalLayout);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        uselAllBt = new QPushButton(layoutWidget);
+        uselAllBt->setObjectName(QStringLiteral("uselAllBt"));
+        QFont font1;
+        font1.setPointSize(10);
+        uselAllBt->setFont(font1);
+
+        horizontalLayout_2->addWidget(uselAllBt);
+
+        selAllBt = new QPushButton(layoutWidget);
+        selAllBt->setObjectName(QStringLiteral("selAllBt"));
+        selAllBt->setFont(font1);
+
+        horizontalLayout_2->addWidget(selAllBt);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
+
+
+        verticalLayout_3->addLayout(verticalLayout_2);
+
+        simBt = new QPushButton(layoutWidget);
+        simBt->setObjectName(QStringLiteral("simBt"));
+        simBt->setMinimumSize(QSize(0, 0));
+        QFont font2;
+        font2.setPointSize(12);
+        simBt->setFont(font2);
+
+        verticalLayout_3->addWidget(simBt);
 
         listSplit->addWidget(layoutWidget);
         tableSim = new QStackedWidget(listSplit);
         tableSim->setObjectName(QStringLiteral("tableSim"));
         listSplit->addWidget(tableSim);
 
-        verticalLayout->addWidget(listSplit);
+        verticalLayout_4->addWidget(listSplit);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        pauseBt = new QPushButton(centralwidget);
+        pauseBt->setObjectName(QStringLiteral("pauseBt"));
+        pauseBt->setFont(font2);
+
+        horizontalLayout->addWidget(pauseBt);
+
+        contBt = new QPushButton(centralwidget);
+        contBt->setObjectName(QStringLiteral("contBt"));
+        contBt->setFont(font2);
+
+        horizontalLayout->addWidget(contBt);
+
+        stopBt = new QPushButton(centralwidget);
+        stopBt->setObjectName(QStringLiteral("stopBt"));
+        stopBt->setFont(font2);
+
+        horizontalLayout->addWidget(stopBt);
+
+
+        verticalLayout_4->addLayout(horizontalLayout);
 
         tableCtrlLt = new QHBoxLayout();
         tableCtrlLt->setObjectName(QStringLiteral("tableCtrlLt"));
         addTableBt = new QPushButton(centralwidget);
         addTableBt->setObjectName(QStringLiteral("addTableBt"));
-        QFont font1;
-        font1.setPointSize(12);
-        addTableBt->setFont(font1);
+        addTableBt->setFont(font2);
 
         tableCtrlLt->addWidget(addTableBt);
 
         editTableBt = new QPushButton(centralwidget);
         editTableBt->setObjectName(QStringLiteral("editTableBt"));
-        editTableBt->setFont(font1);
+        editTableBt->setFont(font2);
 
         tableCtrlLt->addWidget(editTableBt);
 
-        randTableBt = new QPushButton(centralwidget);
-        randTableBt->setObjectName(QStringLiteral("randTableBt"));
-        randTableBt->setFont(font1);
+        qRandTableBt = new QPushButton(centralwidget);
+        qRandTableBt->setObjectName(QStringLiteral("qRandTableBt"));
+        qRandTableBt->setFont(font2);
 
-        tableCtrlLt->addWidget(randTableBt);
+        tableCtrlLt->addWidget(qRandTableBt);
 
+        cRandTableBt = new QPushButton(centralwidget);
+        cRandTableBt->setObjectName(QStringLiteral("cRandTableBt"));
+        cRandTableBt->setFont(font2);
 
-        verticalLayout->addLayout(tableCtrlLt);
+        tableCtrlLt->addWidget(cRandTableBt);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        simBt = new QPushButton(centralwidget);
-        simBt->setObjectName(QStringLiteral("simBt"));
-        simBt->setMinimumSize(QSize(0, 0));
-        simBt->setFont(font1);
+        settingsBt = new QPushButton(centralwidget);
+        settingsBt->setObjectName(QStringLiteral("settingsBt"));
+        settingsBt->setFont(font2);
 
-        horizontalLayout->addWidget(simBt);
+        tableCtrlLt->addWidget(settingsBt);
 
 
-        horizontalLayout_2->addLayout(horizontalLayout);
-
-        pauseBt = new QPushButton(centralwidget);
-        pauseBt->setObjectName(QStringLiteral("pauseBt"));
-        pauseBt->setFont(font1);
-
-        horizontalLayout_2->addWidget(pauseBt);
-
-        contBt = new QPushButton(centralwidget);
-        contBt->setObjectName(QStringLiteral("contBt"));
-        contBt->setFont(font1);
-
-        horizontalLayout_2->addWidget(contBt);
-
-        stopBt = new QPushButton(centralwidget);
-        stopBt->setObjectName(QStringLiteral("stopBt"));
-        stopBt->setFont(font1);
-
-        horizontalLayout_2->addWidget(stopBt);
-
-
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout_4->addLayout(tableCtrlLt);
 
         UserMachines->setCentralWidget(centralwidget);
 
@@ -166,13 +210,17 @@ public:
     {
         UserMachines->setWindowTitle(QApplication::translate("UserMachines", "MainWindow", Q_NULLPTR));
         tablesLabel->setText(QApplication::translate("UserMachines", "Machine's Tables", Q_NULLPTR));
-        addTableBt->setText(QApplication::translate("UserMachines", "Add Table", Q_NULLPTR));
-        editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", Q_NULLPTR));
-        randTableBt->setText(QApplication::translate("UserMachines", "Add Random Table", Q_NULLPTR));
+        uselAllBt->setText(QApplication::translate("UserMachines", "Select All", Q_NULLPTR));
+        selAllBt->setText(QApplication::translate("UserMachines", "Unselect All", Q_NULLPTR));
         simBt->setText(QApplication::translate("UserMachines", "Simulate", Q_NULLPTR));
         pauseBt->setText(QApplication::translate("UserMachines", "Pause", Q_NULLPTR));
         contBt->setText(QApplication::translate("UserMachines", "Continue", Q_NULLPTR));
         stopBt->setText(QApplication::translate("UserMachines", "Stop", Q_NULLPTR));
+        addTableBt->setText(QApplication::translate("UserMachines", "Add Table", Q_NULLPTR));
+        editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", Q_NULLPTR));
+        qRandTableBt->setText(QApplication::translate("UserMachines", "Add Quick Random Table", Q_NULLPTR));
+        cRandTableBt->setText(QApplication::translate("UserMachines", "Add Custom Random Table", Q_NULLPTR));
+        settingsBt->setText(QApplication::translate("UserMachines", "Settings", Q_NULLPTR));
     } // retranslateUi
 
 };
