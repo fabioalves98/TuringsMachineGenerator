@@ -690,7 +690,8 @@ qrc_resource.cpp: ../TuringsMachineSimulator/resource.qrc \
 		../TuringsMachineSimulator/icons/question.png \
 		../TuringsMachineSimulator/icons/table.png \
 		../TuringsMachineSimulator/icons/cancel.png \
-		../TuringsMachineSimulator/icons/check.png
+		../TuringsMachineSimulator/icons/check.png \
+		../TuringsMachineSimulator/icons/pause.png
 	/usr/bin/rcc -name resource ../TuringsMachineSimulator/resource.qrc -o qrc_resource.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

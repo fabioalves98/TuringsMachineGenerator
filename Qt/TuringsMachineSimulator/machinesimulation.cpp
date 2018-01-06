@@ -231,7 +231,12 @@ void MachineSimulation::simulate() {
         for (int i = 0; i < 10; i++) {
             QThread::msleep(10);
             QCoreApplication::processEvents();
-            if (mach->halted() || haltSim) {
+            if (mach->halted()) {
+                state = "TableLoaded";
+                halted = true;
+                return;
+            }
+            if (haltSim) {
                 state = "TableLoaded";
                 return;
             }
@@ -239,7 +244,6 @@ void MachineSimulation::simulate() {
         mach->advance();
     }
     while (true);
-    state = "TableLoaded";
 }
 
 void MachineSimulation::selectTableCellSlt(int st, int sy) {

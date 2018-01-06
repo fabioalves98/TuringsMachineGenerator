@@ -51,6 +51,7 @@ private:
     QStringList states;
     QString selected;
     QVector<Machine*> listMach;
+    QVector<QFutureWatcher<void>*> listWatcher;
 };
 
 #endif // USERMACHINES_H

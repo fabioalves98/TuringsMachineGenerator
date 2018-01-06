@@ -49,6 +49,7 @@ private:
     QString state;
     bool haltSim;
     bool pauseSim;
+    bool halted = false;
     bool tableIsLoaded = false;
 };
 

@@ -66,6 +66,7 @@ void UserMachines::on_addTableBt_clicked()
 void UserMachines::on_simBt_clicked()
 {
     bool itemsChecked = false;
+    listWatcher.clear();
     for (int i = 0; i < ui->tablesList->count(); i++) {
         if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
             itemsChecked = true;
@@ -84,6 +85,7 @@ void UserMachines::on_simBt_clicked()
             QFutureWatcher<void> *watcher = new QFutureWatcher<void>;
             QFuture<void> fut = QtConcurrent::run(toSim, &MachineSimulation::simulate);
             watcher->setFuture(fut);
+            listWatcher.append(watcher);
 
             QSignalMapper *sigMap = new QSignalMapper(this);
             connect(watcher, SIGNAL(finished()), sigMap, SLOT(map()));
@@ -222,6 +224,11 @@ void UserMachines::on_stopBt_clicked()
 {
     MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toStop->stop();
+    int index = ui->tableSim->currentIndex() - 1;
+    QPixmap icon(":/rec/icons/cancel");
+    icon = icon.scaled(20, 20);
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setPixmap(icon);
     enSimButtons(toStop->getState());
 }
 
@@ -229,14 +236,27 @@ void UserMachines::on_pauseBt_clicked()
 {
     MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toPause->pause();
+    int index = ui->tableSim->currentIndex() - 1;
+    QPixmap icon(":/rec/icons/pause");
+    icon = icon.scaled(20, 20);
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setPixmap(icon);
     enSimButtons(toPause->getState());
+
 }
 
 void UserMachines::on_contBt_clicked()
 {
     MachineSimulation *toCont = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toCont->cont();
+    int index = ui->tableSim->currentIndex() - 1;
+    QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setMovie(loading);
+    loading->setScaledSize(QSize(20, 20));
+    loading->start();
     enSimButtons(toCont->getState());
+
 }
 
 void UserMachines::on_randTableBt_clicked()
