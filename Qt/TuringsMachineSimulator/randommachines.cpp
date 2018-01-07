@@ -9,7 +9,7 @@ RandomMachines::RandomMachines(QWidget *parent) :
     this->setWindowTitle("Random Machine Creation");
     ui->randTable->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->randTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    abc = "ABCDEFGIJKLMNOPQRSTUVWXYZ";
     states = new QVector<QChar>;
     symbols = new QVector<QChar>;
     QTime time = QTime::currentTime();
@@ -34,8 +34,45 @@ void RandomMachines::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void RandomMachines::quick() {
-
+void RandomMachines::quick(int minSt, int maxSt, int minSy, int maxSy) {
+    states->clear();
+    symbols->clear();
+    int numSt = qrand() % (maxSt - minSt) + minSt;
+    int numSy = qrand() % (maxSy - minSy) + minSy;
+    qDebug() << numSt << "  " << numSy;
+    for (int i = 0; i < numSt; i++) {
+        states->append(abc.at(i));
+    }
+    for (int i = 0; i < numSy; i++) {
+        symbols->append(QString::number(i).at(0));
+    }
+    int haltAct;
+    if ((states->size() != 0) && (symbols->size() != 0)) {
+        haltAct = qrand() % (states->size() * symbols->size());
+    }
+    QMap<QString, QString> transFunct;
+    for (int i = 0; i < symbols->size(); i++) {
+        for (int j = 0; j < states->size(); j++) {
+            QString action;
+            action.append(symbols->at(qrand()%symbols->size()));
+            action.append((qrand()%2 == 1) ? "R" : "L");
+            if (haltAct != 0) {
+                action.append(states->at(qrand()%states->size()));
+            }
+            else {
+                action.append("H");
+            }
+            haltAct--;
+            QString key;
+            key.append(states->at(j));
+            key.append(symbols->at(i));
+            transFunct.insert(key, action);
+        }
+    }
+    QString name = QString::number(qrand()%10000);
+    QChar initState = states->at(0);
+    QChar blanckSymbol = symbols->at(0);
+    randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, 'H');
 }
 
 void RandomMachines::on_stSel_valueChanged(int arg1)

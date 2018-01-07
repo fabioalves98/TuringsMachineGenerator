@@ -6,7 +6,7 @@ UserMachines::UserMachines(QWidget *parent) :
     ui(new Ui::UserMachines)
 {
     ui->setupUi(this);
-    QThreadPool::globalInstance()->setMaxThreadCount(8);
+    QThreadPool::globalInstance()->setMaxThreadCount(4);
 }
 
 UserMachines::~UserMachines()
@@ -91,11 +91,11 @@ void UserMachines::on_simBt_clicked()
             QThread::msleep(20);
             QCoreApplication::processEvents();
 
-            QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
+            /*QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
             dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->clear();
             dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setMovie(loading);
             loading->setScaledSize(QSize(20, 20));
-            loading->start();
+            loading->start();*/
 
             MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1));
 
@@ -319,7 +319,15 @@ void UserMachines::on_cRandTableBt_clicked()
 void UserMachines::on_qRandTableBt_clicked()
 {
     RandomMachines *rand = new RandomMachines;
-    rand->quick();
+    rand->quick(2, 10, 2, 10);
+    Machine *quick = rand->getRandMach();
+    addMachine(quick);
+    MachineSimulation *sim = new MachineSimulation(quick);
+    ui->tableSim->insertWidget(listMach.size(), sim);
+    ui->tableSim->setCurrentIndex(listMach.size());
+    sim->start();
+    sim->display();
+    enSimButtons(sim->getState());
 }
 
 void UserMachines::on_editTableBt_clicked()
