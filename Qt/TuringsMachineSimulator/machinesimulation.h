@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QScrollBar>
 #include <QtConcurrent>
+#include <QFileDialog>
 #include "machine.h"
 
 namespace Ui {
@@ -43,6 +44,8 @@ private slots:
     void selectTableCellSlt(int st, int sy);
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
+
+    void on_loadTapeBt_clicked();
 
 private:
     Ui::MachineSimulation *ui;

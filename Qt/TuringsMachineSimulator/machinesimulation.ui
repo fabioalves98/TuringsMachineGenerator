@@ -105,6 +105,13 @@
          <item>
           <widget class="QListWidget" name="propList"/>
          </item>
+         <item>
+          <widget class="QPushButton" name="loadTapeBt">
+           <property name="text">
+            <string>Pre-load Tape</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </widget>

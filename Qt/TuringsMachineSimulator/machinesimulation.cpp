@@ -47,6 +47,34 @@ void MachineSimulation::start() {
     connect(this, SIGNAL(selectTableCellSgn(int,int)), this, SLOT(selectTableCellSlt(int,int)));
 }
 
+void MachineSimulation::on_loadTapeBt_clicked()
+{
+    QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tapes", "Text Files (*.txt);;All Files(*)");
+    if (!(fileD == nullptr)) {
+        QFile *tapeFile = new QFile(fileD);
+        mach->setTape(tapeFile);
+        QFileInfo *tapeInfo = new QFileInfo(*tapeFile);
+        QListWidgetItem *tapeI = new QListWidgetItem;
+        QWidget *tapeW = new QWidget;
+        QHBoxLayout *layout = new QHBoxLayout;
+        QLabel *propName = new QLabel;
+        propName->setText(" Custom Tape: ");
+        propName->setFont(QFont("Meiryo", 11, QFont::Bold));
+        layout->addWidget(propName);
+        QLabel *propValue = new QLabel;
+        propValue->setText(tapeInfo->baseName());
+        propValue->setFont(QFont("Meiryo", 11));
+        layout->addWidget(propValue, Qt::AlignLeft);
+        layout->setMargin(0);
+        tapeW->setLayout(layout);
+        tapeI->setSizeHint(QSize(0, 25));
+        tapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        ui->propList->addItem(tapeI);
+        ui->propList->setItemWidget(tapeI, tapeW);
+    }
+}
+
+
 void MachineSimulation::setMachine(Machine *mach) {
     this->mach = mach;
 }
@@ -207,10 +235,14 @@ void MachineSimulation::simulate() {
         tape = mach->getTape();
         int offset = mach->getTapeHeadOffset();
         tapeStr = "";
+        int spacing = tape.size()/2 - offset;
         for (QChar sym : tape) {
+            if (spacing == 0) tapeStr.append(" ");
             tapeStr.append("|");
             tapeStr.append(sym);
             tapeStr.append("|");
+            if (spacing == 0) tapeStr.append(" ");
+            spacing--;
         }
         if (tape.size() % 2 == 0) {
             tapeStr.append("   ");
@@ -232,7 +264,7 @@ void MachineSimulation::simulate() {
         emit insertStateSgn(mach->getCurrentState());
         emit insertTapeSgn(tapeStr);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             QThread::msleep(10);
             QCoreApplication::processEvents();
             if (mach->halted()) {

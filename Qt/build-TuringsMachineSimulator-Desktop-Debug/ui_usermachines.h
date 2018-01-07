@@ -216,7 +216,7 @@ public:
         pauseBt->setText(QApplication::translate("UserMachines", "Pause", Q_NULLPTR));
         contBt->setText(QApplication::translate("UserMachines", "Continue", Q_NULLPTR));
         stopBt->setText(QApplication::translate("UserMachines", "Stop", Q_NULLPTR));
-        addTableBt->setText(QApplication::translate("UserMachines", "Add Table", Q_NULLPTR));
+        addTableBt->setText(QApplication::translate("UserMachines", "Add Table File", Q_NULLPTR));
         editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", Q_NULLPTR));
         qRandTableBt->setText(QApplication::translate("UserMachines", "Add Quick Random Table", Q_NULLPTR));
         cRandTableBt->setText(QApplication::translate("UserMachines", "Add Custom Random Table", Q_NULLPTR));

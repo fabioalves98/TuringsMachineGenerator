@@ -11,6 +11,7 @@ class Machine
 public:
     Machine(QFile *fileName);
     Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt);
+    void setTape(QFile *fileName);
     void start();
     void reset();
     bool halted();
@@ -37,6 +38,8 @@ private:
     void processTable(QString line);
     QString makeKey(QChar st, QChar sy);
     void printTape(QChar st, int begin, int end);
+    bool customTape = false;
+    QFile *tapeFile;
     struct action {
         QChar wSymbol;
         QChar mTape;

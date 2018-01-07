@@ -179,7 +179,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Add Table</string>
+         <string>Add Table File</string>
         </property>
        </widget>
       </item>

@@ -17,6 +17,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -39,6 +40,7 @@ public:
     QVBoxLayout *Properties;
     QLabel *propLabel;
     QListWidget *propList;
+    QPushButton *loadTapeBt;
     QSplitter *simSplit;
     QWidget *layoutWidget_3;
     QVBoxLayout *States;
@@ -111,6 +113,11 @@ public:
 
         Properties->addWidget(propList);
 
+        loadTapeBt = new QPushButton(layoutWidget_2);
+        loadTapeBt->setObjectName(QStringLiteral("loadTapeBt"));
+
+        Properties->addWidget(loadTapeBt);
+
         specSplit->addWidget(layoutWidget_2);
         tableSplit->addWidget(specSplit);
         simSplit = new QSplitter(tableSplit);
@@ -176,6 +183,7 @@ public:
         MachineSimulation->setWindowTitle(QApplication::translate("MachineSimulation", "MainWindow", Q_NULLPTR));
         tableLabel->setText(QApplication::translate("MachineSimulation", "Table's Specification", Q_NULLPTR));
         propLabel->setText(QApplication::translate("MachineSimulation", "Table's Properties", Q_NULLPTR));
+        loadTapeBt->setText(QApplication::translate("MachineSimulation", "Pre-load Tape", Q_NULLPTR));
         stateLabel->setText(QApplication::translate("MachineSimulation", "States", Q_NULLPTR));
         simLabel->setText(QApplication::translate("MachineSimulation", "Table's Simulation", Q_NULLPTR));
     } // retranslateUi

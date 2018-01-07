@@ -39,7 +39,6 @@ void RandomMachines::quick(int minSt, int maxSt, int minSy, int maxSy) {
     symbols->clear();
     int numSt = qrand() % (maxSt - minSt) + minSt;
     int numSy = qrand() % (maxSy - minSy) + minSy;
-    qDebug() << numSt << "  " << numSy;
     for (int i = 0; i < numSt; i++) {
         states->append(abc.at(i));
     }

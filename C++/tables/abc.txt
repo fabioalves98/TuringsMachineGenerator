@@ -1,0 +1,10 @@
+begin_info
+bs: a
+is: A
+fs: H
+begin_table
+  *    A    B    C  
+  a   cRB  bLA  cLB 
+  b   aLC  cRB  aRH 
+  c   aRB  bLC  aRA
+end_table
