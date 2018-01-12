@@ -30,8 +30,11 @@ class Ui_UserMachines
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_4;
+    QVBoxLayout *verticalLayout_7;
     QSplitter *listSplit;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout_6;
+    QSplitter *tapeSplit;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
@@ -41,6 +44,14 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QPushButton *uselAllBt;
     QPushButton *selAllBt;
+    QWidget *widget1;
+    QVBoxLayout *verticalLayout_5;
+    QVBoxLayout *verticalLayout_4;
+    QLabel *tapesLabel;
+    QListWidget *tapesList;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *pushButton;
+    QPushButton *loadTapeBt;
     QPushButton *simBt;
     QStackedWidget *tableSim;
     QHBoxLayout *horizontalLayout;
@@ -64,12 +75,20 @@ public:
 "}"));
         centralwidget = new QWidget(UserMachines);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout_4 = new QVBoxLayout(centralwidget);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_7 = new QVBoxLayout(centralwidget);
+        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         listSplit = new QSplitter(centralwidget);
         listSplit->setObjectName(QStringLiteral("listSplit"));
         listSplit->setOrientation(Qt::Horizontal);
-        layoutWidget = new QWidget(listSplit);
+        widget = new QWidget(listSplit);
+        widget->setObjectName(QStringLiteral("widget"));
+        verticalLayout_6 = new QVBoxLayout(widget);
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
+        tapeSplit = new QSplitter(widget);
+        tapeSplit->setObjectName(QStringLiteral("tapeSplit"));
+        tapeSplit->setOrientation(Qt::Vertical);
+        layoutWidget = new QWidget(tapeSplit);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setSpacing(2);
@@ -125,21 +144,68 @@ public:
 
         verticalLayout_3->addLayout(verticalLayout_2);
 
-        simBt = new QPushButton(layoutWidget);
+        tapeSplit->addWidget(layoutWidget);
+        widget1 = new QWidget(tapeSplit);
+        widget1->setObjectName(QStringLiteral("widget1"));
+        verticalLayout_5 = new QVBoxLayout(widget1);
+        verticalLayout_5->setSpacing(2);
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(0);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        tapesLabel = new QLabel(widget1);
+        tapesLabel->setObjectName(QStringLiteral("tapesLabel"));
+        tapesLabel->setFont(font);
+        tapesLabel->setFrameShape(QFrame::Panel);
+        tapesLabel->setFrameShadow(QFrame::Raised);
+        tapesLabel->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_4->addWidget(tapesLabel);
+
+        tapesList = new QListWidget(widget1);
+        tapesList->setObjectName(QStringLiteral("tapesList"));
+
+        verticalLayout_4->addWidget(tapesList);
+
+
+        verticalLayout_5->addLayout(verticalLayout_4);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        pushButton = new QPushButton(widget1);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        horizontalLayout_3->addWidget(pushButton);
+
+        loadTapeBt = new QPushButton(widget1);
+        loadTapeBt->setObjectName(QStringLiteral("loadTapeBt"));
+        loadTapeBt->setFont(font1);
+
+        horizontalLayout_3->addWidget(loadTapeBt);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_3);
+
+        tapeSplit->addWidget(widget1);
+
+        verticalLayout_6->addWidget(tapeSplit);
+
+        simBt = new QPushButton(widget);
         simBt->setObjectName(QStringLiteral("simBt"));
         simBt->setMinimumSize(QSize(0, 0));
         QFont font2;
         font2.setPointSize(12);
         simBt->setFont(font2);
 
-        verticalLayout_3->addWidget(simBt);
+        verticalLayout_6->addWidget(simBt);
 
-        listSplit->addWidget(layoutWidget);
+        listSplit->addWidget(widget);
         tableSim = new QStackedWidget(listSplit);
         tableSim->setObjectName(QStringLiteral("tableSim"));
         listSplit->addWidget(tableSim);
 
-        verticalLayout_4->addWidget(listSplit);
+        verticalLayout_7->addWidget(listSplit);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
@@ -162,7 +228,7 @@ public:
         horizontalLayout->addWidget(stopBt);
 
 
-        verticalLayout_4->addLayout(horizontalLayout);
+        verticalLayout_7->addLayout(horizontalLayout);
 
         tableCtrlLt = new QHBoxLayout();
         tableCtrlLt->setObjectName(QStringLiteral("tableCtrlLt"));
@@ -197,7 +263,7 @@ public:
         tableCtrlLt->addWidget(settingsBt);
 
 
-        verticalLayout_4->addLayout(tableCtrlLt);
+        verticalLayout_7->addLayout(tableCtrlLt);
 
         UserMachines->setCentralWidget(centralwidget);
 
@@ -212,6 +278,9 @@ public:
         tablesLabel->setText(QApplication::translate("UserMachines", "Machine's Tables", Q_NULLPTR));
         uselAllBt->setText(QApplication::translate("UserMachines", "Select All", Q_NULLPTR));
         selAllBt->setText(QApplication::translate("UserMachines", "Unselect All", Q_NULLPTR));
+        tapesLabel->setText(QApplication::translate("UserMachines", "Tapes", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("UserMachines", "Add Tape", Q_NULLPTR));
+        loadTapeBt->setText(QApplication::translate("UserMachines", "Load Tape", Q_NULLPTR));
         simBt->setText(QApplication::translate("UserMachines", "Simulate", Q_NULLPTR));
         pauseBt->setText(QApplication::translate("UserMachines", "Pause", Q_NULLPTR));
         contBt->setText(QApplication::translate("UserMachines", "Continue", Q_NULLPTR));

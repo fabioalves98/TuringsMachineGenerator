@@ -46,3 +46,6 @@ FORMS += \
 
 RESOURCES += \
     resource.qrc
+
+DISTFILES += \
+    toDo

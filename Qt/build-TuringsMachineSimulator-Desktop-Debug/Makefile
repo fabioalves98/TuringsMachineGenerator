@@ -71,7 +71,8 @@ OBJECTS       = main.o \
 		moc_randommachines.o \
 		moc_editmachines.o \
 		moc_machinesimulation.o
-DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
+DIST          = ../TuringsMachineSimulator/toDo \
+		/usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
 		/usr/lib/qt/mkspecs/common/sanitize.conf \

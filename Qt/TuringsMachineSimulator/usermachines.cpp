@@ -21,6 +21,10 @@ void UserMachines::start()
     sizes[0] = (int)ui->listSplit->width()*0.25;
     sizes[1] = (int)ui->listSplit->width()*0.75;
     ui->listSplit->setSizes(sizes);
+    sizes = ui->tapeSplit->sizes();
+    sizes[0] = (int)ui->tapeSplit->width()*0.70;
+    sizes[1] = (int)ui->tapeSplit->width()*0.30;
+    ui->tapeSplit->setSizes(sizes);
     // Setting the default display
     MachineSimulation *newMach = new MachineSimulation(nullptr);
     ui->tableSim->insertWidget(0, newMach);
