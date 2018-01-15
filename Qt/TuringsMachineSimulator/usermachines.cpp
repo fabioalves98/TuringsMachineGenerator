@@ -52,7 +52,7 @@ void UserMachines::close() {
 void UserMachines::on_addTableBt_clicked()
 {
     // Initialize new Table, and display it
-    QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tables", "Text Files (*.txt);;All Files(*)");
+    QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
     if (!(fileD == nullptr)) {
         QFile *tableFile = new QFile(fileD);
         Machine *mach = new Machine(tableFile);

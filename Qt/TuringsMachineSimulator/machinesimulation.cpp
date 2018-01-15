@@ -294,7 +294,7 @@ void MachineSimulation::insertStateSlt(QString state) {
     QListWidgetItem *newStateI = new QListWidgetItem;
     QLabel *stateText = new QLabel;
     stateText->setText(state);
-    stateText->setFont(QFont("Courier", 12, QFont::Bold));
+    stateText->setFont(QFont("Monospace", 12));
     stateText->setAlignment(Qt::AlignCenter);
     newStateI->setSizeHint(stateText->sizeHint());
     newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -310,7 +310,7 @@ void MachineSimulation::insertTapeSlt(QString toUpdate) {
     QListWidgetItem *newTapeI = new QListWidgetItem;
     QLabel *tableText = new QLabel;
     tableText->setText(toUpdate);
-    tableText->setFont(QFont("Courier", 12, QFont::Bold));
+    tableText->setFont(QFont("Monospace", 12));
     tableText->setAlignment(Qt::AlignCenter);
     newTapeI->setSizeHint(tableText->sizeHint());
     newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
