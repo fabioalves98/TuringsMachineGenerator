@@ -46,7 +46,6 @@ void EditMachines::loadTable() {
             }
             QTableWidgetItem *tableItem = new QTableWidgetItem(mach->funct(states->value(j), symbols->value(i)));
             tableItem->setFont(QFont("Meiryo", 15));
-            tableItem->setTextColor(QColor(Qt::white));
             tableItem->setTextAlignment(Qt::AlignCenter);
             tableItem->setFlags(tableItem->flags() ^ Qt::ItemIsEditable);
             ui->tableView->setItem(i, j, tableItem);

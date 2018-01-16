@@ -1,0 +1,13 @@
+INPUT(
+./debug\main.o
+./debug\machine.o
+./debug\usermachines.o
+./debug\randommachines.o
+./debug\editmachines.o
+./debug\machinesimulation.o
+./debug\qrc_resource.o
+./debug\moc_usermachines.o
+./debug\moc_randommachines.o
+./debug\moc_editmachines.o
+./debug\moc_machinesimulation.o
+);

@@ -98,7 +98,6 @@ void MachineSimulation::display() {
             }
             QTableWidgetItem *tableItem = new QTableWidgetItem(mach->funct(states->value(j), symbols->value(i)));
             tableItem->setFont(QFont("Meiryo", 15));
-            tableItem->setTextColor(QColor(Qt::white));
             tableItem->setTextAlignment(Qt::AlignCenter);
             tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
             ui->tableView->setItem(i, j, tableItem);
@@ -294,7 +293,7 @@ void MachineSimulation::insertStateSlt(QString state) {
     QListWidgetItem *newStateI = new QListWidgetItem;
     QLabel *stateText = new QLabel;
     stateText->setText(state);
-    stateText->setFont(QFont("Monospace", 12));
+    stateText->setFont(QFont("Courier", 12, QFont::Bold));
     stateText->setAlignment(Qt::AlignCenter);
     newStateI->setSizeHint(stateText->sizeHint());
     newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
@@ -310,7 +309,7 @@ void MachineSimulation::insertTapeSlt(QString toUpdate) {
     QListWidgetItem *newTapeI = new QListWidgetItem;
     QLabel *tableText = new QLabel;
     tableText->setText(toUpdate);
-    tableText->setFont(QFont("Monospace", 12));
+    tableText->setFont(QFont("Courier", 12, QFont::Bold));
     tableText->setAlignment(Qt::AlignCenter);
     newTapeI->setSizeHint(tableText->sizeHint());
     newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);

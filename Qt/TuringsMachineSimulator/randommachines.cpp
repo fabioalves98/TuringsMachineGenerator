@@ -285,7 +285,6 @@ void RandomMachines::on_randBut_clicked()
             haltAct--;
             QTableWidgetItem *tbAction = new QTableWidgetItem(action);
             tbAction->setFont(QFont("Meiryo", 16));
-            tbAction->setTextColor(QColor(Qt::white));
             tbAction->setTextAlignment(Qt::AlignCenter);
             tbAction->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
             ui->randTable->setItem(i, j, tbAction);
