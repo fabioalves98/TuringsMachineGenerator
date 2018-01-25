@@ -74,7 +74,6 @@ void MachineSimulation::on_loadTapeBt_clicked()
     }
 }
 
-
 void MachineSimulation::setMachine(Machine *mach) {
     this->mach = mach;
 }

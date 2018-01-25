@@ -59,10 +59,9 @@ void Machine::start() {
     tape.clear();
     if (customTape) {
         if (!tapeFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << "Error Opening Table File" << endl;
+            qDebug() << "Error Opening Tape File" << endl;
             return;
         }
-
         QTextStream in(tapeFile);
         int headPos = in.readLine().toInt();
         QString tapeStr = in.readLine();

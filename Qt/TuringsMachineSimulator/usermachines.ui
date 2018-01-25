@@ -25,7 +25,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <widget class="QSplitter" name="tapeSplit">
@@ -115,7 +115,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <property name="spacing">
              <number>2</number>
@@ -154,7 +154,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="addTapeBt">
                 <property name="text">
                  <string>Add Tape</string>
                 </property>

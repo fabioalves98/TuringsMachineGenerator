@@ -5,6 +5,7 @@ INPUT(
 ./debug\randommachines.o
 ./debug\editmachines.o
 ./debug\machinesimulation.o
+./debug\tape.o
 ./debug\qrc_resource.o
 ./debug\moc_usermachines.o
 ./debug\moc_randommachines.o

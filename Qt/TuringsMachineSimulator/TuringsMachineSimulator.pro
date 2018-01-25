@@ -29,14 +29,16 @@ SOURCES += \
     usermachines.cpp \
     randommachines.cpp \
     editmachines.cpp \
-    machinesimulation.cpp
+    machinesimulation.cpp \
+    tape.cpp
 
 HEADERS += \
     machine.h \
     usermachines.h \
     randommachines.h \
     editmachines.h \
-    machinesimulation.h
+    machinesimulation.h \
+    tape.h
 
 FORMS += \
     usermachines.ui \

@@ -32,6 +32,9 @@ void UserMachines::start()
     newMach->start();
     newMach->setEnabled(false);
 
+    // Setting the default tape item
+    addTape("Default");
+
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
     enSimButtons("Init");
 
@@ -65,6 +68,11 @@ void UserMachines::on_addTableBt_clicked()
             enSimButtons(sim->getState());
         }
     }
+}
+
+void UserMachines::on_addTapeBt_clicked()
+{
+    addTape("Custom");
 }
 
 void UserMachines::on_uselAllBt_clicked()
@@ -202,6 +210,59 @@ bool UserMachines::addMachine(Machine *toAdd) {
     }
 }
 
+void UserMachines::addTape(QString mode) {
+    Tape *newTape;
+    if (mode == "Default") {
+        newTape = new Tape(new QFile());
+    }
+    else {
+        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+        if (!(fileD == nullptr)) {
+            QFile *tapeFile = new QFile(fileD);
+            newTape = new Tape(tapeFile);
+        }
+        else return;
+    }
+    bool contains = false;
+    foreach (Tape *tape, listTape) {
+        if (tape->getName() == newTape->getName()) {
+            contains = true;
+        }
+    }
+    if (!contains) {
+        listTape.append(newTape);
+        ui->tapesList->clearSelection();
+        QListWidgetItem *tapeItem = new QListWidgetItem;
+
+        QWidget *widget = new QWidget;
+        QHBoxLayout *layout = new QHBoxLayout;
+
+        QLabel *tapeName = new QLabel(newTape->getName());
+        tapeName->setFont(QFont("Meiryo", 11));
+        layout->addWidget(tapeName);
+
+        layout->addStretch();
+
+        QRadioButton *radio = new QRadioButton();
+        QSignalMapper *sigMap = new QSignalMapper(this);
+        connect(radio, SIGNAL(clicked(bool)), sigMap, SLOT(map()));
+        sigMap->setMapping(radio, ui->tapesList->count());
+        connect(sigMap, SIGNAL(mapped(int)), SLOT(tapeButtons(int)));
+        layout->addWidget(radio);
+
+        // PixMap
+
+        layout->setMargin(0);
+        widget->setLayout(layout);
+
+        tapeItem->setIcon(QIcon(":rec/icons/tape.png"));
+        tapeItem->setFlags(Qt::ItemIsEnabled);
+
+        ui->tapesList->addItem(tapeItem);
+        ui->tapesList->setItemWidget(tapeItem, widget);
+        ui->tapesList->setIconSize(QSize(20, 20));
+    }
+}
 void UserMachines::enSimButtons(QString state) {
     switch(states.indexOf(state)) {
         case 0: {
@@ -356,4 +417,16 @@ void UserMachines::on_editTableBt_clicked()
     dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setMachine(edited);
     dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->display();
     enSimButtons("TableLoaded");
+}
+
+void UserMachines::tapeButtons(int item) {
+    qDebug() << item;
+    for (int i = 0; i < ui->tapesList->count(); i++) {
+        if (i == item) {
+            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
+        }
+        else {
+            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
+        }
+    }
 }

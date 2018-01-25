@@ -5,6 +5,7 @@ INPUT(
 ./release\randommachines.o
 ./release\editmachines.o
 ./release\machinesimulation.o
+./release\tape.o
 ./release\qrc_resource.o
 ./release\moc_usermachines.o
 ./release\moc_randommachines.o

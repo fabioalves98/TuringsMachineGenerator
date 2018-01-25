@@ -32,10 +32,10 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_7;
     QSplitter *listSplit;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_6;
     QSplitter *tapeSplit;
-    QWidget *layoutWidget;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
@@ -44,13 +44,13 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QPushButton *uselAllBt;
     QPushButton *selAllBt;
-    QWidget *widget1;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
     QLabel *tapesLabel;
     QListWidget *tapesList;
     QHBoxLayout *horizontalLayout_3;
-    QPushButton *pushButton;
+    QPushButton *addTapeBt;
     QPushButton *loadTapeBt;
     QPushButton *simBt;
     QStackedWidget *tableSim;
@@ -80,17 +80,17 @@ public:
         listSplit = new QSplitter(centralwidget);
         listSplit->setObjectName(QStringLiteral("listSplit"));
         listSplit->setOrientation(Qt::Horizontal);
-        widget = new QWidget(listSplit);
-        widget->setObjectName(QStringLiteral("widget"));
-        verticalLayout_6 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(listSplit);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        verticalLayout_6 = new QVBoxLayout(layoutWidget);
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
         verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        tapeSplit = new QSplitter(widget);
+        tapeSplit = new QSplitter(layoutWidget);
         tapeSplit->setObjectName(QStringLiteral("tapeSplit"));
         tapeSplit->setOrientation(Qt::Vertical);
-        layoutWidget = new QWidget(tapeSplit);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        verticalLayout_3 = new QVBoxLayout(layoutWidget);
+        layoutWidget1 = new QWidget(tapeSplit);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        verticalLayout_3 = new QVBoxLayout(layoutWidget1);
         verticalLayout_3->setSpacing(2);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -100,7 +100,7 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        tablesLabel = new QLabel(layoutWidget);
+        tablesLabel = new QLabel(layoutWidget1);
         tablesLabel->setObjectName(QStringLiteral("tablesLabel"));
         tablesLabel->setEnabled(true);
         QFont font;
@@ -113,7 +113,7 @@ public:
 
         verticalLayout->addWidget(tablesLabel);
 
-        tablesList = new QListWidget(layoutWidget);
+        tablesList = new QListWidget(layoutWidget1);
         tablesList->setObjectName(QStringLiteral("tablesList"));
         tablesList->setStyleSheet(QStringLiteral(""));
 
@@ -124,7 +124,7 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        uselAllBt = new QPushButton(layoutWidget);
+        uselAllBt = new QPushButton(layoutWidget1);
         uselAllBt->setObjectName(QStringLiteral("uselAllBt"));
         QFont font1;
         font1.setPointSize(10);
@@ -132,7 +132,7 @@ public:
 
         horizontalLayout_2->addWidget(uselAllBt);
 
-        selAllBt = new QPushButton(layoutWidget);
+        selAllBt = new QPushButton(layoutWidget1);
         selAllBt->setObjectName(QStringLiteral("selAllBt"));
         selAllBt->setFont(font1);
 
@@ -144,17 +144,17 @@ public:
 
         verticalLayout_3->addLayout(verticalLayout_2);
 
-        tapeSplit->addWidget(layoutWidget);
-        widget1 = new QWidget(tapeSplit);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        verticalLayout_5 = new QVBoxLayout(widget1);
+        tapeSplit->addWidget(layoutWidget1);
+        layoutWidget2 = new QWidget(tapeSplit);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        verticalLayout_5 = new QVBoxLayout(layoutWidget2);
         verticalLayout_5->setSpacing(2);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         verticalLayout_4 = new QVBoxLayout();
         verticalLayout_4->setSpacing(0);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        tapesLabel = new QLabel(widget1);
+        tapesLabel = new QLabel(layoutWidget2);
         tapesLabel->setObjectName(QStringLiteral("tapesLabel"));
         tapesLabel->setFont(font);
         tapesLabel->setFrameShape(QFrame::Panel);
@@ -163,7 +163,7 @@ public:
 
         verticalLayout_4->addWidget(tapesLabel);
 
-        tapesList = new QListWidget(widget1);
+        tapesList = new QListWidget(layoutWidget2);
         tapesList->setObjectName(QStringLiteral("tapesList"));
 
         verticalLayout_4->addWidget(tapesList);
@@ -173,12 +173,12 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        pushButton = new QPushButton(widget1);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        addTapeBt = new QPushButton(layoutWidget2);
+        addTapeBt->setObjectName(QStringLiteral("addTapeBt"));
 
-        horizontalLayout_3->addWidget(pushButton);
+        horizontalLayout_3->addWidget(addTapeBt);
 
-        loadTapeBt = new QPushButton(widget1);
+        loadTapeBt = new QPushButton(layoutWidget2);
         loadTapeBt->setObjectName(QStringLiteral("loadTapeBt"));
         loadTapeBt->setFont(font1);
 
@@ -187,11 +187,11 @@ public:
 
         verticalLayout_5->addLayout(horizontalLayout_3);
 
-        tapeSplit->addWidget(widget1);
+        tapeSplit->addWidget(layoutWidget2);
 
         verticalLayout_6->addWidget(tapeSplit);
 
-        simBt = new QPushButton(widget);
+        simBt = new QPushButton(layoutWidget);
         simBt->setObjectName(QStringLiteral("simBt"));
         simBt->setMinimumSize(QSize(0, 0));
         QFont font2;
@@ -200,7 +200,7 @@ public:
 
         verticalLayout_6->addWidget(simBt);
 
-        listSplit->addWidget(widget);
+        listSplit->addWidget(layoutWidget);
         tableSim = new QStackedWidget(listSplit);
         tableSim->setObjectName(QStringLiteral("tableSim"));
         listSplit->addWidget(tableSim);
@@ -279,7 +279,7 @@ public:
         uselAllBt->setText(QApplication::translate("UserMachines", "Select All", nullptr));
         selAllBt->setText(QApplication::translate("UserMachines", "Unselect All", nullptr));
         tapesLabel->setText(QApplication::translate("UserMachines", "Tapes", nullptr));
-        pushButton->setText(QApplication::translate("UserMachines", "Add Tape", nullptr));
+        addTapeBt->setText(QApplication::translate("UserMachines", "Add Tape", nullptr));
         loadTapeBt->setText(QApplication::translate("UserMachines", "Load Tape", nullptr));
         simBt->setText(QApplication::translate("UserMachines", "Simulate", nullptr));
         pauseBt->setText(QApplication::translate("UserMachines", "Pause", nullptr));

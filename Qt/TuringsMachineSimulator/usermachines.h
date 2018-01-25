@@ -10,8 +10,10 @@
 #include <QScrollBar>
 #include <QCloseEvent>
 #include <QCheckBox>
+#include <QRadioButton>
 #include <QMovie>
 #include "machine.h"
+#include "tape.h"
 #include "randommachines.h"
 #include "editmachines.h"
 #include "machinesimulation.h"
@@ -45,16 +47,20 @@ private slots:
     void on_contBt_clicked();
     void on_cRandTableBt_clicked();
     void on_editTableBt_clicked();
-
     void on_qRandTableBt_clicked();
+    void on_addTapeBt_clicked();
+
+    void tapeButtons(int item);
 
 private:
     bool addMachine(Machine* toAdd);
+    void addTape(QString mode);
     void enSimButtons(QString state);
     Ui::UserMachines *ui;
     QStringList states;
     QString selected;
     QVector<Machine*> listMach;
+    QVector<Tape*> listTape;
 };
 
 #endif // USERMACHINES_H
