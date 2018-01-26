@@ -325,6 +325,11 @@
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
        <widget class="QPushButton" name="randBut">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Random</string>
         </property>
@@ -332,6 +337,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="saveBut">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Save Table</string>
         </property>

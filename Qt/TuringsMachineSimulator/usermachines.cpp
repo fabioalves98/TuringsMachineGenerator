@@ -293,6 +293,7 @@ void UserMachines::enSimButtons(QString state) {
         case 0: {
             ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(false);
+            ui->saveTableBt->setEnabled(false);
             ui->cRandTableBt->setEnabled(true);
             ui->qRandTableBt->setEnabled(true);
             ui->simBt->setEnabled(false);
@@ -306,6 +307,7 @@ void UserMachines::enSimButtons(QString state) {
         case 1: {
             ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(true);
+            ui->saveTableBt->setEnabled(true);
             ui->cRandTableBt->setEnabled(true);
             ui->qRandTableBt->setEnabled(true);
             ui->simBt->setEnabled(true);
@@ -319,6 +321,7 @@ void UserMachines::enSimButtons(QString state) {
         case 2: {
             ui->addTableBt->setEnabled(true);
             ui->editTableBt->setEnabled(false);
+            ui->saveTableBt->setEnabled(true);
             ui->cRandTableBt->setEnabled(true);
             ui->qRandTableBt->setEnabled(true);
             ui->simBt->setEnabled(true);
@@ -332,6 +335,7 @@ void UserMachines::enSimButtons(QString state) {
         case 3: {
             ui->addTableBt->setEnabled(false);
             ui->editTableBt->setEnabled(false);
+            ui->saveTableBt->setEnabled(true);
             ui->cRandTableBt->setEnabled(true);
             ui->qRandTableBt->setEnabled(true);
             ui->simBt->setEnabled(true);
@@ -471,4 +475,39 @@ void UserMachines::on_loadTapeBt_clicked()
             dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i + 1))->setTape(toLoad);
         }
     }
+}
+
+void UserMachines::on_saveTableBt_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Turing's Machine", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            qDebug() << "Error saving file";
+            return;
+    }
+    QTextStream out(&file);
+    Machine *toSave = listMach.at(ui->tableSim->currentIndex() - 1);
+    out << "begin_info" << endl;
+    out << "bs: " << toSave->getBlanckSym() << endl;
+    out << "is: " << toSave->getInitState() << endl;
+    out << "fs: " << toSave->getHaltState() << endl;
+    out << "begin_table" << endl;
+    QVector<QChar> *states = toSave->getStates();
+    QVector<QChar> *symbols = toSave->getSymbols();
+    out << "  *  ";
+    for (int i = - 1; i < symbols->size(); i++) {
+        if (i >= 0) out << "  " << symbols->at(i) << "  ";
+        for (int j = 0; j < states->size(); j++) {
+            if (i < 0) {
+                out << "  " << states->at(j) << "  ";
+            }
+            else {
+                out << " " << toSave->funct(states->at(j), symbols->at(i)) << " ";
+            }
+        }
+        out << endl;
+    }
+    out << "end_table";
+    file.flush();
+    file.close();
 }

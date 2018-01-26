@@ -54,6 +54,8 @@ private slots:
     void selTapeButtons(int item);
     void on_loadTapeBt_clicked();
 
+    void on_saveTableBt_clicked();
+
 private:
     bool addMachine(Machine* toAdd);
     void addTape(QString mode);

@@ -237,11 +237,15 @@ public:
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         randBut = new QPushButton(centralwidget);
         randBut->setObjectName(QStringLiteral("randBut"));
+        QFont font1;
+        font1.setPointSize(10);
+        randBut->setFont(font1);
 
         horizontalLayout_5->addWidget(randBut);
 
         saveBut = new QPushButton(centralwidget);
         saveBut->setObjectName(QStringLiteral("saveBut"));
+        saveBut->setFont(font1);
 
         horizontalLayout_5->addWidget(saveBut);
 

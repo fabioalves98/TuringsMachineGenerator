@@ -47,6 +47,14 @@ public:
     QLabel *nextLabel;
     QComboBox *nextCBox;
     QSpacerItem *spacer2;
+    QHBoxLayout *horizontalLayout_3;
+    QSpacerItem *horizontalSpacer_6;
+    QLabel *inStateLabel;
+    QComboBox *inStateCBox;
+    QSpacerItem *horizontalSpacer_5;
+    QLabel *hltStateLabel;
+    QComboBox *hltStateCBox;
+    QSpacerItem *horizontalSpacer_7;
     QHBoxLayout *horizontalLayout_5;
     QPushButton *changeBut;
     QPushButton *saveBut;
@@ -98,7 +106,7 @@ public:
 
         writeLabel = new QLabel(centralwidget);
         writeLabel->setObjectName(QStringLiteral("writeLabel"));
-        writeLabel->setMinimumSize(QSize(126, 31));
+        writeLabel->setMinimumSize(QSize(125, 31));
         QFont font1;
         font1.setPointSize(14);
         writeLabel->setFont(font1);
@@ -121,7 +129,7 @@ public:
 
         moveLabel = new QLabel(centralwidget);
         moveLabel->setObjectName(QStringLiteral("moveLabel"));
-        moveLabel->setMinimumSize(QSize(101, 31));
+        moveLabel->setMinimumSize(QSize(100, 31));
         moveLabel->setFont(font1);
         moveLabel->setFrameShape(QFrame::Panel);
         moveLabel->setFrameShadow(QFrame::Raised);
@@ -142,7 +150,7 @@ public:
 
         nextLabel = new QLabel(centralwidget);
         nextLabel->setObjectName(QStringLiteral("nextLabel"));
-        nextLabel->setMinimumSize(QSize(100, 31));
+        nextLabel->setMinimumSize(QSize(95, 31));
         nextLabel->setFont(font1);
         nextLabel->setFrameShape(QFrame::Panel);
         nextLabel->setFrameShadow(QFrame::Raised);
@@ -164,15 +172,71 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_6);
+
+        inStateLabel = new QLabel(centralwidget);
+        inStateLabel->setObjectName(QStringLiteral("inStateLabel"));
+        inStateLabel->setMinimumSize(QSize(105, 31));
+        inStateLabel->setMaximumSize(QSize(16777215, 16777215));
+        inStateLabel->setFont(font1);
+        inStateLabel->setFrameShape(QFrame::Panel);
+        inStateLabel->setFrameShadow(QFrame::Raised);
+        inStateLabel->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_3->addWidget(inStateLabel);
+
+        inStateCBox = new QComboBox(centralwidget);
+        inStateCBox->setObjectName(QStringLiteral("inStateCBox"));
+        inStateCBox->setMaximumSize(QSize(51, 31));
+        inStateCBox->setFont(font1);
+
+        horizontalLayout_3->addWidget(inStateCBox);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_5);
+
+        hltStateLabel = new QLabel(centralwidget);
+        hltStateLabel->setObjectName(QStringLiteral("hltStateLabel"));
+        hltStateLabel->setMinimumSize(QSize(90, 31));
+        hltStateLabel->setFont(font1);
+        hltStateLabel->setFrameShape(QFrame::Panel);
+        hltStateLabel->setFrameShadow(QFrame::Raised);
+        hltStateLabel->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_3->addWidget(hltStateLabel);
+
+        hltStateCBox = new QComboBox(centralwidget);
+        hltStateCBox->setObjectName(QStringLiteral("hltStateCBox"));
+        hltStateCBox->setMaximumSize(QSize(51, 31));
+        hltStateCBox->setFont(font1);
+
+        horizontalLayout_3->addWidget(hltStateCBox);
+
+        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_7);
+
+
+        verticalLayout->addLayout(horizontalLayout_3);
+
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         changeBut = new QPushButton(centralwidget);
         changeBut->setObjectName(QStringLiteral("changeBut"));
+        QFont font2;
+        font2.setPointSize(10);
+        changeBut->setFont(font2);
 
         horizontalLayout_5->addWidget(changeBut);
 
         saveBut = new QPushButton(centralwidget);
         saveBut->setObjectName(QStringLiteral("saveBut"));
+        saveBut->setFont(font2);
 
         horizontalLayout_5->addWidget(saveBut);
 
@@ -193,6 +257,8 @@ public:
         writeLabel->setText(QApplication::translate("EditMachines", "Write Symbol", nullptr));
         moveLabel->setText(QApplication::translate("EditMachines", "Move Tape", nullptr));
         nextLabel->setText(QApplication::translate("EditMachines", "Next State", nullptr));
+        inStateLabel->setText(QApplication::translate("EditMachines", "Initial State", nullptr));
+        hltStateLabel->setText(QApplication::translate("EditMachines", "Halt State", nullptr));
         changeBut->setText(QApplication::translate("EditMachines", "Change", nullptr));
         saveBut->setText(QApplication::translate("EditMachines", "Save", nullptr));
     } // retranslateUi

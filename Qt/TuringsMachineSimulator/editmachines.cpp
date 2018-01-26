@@ -125,10 +125,29 @@ void EditMachines::fillComBoxes() {
     }
     ui->moveCBox->addItem("Left");
     ui->moveCBox->addItem("Right");
+    QChar haltState = mach->getHaltState();
+    QChar initState = mach->getInitState();
+    bool haltInStates = false;
+    int init = 0, halt = 0, i = 0;
     foreach (QChar st, *mach->getStates()) {
+        if (st == haltState) {
+            haltInStates = true;
+            halt = i;
+        }
+        if (st == initState) {
+            init = i;
+        }
         ui->nextCBox->addItem(st);
+        ui->inStateCBox->addItem(st);
+        ui->hltStateCBox->addItem(st);
+        i++;
     }
-    ui->nextCBox->addItem(QChar('H'));
+    if (!haltInStates) {
+        ui->nextCBox->addItem(mach->getHaltState());
+        ui->hltStateCBox->addItem(mach->getHaltState());
+    }
+    ui->inStateCBox->setCurrentIndex(init);
+    ui->hltStateCBox->setCurrentIndex(halt);
 }
 
 void EditMachines::on_saveBut_clicked()

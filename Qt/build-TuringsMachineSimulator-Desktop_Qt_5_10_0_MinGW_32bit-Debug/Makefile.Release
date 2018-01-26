@@ -69,7 +69,7 @@ OBJECTS       = release/main.o \
 		release/moc_editmachines.o \
 		release/moc_machinesimulation.o
 
-DIST          = toDo ..\TuringsMachineSimulator\machine.h \
+DIST          =  ..\TuringsMachineSimulator\machine.h \
 		..\TuringsMachineSimulator\usermachines.h \
 		..\TuringsMachineSimulator\randommachines.h \
 		..\TuringsMachineSimulator\editmachines.h \
@@ -130,6 +130,7 @@ release/qrc_resource.cpp: ../TuringsMachineSimulator/resource.qrc \
 		../TuringsMachineSimulator/icons/table.png \
 		../TuringsMachineSimulator/icons/cancel.png \
 		../TuringsMachineSimulator/icons/check.png \
+		../TuringsMachineSimulator/icons/tape.png \
 		../TuringsMachineSimulator/icons/pause.png
 	C:\Qt\5.10.0\mingw53_32\bin\rcc.exe -name resource ..\TuringsMachineSimulator\resource.qrc -o release\qrc_resource.cpp
 
@@ -285,6 +286,8 @@ release/moc_usermachines.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QCheckBox \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcheckbox.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QRadioButton \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qradiobutton.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/QMovie \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qmovie.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qimagereader.h \
@@ -296,11 +299,18 @@ release/moc_usermachines.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qjsonobject.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qjsonvalue.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfactoryinterface.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPainter \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpainter.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPixmap \
 		../TuringsMachineSimulator/machine.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/randommachines.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QTime \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdatetime.h \
@@ -309,8 +319,6 @@ release/moc_usermachines.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlineedit.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
 		../TuringsMachineSimulator/editmachines.h \
@@ -568,6 +576,8 @@ release/moc_randommachines.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainW
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/randommachines.h \
 		release/moc_predefs.h \
 		C:/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -690,6 +700,8 @@ release/moc_editmachines.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/editmachines.h \
 		release/moc_predefs.h \
 		C:/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -946,6 +958,8 @@ release/moc_machinesimulation.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMa
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/machinesimulation.h \
 		release/moc_predefs.h \
 		C:/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -1130,6 +1144,8 @@ release/main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/u
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QCheckBox \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcheckbox.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QRadioButton \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qradiobutton.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/QMovie \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qmovie.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qimagereader.h \
@@ -1141,11 +1157,18 @@ release/main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/u
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qjsonobject.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qjsonvalue.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfactoryinterface.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPainter \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpainter.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPixmap \
 		../TuringsMachineSimulator/machine.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/randommachines.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QTime \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdatetime.h \
@@ -1154,8 +1177,6 @@ release/main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/u
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlineedit.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
 		../TuringsMachineSimulator/editmachines.h \
@@ -1356,7 +1377,9 @@ release/machine.o: ../TuringsMachineSimulator/machine.cpp ../TuringsMachineSimul
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\machine.o ..\TuringsMachineSimulator\machine.cpp
 
 release/usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMachineSimulator/usermachines.h \
@@ -1503,6 +1526,8 @@ release/usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMa
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QCheckBox \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcheckbox.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QRadioButton \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qradiobutton.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/QMovie \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qmovie.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qimagereader.h \
@@ -1514,11 +1539,18 @@ release/usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMa
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qjsonobject.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qjsonvalue.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfactoryinterface.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPainter \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpainter.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPixmap \
 		../TuringsMachineSimulator/machine.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/randommachines.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QTime \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdatetime.h \
@@ -1527,8 +1559,6 @@ release/usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMa
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlineedit.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
 		../TuringsMachineSimulator/editmachines.h \
@@ -1809,6 +1839,8 @@ release/randommachines.o: ../TuringsMachineSimulator/randommachines.cpp ../Turin
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		ui_randommachines.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
@@ -1981,6 +2013,8 @@ release/editmachines.o: ../TuringsMachineSimulator/editmachines.cpp ../TuringsMa
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		ui_editmachines.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
@@ -2283,6 +2317,8 @@ release/machinesimulation.o: ../TuringsMachineSimulator/machinesimulation.cpp ..
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		ui_machinesimulation.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
@@ -2313,9 +2349,8 @@ release/machinesimulation.o: ../TuringsMachineSimulator/machinesimulation.cpp ..
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QListWidget \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistwidget.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpinBox \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qspinbox.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSplitter \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qsplitter.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QTableWidget \
@@ -2396,7 +2431,9 @@ release/tape.o: ../TuringsMachineSimulator/tape.cpp ../TuringsMachineSimulator/t
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfile.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\tape.o ..\TuringsMachineSimulator\tape.cpp
 
 release/qrc_resource.o: release/qrc_resource.cpp 

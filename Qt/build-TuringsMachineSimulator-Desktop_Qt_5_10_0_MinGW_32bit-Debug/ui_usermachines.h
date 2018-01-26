@@ -61,6 +61,7 @@ public:
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
     QPushButton *editTableBt;
+    QPushButton *saveTableBt;
     QPushButton *qRandTableBt;
     QPushButton *cRandTableBt;
     QPushButton *settingsBt;
@@ -247,6 +248,12 @@ public:
 
         tableCtrlLt->addWidget(editTableBt);
 
+        saveTableBt = new QPushButton(centralwidget);
+        saveTableBt->setObjectName(QStringLiteral("saveTableBt"));
+        saveTableBt->setFont(font2);
+
+        tableCtrlLt->addWidget(saveTableBt);
+
         qRandTableBt = new QPushButton(centralwidget);
         qRandTableBt->setObjectName(QStringLiteral("qRandTableBt"));
         qRandTableBt->setFont(font2);
@@ -290,6 +297,7 @@ public:
         stopBt->setText(QApplication::translate("UserMachines", "Stop", nullptr));
         addTableBt->setText(QApplication::translate("UserMachines", "Add Table File", nullptr));
         editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", nullptr));
+        saveTableBt->setText(QApplication::translate("UserMachines", "Save Table", nullptr));
         qRandTableBt->setText(QApplication::translate("UserMachines", "Add Quick Random Table", nullptr));
         cRandTableBt->setText(QApplication::translate("UserMachines", "Add Custom Random Table", nullptr));
         settingsBt->setText(QApplication::translate("UserMachines", "Settings", nullptr));
