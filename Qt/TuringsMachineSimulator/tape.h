@@ -12,13 +12,11 @@ public:
     QString getName();
     std::list<QChar> getTape();
     int getTapePos();
-    bool isCustom();
 
 private:
     QString name;
     std::list<QChar> tape;
     int headPos;
-    bool custom;
 };
 
 #endif // TAPE_H

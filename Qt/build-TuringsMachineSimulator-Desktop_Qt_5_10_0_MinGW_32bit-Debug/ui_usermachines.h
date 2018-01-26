@@ -175,6 +175,7 @@ public:
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         addTapeBt = new QPushButton(layoutWidget2);
         addTapeBt->setObjectName(QStringLiteral("addTapeBt"));
+        addTapeBt->setFont(font1);
 
         horizontalLayout_3->addWidget(addTapeBt);
 

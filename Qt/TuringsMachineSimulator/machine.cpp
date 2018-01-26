@@ -50,48 +50,16 @@ Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<
     haltState = hSt;
 }
 
-void Machine::setTape(QFile *fileName) {
-    customTape = true;
-    tapeFile = fileName;
-}
-
-void Machine::start() {
+void Machine::start(Tape *inTape) {
     tape.clear();
-    if (customTape) {
-        if (!tapeFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qDebug() << "Error Opening Tape File" << endl;
-            return;
-        }
-        QTextStream in(tapeFile);
-        int headPos = in.readLine().toInt();
-        QString tapeStr = in.readLine();
-        for (int i = 0; i < tapeStr.length(); i++) {
-            tape.push_back(tapeStr.at(i));
-        }
-        pState = initState;
-        cSymbol = blanckSym;
-        head = tape.begin();
-        std::advance(head, headPos);
-        startP = 0;
-        endP = tape.size();
-        count = 0;
-        tapeFile->close();
-    }
-    else {
-        int tapeSize = 3;
-        tape.assign(3, blanckSym);
-        pState = initState;
-        cSymbol = blanckSym;
-        head = tape.begin();
-        std::advance(head, tapeSize/2);
-        startP = 0;
-        endP = tapeSize;
-        count = 0;
-    }
-}
-
-void Machine::reset() {
-    tape.clear();
+    tape = inTape->getTape();
+    pState = initState;
+    cSymbol = blanckSym;
+    head = tape.begin();
+    std::advance(head, inTape->getTapePos());
+    startP = 0;
+    endP = tape.size();
+    count = 0;
 }
 
 bool Machine::halted() {

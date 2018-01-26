@@ -7,6 +7,7 @@
 #include <QtConcurrent>
 #include <QFileDialog>
 #include "machine.h"
+#include "tape.h"
 
 namespace Ui {
 class MachineSimulation;
@@ -17,8 +18,9 @@ class MachineSimulation : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MachineSimulation(Machine *mach, QWidget *parent = 0);
-    void setMachine(Machine * mach);
+    MachineSimulation(Machine *mach, Tape *tape, QWidget *parent = 0);
+    void setMachine(Machine* mach);
+    void setTape(Tape* tape);
     void start();
     void display();
     void simulate();
@@ -45,11 +47,10 @@ private slots:
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
 
-    void on_loadTapeBt_clicked();
-
 private:
     Ui::MachineSimulation *ui;
     Machine *mach;
+    Tape *inTape;
     QString state;
     bool haltSim;
     bool pauseSim;

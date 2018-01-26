@@ -5,15 +5,14 @@
 #include <QFile>
 #include <QDir>
 #include <QLinkedList>
+#include "tape.h"
 
 class Machine
 {
 public:
     Machine(QFile *fileName);
     Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt);
-    void setTape(QFile *fileName);
-    void start();
-    void reset();
+    void start(Tape *inTape);
     bool halted();
     void halt();
     void advance();
@@ -39,7 +38,6 @@ private:
     QString makeKey(QChar st, QChar sy);
     void printTape(QChar st, int begin, int end);
     bool customTape = false;
-    QFile *tapeFile;
     struct action {
         QChar wSymbol;
         QChar mTape;

@@ -1,10 +1,11 @@
 #include "machinesimulation.h"
 #include "ui_machinesimulation.h"
 
-MachineSimulation::MachineSimulation(Machine *mach, QWidget *parent) :
+MachineSimulation::MachineSimulation(Machine *mach, Tape *tape, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MachineSimulation),
-    mach(mach)
+    mach(mach),
+    inTape(tape)
 {
     ui->setupUi(this);
 }
@@ -47,35 +48,13 @@ void MachineSimulation::start() {
     connect(this, SIGNAL(selectTableCellSgn(int,int)), this, SLOT(selectTableCellSlt(int,int)));
 }
 
-void MachineSimulation::on_loadTapeBt_clicked()
-{
-    QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath() + "/Mega/Bolsa/TuringsMachineGenerator/C++/tapes", "Text Files (*.txt);;All Files(*)");
-    if (!(fileD == nullptr)) {
-        QFile *tapeFile = new QFile(fileD);
-        mach->setTape(tapeFile);
-        QFileInfo *tapeInfo = new QFileInfo(*tapeFile);
-        QListWidgetItem *tapeI = new QListWidgetItem;
-        QWidget *tapeW = new QWidget;
-        QHBoxLayout *layout = new QHBoxLayout;
-        QLabel *propName = new QLabel;
-        propName->setText(" Custom Tape: ");
-        propName->setFont(QFont("Meiryo", 11, QFont::Bold));
-        layout->addWidget(propName);
-        QLabel *propValue = new QLabel;
-        propValue->setText(tapeInfo->baseName());
-        propValue->setFont(QFont("Meiryo", 11));
-        layout->addWidget(propValue, Qt::AlignLeft);
-        layout->setMargin(0);
-        tapeW->setLayout(layout);
-        tapeI->setSizeHint(QSize(0, 25));
-        tapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-        ui->propList->addItem(tapeI);
-        ui->propList->setItemWidget(tapeI, tapeW);
-    }
-}
-
 void MachineSimulation::setMachine(Machine *mach) {
     this->mach = mach;
+}
+
+void MachineSimulation::setTape(Tape *tape) {
+    this->inTape = tape;
+    dynamic_cast<QLabel*>(ui->propList->itemWidget(ui->propList->item(6))->layout()->itemAt(1)->widget())->setText(tape->getName());
 }
 
 void MachineSimulation::display() {
@@ -108,7 +87,7 @@ void MachineSimulation::display() {
     ui->propList->clear();
     // Get the remaining properties, and fill the PropertiesList
     QStringList properties;
-    properties << " Name: " << " Symbols: " << " States: " << " Blanck Symbol: " << " Inicial State: " << " Halt State: ";
+    properties << " Name: " << " Symbols: " << " States: " << " Blanck Symbol: " << " Inicial State: " << " Halt State: " << " Tape: ";
     for (QString prop : properties) {
         QListWidgetItem *newProI = new QListWidgetItem;
         QWidget *newProW = new QWidget;
@@ -155,6 +134,9 @@ void MachineSimulation::display() {
                 QString hSt(mach->getHaltState());
                 propValue->setText(hSt);
                 break;
+            }
+            case 6: {
+                propValue->setText(inTape->getName());
             }
         }
         propValue->setFont(QFont("Meiryo", 11));
@@ -214,8 +196,7 @@ void MachineSimulation::simulate() {
     halts = false;
     ui->simList->clear();
     ui->stateList->clear();
-    mach->reset();
-    mach->start();
+    mach->start(inTape);
 
     std::list<QChar> tape;
     QString tapeStr;

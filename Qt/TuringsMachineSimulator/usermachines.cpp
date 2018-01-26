@@ -26,7 +26,7 @@ void UserMachines::start()
     sizes[1] = (int)ui->tapeSplit->width()*0.30;
     ui->tapeSplit->setSizes(sizes);
     // Setting the default display
-    MachineSimulation *newMach = new MachineSimulation(nullptr);
+    MachineSimulation *newMach = new MachineSimulation(nullptr, nullptr);
     ui->tableSim->insertWidget(0, newMach);
     ui->tableSim->setCurrentIndex(0);
     newMach->start();
@@ -60,7 +60,7 @@ void UserMachines::on_addTableBt_clicked()
         QFile *tableFile = new QFile(fileD);
         Machine *mach = new Machine(tableFile);
         if (addMachine(mach)) {
-            MachineSimulation *sim = new MachineSimulation(mach);
+            MachineSimulation *sim = new MachineSimulation(mach, listTape.at(0));
             ui->tableSim->insertWidget(listMach.size(), sim);
             ui->tableSim->setCurrentIndex(listMach.size());
             sim->start();
@@ -247,8 +247,9 @@ void UserMachines::addTape(QString mode) {
         QSignalMapper *sigMap = new QSignalMapper(this);
         connect(radio, SIGNAL(clicked(bool)), sigMap, SLOT(map()));
         sigMap->setMapping(radio, ui->tapesList->count());
-        connect(sigMap, SIGNAL(mapped(int)), SLOT(tapeButtons(int)));
+        connect(sigMap, SIGNAL(mapped(int)), SLOT(selTapeButtons(int)));
         layout->addWidget(radio);
+        radio->click();
 
         // PixMap
 
@@ -263,6 +264,7 @@ void UserMachines::addTape(QString mode) {
         ui->tapesList->setIconSize(QSize(20, 20));
     }
 }
+
 void UserMachines::enSimButtons(QString state) {
     switch(states.indexOf(state)) {
         case 0: {
@@ -373,7 +375,7 @@ void UserMachines::on_cRandTableBt_clicked()
     Machine *randMach = rand->getRandMach();
     rand->close();
     addMachine(randMach);
-    MachineSimulation *sim = new MachineSimulation(randMach);
+    MachineSimulation *sim = new MachineSimulation(randMach, listTape.at(0));
     ui->tableSim->insertWidget(listMach.size(), sim);
     ui->tableSim->setCurrentIndex(listMach.size());
     sim->start();
@@ -387,7 +389,7 @@ void UserMachines::on_qRandTableBt_clicked()
     rand->quick(2, 10, 2, 10);
     Machine *quick = rand->getRandMach();
     addMachine(quick);
-    MachineSimulation *sim = new MachineSimulation(quick);
+    MachineSimulation *sim = new MachineSimulation(quick, listTape.at(0));
     ui->tableSim->insertWidget(listMach.size(), sim);
     ui->tableSim->setCurrentIndex(listMach.size());
     sim->start();
@@ -419,14 +421,29 @@ void UserMachines::on_editTableBt_clicked()
     enSimButtons("TableLoaded");
 }
 
-void UserMachines::tapeButtons(int item) {
-    qDebug() << item;
+void UserMachines::selTapeButtons(int item) {
     for (int i = 0; i < ui->tapesList->count(); i++) {
         if (i == item) {
             dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
         }
         else {
             dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
+        }
+    }
+}
+
+void UserMachines::on_loadTapeBt_clicked()
+{
+    Tape *toLoad;
+    for (int i = 0; i < ui->tapesList->count(); i++) {
+        if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
+            toLoad = listTape.at(i);
+            break;
+        }
+    }
+    for (int i = 0; i < ui->tablesList->count(); i++) {
+        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
+            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i + 1))->setTape(toLoad);
         }
     }
 }

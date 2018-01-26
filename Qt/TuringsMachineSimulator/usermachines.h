@@ -49,8 +49,8 @@ private slots:
     void on_editTableBt_clicked();
     void on_qRandTableBt_clicked();
     void on_addTapeBt_clicked();
-
-    void tapeButtons(int item);
+    void selTapeButtons(int item);
+    void on_loadTapeBt_clicked();
 
 private:
     bool addMachine(Machine* toAdd);

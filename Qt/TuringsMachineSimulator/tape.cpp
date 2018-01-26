@@ -4,7 +4,10 @@ Tape::Tape(QFile *tapeFile)
 {
     if (!tapeFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
         name = "Default";
-        custom = false;
+        for (int i = 0; i < 3; i++) {
+            tape.push_back('0');
+        }
+        headPos = 1;
     }
     else {
         QFileInfo *tapeInfo = new QFileInfo(*tapeFile);
@@ -15,10 +18,17 @@ Tape::Tape(QFile *tapeFile)
         for (int i = 0; i < tapeStr.length(); i++) {
             tape.push_back(tapeStr.at(i));
         }
-        custom = true;
     }
 }
 
 QString Tape::getName() {
     return name;
+}
+
+std::list<QChar> Tape::getTape() {
+    return tape;
+}
+
+int Tape::getTapePos() {
+    return headPos;
 }

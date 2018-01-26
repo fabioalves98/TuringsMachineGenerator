@@ -155,6 +155,11 @@
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
                <widget class="QPushButton" name="addTapeBt">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Add Tape</string>
                 </property>
