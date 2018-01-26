@@ -23,7 +23,9 @@ public:
     QString getFileName();
     QChar getBlanckSym();
     QChar getInitState();
+    void setInitState(QChar init);
     QChar getHaltState();
+    void setHaltState(QChar halt);
     QVector<QChar> *getStates();
     QVector<QChar> *getSymbols();
     void setTransFunct(QMap<QString, QString> *tFunct);

@@ -126,8 +126,16 @@ QChar Machine::getInitState() {
     return initState;
 }
 
+void Machine::setInitState(QChar init) {
+    initState = init;
+}
+
 QChar Machine::getHaltState() {
     return haltState;
+}
+
+void Machine::setHaltState(QChar halt) {
+    haltState = halt;
 }
 
 QVector<QChar> *Machine::getStates() {

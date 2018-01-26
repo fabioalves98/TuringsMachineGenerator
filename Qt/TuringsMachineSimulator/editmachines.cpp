@@ -128,7 +128,7 @@ void EditMachines::fillComBoxes() {
     QChar haltState = mach->getHaltState();
     QChar initState = mach->getInitState();
     bool haltInStates = false;
-    int init = 0, halt = 0, i = 0;
+    int init = -1, halt = -1, i = 0;
     foreach (QChar st, *mach->getStates()) {
         if (st == haltState) {
             haltInStates = true;
@@ -146,8 +146,17 @@ void EditMachines::fillComBoxes() {
         ui->nextCBox->addItem(mach->getHaltState());
         ui->hltStateCBox->addItem(mach->getHaltState());
     }
+    else {
+        ui->nextCBox->addItem(QChar('Z'));
+        ui->hltStateCBox->addItem(QChar('Z'));
+    }
     ui->inStateCBox->setCurrentIndex(init);
-    ui->hltStateCBox->setCurrentIndex(halt);
+    if (halt != -1) {
+        ui->hltStateCBox->setCurrentIndex(halt);
+    }
+    else {
+        ui->hltStateCBox->setCurrentIndex(ui->hltStateCBox->count() - 1);
+    }
 }
 
 void EditMachines::on_saveBut_clicked()
@@ -164,6 +173,8 @@ void EditMachines::on_saveBut_clicked()
         }
     }
     mach->setTransFunct(&tFunct);
+    mach->setInitState(ui->inStateCBox->currentText().at(0));
+    mach->setHaltState(ui->hltStateCBox->currentText().at(0));
     ready = true;
 }
 
