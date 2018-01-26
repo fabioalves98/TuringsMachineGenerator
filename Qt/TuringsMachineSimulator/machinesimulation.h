@@ -47,7 +47,10 @@ private slots:
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
 
+    void on_headPos_valueChanged(int arg1);
+
 private:
+    void displayTape();
     Ui::MachineSimulation *ui;
     Machine *mach;
     Tape *inTape;

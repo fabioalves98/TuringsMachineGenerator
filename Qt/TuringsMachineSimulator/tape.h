@@ -12,6 +12,7 @@ public:
     QString getName();
     std::list<QChar> getTape();
     int getTapePos();
+    void setTapePos(int pos);
 
 private:
     QString name;

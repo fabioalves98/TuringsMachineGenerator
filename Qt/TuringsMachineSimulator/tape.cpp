@@ -32,3 +32,7 @@ std::list<QChar> Tape::getTape() {
 int Tape::getTapePos() {
     return headPos;
 }
+
+void Tape::setTapePos(int pos) {
+    headPos = pos;
+}

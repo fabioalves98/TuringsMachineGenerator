@@ -35,6 +35,7 @@ void MachineSimulation::start() {
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
 
+    ui->stateList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->stateList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->simList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -55,6 +56,7 @@ void MachineSimulation::setMachine(Machine *mach) {
 void MachineSimulation::setTape(Tape *tape) {
     this->inTape = tape;
     dynamic_cast<QLabel*>(ui->propList->itemWidget(ui->propList->item(6))->layout()->itemAt(1)->widget())->setText(tape->getName());
+    displayTape();
 }
 
 void MachineSimulation::display() {
@@ -148,9 +150,48 @@ void MachineSimulation::display() {
         ui->propList->addItem(newProI);
         ui->propList->setItemWidget(newProI, newProW);
     }
+    displayTape();
     tableIsLoaded = true;
     resizeTable();
     state = "TableLoaded";
+}
+
+void MachineSimulation::displayTape() {
+    int headPos = inTape->getTapePos();
+    ui->headPos->setValue(headPos);
+    std::list<QChar> tape = inTape->getTape();
+    std::list<QChar>::iterator tapeIt = tape.begin();
+    QString tapeStr;
+    int offset = tape.size()/2 - headPos;
+    for (int i = 0; i < tape.size(); i++) {
+        if (i == headPos) tapeStr.append(" ");
+        tapeStr.append("|");
+        tapeStr.append(*tapeIt);
+        tapeStr.append("|");
+        if (i == headPos) tapeStr.append(" ");
+        tapeIt++;
+    }
+    if (tape.size() % 2 == 0) {
+        tapeStr.append("   ");
+    }
+    if (offset > 0) {
+        for (int i = 0; i < abs(offset); i++) {
+            tapeStr.prepend("      ");
+        }
+    }
+    else if (offset < 0) {
+        for (int i = 0; i < abs(offset); i++) {
+            tapeStr.append("      ");
+        }
+    }
+    QListWidgetItem *inTapeItem = new QListWidgetItem;
+    QLabel *inTapeText = new QLabel;
+    inTapeText->setText(tapeStr);
+    inTapeText->setFont(QFont("Courier", 12, QFont::Bold));
+    inTapeText->setAlignment(Qt::AlignCenter);
+    ui->inTape->clear();
+    ui->inTape->addItem(inTapeItem);
+    ui->inTape->setItemWidget(inTapeItem, inTapeText);
 }
 
 void MachineSimulation::resizeEvent(QResizeEvent *event)
@@ -323,4 +364,10 @@ bool MachineSimulation::halted() {
 
 QString MachineSimulation::getState() {
     return state;
+}
+
+void MachineSimulation::on_headPos_valueChanged(int arg1)
+{
+    inTape->setTapePos(arg1);
+    displayTape();
 }
