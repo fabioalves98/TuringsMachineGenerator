@@ -12,6 +12,8 @@
 #include <QCheckBox>
 #include <QRadioButton>
 #include <QMovie>
+#include <QPainter>
+#include <QPixmap>
 #include "machine.h"
 #include "tape.h"
 #include "randommachines.h"

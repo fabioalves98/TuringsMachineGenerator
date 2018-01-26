@@ -103,6 +103,7 @@ public:
         tablesLabel = new QLabel(layoutWidget1);
         tablesLabel->setObjectName(QStringLiteral("tablesLabel"));
         tablesLabel->setEnabled(true);
+        tablesLabel->setMinimumSize(QSize(0, 33));
         QFont font;
         font.setPointSize(16);
         tablesLabel->setFont(font);
@@ -156,6 +157,7 @@ public:
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         tapesLabel = new QLabel(layoutWidget2);
         tapesLabel->setObjectName(QStringLiteral("tapesLabel"));
+        tapesLabel->setMinimumSize(QSize(0, 33));
         tapesLabel->setFont(font);
         tapesLabel->setFrameShape(QFrame::Panel);
         tapesLabel->setFrameShadow(QFrame::Raised);

@@ -6,6 +6,9 @@ UserMachines::UserMachines(QWidget *parent) :
     ui(new Ui::UserMachines)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Turing's Machine Generator");
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
     QThreadPool::globalInstance()->setMaxThreadCount(8);
 }
 
@@ -78,34 +81,34 @@ void UserMachines::on_addTapeBt_clicked()
 void UserMachines::on_uselAllBt_clicked()
 {
     for (int i = 0; i < ui->tablesList->count(); i++) {
-        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
+        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setChecked(true);
     }
 }
 
 void UserMachines::on_selAllBt_clicked()
 {
     for (int i = 0; i < ui->tablesList->count(); i++) {
-        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
+        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
     }
 }
 
 void UserMachines::on_simBt_clicked()
 {
     int index = ui->tableSim->currentIndex() - 1;
-    if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(2)->widget())->isChecked()) {
+    if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->isChecked()) {
         enSimButtons("Sim");
     }
     for (int i = 0; i < ui->tablesList->count(); i++) {
-        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
-            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
-            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setEnabled(false);
+        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->isChecked()) {
+            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
+            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setEnabled(false);
             dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->stop();
             QThread::msleep(20);
             QCoreApplication::processEvents();
 
             QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->clear();
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setMovie(loading);
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->clear();
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->setMovie(loading);
             loading->setScaledSize(QSize(20, 20));
             loading->start();
 
@@ -127,8 +130,8 @@ void UserMachines::on_simBt_clicked()
 void UserMachines::finishSim(QString tableName) {    
     for (int i = 0; i < listMach.size(); i++) {
         if (listMach.at(i)->getFileName() == tableName) {
-            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->setEnabled(true);
-            delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->movie();
+            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setEnabled(true);
+            delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->movie();
             QPixmap icon;
             if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->halted()) {
                 icon.load(":/rec/icons/check");
@@ -137,8 +140,8 @@ void UserMachines::finishSim(QString tableName) {
                 icon.load(":/rec/icons/question");
             }
             icon = icon.scaled(20, 20);
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->clear();
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setPixmap(icon);
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->clear();
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->setPixmap(icon);
             break;
         }
     }
@@ -179,6 +182,11 @@ bool UserMachines::addMachine(Machine *toAdd) {
         QLabel *tableName = new QLabel(selected);
         tableName->setFont(QFont("Meiryo", 11));
         layout->addWidget(tableName);
+
+        QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(3)->widget())->pixmap());
+        QLabel *tapeIcon = new QLabel;
+        tapeIcon->setPixmap(pix);
+        layout->addWidget(tapeIcon);
 
         layout->addStretch();
 
@@ -251,7 +259,22 @@ void UserMachines::addTape(QString mode) {
         layout->addWidget(radio);
         radio->click();
 
-        // PixMap
+        QPixmap myPix(QSize(20,20));
+        myPix.fill(QColor(0, 0, 0, 0));
+        QPainter painter(&myPix);
+        if (mode == "Default") {
+             painter.setBrush( Qt::white );
+        }
+        else {
+            int r = qrand() % 255;
+            int g = qrand() % 255;
+            int b = qrand() % 255;
+            painter.setBrush(QColor(r, g, b));
+        }
+        painter.drawEllipse(QPoint(10, 9), 7, 7);
+        QLabel *label = new QLabel;
+        label->setPixmap(myPix);
+        layout->addWidget(label);
 
         layout->setMargin(0);
         widget->setLayout(layout);
@@ -327,7 +350,7 @@ void UserMachines::on_stopBt_clicked()
     MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toStop->stop();
     int index = ui->tableSim->currentIndex() - 1;
-    dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(2)->widget())->setEnabled(true);
+    dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setEnabled(true);
     enSimButtons(toStop->getState());
 }
 
@@ -336,13 +359,12 @@ void UserMachines::on_pauseBt_clicked()
     MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
     toPause->pause();
     int index = ui->tableSim->currentIndex() - 1;
-    delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->movie();
+    delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->movie();
     QPixmap icon(":/rec/icons/pause");
     icon = icon.scaled(20, 20);
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setPixmap(icon);
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->setPixmap(icon);
     enSimButtons(toPause->getState());
-
 }
 
 void UserMachines::on_contBt_clicked()
@@ -351,12 +373,11 @@ void UserMachines::on_contBt_clicked()
     toCont->cont();
     int index = ui->tableSim->currentIndex() - 1;
     QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->clear();
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setMovie(loading);
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->setMovie(loading);
     loading->setScaledSize(QSize(20, 20));
     loading->start();
     enSimButtons(toCont->getState());
-
 }
 
 void UserMachines::on_cRandTableBt_clicked()
@@ -435,14 +456,18 @@ void UserMachines::selTapeButtons(int item) {
 void UserMachines::on_loadTapeBt_clicked()
 {
     Tape *toLoad;
+    int tapeListIndex = 0;
     for (int i = 0; i < ui->tapesList->count(); i++) {
         if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
             toLoad = listTape.at(i);
+            tapeListIndex = i;
             break;
         }
     }
     for (int i = 0; i < ui->tablesList->count(); i++) {
-        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
+        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->isChecked()) {
+            QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(tapeListIndex))->layout()->itemAt(3)->widget())->pixmap());
+            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(1)->widget())->setPixmap(pix);
             dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i + 1))->setTape(toLoad);
         }
     }
