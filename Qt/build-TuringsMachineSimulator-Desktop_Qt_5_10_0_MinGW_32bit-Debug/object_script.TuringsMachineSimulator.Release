@@ -6,9 +6,11 @@ INPUT(
 ./release\editmachines.o
 ./release\machinesimulation.o
 ./release\tape.o
+./release\settings.o
 ./release\qrc_resource.o
 ./release\moc_usermachines.o
 ./release\moc_randommachines.o
 ./release\moc_editmachines.o
 ./release\moc_machinesimulation.o
+./release\moc_settings.o
 );

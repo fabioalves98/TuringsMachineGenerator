@@ -31,6 +31,8 @@ void MachineSimulation::start() {
     sizes[0] = (int)ui->simSplit->width()*0.1;
     sizes[1] = (int)ui->simSplit->width()*0.9;
     ui->simSplit->setSizes(sizes);
+    // Gettings the global Settings
+   set = Settings::getInstance();
 
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
@@ -239,6 +241,9 @@ void MachineSimulation::simulate() {
     ui->stateList->clear();
     mach->start(inTape);
 
+    int delayTime = set->getDelayTime();
+    localDelayFormat = delayTime/10;
+
     std::list<QChar> tape;
     QString tapeStr;
     do {
@@ -284,7 +289,7 @@ void MachineSimulation::simulate() {
         emit insertStateSgn(mach->getCurrentState());
         emit insertTapeSgn(tapeStr);
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < localDelayFormat; i++) {
             QThread::msleep(10);
             QCoreApplication::processEvents();
             if (mach->halted()) {
@@ -360,6 +365,16 @@ void MachineSimulation::stop() {
 
 bool MachineSimulation::halted() {
     return halts;
+}
+
+void MachineSimulation::decreaseSpeed()
+{
+    localDelayFormat = localDelayFormat * 1.3;
+}
+
+void MachineSimulation::increaseSpeed()
+{
+    localDelayFormat = localDelayFormat * 0.7;
 }
 
 QString MachineSimulation::getState() {

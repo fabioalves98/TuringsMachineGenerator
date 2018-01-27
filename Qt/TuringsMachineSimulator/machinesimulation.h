@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include "machine.h"
 #include "tape.h"
+#include "settings.h"
 
 namespace Ui {
 class MachineSimulation;
@@ -28,6 +29,8 @@ public:
     void cont();
     void stop();
     bool halted();
+    void decreaseSpeed();
+    void increaseSpeed();
     QString getState();
     ~MachineSimulation();
 
@@ -51,14 +54,17 @@ private slots:
 
 private:
     void displayTape();
-    Ui::MachineSimulation *ui;
     Machine *mach;
     Tape *inTape;
     QString state;
     bool haltSim;
     bool pauseSim;
     bool halts;
+    int localDelayFormat;
     bool tableIsLoaded = false;
+
+    Ui::MachineSimulation *ui;
+    Settings *set;
 };
 
 #endif // MACHINESIMULATION_H

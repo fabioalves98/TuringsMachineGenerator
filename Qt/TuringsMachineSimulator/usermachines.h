@@ -16,9 +16,10 @@
 #include <QPixmap>
 #include "machine.h"
 #include "tape.h"
+#include "settings.h"
+#include "machinesimulation.h"
 #include "randommachines.h"
 #include "editmachines.h"
-#include "machinesimulation.h"
 
 namespace Ui {
 class UserMachines;
@@ -56,15 +57,23 @@ private slots:
 
     void on_saveTableBt_clicked();
 
+    void on_settingsBt_clicked();
+
+    void on_slowerBt_clicked();
+
+    void on_fasterBt_clicked();
+
 private:
     bool addMachine(Machine* toAdd);
     void addTape(QString mode);
     void enSimButtons(QString state);
-    Ui::UserMachines *ui;
     QStringList states;
     QString selected;
     QVector<Machine*> listMach;
     QVector<Tape*> listTape;
+
+    Ui::UserMachines *ui;
+    Settings *set;
 };
 
 #endif // USERMACHINES_H

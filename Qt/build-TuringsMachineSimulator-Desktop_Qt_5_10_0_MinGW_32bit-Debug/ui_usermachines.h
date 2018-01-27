@@ -58,6 +58,8 @@ public:
     QPushButton *pauseBt;
     QPushButton *contBt;
     QPushButton *stopBt;
+    QPushButton *slowerBt;
+    QPushButton *fasterBt;
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
     QPushButton *editTableBt;
@@ -231,6 +233,20 @@ public:
 
         horizontalLayout->addWidget(stopBt);
 
+        slowerBt = new QPushButton(centralwidget);
+        slowerBt->setObjectName(QStringLiteral("slowerBt"));
+        slowerBt->setMinimumSize(QSize(30, 27));
+        slowerBt->setMaximumSize(QSize(30, 27));
+
+        horizontalLayout->addWidget(slowerBt);
+
+        fasterBt = new QPushButton(centralwidget);
+        fasterBt->setObjectName(QStringLiteral("fasterBt"));
+        fasterBt->setMinimumSize(QSize(30, 27));
+        fasterBt->setMaximumSize(QSize(30, 27));
+
+        horizontalLayout->addWidget(fasterBt);
+
 
         verticalLayout_7->addLayout(horizontalLayout);
 
@@ -295,6 +311,8 @@ public:
         pauseBt->setText(QApplication::translate("UserMachines", "Pause", nullptr));
         contBt->setText(QApplication::translate("UserMachines", "Continue", nullptr));
         stopBt->setText(QApplication::translate("UserMachines", "Stop", nullptr));
+        slowerBt->setText(QString());
+        fasterBt->setText(QString());
         addTableBt->setText(QApplication::translate("UserMachines", "Add Table File", nullptr));
         editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", nullptr));
         saveTableBt->setText(QApplication::translate("UserMachines", "Save Table", nullptr));

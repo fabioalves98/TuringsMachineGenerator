@@ -7,5 +7,7 @@
         <file>icons/cancel.png</file>
         <file>icons/pause.png</file>
         <file>icons/tape.png</file>
+        <file>icons/faster.png</file>
+        <file>icons/slower.png</file>
     </qresource>
 </RCC>

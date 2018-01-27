@@ -28,6 +28,10 @@ void UserMachines::start()
     sizes[0] = (int)ui->tapeSplit->width()*0.70;
     sizes[1] = (int)ui->tapeSplit->width()*0.30;
     ui->tapeSplit->setSizes(sizes);
+
+    // Getting the global Settings Settings
+    set = Settings::getInstance();
+
     // Setting the default display
     MachineSimulation *newMach = new MachineSimulation(nullptr, nullptr);
     ui->tableSim->insertWidget(0, newMach);
@@ -35,12 +39,24 @@ void UserMachines::start()
     newMach->start();
     newMach->setEnabled(false);
 
+    // Setting the icons for controlling simulation speed
+    QPixmap pixS(":rec/icons/slower");
+    QIcon iconS(pixS);
+    ui->slowerBt->setIcon(iconS);
+    ui->slowerBt->setIconSize(QSize(25, 20));
+    QPixmap pixF(":rec/icons/faster");
+    QIcon iconF(pixF);
+    ui->fasterBt->setIcon(iconF);
+    ui->fasterBt->setIconSize(QSize(25, 20));
+
     // Setting the default tape item
     addTape("Default");
 
+    // Setting the possible states for the application
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
     enSimButtons("Init");
 
+    // Changing the machine view according to the table selected
     connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
 }
 
@@ -510,4 +526,19 @@ void UserMachines::on_saveTableBt_clicked()
     out << "end_table";
     file.flush();
     file.close();
+}
+
+void UserMachines::on_settingsBt_clicked()
+{
+    set->show();
+}
+
+void UserMachines::on_slowerBt_clicked()
+{
+    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->decreaseSpeed();
+}
+
+void UserMachines::on_fasterBt_clicked()
+{
+    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->increaseSpeed();
 }
