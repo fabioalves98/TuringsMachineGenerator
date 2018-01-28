@@ -49,7 +49,6 @@ private slots:
     void selectTableCellSlt(int st, int sy);
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
-
     void on_headPos_valueChanged(int arg1);
 
 private:

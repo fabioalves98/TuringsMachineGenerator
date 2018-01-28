@@ -318,7 +318,7 @@ public:
         saveTableBt->setText(QApplication::translate("UserMachines", "Save Table", nullptr));
         qRandTableBt->setText(QApplication::translate("UserMachines", "Add Quick Random Table", nullptr));
         cRandTableBt->setText(QApplication::translate("UserMachines", "Add Custom Random Table", nullptr));
-        settingsBt->setText(QApplication::translate("UserMachines", "Settings", nullptr));
+        settingsBt->setText(QApplication::translate("UserMachines", "Help / Settings", nullptr));
     } // retranslateUi
 
 };

@@ -54,13 +54,9 @@ private slots:
     void on_addTapeBt_clicked();
     void selTapeButtons(int item);
     void on_loadTapeBt_clicked();
-
     void on_saveTableBt_clicked();
-
     void on_settingsBt_clicked();
-
     void on_slowerBt_clicked();
-
     void on_fasterBt_clicked();
 
 private:
