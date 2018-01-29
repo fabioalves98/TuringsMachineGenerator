@@ -37,16 +37,21 @@ void MachineSimulation::start() {
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
 
-    ui->stateList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->statesList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->statesList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->stateList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->simList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->simList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->tapeList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->tapeList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->inTape->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    ui->tapeList->addItem(new QListWidgetItem);
 
     connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
-    connect(ui->stateList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
-    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->stateList->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->statesList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->statesList->verticalScrollBar(), SLOT(setValue(int)));
 
     connect(this, SIGNAL(insertTapeSgn(QString)), this, SLOT(insertTapeSlt(QString)));
     connect(this, SIGNAL(insertStateSgn(QString)), this, SLOT(insertStateSlt(QString)));
@@ -242,7 +247,7 @@ void MachineSimulation::simulate() {
     pauseSim = false;
     halts = false;
     ui->simList->clear();
-    ui->stateList->clear();
+    ui->statesList->clear();
     mach->start(inTape);
 
     int iterations = 0;
@@ -344,10 +349,10 @@ void MachineSimulation::insertStateSlt(QString state) {
     stateText->setAlignment(Qt::AlignCenter);
     newStateI->setSizeHint(stateText->sizeHint());
     newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-    ui->stateList->addItem(newStateI);
-    ui->stateList->setItemWidget(newStateI, stateText);
-    ui->stateList->scrollToBottom();
-    QScrollBar *bar = ui->stateList->horizontalScrollBar();
+    ui->statesList->addItem(newStateI);
+    ui->statesList->setItemWidget(newStateI, stateText);
+    ui->statesList->scrollToBottom();
+    QScrollBar *bar = ui->statesList->horizontalScrollBar();
     bar->setValue((bar->maximum() + bar->minimum())/2);
     bar->update();}
 
@@ -362,6 +367,13 @@ void MachineSimulation::insertTapeSlt(QString toUpdate) {
     ui->simList->addItem(newTapeI);
     ui->simList->setItemWidget(newTapeI, tableText);
     ui->simList->scrollToBottom();
+
+    QLabel *tapeText = new QLabel;
+    tapeText->setText(toUpdate);
+    tapeText->setFont(QFont("Courier", 12, QFont::Bold));
+    tapeText->setAlignment(Qt::AlignCenter);
+    ui->tapeList->setItemWidget(ui->tapeList->item(0), tapeText);
+
     QScrollBar *bar = ui->simList->horizontalScrollBar();
     bar->setValue((bar->maximum() + bar->minimum())/2);
     bar->update();
