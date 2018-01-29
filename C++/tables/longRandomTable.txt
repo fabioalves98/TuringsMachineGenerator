@@ -1,0 +1,15 @@
+begin_info
+bs: 0
+is: A
+fs: H
+begin_table
+  *    A    B    C    D    E    F    G    I    J    K  
+  0   2LK  6LG  6RJ  6RA  0RF  3RE  4LC  6LA  5RA  0RD 
+  1   3LF  6LF  4LE  7LJ  4RJ  1LK  3LI  6RC  4LD  0RD 
+  2   6LF  6LI  6RB  5LG  0LG  7RB  4RJ  3LJ  3RC  2RK 
+  3   1RD  0LD  1LA  7LC  1LD  6LG  2LF  0LE  4RG  6RJ 
+  4   0LE  6LE  0LG  6RK  1RK  2RD  7LC  5LA  5LA  7RE 
+  5   0LF  5RG  0RI  7LF  1LJ  1RC  1LD  4LK  4RI  0RD 
+  6   3LF  0LK  1RK  0RC  3LE  6RA  4RK  6LF  3LD  3RD 
+  7   7RA  5RJ  5LJ  0RA  2RD  5RH  2RB  3LB  0RB  0RE 
+end_table

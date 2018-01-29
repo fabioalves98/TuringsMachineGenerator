@@ -36,6 +36,7 @@ void MachineSimulation::start() {
 
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
+    ui->tapeList->verticalScrollBar()->setEnabled(false);
 
     ui->statesList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->statesList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -45,8 +46,6 @@ void MachineSimulation::start() {
     ui->tapeList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->tapeList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->inTape->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-    ui->tapeList->addItem(new QListWidgetItem);
 
     connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
@@ -248,6 +247,10 @@ void MachineSimulation::simulate() {
     halts = false;
     ui->simList->clear();
     ui->statesList->clear();
+    ui->tapeList->clear();
+    ui->stateList->clear();
+    ui->tapeList->addItem(new QListWidgetItem);
+    ui->stateList->addItem(new QListWidgetItem);
     mach->start(inTape);
 
     int iterations = 0;
@@ -343,41 +346,54 @@ void MachineSimulation::selectTableCellSlt(int st, int sy) {
 
 void MachineSimulation::insertStateSlt(QString state) {
     QListWidgetItem *newStateI = new QListWidgetItem;
+    QLabel *statesText = new QLabel;
+    statesText->setText(state);
+    statesText->setFont(QFont("Courier", 12, QFont::Bold));
+    statesText->setAlignment(Qt::AlignCenter);
+    newStateI->setSizeHint(statesText->sizeHint());
+    newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+    ui->statesList->addItem(newStateI);
+    ui->statesList->setItemWidget(newStateI, statesText);
+    ui->statesList->scrollToBottom();
+
     QLabel *stateText = new QLabel;
     stateText->setText(state);
     stateText->setFont(QFont("Courier", 12, QFont::Bold));
     stateText->setAlignment(Qt::AlignCenter);
-    newStateI->setSizeHint(stateText->sizeHint());
-    newStateI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-    ui->statesList->addItem(newStateI);
-    ui->statesList->setItemWidget(newStateI, stateText);
-    ui->statesList->scrollToBottom();
-    QScrollBar *bar = ui->statesList->horizontalScrollBar();
-    bar->setValue((bar->maximum() + bar->minimum())/2);
-    bar->update();}
+    ui->stateList->setItemWidget(ui->stateList->item(0), stateText);
+}
 
 void MachineSimulation::insertTapeSlt(QString toUpdate) {
-    QListWidgetItem *newTapeI = new QListWidgetItem;
+    QListWidgetItem *tableTextI = new QListWidgetItem;
     QLabel *tableText = new QLabel;
     tableText->setText(toUpdate);
     tableText->setFont(QFont("Courier", 12, QFont::Bold));
     tableText->setAlignment(Qt::AlignCenter);
-    newTapeI->setSizeHint(tableText->sizeHint());
-    newTapeI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-    ui->simList->addItem(newTapeI);
-    ui->simList->setItemWidget(newTapeI, tableText);
+    tableTextI->setSizeHint(tableText->sizeHint());
+    tableTextI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+    ui->simList->addItem(tableTextI);
+    ui->simList->setItemWidget(tableTextI, tableText);
     ui->simList->scrollToBottom();
 
+    QListWidgetItem *tapeTextI = new QListWidgetItem;
     QLabel *tapeText = new QLabel;
     tapeText->setText(toUpdate);
     tapeText->setFont(QFont("Courier", 12, QFont::Bold));
     tapeText->setAlignment(Qt::AlignCenter);
-    ui->tapeList->setItemWidget(ui->tapeList->item(0), tapeText);
+    tapeTextI->setSizeHint(tapeText->sizeHint());
+    tapeTextI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+    ui->tapeList->addItem(tapeTextI);
+    ui->tapeList->setItemWidget(tapeTextI, tapeText);
+    ui->tapeList->scrollToBottom();
 
-    QScrollBar *bar = ui->simList->horizontalScrollBar();
-    bar->setValue((bar->maximum() + bar->minimum())/2);
-    bar->update();
+    QScrollBar *barUp = ui->simList->horizontalScrollBar();
+    barUp->setValue((barUp->maximum() + barUp->minimum())/2);
+    barUp->update();
     ui->simList->update();
+    QScrollBar *barDown = ui->tapeList->horizontalScrollBar();
+    barDown->setValue((barDown->maximum() + barDown->minimum())/2);
+    barDown->update();
+    ui->tapeList->update();
 }
 
 void MachineSimulation::changeStatusSlt(QString status) {

@@ -67,6 +67,7 @@ private:
 
     Ui::MachineSimulation *ui;
     Settings *set;
+    QSize maxTapeSize = QSize(1, 1);
 };
 
 #endif // MACHINESIMULATION_H
