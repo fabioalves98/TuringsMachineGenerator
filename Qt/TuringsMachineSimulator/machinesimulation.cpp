@@ -40,6 +40,8 @@ void MachineSimulation::start() {
     ui->stateList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->stateList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->simList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->simList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->inTape->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
@@ -49,6 +51,7 @@ void MachineSimulation::start() {
     connect(this, SIGNAL(insertTapeSgn(QString)), this, SLOT(insertTapeSlt(QString)));
     connect(this, SIGNAL(insertStateSgn(QString)), this, SLOT(insertStateSlt(QString)));
     connect(this, SIGNAL(selectTableCellSgn(int,int)), this, SLOT(selectTableCellSlt(int,int)));
+    connect(this, SIGNAL(changeStatusSgn(QString)), this, SLOT(changeStatusSlt(QString)));
 }
 
 void MachineSimulation::setMachine(Machine *mach) {
@@ -156,6 +159,7 @@ void MachineSimulation::display() {
     tableIsLoaded = true;
     resizeTable();
     state = "TableLoaded";
+    statusBar()->showMessage("Machine is Loaded");
 }
 
 void MachineSimulation::displayTape() {
@@ -288,7 +292,6 @@ void MachineSimulation::simulate() {
         }
         int st = mach->getStates()->indexOf(mach->getCurrentState());
         int sy = mach->getSymbols()->indexOf(mach->getCurrentSymbol());
-
         emit selectTableCellSgn(st, sy);
         emit insertStateSgn(mach->getCurrentState());
         emit insertTapeSgn(tapeStr);
@@ -297,11 +300,13 @@ void MachineSimulation::simulate() {
             QThread::msleep(10);
             QCoreApplication::processEvents();
             if (mach->halted()) {
+                emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations.");
                 state = "TableLoaded";
                 halts = true;
                 return;
             }
             if (haltSim) {
+                emit changeStatusSgn("The machine halted by user's order.");
                 state = "TableLoaded";
                 return;
             }
@@ -312,11 +317,13 @@ void MachineSimulation::simulate() {
                 localDelayFormat--;
             }
         }*/
+        iterations++;
         if ((iterations > maxIter) && haltWhenMaxIter) {
+            emit changeStatusSgn("The machine reached maximum number of iterations.");
             return;
         }
-        iterations++;
         mach->advance();
+        emit changeStatusSgn("Simulating - " + QString::number(iterations) + " iterations.");
     }
     while (true);
 }
@@ -342,8 +349,7 @@ void MachineSimulation::insertStateSlt(QString state) {
     ui->stateList->scrollToBottom();
     QScrollBar *bar = ui->stateList->horizontalScrollBar();
     bar->setValue((bar->maximum() + bar->minimum())/2);
-    bar->update();
-}
+    bar->update();}
 
 void MachineSimulation::insertTapeSlt(QString toUpdate) {
     QListWidgetItem *newTapeI = new QListWidgetItem;
@@ -360,6 +366,10 @@ void MachineSimulation::insertTapeSlt(QString toUpdate) {
     bar->setValue((bar->maximum() + bar->minimum())/2);
     bar->update();
     ui->simList->update();
+}
+
+void MachineSimulation::changeStatusSlt(QString status) {
+    statusBar()->showMessage(status);
 }
 
 void MachineSimulation::pause() {

@@ -102,7 +102,7 @@ QChar Machine::getCurrentState() {
 }
 
 QChar Machine::getCurrentSymbol() {
-    return cSymbol;
+    return *head;
 }
 
 std::list<QChar> Machine::getTape() {

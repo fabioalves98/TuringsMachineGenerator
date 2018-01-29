@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QSplitter>
+#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -41,7 +42,7 @@ public:
     QLabel *propLabel;
     QListWidget *propList;
     QSplitter *simSplit;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QVBoxLayout *rightSim;
     QVBoxLayout *Head;
     QLabel *headPosLabel;
@@ -49,7 +50,7 @@ public:
     QVBoxLayout *States;
     QLabel *stateLabel;
     QListWidget *stateList;
-    QWidget *widget1;
+    QWidget *layoutWidget2;
     QVBoxLayout *leftSim;
     QVBoxLayout *InitialTape;
     QLabel *inTapeLabel;
@@ -57,6 +58,7 @@ public:
     QVBoxLayout *Tape;
     QLabel *simLabel;
     QListWidget *simList;
+    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MachineSimulation)
     {
@@ -125,16 +127,16 @@ public:
         simSplit = new QSplitter(tableSplit);
         simSplit->setObjectName(QStringLiteral("simSplit"));
         simSplit->setOrientation(Qt::Horizontal);
-        widget = new QWidget(simSplit);
-        widget->setObjectName(QStringLiteral("widget"));
-        rightSim = new QVBoxLayout(widget);
+        layoutWidget1 = new QWidget(simSplit);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        rightSim = new QVBoxLayout(layoutWidget1);
         rightSim->setSpacing(2);
         rightSim->setObjectName(QStringLiteral("rightSim"));
         rightSim->setContentsMargins(0, 0, 0, 0);
         Head = new QVBoxLayout();
         Head->setSpacing(0);
         Head->setObjectName(QStringLiteral("Head"));
-        headPosLabel = new QLabel(widget);
+        headPosLabel = new QLabel(layoutWidget1);
         headPosLabel->setObjectName(QStringLiteral("headPosLabel"));
         headPosLabel->setMinimumSize(QSize(70, 24));
         headPosLabel->setMaximumSize(QSize(16777215, 24));
@@ -147,7 +149,7 @@ public:
 
         Head->addWidget(headPosLabel);
 
-        headPos = new QSpinBox(widget);
+        headPos = new QSpinBox(layoutWidget1);
         headPos->setObjectName(QStringLiteral("headPos"));
         headPos->setMinimumSize(QSize(0, 25));
         QFont font2;
@@ -163,7 +165,7 @@ public:
         States = new QVBoxLayout();
         States->setSpacing(0);
         States->setObjectName(QStringLiteral("States"));
-        stateLabel = new QLabel(widget);
+        stateLabel = new QLabel(layoutWidget1);
         stateLabel->setObjectName(QStringLiteral("stateLabel"));
         stateLabel->setMinimumSize(QSize(0, 36));
         stateLabel->setFont(font);
@@ -173,7 +175,7 @@ public:
 
         States->addWidget(stateLabel);
 
-        stateList = new QListWidget(widget);
+        stateList = new QListWidget(layoutWidget1);
         stateList->setObjectName(QStringLiteral("stateList"));
 
         States->addWidget(stateList);
@@ -181,17 +183,17 @@ public:
 
         rightSim->addLayout(States);
 
-        simSplit->addWidget(widget);
-        widget1 = new QWidget(simSplit);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        leftSim = new QVBoxLayout(widget1);
+        simSplit->addWidget(layoutWidget1);
+        layoutWidget2 = new QWidget(simSplit);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        leftSim = new QVBoxLayout(layoutWidget2);
         leftSim->setSpacing(2);
         leftSim->setObjectName(QStringLiteral("leftSim"));
         leftSim->setContentsMargins(0, 0, 0, 0);
         InitialTape = new QVBoxLayout();
         InitialTape->setSpacing(0);
         InitialTape->setObjectName(QStringLiteral("InitialTape"));
-        inTapeLabel = new QLabel(widget1);
+        inTapeLabel = new QLabel(layoutWidget2);
         inTapeLabel->setObjectName(QStringLiteral("inTapeLabel"));
         inTapeLabel->setMinimumSize(QSize(0, 24));
         inTapeLabel->setMaximumSize(QSize(16777215, 24));
@@ -202,7 +204,7 @@ public:
 
         InitialTape->addWidget(inTapeLabel);
 
-        inTape = new QListWidget(widget1);
+        inTape = new QListWidget(layoutWidget2);
         inTape->setObjectName(QStringLiteral("inTape"));
         inTape->setMaximumSize(QSize(16777215, 25));
 
@@ -214,7 +216,7 @@ public:
         Tape = new QVBoxLayout();
         Tape->setSpacing(0);
         Tape->setObjectName(QStringLiteral("Tape"));
-        simLabel = new QLabel(widget1);
+        simLabel = new QLabel(layoutWidget2);
         simLabel->setObjectName(QStringLiteral("simLabel"));
         simLabel->setMinimumSize(QSize(0, 36));
         simLabel->setFont(font);
@@ -225,7 +227,7 @@ public:
 
         Tape->addWidget(simLabel);
 
-        simList = new QListWidget(widget1);
+        simList = new QListWidget(layoutWidget2);
         simList->setObjectName(QStringLiteral("simList"));
 
         Tape->addWidget(simList);
@@ -233,12 +235,15 @@ public:
 
         leftSim->addLayout(Tape);
 
-        simSplit->addWidget(widget1);
+        simSplit->addWidget(layoutWidget2);
         tableSplit->addWidget(simSplit);
 
         verticalLayout->addWidget(tableSplit);
 
         MachineSimulation->setCentralWidget(centralwidget);
+        statusBar = new QStatusBar(MachineSimulation);
+        statusBar->setObjectName(QStringLiteral("statusBar"));
+        MachineSimulation->setStatusBar(statusBar);
 
         retranslateUi(MachineSimulation);
 

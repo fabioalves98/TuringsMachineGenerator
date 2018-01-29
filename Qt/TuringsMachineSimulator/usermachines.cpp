@@ -48,6 +48,19 @@ void UserMachines::start()
     QIcon iconF(pixF);
     ui->fasterBt->setIcon(iconF);
     ui->fasterBt->setIconSize(QSize(25, 20));
+    QPixmap pixP(":rec/icons/pauseBt");
+    QIcon iconP(pixP);
+    ui->pauseBt->setIcon(iconP);
+    ui->pauseBt->setIconSize(QSize(25, 20));
+    QPixmap pixC(":rec/icons/play");
+    QIcon iconC(pixC);
+    ui->contBt->setIcon(iconC);
+    ui->contBt->setIconSize(QSize(25, 20));
+    QPixmap pixH(":rec/icons/stop");
+    QIcon iconH(pixH);
+    ui->stopBt->setIcon(iconH);
+    ui->stopBt->setIconSize(QSize(25, 20));
+
 
     // Setting the default tape item
     addTape("Default");
@@ -318,6 +331,8 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
+            ui->slowerBt->setEnabled(false);
+            ui->fasterBt->setEnabled(false);
             break;
         }
         case 1: {
@@ -332,6 +347,8 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
+            ui->slowerBt->setEnabled(false);
+            ui->fasterBt->setEnabled(false);
             break;
         }
         case 2: {
@@ -346,6 +363,8 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(true);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(true);
+            ui->slowerBt->setEnabled(true);
+            ui->fasterBt->setEnabled(true);
             break;
         }
         case 3: {
@@ -360,6 +379,8 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(true);
             ui->stopBt->setEnabled(true);
+            ui->slowerBt->setEnabled(true);
+            ui->fasterBt->setEnabled(true);
             break;
         }
     }

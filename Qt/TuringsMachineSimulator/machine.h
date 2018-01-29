@@ -13,9 +13,9 @@ public:
     Machine(QFile *fileName);
     Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt);
     void start(Tape *inTape);
+    void advance();
     bool halted();
     void halt();
-    void advance();
     QChar getCurrentState();
     QChar getCurrentSymbol();
     std::list<QChar> getTape();

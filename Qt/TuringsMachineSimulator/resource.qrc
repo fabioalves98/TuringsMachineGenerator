@@ -9,5 +9,8 @@
         <file>icons/tape.png</file>
         <file>icons/faster.png</file>
         <file>icons/slower.png</file>
+        <file>icons/pauseBt.png</file>
+        <file>icons/play.png</file>
+        <file>icons/stop.png</file>
     </qresource>
 </RCC>

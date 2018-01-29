@@ -6,6 +6,7 @@
 #include <QScrollBar>
 #include <QtConcurrent>
 #include <QFileDialog>
+#include <QTimer>
 #include "machine.h"
 #include "tape.h"
 #include "settings.h"
@@ -44,11 +45,13 @@ signals:
     void selectTableCellSgn(int, int);
     void insertStateSgn(QString);
     void insertTapeSgn(QString);
+    void changeStatusSgn(QString);
 
 private slots:
     void selectTableCellSlt(int st, int sy);
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
+    void changeStatusSlt(QString status);
     void on_headPos_valueChanged(int arg1);
 
 private:

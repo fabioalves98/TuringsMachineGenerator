@@ -19,6 +19,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -44,6 +45,7 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QPushButton *uselAllBt;
     QPushButton *selAllBt;
+    QPushButton *simBt;
     QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_4;
@@ -52,14 +54,15 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QPushButton *addTapeBt;
     QPushButton *loadTapeBt;
-    QPushButton *simBt;
-    QStackedWidget *tableSim;
     QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
     QPushButton *pauseBt;
     QPushButton *contBt;
     QPushButton *stopBt;
     QPushButton *slowerBt;
     QPushButton *fasterBt;
+    QSpacerItem *horizontalSpacer_2;
+    QStackedWidget *tableSim;
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
     QPushButton *editTableBt;
@@ -145,6 +148,15 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_2);
 
+        simBt = new QPushButton(layoutWidget1);
+        simBt->setObjectName(QStringLiteral("simBt"));
+        simBt->setMinimumSize(QSize(0, 0));
+        QFont font2;
+        font2.setPointSize(12);
+        simBt->setFont(font2);
+
+        verticalLayout_2->addWidget(simBt);
+
 
         verticalLayout_3->addLayout(verticalLayout_2);
 
@@ -197,14 +209,56 @@ public:
 
         verticalLayout_6->addWidget(tapeSplit);
 
-        simBt = new QPushButton(layoutWidget);
-        simBt->setObjectName(QStringLiteral("simBt"));
-        simBt->setMinimumSize(QSize(0, 0));
-        QFont font2;
-        font2.setPointSize(12);
-        simBt->setFont(font2);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        verticalLayout_6->addWidget(simBt);
+        horizontalLayout->addItem(horizontalSpacer);
+
+        pauseBt = new QPushButton(layoutWidget);
+        pauseBt->setObjectName(QStringLiteral("pauseBt"));
+        pauseBt->setMinimumSize(QSize(30, 27));
+        pauseBt->setMaximumSize(QSize(30, 27));
+        pauseBt->setFont(font2);
+
+        horizontalLayout->addWidget(pauseBt);
+
+        contBt = new QPushButton(layoutWidget);
+        contBt->setObjectName(QStringLiteral("contBt"));
+        contBt->setMinimumSize(QSize(30, 27));
+        contBt->setMaximumSize(QSize(30, 27));
+        contBt->setFont(font2);
+
+        horizontalLayout->addWidget(contBt);
+
+        stopBt = new QPushButton(layoutWidget);
+        stopBt->setObjectName(QStringLiteral("stopBt"));
+        stopBt->setMinimumSize(QSize(30, 27));
+        stopBt->setMaximumSize(QSize(30, 27));
+        stopBt->setFont(font2);
+
+        horizontalLayout->addWidget(stopBt);
+
+        slowerBt = new QPushButton(layoutWidget);
+        slowerBt->setObjectName(QStringLiteral("slowerBt"));
+        slowerBt->setMinimumSize(QSize(30, 27));
+        slowerBt->setMaximumSize(QSize(30, 27));
+
+        horizontalLayout->addWidget(slowerBt);
+
+        fasterBt = new QPushButton(layoutWidget);
+        fasterBt->setObjectName(QStringLiteral("fasterBt"));
+        fasterBt->setMinimumSize(QSize(30, 27));
+        fasterBt->setMaximumSize(QSize(30, 27));
+
+        horizontalLayout->addWidget(fasterBt);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_6->addLayout(horizontalLayout);
 
         listSplit->addWidget(layoutWidget);
         tableSim = new QStackedWidget(listSplit);
@@ -212,43 +266,6 @@ public:
         listSplit->addWidget(tableSim);
 
         verticalLayout_7->addWidget(listSplit);
-
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        pauseBt = new QPushButton(centralwidget);
-        pauseBt->setObjectName(QStringLiteral("pauseBt"));
-        pauseBt->setFont(font2);
-
-        horizontalLayout->addWidget(pauseBt);
-
-        contBt = new QPushButton(centralwidget);
-        contBt->setObjectName(QStringLiteral("contBt"));
-        contBt->setFont(font2);
-
-        horizontalLayout->addWidget(contBt);
-
-        stopBt = new QPushButton(centralwidget);
-        stopBt->setObjectName(QStringLiteral("stopBt"));
-        stopBt->setFont(font2);
-
-        horizontalLayout->addWidget(stopBt);
-
-        slowerBt = new QPushButton(centralwidget);
-        slowerBt->setObjectName(QStringLiteral("slowerBt"));
-        slowerBt->setMinimumSize(QSize(30, 27));
-        slowerBt->setMaximumSize(QSize(30, 27));
-
-        horizontalLayout->addWidget(slowerBt);
-
-        fasterBt = new QPushButton(centralwidget);
-        fasterBt->setObjectName(QStringLiteral("fasterBt"));
-        fasterBt->setMinimumSize(QSize(30, 27));
-        fasterBt->setMaximumSize(QSize(30, 27));
-
-        horizontalLayout->addWidget(fasterBt);
-
-
-        verticalLayout_7->addLayout(horizontalLayout);
 
         tableCtrlLt = new QHBoxLayout();
         tableCtrlLt->setObjectName(QStringLiteral("tableCtrlLt"));
@@ -304,13 +321,13 @@ public:
         tablesLabel->setText(QApplication::translate("UserMachines", "Machine's Tables", nullptr));
         uselAllBt->setText(QApplication::translate("UserMachines", "Select All", nullptr));
         selAllBt->setText(QApplication::translate("UserMachines", "Unselect All", nullptr));
+        simBt->setText(QApplication::translate("UserMachines", "Simulate", nullptr));
         tapesLabel->setText(QApplication::translate("UserMachines", "Tapes", nullptr));
         addTapeBt->setText(QApplication::translate("UserMachines", "Add Tape", nullptr));
         loadTapeBt->setText(QApplication::translate("UserMachines", "Load Tape", nullptr));
-        simBt->setText(QApplication::translate("UserMachines", "Simulate", nullptr));
-        pauseBt->setText(QApplication::translate("UserMachines", "Pause", nullptr));
-        contBt->setText(QApplication::translate("UserMachines", "Continue", nullptr));
-        stopBt->setText(QApplication::translate("UserMachines", "Stop", nullptr));
+        pauseBt->setText(QString());
+        contBt->setText(QString());
+        stopBt->setText(QString());
         slowerBt->setText(QString());
         fasterBt->setText(QString());
         addTableBt->setText(QApplication::translate("UserMachines", "Add Table File", nullptr));
