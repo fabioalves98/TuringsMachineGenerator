@@ -18,6 +18,7 @@ RandomMachines::RandomMachines(QWidget *parent) :
     qsrand((uint)time.msec());
     changeButState();
     resizable = true;
+    ui->randTable->setSelectionMode(QAbstractItemView::NoSelection);
     ui->randTable->verticalScrollBar()->setEnabled(false);
     ui->randTable->horizontalScrollBar()->setEnabled(false);
     this->on_stSel_valueChanged(0);

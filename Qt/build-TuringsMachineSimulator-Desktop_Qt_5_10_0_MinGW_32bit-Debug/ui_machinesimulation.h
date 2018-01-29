@@ -74,7 +74,9 @@ public:
         centralwidget = new QWidget(MachineSimulation);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayout_2 = new QVBoxLayout(centralwidget);
+        verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         tableSplit = new QSplitter(centralwidget);
         tableSplit->setObjectName(QStringLiteral("tableSplit"));
         tableSplit->setOrientation(Qt::Vertical);
@@ -101,6 +103,7 @@ public:
 
         tableView = new QTableWidget(layoutWidget);
         tableView->setObjectName(QStringLiteral("tableView"));
+        tableView->setStyleSheet(QStringLiteral("QTableWidget::item:selected{ background-color: #3399ff }"));
 
         Specs->addWidget(tableView);
 
@@ -291,6 +294,9 @@ public:
         MachineSimulation->setCentralWidget(centralwidget);
         statusBar = new QStatusBar(MachineSimulation);
         statusBar->setObjectName(QStringLiteral("statusBar"));
+        QFont font3;
+        font3.setPointSize(9);
+        statusBar->setFont(font3);
         MachineSimulation->setStatusBar(statusBar);
 
         retranslateUi(MachineSimulation);

@@ -15,6 +15,21 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QSplitter" name="tableSplit">
       <property name="orientation">
@@ -54,7 +69,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QTableWidget" name="tableView"/>
+          <widget class="QTableWidget" name="tableView">
+           <property name="styleSheet">
+            <string notr="true">QTableWidget::item:selected{ background-color: #3399ff }</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -389,7 +408,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
