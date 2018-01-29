@@ -45,7 +45,6 @@ void RandomMachines::quick() {
     int minSy = set->getMinSy();
     int numSt = qrand() % ((maxSt - minSt) + 1) + minSt;
     int numSy = qrand() % ((maxSy - minSy) + 1) + minSy;
-    qDebug() << numSt << " " << numSy;
     for (int i = 0; i < numSt; i++) {
         states->append(set->getStates()->at(i));
         }
@@ -75,11 +74,9 @@ void RandomMachines::quick() {
         }
     }
     int numDigitsName = pow(10, set->getRandSuffix() - 1);
-    qDebug() << numDigitsName;
     QString name = set->getNamePrefix() +  QString::number(qrand()%(9*numDigitsName) + numDigitsName);
     QChar initState = (set->getRandInState() ? (states->at(qrand()%numSt)) : (set->getInState()));
     QChar blanckSymbol = symbols->at(0);
-    qDebug() << name << " " << initState << " " << blanckSymbol;
     randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, 'H');
 }
 

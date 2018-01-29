@@ -32,7 +32,7 @@ void MachineSimulation::start() {
     sizes[1] = (int)ui->simSplit->width()*0.9;
     ui->simSplit->setSizes(sizes);
     // Gettings the global Settings
-   set = Settings::getInstance();
+    set = Settings::getInstance();
 
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
@@ -241,8 +241,12 @@ void MachineSimulation::simulate() {
     ui->stateList->clear();
     mach->start(inTape);
 
+    int iterations = 0;
+    int maxIter = set->getIterTilHalt();
+    bool haltWhenMaxIter = set->getHaltInXIt();
     int delayTime = set->getDelayTime();
     localDelayFormat = delayTime/10;
+    //bool decDelay = set->getDecDelay();
 
     std::list<QChar> tape;
     QString tapeStr;
@@ -302,6 +306,16 @@ void MachineSimulation::simulate() {
                 return;
             }
         }
+        // To Fix
+        /*if (decDelay && localDelayFormat > 1) {
+            if (iterations % 10 == 0) {
+                localDelayFormat--;
+            }
+        }*/
+        if ((iterations > maxIter) && haltWhenMaxIter) {
+            return;
+        }
+        iterations++;
         mach->advance();
     }
     while (true);
