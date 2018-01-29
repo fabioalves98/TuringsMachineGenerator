@@ -9,7 +9,9 @@
 #include <QLineEdit>
 #include <QSignalMapper>
 #include <QScrollBar>
+#include "math.h"
 #include "machine.h"
+#include "settings.h"
 
 namespace Ui {
 class RandomMachines;
@@ -21,7 +23,7 @@ class RandomMachines : public QMainWindow
 
 public:
     explicit RandomMachines(QWidget *parent = 0);
-    void quick(int minSt, int maxSt, int minSy, int maxSy);
+    void quick();
     bool isReady();
     Machine *getRandMach();
     ~RandomMachines();
@@ -45,7 +47,6 @@ private:
     void clearSyLayout();
     void changeButState();
     void resizeTable();
-    Ui::RandomMachines *ui;
     QString abc;
     QVector<QChar> *states;
     QVector<QChar> *symbols;
@@ -55,6 +56,9 @@ private:
     bool ready = false;
     int prevState = 0;
     int prevSymbol = 0;
+
+    Ui::RandomMachines *ui;
+    Settings *set;
 };
 
 #endif // RANDOMMACHINES_H

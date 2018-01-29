@@ -427,7 +427,7 @@ void UserMachines::on_cRandTableBt_clicked()
 void UserMachines::on_qRandTableBt_clicked()
 {
     RandomMachines *rand = new RandomMachines;
-    rand->quick(2, 10, 2, 10);
+    rand->quick();
     Machine *quick = rand->getRandMach();
     addMachine(quick);
     MachineSimulation *sim = new MachineSimulation(quick, listTape.at(0));

@@ -23,6 +23,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -41,7 +42,10 @@ public:
     QGroupBox *groupBox;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
-    QLineEdit *lineEdit;
+    QLineEdit *nameEdit;
+    QLabel *label_3;
+    QComboBox *nameRandNum;
+    QLabel *label_4;
     QGroupBox *statesGBox;
     QHBoxLayout *horizontalLayout_5;
     QVBoxLayout *stLabels;
@@ -60,9 +64,9 @@ public:
     QComboBox *inStCBox;
     QCheckBox *rInStCheck;
     QSpacerItem *inStSpacer;
-    QHBoxLayout *hltState;
-    QLineEdit *hltStEdit;
-    QSpacerItem *hltStSpacer;
+    QHBoxLayout *haltState;
+    QLineEdit *haltStEdit;
+    QSpacerItem *haltStSpacer;
     QGroupBox *symbolsGBox;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *syLabels;
@@ -75,7 +79,24 @@ public:
     QSpacerItem *sySpinBoxerSpacer;
     QSpacerItem *verticalSpacer;
     QWidget *simulation;
+    QVBoxLayout *verticalLayout_2;
+    QGroupBox *groupBox_2;
+    QHBoxLayout *horizontalLayout_4;
+    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_2;
+    QSpinBox *delaySpinBox;
+    QCheckBox *decDelayCheck;
+    QSpacerItem *horizontalSpacer;
+    QGroupBox *groupBox_3;
+    QHBoxLayout *horizontalLayout_6;
+    QCheckBox *haltSimCheck;
+    QSpinBox *haltSimSpinBox;
+    QLabel *label_5;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
     QWidget *about;
+    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *Settings)
     {
@@ -115,13 +136,31 @@ public:
 
         horizontalLayout->addWidget(label);
 
-        lineEdit = new QLineEdit(groupBox);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        nameEdit = new QLineEdit(groupBox);
+        nameEdit->setObjectName(QStringLiteral("nameEdit"));
         QFont font3;
         font3.setPointSize(10);
-        lineEdit->setFont(font3);
+        nameEdit->setFont(font3);
 
-        horizontalLayout->addWidget(lineEdit);
+        horizontalLayout->addWidget(nameEdit);
+
+        label_3 = new QLabel(groupBox);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setFont(font2);
+
+        horizontalLayout->addWidget(label_3);
+
+        nameRandNum = new QComboBox(groupBox);
+        nameRandNum->setObjectName(QStringLiteral("nameRandNum"));
+        nameRandNum->setFont(font2);
+
+        horizontalLayout->addWidget(nameRandNum);
+
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setFont(font2);
+
+        horizontalLayout->addWidget(label_4);
 
 
         verticalLayout_8->addWidget(groupBox);
@@ -178,6 +217,8 @@ public:
         QFont font5;
         font5.setPointSize(12);
         minStSpinBox->setFont(font5);
+        minStSpinBox->setMinimum(1);
+        minStSpinBox->setMaximum(50);
 
         stSpinBoxs->addWidget(minStSpinBox);
 
@@ -185,6 +226,8 @@ public:
         maxStSpinBox->setObjectName(QStringLiteral("maxStSpinBox"));
         maxStSpinBox->setMinimumSize(QSize(50, 30));
         maxStSpinBox->setFont(font5);
+        maxStSpinBox->setMinimum(1);
+        maxStSpinBox->setMaximum(50);
 
         stSpinBoxs->addWidget(maxStSpinBox);
 
@@ -227,22 +270,22 @@ public:
 
         stSettings->addLayout(inState);
 
-        hltState = new QHBoxLayout();
-        hltState->setObjectName(QStringLiteral("hltState"));
-        hltStEdit = new QLineEdit(statesGBox);
-        hltStEdit->setObjectName(QStringLiteral("hltStEdit"));
-        hltStEdit->setMinimumSize(QSize(50, 30));
-        hltStEdit->setMaximumSize(QSize(50, 30));
-        hltStEdit->setFont(font5);
+        haltState = new QHBoxLayout();
+        haltState->setObjectName(QStringLiteral("haltState"));
+        haltStEdit = new QLineEdit(statesGBox);
+        haltStEdit->setObjectName(QStringLiteral("haltStEdit"));
+        haltStEdit->setMinimumSize(QSize(50, 30));
+        haltStEdit->setMaximumSize(QSize(50, 30));
+        haltStEdit->setFont(font5);
 
-        hltState->addWidget(hltStEdit);
+        haltState->addWidget(haltStEdit);
 
-        hltStSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        haltStSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hltState->addItem(hltStSpacer);
+        haltState->addItem(haltStSpacer);
 
 
-        stSettings->addLayout(hltState);
+        stSettings->addLayout(haltState);
 
 
         horizontalLayout_5->addLayout(stSettings);
@@ -278,6 +321,8 @@ public:
         minSySpinBox->setObjectName(QStringLiteral("minSySpinBox"));
         minSySpinBox->setMinimumSize(QSize(50, 30));
         minSySpinBox->setFont(font5);
+        minSySpinBox->setMinimum(1);
+        minSySpinBox->setMaximum(50);
 
         sySpinBoxs->addWidget(minSySpinBox);
 
@@ -285,6 +330,8 @@ public:
         maxSySpinBox->setObjectName(QStringLiteral("maxSySpinBox"));
         maxSySpinBox->setMinimumSize(QSize(50, 30));
         maxSySpinBox->setFont(font5);
+        maxSySpinBox->setMinimum(1);
+        maxSySpinBox->setMaximum(50);
 
         sySpinBoxs->addWidget(maxSySpinBox);
 
@@ -310,6 +357,86 @@ public:
         tabWidget->addTab(randomTables, QString());
         simulation = new QWidget();
         simulation->setObjectName(QStringLiteral("simulation"));
+        verticalLayout_2 = new QVBoxLayout(simulation);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        groupBox_2 = new QGroupBox(simulation);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_2->setFont(font1);
+        horizontalLayout_4 = new QHBoxLayout(groupBox_2);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        label_2 = new QLabel(groupBox_2);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setFont(font2);
+
+        horizontalLayout_3->addWidget(label_2);
+
+        delaySpinBox = new QSpinBox(groupBox_2);
+        delaySpinBox->setObjectName(QStringLiteral("delaySpinBox"));
+        delaySpinBox->setMinimum(50);
+        delaySpinBox->setMaximum(1000000);
+        delaySpinBox->setSingleStep(50);
+        delaySpinBox->setValue(200);
+
+        horizontalLayout_3->addWidget(delaySpinBox);
+
+
+        verticalLayout->addLayout(horizontalLayout_3);
+
+        decDelayCheck = new QCheckBox(groupBox_2);
+        decDelayCheck->setObjectName(QStringLiteral("decDelayCheck"));
+        decDelayCheck->setFont(font2);
+
+        verticalLayout->addWidget(decDelayCheck);
+
+
+        horizontalLayout_4->addLayout(verticalLayout);
+
+        horizontalSpacer = new QSpacerItem(477, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer);
+
+
+        verticalLayout_2->addWidget(groupBox_2);
+
+        groupBox_3 = new QGroupBox(simulation);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        groupBox_3->setFont(font1);
+        horizontalLayout_6 = new QHBoxLayout(groupBox_3);
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        haltSimCheck = new QCheckBox(groupBox_3);
+        haltSimCheck->setObjectName(QStringLiteral("haltSimCheck"));
+        haltSimCheck->setFont(font2);
+
+        horizontalLayout_6->addWidget(haltSimCheck);
+
+        haltSimSpinBox = new QSpinBox(groupBox_3);
+        haltSimSpinBox->setObjectName(QStringLiteral("haltSimSpinBox"));
+        haltSimSpinBox->setMinimum(1);
+        haltSimSpinBox->setMaximum(10000000);
+
+        horizontalLayout_6->addWidget(haltSimSpinBox);
+
+        label_5 = new QLabel(groupBox_3);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setFont(font2);
+
+        horizontalLayout_6->addWidget(label_5);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_6->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_2->addWidget(groupBox_3);
+
+        verticalSpacer_2 = new QSpacerItem(20, 418, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_2->addItem(verticalSpacer_2);
+
         tabWidget->addTab(simulation, QString());
         about = new QWidget();
         about->setObjectName(QStringLiteral("about"));
@@ -318,6 +445,9 @@ public:
         verticalLayout_6->addWidget(tabWidget);
 
         Settings->setCentralWidget(centralwidget);
+        statusBar = new QStatusBar(Settings);
+        statusBar->setObjectName(QStringLiteral("statusBar"));
+        Settings->setStatusBar(statusBar);
 
         retranslateUi(Settings);
 
@@ -333,6 +463,8 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(general), QApplication::translate("Settings", "General", nullptr));
         groupBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
         label->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));
+        label_3->setText(QApplication::translate("Settings", "+", nullptr));
+        label_4->setText(QApplication::translate("Settings", "Random integer", nullptr));
         statesGBox->setTitle(QApplication::translate("Settings", "States", nullptr));
         minStLabel->setText(QApplication::translate("Settings", "Minimum:", nullptr));
         maxStLabel->setText(QApplication::translate("Settings", "Maximum:", nullptr));
@@ -343,6 +475,12 @@ public:
         minSyLabel->setText(QApplication::translate("Settings", "Minimum:", nullptr));
         maxSyLabel->setText(QApplication::translate("Settings", "Maximum:", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(randomTables), QApplication::translate("Settings", "Quick Random Tables", nullptr));
+        groupBox_2->setTitle(QApplication::translate("Settings", "Iteration Delay", nullptr));
+        label_2->setText(QApplication::translate("Settings", "Delay between iterations (ms):", nullptr));
+        decDelayCheck->setText(QApplication::translate("Settings", "Decrease delay during simulation", nullptr));
+        groupBox_3->setTitle(QApplication::translate("Settings", "Halt Simulation", nullptr));
+        haltSimCheck->setText(QApplication::translate("Settings", "Halt Simulation in ", nullptr));
+        label_5->setText(QApplication::translate("Settings", "iterations", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(simulation), QApplication::translate("Settings", "Simulation", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(about), QApplication::translate("Settings", "About", nullptr));
     } // retranslateUi

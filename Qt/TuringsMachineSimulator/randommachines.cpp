@@ -7,11 +7,13 @@ RandomMachines::RandomMachines(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Random Machine Creation");
+    this->setWindowModality(Qt::ApplicationModal);
     ui->randTable->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->randTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     abc = "ABCDEFGIJKLMNOPQRSTUVWXYZ";
     states = new QVector<QChar>;
     symbols = new QVector<QChar>;
+    set = Settings::getInstance();
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
     changeButState();
@@ -34,32 +36,36 @@ void RandomMachines::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void RandomMachines::quick(int minSt, int maxSt, int minSy, int maxSy) {
+void RandomMachines::quick() {
     states->clear();
     symbols->clear();
-    int numSt = qrand() % (maxSt - minSt) + minSt;
-    int numSy = qrand() % (maxSy - minSy) + minSy;
+    int maxSt = set->getMaxSt();
+    int minSt = set->getMinSt();
+    int maxSy = set->getMaxSy();
+    int minSy = set->getMinSy();
+    int numSt = qrand() % ((maxSt - minSt) + 1) + minSt;
+    int numSy = qrand() % ((maxSy - minSy) + 1) + minSy;
+    qDebug() << numSt << " " << numSy;
     for (int i = 0; i < numSt; i++) {
-        states->append(abc.at(i));
-    }
+        states->append(set->getStates()->at(i));
+        }
     for (int i = 0; i < numSy; i++) {
-        symbols->append(QString::number(i).at(0));
+        symbols->append(set->getSymbols()->at(i));
     }
     int haltAct;
-    if ((states->size() != 0) && (symbols->size() != 0)) {
-        haltAct = qrand() % (states->size() * symbols->size());
-    }
+    haltAct = qrand() % (numSt * numSy);
+    QChar haltState = set->getHaltState();
     QMap<QString, QString> transFunct;
-    for (int i = 0; i < symbols->size(); i++) {
-        for (int j = 0; j < states->size(); j++) {
+    for (int i = 0; i < numSy; i++) {
+        for (int j = 0; j < numSt; j++) {
             QString action;
-            action.append(symbols->at(qrand()%symbols->size()));
+            action.append(symbols->at(qrand()%numSy));
             action.append((qrand()%2 == 1) ? "R" : "L");
             if (haltAct != 0) {
-                action.append(states->at(qrand()%states->size()));
+                action.append(states->at(qrand()%numSt));
             }
             else {
-                action.append("H");
+                action.append(QString(haltState));
             }
             haltAct--;
             QString key;
@@ -68,9 +74,12 @@ void RandomMachines::quick(int minSt, int maxSt, int minSy, int maxSy) {
             transFunct.insert(key, action);
         }
     }
-    QString name = QString::number(qrand()%10000);
-    QChar initState = states->at(0);
+    int numDigitsName = pow(10, set->getRandSuffix() - 1);
+    qDebug() << numDigitsName;
+    QString name = set->getNamePrefix() +  QString::number(qrand()%(9*numDigitsName) + numDigitsName);
+    QChar initState = (set->getRandInState() ? (states->at(qrand()%numSt)) : (set->getInState()));
     QChar blanckSymbol = symbols->at(0);
+    qDebug() << name << " " << initState << " " << blanckSymbol;
     randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, 'H');
 }
 

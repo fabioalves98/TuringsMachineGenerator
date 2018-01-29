@@ -10,9 +10,12 @@ Settings::Settings(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Settings");
     abc = "ABCDEFGIJKLMNOPQRSTUVWXYZ";
-    ui->hltStEdit->setPlaceholderText("H");
-    ui->hltStEdit->setAlignment(Qt::AlignCenter);
-    ui->rInStCheck->setChecked(true);
+    this->setWindowModality(Qt::ApplicationModal);
+    ui->tabWidget->setCurrentIndex(0);
+
+    setDefaults();
+
+    statusBar()->showMessage("Changes will be applied automatically by closing this window.");
 }
 
 Settings::~Settings()
@@ -25,6 +28,160 @@ Settings* Settings::getInstance() {
         instance = new Settings;
     }
     return instance;
+}
+
+void Settings::setDefaults() {
+    // Settings for the quick random tables tab
+    namePrefix = "Quick Random - ";
+    ui->nameEdit->setPlaceholderText(namePrefix);
+    for (int i = 2; i < 8; i++) {
+        ui->nameRandNum->addItem(QString::number(i) + " digit");
+    }
+    randSuffix = 4;
+    ui->nameRandNum->setCurrentIndex(randSuffix - 2);
+    haltState = 'H';
+    ui->haltStEdit->setPlaceholderText(QString(haltState));
+    ui->haltStEdit->setAlignment(Qt::AlignCenter);
+    randInState = true;
+    ui->rInStCheck->setChecked(randInState);
+    minSt = 2; maxSt = 10;
+    ui->minStSpinBox->setValue(minSt);
+    ui->maxStSpinBox->setValue(maxSt);
+    minSy = 2; maxSy = 10;
+    ui->minSySpinBox->setValue(minSy);
+    ui->maxSySpinBox->setValue(maxSy);
+    fillStatesNSymbols();
+    inState = ui->inStCBox->itemText(0).at(0);
+
+    // Settings for the simulation tab
+    delayTime = 200;
+    ui->delaySpinBox->setValue(delayTime);
+    decDelay = true;
+    ui->decDelayCheck->setChecked(decDelay);
+    haltInXIt = false;
+    ui->haltSimSpinBox->setEnabled(haltInXIt);
+    iterTilHalt = 1000;
+    ui->haltSimSpinBox->setValue(iterTilHalt);
+}
+
+void Settings::fillStatesNSymbols() {
+    for (int i = 0; i < ui->stLayout->count(); i++) {
+        if (dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->text() == nullptr) {
+            states.append(dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->placeholderText().at(0));
+        }
+        else {
+            states.append(dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->text().at(0));
+        }
+    }
+    for (int i = 0; i < ui->syLayout->count(); i++) {
+        if (dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->text() == nullptr) {
+            symbols.append(dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->placeholderText().at(0));
+        }
+        else {
+            symbols.append(dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->text().at(0));
+        }
+    }
+}
+
+void Settings::closeEvent(QCloseEvent *event) {
+    if (ui->nameEdit->text() == nullptr) {
+        namePrefix = ui->nameEdit->placeholderText();
+    }
+    else {
+        namePrefix = ui->nameEdit->text();
+    }
+    randSuffix = ui->nameRandNum->currentIndex() + 2;
+    minSt = ui->minStSpinBox->value();
+    maxSt = ui->maxStSpinBox->value();
+    states.clear();
+    minSy = ui->minSySpinBox->value();
+    maxSy = ui->maxSySpinBox->value();
+    symbols.clear();
+    fillStatesNSymbols();
+    randInState = ui->rInStCheck->isChecked();
+    inState = ui->inStCBox->currentText().at(0);
+    if (ui->haltStEdit->text() == nullptr) {
+        haltState = ui->haltStEdit->placeholderText().at(0);
+    }
+    else {
+        haltState = ui->haltStEdit->text().at(0);
+    }
+    delayTime = ui->delaySpinBox->value();
+    decDelay = ui->decDelayCheck->isChecked();
+    haltInXIt = ui->haltSimCheck->isChecked();
+    iterTilHalt = ui->haltSimSpinBox->value();
+    close();
+    QWidget::closeEvent(event);
+}
+
+int Settings::getIterTilHalt()
+{
+    return iterTilHalt;
+}
+
+bool Settings::getHaltInXIt()
+{
+    return haltInXIt;
+}
+
+bool Settings::getDecDelay()
+{
+    return decDelay;
+}
+
+QChar Settings::getHaltState()
+{
+    return haltState;
+}
+
+QChar Settings::getInState()
+{
+    return inState;
+}
+
+bool Settings::getRandInState()
+{
+    return randInState;
+}
+
+QVector<QChar>* Settings::getSymbols()
+{
+    return &symbols;
+}
+
+QVector<QChar>* Settings::getStates()
+{
+    return &states;
+}
+
+int Settings::getMaxSy()
+{
+    return maxSy;
+}
+
+int Settings::getMinSy()
+{
+    return minSy;
+}
+
+int Settings::getMaxSt()
+{
+    return maxSt;
+}
+
+int Settings::getMinSt()
+{
+    return minSt;
+}
+
+int Settings::getRandSuffix()
+{
+    return randSuffix;
+}
+
+QString Settings::getNamePrefix()
+{
+    return namePrefix;
 }
 
 int Settings::getDelayTime()
@@ -63,7 +220,7 @@ void Settings::on_maxStSpinBox_valueChanged(int arg1)
             ui->inStCBox->addItem(st);
 
             QLineEdit *lEdit = new QLineEdit;
-            lEdit->setMaximumSize(ui->maxStSpinBox->size());
+            lEdit->setMaximumSize(QSize(50, ui->maxStSpinBox->height()));
             lEdit->setAlignment(Qt::AlignCenter);
             lEdit->setPlaceholderText(st);
             ui->stLayout->addWidget(lEdit);
@@ -124,7 +281,7 @@ void Settings::on_maxSySpinBox_valueChanged(int arg1)
             }
 
             QLineEdit *lEdit = new QLineEdit;
-            lEdit->setMaximumSize(ui->maxSySpinBox->size());
+            lEdit->setMaximumSize(QSize(50, ui->maxSySpinBox->height()));
             lEdit->setAlignment(Qt::AlignCenter);
             lEdit->setPlaceholderText(sy);
             ui->syLayout->addWidget(lEdit);
@@ -148,5 +305,15 @@ void Settings::on_minSySpinBox_valueChanged(int arg1)
 {
     if (arg1 > ui->maxSySpinBox->value()) {
         ui->maxSySpinBox->setValue(arg1);
+    }
+}
+
+void Settings::on_haltSimCheck_stateChanged(int arg1)
+{
+    if (arg1 > 1) {
+        ui->haltSimSpinBox->setEnabled(true);
+    }
+    else {
+        ui->haltSimSpinBox->setEnabled(false);
     }
 }
