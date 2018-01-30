@@ -56,7 +56,8 @@ void Machine::start(Tape *inTape) {
     pState = initState;
     cSymbol = blanckSym;
     head = tape.begin();
-    std::advance(head, inTape->getTapePos());
+    int headPos = (inTape->getTapePos() > 0) ? inTape->getTapePos() : 1;
+    std::advance(head, headPos);
     startP = 0;
     endP = tape.size();
     count = 0;

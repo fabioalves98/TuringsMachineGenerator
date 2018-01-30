@@ -176,6 +176,9 @@ void MachineSimulation::displayTape() {
     int headPos = inTape->getTapePos();
     ui->headPos->setValue(headPos);
     std::list<QChar> tape = inTape->getTape();
+    if (headPos <= 0) {
+        headPos = 1;
+    }
     std::list<QChar>::iterator tapeIt = tape.begin();
     QString tapeStr;
     int offset = tape.size()/2 - headPos;

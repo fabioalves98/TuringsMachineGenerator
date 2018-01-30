@@ -26,7 +26,18 @@ QString Tape::getName() {
 }
 
 std::list<QChar> Tape::getTape() {
-    return tape;
+    tempTape = tape;
+    if (signed(headPos) >= signed(tape.size() - 1)) {
+        for (int i = tape.size() - 1; i <= headPos; i++) {
+            tempTape.push_back('0');
+        }
+    }
+    else if (headPos <= 0) {
+        for (int i = headPos; i <= 0; i++) {
+            tempTape.push_front('0');
+        }
+    }
+    return tempTape;
 }
 
 int Tape::getTapePos() {

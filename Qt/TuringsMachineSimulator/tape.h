@@ -17,6 +17,7 @@ public:
 private:
     QString name;
     std::list<QChar> tape;
+    std::list<QChar> tempTape;
     int headPos;
 };
 

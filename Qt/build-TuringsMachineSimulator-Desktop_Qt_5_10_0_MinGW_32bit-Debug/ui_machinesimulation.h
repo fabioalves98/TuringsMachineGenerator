@@ -163,6 +163,8 @@ public:
         font2.setPointSize(10);
         headPos->setFont(font2);
         headPos->setAlignment(Qt::AlignCenter);
+        headPos->setMinimum(-999);
+        headPos->setMaximum(999);
 
         Head->addWidget(headPos);
 
