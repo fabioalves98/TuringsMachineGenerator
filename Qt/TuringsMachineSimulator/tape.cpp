@@ -40,6 +40,10 @@ std::list<QChar> Tape::getTape() {
     return tempTape;
 }
 
+int Tape::getTapeSize() {
+    return tape.size();
+}
+
 int Tape::getTapePos() {
     return headPos;
 }

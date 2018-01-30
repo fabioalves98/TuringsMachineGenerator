@@ -43,9 +43,6 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 signals:
-    /*void selectTableCellSgn(int, int);
-    void insertStateSgn(QString);
-    void insertTapeSgn(QString);*/
     void updateUiSgn(int, int, int, QString, QString, QString);
     void changeStatusSgn(QString);
     void delayChanged(int);

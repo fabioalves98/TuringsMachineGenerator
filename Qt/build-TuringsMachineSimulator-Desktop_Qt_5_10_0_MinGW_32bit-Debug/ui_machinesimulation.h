@@ -37,12 +37,17 @@ public:
     QVBoxLayout *Specs;
     QLabel *tableLabel;
     QTableWidget *tableView;
+    QSplitter *propSplit;
     QWidget *layoutWidget_2;
-    QVBoxLayout *Properties;
+    QVBoxLayout *tableProp;
     QLabel *propLabel;
-    QListWidget *propList;
-    QSplitter *simSplit;
+    QListWidget *tablePropList;
     QWidget *layoutWidget1;
+    QVBoxLayout *tapeProp;
+    QLabel *label;
+    QListWidget *tapePropList;
+    QSplitter *simSplit;
+    QWidget *layoutWidget2;
     QVBoxLayout *rightSim;
     QVBoxLayout *Head;
     QLabel *headPosLabel;
@@ -53,7 +58,7 @@ public:
     QVBoxLayout *State;
     QLabel *stateLabel;
     QListWidget *stateList;
-    QWidget *layoutWidget2;
+    QWidget *layoutWidget3;
     QVBoxLayout *leftSim;
     QVBoxLayout *InitialTape;
     QLabel *inTapeLabel;
@@ -108,12 +113,15 @@ public:
         Specs->addWidget(tableView);
 
         specSplit->addWidget(layoutWidget);
-        layoutWidget_2 = new QWidget(specSplit);
+        propSplit = new QSplitter(specSplit);
+        propSplit->setObjectName(QStringLiteral("propSplit"));
+        propSplit->setOrientation(Qt::Vertical);
+        layoutWidget_2 = new QWidget(propSplit);
         layoutWidget_2->setObjectName(QStringLiteral("layoutWidget_2"));
-        Properties = new QVBoxLayout(layoutWidget_2);
-        Properties->setSpacing(0);
-        Properties->setObjectName(QStringLiteral("Properties"));
-        Properties->setContentsMargins(0, 0, 0, 0);
+        tableProp = new QVBoxLayout(layoutWidget_2);
+        tableProp->setSpacing(0);
+        tableProp->setObjectName(QStringLiteral("tableProp"));
+        tableProp->setContentsMargins(0, 0, 0, 0);
         propLabel = new QLabel(layoutWidget_2);
         propLabel->setObjectName(QStringLiteral("propLabel"));
         propLabel->setFont(font);
@@ -122,28 +130,53 @@ public:
         propLabel->setAlignment(Qt::AlignCenter);
         propLabel->setMargin(3);
 
-        Properties->addWidget(propLabel);
+        tableProp->addWidget(propLabel);
 
-        propList = new QListWidget(layoutWidget_2);
-        propList->setObjectName(QStringLiteral("propList"));
+        tablePropList = new QListWidget(layoutWidget_2);
+        tablePropList->setObjectName(QStringLiteral("tablePropList"));
 
-        Properties->addWidget(propList);
+        tableProp->addWidget(tablePropList);
 
-        specSplit->addWidget(layoutWidget_2);
+        propSplit->addWidget(layoutWidget_2);
+        layoutWidget1 = new QWidget(propSplit);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        tapeProp = new QVBoxLayout(layoutWidget1);
+        tapeProp->setSpacing(0);
+        tapeProp->setObjectName(QStringLiteral("tapeProp"));
+        tapeProp->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(layoutWidget1);
+        label->setObjectName(QStringLiteral("label"));
+        label->setMinimumSize(QSize(0, 33));
+        label->setMaximumSize(QSize(16777215, 33));
+        label->setFont(font);
+        label->setFrameShape(QFrame::Panel);
+        label->setFrameShadow(QFrame::Raised);
+        label->setAlignment(Qt::AlignCenter);
+
+        tapeProp->addWidget(label);
+
+        tapePropList = new QListWidget(layoutWidget1);
+        tapePropList->setObjectName(QStringLiteral("tapePropList"));
+        tapePropList->setMinimumSize(QSize(0, 50));
+
+        tapeProp->addWidget(tapePropList);
+
+        propSplit->addWidget(layoutWidget1);
+        specSplit->addWidget(propSplit);
         tableSplit->addWidget(specSplit);
         simSplit = new QSplitter(tableSplit);
         simSplit->setObjectName(QStringLiteral("simSplit"));
         simSplit->setOrientation(Qt::Horizontal);
-        layoutWidget1 = new QWidget(simSplit);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        rightSim = new QVBoxLayout(layoutWidget1);
+        layoutWidget2 = new QWidget(simSplit);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        rightSim = new QVBoxLayout(layoutWidget2);
         rightSim->setSpacing(2);
         rightSim->setObjectName(QStringLiteral("rightSim"));
         rightSim->setContentsMargins(0, 0, 0, 0);
         Head = new QVBoxLayout();
         Head->setSpacing(0);
         Head->setObjectName(QStringLiteral("Head"));
-        headPosLabel = new QLabel(layoutWidget1);
+        headPosLabel = new QLabel(layoutWidget2);
         headPosLabel->setObjectName(QStringLiteral("headPosLabel"));
         headPosLabel->setMinimumSize(QSize(70, 24));
         headPosLabel->setMaximumSize(QSize(16777215, 24));
@@ -156,7 +189,7 @@ public:
 
         Head->addWidget(headPosLabel);
 
-        headPos = new QSpinBox(layoutWidget1);
+        headPos = new QSpinBox(layoutWidget2);
         headPos->setObjectName(QStringLiteral("headPos"));
         headPos->setMinimumSize(QSize(0, 25));
         QFont font2;
@@ -174,7 +207,7 @@ public:
         States = new QVBoxLayout();
         States->setSpacing(0);
         States->setObjectName(QStringLiteral("States"));
-        statesLabel = new QLabel(layoutWidget1);
+        statesLabel = new QLabel(layoutWidget2);
         statesLabel->setObjectName(QStringLiteral("statesLabel"));
         statesLabel->setMinimumSize(QSize(0, 36));
         statesLabel->setFont(font);
@@ -184,7 +217,7 @@ public:
 
         States->addWidget(statesLabel);
 
-        statesList = new QListWidget(layoutWidget1);
+        statesList = new QListWidget(layoutWidget2);
         statesList->setObjectName(QStringLiteral("statesList"));
 
         States->addWidget(statesList);
@@ -195,7 +228,7 @@ public:
         State = new QVBoxLayout();
         State->setSpacing(0);
         State->setObjectName(QStringLiteral("State"));
-        stateLabel = new QLabel(layoutWidget1);
+        stateLabel = new QLabel(layoutWidget2);
         stateLabel->setObjectName(QStringLiteral("stateLabel"));
         stateLabel->setMaximumSize(QSize(16777215, 24));
         stateLabel->setFont(font1);
@@ -205,7 +238,7 @@ public:
 
         State->addWidget(stateLabel);
 
-        stateList = new QListWidget(layoutWidget1);
+        stateList = new QListWidget(layoutWidget2);
         stateList->setObjectName(QStringLiteral("stateList"));
         stateList->setMaximumSize(QSize(16777215, 40));
 
@@ -214,17 +247,17 @@ public:
 
         rightSim->addLayout(State);
 
-        simSplit->addWidget(layoutWidget1);
-        layoutWidget2 = new QWidget(simSplit);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        leftSim = new QVBoxLayout(layoutWidget2);
+        simSplit->addWidget(layoutWidget2);
+        layoutWidget3 = new QWidget(simSplit);
+        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
+        leftSim = new QVBoxLayout(layoutWidget3);
         leftSim->setSpacing(2);
         leftSim->setObjectName(QStringLiteral("leftSim"));
         leftSim->setContentsMargins(0, 0, 0, 0);
         InitialTape = new QVBoxLayout();
         InitialTape->setSpacing(0);
         InitialTape->setObjectName(QStringLiteral("InitialTape"));
-        inTapeLabel = new QLabel(layoutWidget2);
+        inTapeLabel = new QLabel(layoutWidget3);
         inTapeLabel->setObjectName(QStringLiteral("inTapeLabel"));
         inTapeLabel->setMinimumSize(QSize(0, 24));
         inTapeLabel->setMaximumSize(QSize(16777215, 24));
@@ -235,7 +268,7 @@ public:
 
         InitialTape->addWidget(inTapeLabel);
 
-        inTape = new QListWidget(layoutWidget2);
+        inTape = new QListWidget(layoutWidget3);
         inTape->setObjectName(QStringLiteral("inTape"));
         inTape->setMaximumSize(QSize(16777215, 25));
 
@@ -247,7 +280,7 @@ public:
         Tape = new QVBoxLayout();
         Tape->setSpacing(0);
         Tape->setObjectName(QStringLiteral("Tape"));
-        simLabel = new QLabel(layoutWidget2);
+        simLabel = new QLabel(layoutWidget3);
         simLabel->setObjectName(QStringLiteral("simLabel"));
         simLabel->setMinimumSize(QSize(0, 36));
         simLabel->setFont(font);
@@ -258,7 +291,7 @@ public:
 
         Tape->addWidget(simLabel);
 
-        simList = new QListWidget(layoutWidget2);
+        simList = new QListWidget(layoutWidget3);
         simList->setObjectName(QStringLiteral("simList"));
 
         Tape->addWidget(simList);
@@ -269,7 +302,7 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        tapeLabel = new QLabel(layoutWidget2);
+        tapeLabel = new QLabel(layoutWidget3);
         tapeLabel->setObjectName(QStringLiteral("tapeLabel"));
         tapeLabel->setMaximumSize(QSize(16777215, 24));
         tapeLabel->setFont(font1);
@@ -279,7 +312,7 @@ public:
 
         verticalLayout->addWidget(tapeLabel);
 
-        tapeList = new QListWidget(layoutWidget2);
+        tapeList = new QListWidget(layoutWidget3);
         tapeList->setObjectName(QStringLiteral("tapeList"));
         tapeList->setMaximumSize(QSize(16777215, 40));
 
@@ -288,7 +321,7 @@ public:
 
         leftSim->addLayout(verticalLayout);
 
-        simSplit->addWidget(layoutWidget2);
+        simSplit->addWidget(layoutWidget3);
         tableSplit->addWidget(simSplit);
 
         verticalLayout_2->addWidget(tableSplit);
@@ -311,6 +344,7 @@ public:
         MachineSimulation->setWindowTitle(QApplication::translate("MachineSimulation", "MainWindow", nullptr));
         tableLabel->setText(QApplication::translate("MachineSimulation", "Table's Specification", nullptr));
         propLabel->setText(QApplication::translate("MachineSimulation", "Table's Properties", nullptr));
+        label->setText(QApplication::translate("MachineSimulation", "Tape's Properties", nullptr));
         headPosLabel->setText(QApplication::translate("MachineSimulation", "Head", nullptr));
         statesLabel->setText(QApplication::translate("MachineSimulation", "States", nullptr));
         stateLabel->setText(QApplication::translate("MachineSimulation", "State", nullptr));

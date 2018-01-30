@@ -18,14 +18,19 @@ MachineSimulation::~MachineSimulation()
 void MachineSimulation::start() {
     // Setting the size of the simulation container
     QList<int> sizes = ui->tableSplit->sizes();
-    sizes[0] = (int)ui->tableSplit->height()*0.4;
-    sizes[1] = (int)ui->tableSplit->height()*0.6;
+    sizes[0] = (int)ui->tableSplit->height()*0.45;
+    sizes[1] = (int)ui->tableSplit->height()*0.55;
     ui->tableSplit->setSizes(sizes);
     // Setting the size of the table view container
     sizes = ui->specSplit->sizes();
     sizes[0] = (int)ui->specSplit->width()*0.6;
     sizes[1] = (int)ui->specSplit->width()*0.4;
     ui->specSplit->setSizes(sizes);
+    // Settings the size of the properties view container
+    sizes = ui->propSplit->sizes();
+    sizes[0] = (int)ui->propSplit->width()*0.58;
+    sizes[1] = (int)ui->propSplit->width()*0.42;
+    ui->propSplit->setSizes(sizes);
     // Setting the size of the states container
     sizes = ui->simSplit->sizes();
     sizes[0] = (int)ui->simSplit->width()*0.1;
@@ -69,7 +74,6 @@ void MachineSimulation::setMachine(Machine *mach) {
 
 void MachineSimulation::setTape(Tape *tape) {
     this->inTape = tape;
-    dynamic_cast<QLabel*>(ui->propList->itemWidget(ui->propList->item(6))->layout()->itemAt(1)->widget())->setText(tape->getName());
     displayTape();
 }
 
@@ -100,10 +104,10 @@ void MachineSimulation::display() {
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    ui->propList->clear();
+    ui->tablePropList->clear();
     // Get the remaining properties, and fill the PropertiesList
     QStringList properties;
-    properties << " Name: " << " Symbols: " << " States: " << " Blanck Symbol: " << " Inicial State: " << " Halt State: " << " Tape: ";
+    properties << " Name: " << " Symbols: " << " States: " << " Inicial State: " << " Halt State: ";
     for (QString prop : properties) {
         QListWidgetItem *newProI = new QListWidgetItem;
         QWidget *newProW = new QWidget;
@@ -137,22 +141,14 @@ void MachineSimulation::display() {
                 break;
             }
             case 3: {
-                QString bSym(mach->getBlanckSym());
-                propValue->setText(bSym);
-                break;
-            }
-            case 4: {
                 QString iSt(mach->getInitState());
                 propValue->setText(iSt);
                 break;
             }
-            case 5: {
+            case 4: {
                 QString hSt(mach->getHaltState());
                 propValue->setText(hSt);
                 break;
-            }
-            case 6: {
-                propValue->setText(inTape->getName());
             }
         }
         propValue->setFont(QFont("Meiryo", 11));
@@ -161,8 +157,8 @@ void MachineSimulation::display() {
         newProW->setLayout(layout);
         newProI->setSizeHint(QSize(0, 25));
         newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-        ui->propList->addItem(newProI);
-        ui->propList->setItemWidget(newProI, newProW);
+        ui->tablePropList->addItem(newProI);
+        ui->tablePropList->setItemWidget(newProI, newProW);
     }
     displayTape();
     tableIsLoaded = true;
@@ -210,6 +206,42 @@ void MachineSimulation::displayTape() {
     ui->inTape->clear();
     ui->inTape->addItem(inTapeItem);
     ui->inTape->setItemWidget(inTapeItem, inTapeText);
+
+    ui->tapePropList->clear();
+    QStringList properties;
+    properties << " Name: " << " Initial Size: " << " Blanck Symbol: ";
+    for (QString prop : properties) {
+        QListWidgetItem *newProI = new QListWidgetItem;
+        QWidget *newProW = new QWidget;
+        QHBoxLayout *layout = new QHBoxLayout;
+        QLabel *propName = new QLabel;
+        propName->setText(prop);
+        propName->setFont(QFont("Meiryo", 11, QFont::Bold));
+        layout->addWidget(propName);
+        QLabel *propValue = new QLabel;
+        switch(properties.indexOf(prop)) {
+            case 0: {
+                propValue->setText(inTape->getName());
+                break;
+            }
+            case 1: {
+                propValue->setText(QString::number(inTape->getTapeSize()));
+                break;
+            }
+            case 2: {
+                propValue->setText(QString(mach->getBlanckSym()));
+                break;
+            }
+        }
+        propValue->setFont(QFont("Meiryo", 11));
+        layout->addWidget(propValue, Qt::AlignLeft);
+        layout->setMargin(0);
+        newProW->setLayout(layout);
+        newProI->setSizeHint(QSize(0, 25));
+        newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        ui->tapePropList->addItem(newProI);
+        ui->tapePropList->setItemWidget(newProI, newProW);
+    }
 }
 
 bool MachineSimulation::uiReady()

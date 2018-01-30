@@ -11,6 +11,7 @@ public:
     Tape(QFile *tapeFile);
     QString getName();
     std::list<QChar> getTape();
+    int getTapeSize();
     int getTapePos();
     void setTapePos(int pos);
 
