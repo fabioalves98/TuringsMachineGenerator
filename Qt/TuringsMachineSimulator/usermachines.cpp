@@ -93,6 +93,7 @@ void UserMachines::on_addTableBt_clicked()
         Machine *mach = new Machine(tableFile);
         if (addMachine(mach)) {
             MachineSimulation *sim = new MachineSimulation(mach, listTape.at(0));
+            connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
             ui->tableSim->insertWidget(listMach.size(), sim);
             ui->tableSim->setCurrentIndex(listMach.size());
             sim->start();
@@ -186,6 +187,7 @@ void UserMachines::getMachToDispay(QListWidgetItem *item) {
             ui->tableSim->setCurrentIndex(i + 1);
             dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->resizeTable();
             enSimButtons(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState());
+            ui->delayLb->setText(QString::number(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getLocalDelay()*10) + " ms");
             break;
         }
     }
@@ -238,6 +240,8 @@ bool UserMachines::addMachine(Machine *toAdd) {
         ui->tablesList->addItem(tableItem);
         ui->tablesList->setItemWidget(tableItem, widget);
         ui->tablesList->setIconSize(QSize(20, 20));
+
+        ui->delayLb->setText(QString::number(set->getDelayTime()) + " ms");
 
         tableItem->setSelected(true);
         return true;
@@ -331,8 +335,6 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
-            ui->slowerBt->setEnabled(false);
-            ui->fasterBt->setEnabled(false);
             break;
         }
         case 1: {
@@ -347,8 +349,6 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
-            ui->slowerBt->setEnabled(false);
-            ui->fasterBt->setEnabled(false);
             break;
         }
         case 2: {
@@ -363,8 +363,6 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(true);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(true);
-            ui->slowerBt->setEnabled(true);
-            ui->fasterBt->setEnabled(true);
             break;
         }
         case 3: {
@@ -379,8 +377,6 @@ void UserMachines::enSimButtons(QString state) {
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(true);
             ui->stopBt->setEnabled(true);
-            ui->slowerBt->setEnabled(true);
-            ui->fasterBt->setEnabled(true);
             break;
         }
     }
@@ -438,6 +434,7 @@ void UserMachines::on_cRandTableBt_clicked()
     rand->close();
     addMachine(randMach);
     MachineSimulation *sim = new MachineSimulation(randMach, listTape.at(0));
+    connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
     ui->tableSim->insertWidget(listMach.size(), sim);
     ui->tableSim->setCurrentIndex(listMach.size());
     sim->start();
@@ -452,6 +449,7 @@ void UserMachines::on_qRandTableBt_clicked()
     Machine *quick = rand->getRandMach();
     addMachine(quick);
     MachineSimulation *sim = new MachineSimulation(quick, listTape.at(0));
+    connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
     ui->tableSim->insertWidget(listMach.size(), sim);
     ui->tableSim->setCurrentIndex(listMach.size());
     sim->start();
@@ -562,4 +560,9 @@ void UserMachines::on_slowerBt_clicked()
 void UserMachines::on_fasterBt_clicked()
 {
     dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->increaseSpeed();
+}
+
+void UserMachines::delayUpdated(int delay)
+{
+    ui->delayLb->setText(QString::number(delay*10) + " ms");
 }

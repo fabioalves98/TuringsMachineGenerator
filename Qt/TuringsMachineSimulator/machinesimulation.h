@@ -32,6 +32,7 @@ public:
     bool halted();
     void decreaseSpeed();
     void increaseSpeed();
+    int getLocalDelay();
     QString getState();
     ~MachineSimulation();
 
@@ -46,6 +47,7 @@ signals:
     void insertStateSgn(QString);
     void insertTapeSgn(QString);
     void changeStatusSgn(QString);
+    void delayChanged(int);
 
 private slots:
     void selectTableCellSlt(int st, int sy);
@@ -63,7 +65,7 @@ private:
     bool haltSim;
     bool pauseSim;
     bool halts;
-    int localDelayFormat;
+    double localDelayFormat;
     bool tableIsLoaded = false;
 
     Settings *set;

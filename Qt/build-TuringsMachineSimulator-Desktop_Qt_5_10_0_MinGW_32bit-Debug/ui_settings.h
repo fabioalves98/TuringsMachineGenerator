@@ -218,7 +218,7 @@ public:
         font5.setPointSize(12);
         minStSpinBox->setFont(font5);
         minStSpinBox->setMinimum(1);
-        minStSpinBox->setMaximum(50);
+        minStSpinBox->setMaximum(25);
 
         stSpinBoxs->addWidget(minStSpinBox);
 
@@ -227,7 +227,7 @@ public:
         maxStSpinBox->setMinimumSize(QSize(50, 30));
         maxStSpinBox->setFont(font5);
         maxStSpinBox->setMinimum(1);
-        maxStSpinBox->setMaximum(50);
+        maxStSpinBox->setMaximum(25);
 
         stSpinBoxs->addWidget(maxStSpinBox);
 
@@ -322,7 +322,7 @@ public:
         minSySpinBox->setMinimumSize(QSize(50, 30));
         minSySpinBox->setFont(font5);
         minSySpinBox->setMinimum(1);
-        minSySpinBox->setMaximum(50);
+        minSySpinBox->setMaximum(10);
 
         sySpinBoxs->addWidget(minSySpinBox);
 
@@ -331,7 +331,7 @@ public:
         maxSySpinBox->setMinimumSize(QSize(50, 30));
         maxSySpinBox->setFont(font5);
         maxSySpinBox->setMinimum(1);
-        maxSySpinBox->setMaximum(50);
+        maxSySpinBox->setMaximum(10);
 
         sySpinBoxs->addWidget(maxSySpinBox);
 

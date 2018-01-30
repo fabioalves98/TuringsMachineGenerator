@@ -59,6 +59,7 @@ public:
     QPushButton *stopBt;
     QPushButton *slowerBt;
     QPushButton *fasterBt;
+    QLabel *delayLb;
     QStackedWidget *tableSim;
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
@@ -246,6 +247,12 @@ public:
 
         horizontalLayout->addWidget(fasterBt);
 
+        delayLb = new QLabel(layoutWidget);
+        delayLb->setObjectName(QStringLiteral("delayLb"));
+        delayLb->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout->addWidget(delayLb);
+
 
         verticalLayout_6->addLayout(horizontalLayout);
 
@@ -319,6 +326,7 @@ public:
         stopBt->setText(QString());
         slowerBt->setText(QString());
         fasterBt->setText(QString());
+        delayLb->setText(QString());
         addTableBt->setText(QApplication::translate("UserMachines", "Add Table File", nullptr));
         editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", nullptr));
         saveTableBt->setText(QApplication::translate("UserMachines", "Save Table", nullptr));

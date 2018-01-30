@@ -121,6 +121,9 @@
               <height>26</height>
              </size>
             </property>
+            <property name="maximum">
+             <number>25</number>
+            </property>
            </widget>
           </item>
           <item>
@@ -150,6 +153,9 @@
               <width>46</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="maximum">
+             <number>10</number>
             </property>
            </widget>
           </item>

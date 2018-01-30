@@ -33,6 +33,7 @@ void MachineSimulation::start() {
     ui->simSplit->setSizes(sizes);
     // Gettings the global Settings
     set = Settings::getInstance();
+    localDelayFormat = set->getDelayTime()/10;
 
     ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);
 
@@ -262,8 +263,6 @@ void MachineSimulation::simulate() {
     int iterations = 0;
     int maxIter = set->getIterTilHalt();
     bool haltWhenMaxIter = set->getHaltInXIt();
-    int delayTime = set->getDelayTime();
-    localDelayFormat = delayTime/10;
     //bool decDelay = set->getDecDelay();
 
     std::list<QChar> tape;
@@ -428,12 +427,22 @@ bool MachineSimulation::halted() {
 
 void MachineSimulation::decreaseSpeed()
 {
-    localDelayFormat = localDelayFormat * 1.3;
+    localDelayFormat = localDelayFormat * 1.2;
+    emit delayChanged(localDelayFormat);
 }
 
 void MachineSimulation::increaseSpeed()
 {
-    localDelayFormat = localDelayFormat * 0.7;
+    localDelayFormat = localDelayFormat * 0.8;
+    if (localDelayFormat < 5) {
+        localDelayFormat = 5;
+    }
+    emit delayChanged(localDelayFormat);
+}
+
+int MachineSimulation::getLocalDelay()
+{
+    return int(localDelayFormat);
 }
 
 QString MachineSimulation::getState() {

@@ -325,6 +325,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="delayLb">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>

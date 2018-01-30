@@ -125,6 +125,7 @@ public:
         stSel = new QSpinBox(centralwidget);
         stSel->setObjectName(QStringLiteral("stSel"));
         stSel->setMaximumSize(QSize(46, 26));
+        stSel->setMaximum(25);
 
         horizontalLayout_3->addWidget(stSel);
 
@@ -145,6 +146,7 @@ public:
         sySel = new QSpinBox(centralwidget);
         sySel->setObjectName(QStringLiteral("sySel"));
         sySel->setMaximumSize(QSize(46, 26));
+        sySel->setMaximum(10);
 
         horizontalLayout_4->addWidget(sySel);
 

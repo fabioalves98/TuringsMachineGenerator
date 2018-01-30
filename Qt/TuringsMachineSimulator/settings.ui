@@ -212,7 +212,7 @@
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>50</number>
+                    <number>25</number>
                    </property>
                   </widget>
                  </item>
@@ -233,7 +233,7 @@
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>50</number>
+                    <number>25</number>
                    </property>
                   </widget>
                  </item>
@@ -414,7 +414,7 @@
                 <number>1</number>
                </property>
                <property name="maximum">
-                <number>50</number>
+                <number>10</number>
                </property>
               </widget>
              </item>
@@ -435,7 +435,7 @@
                 <number>1</number>
                </property>
                <property name="maximum">
-                <number>50</number>
+                <number>10</number>
                </property>
               </widget>
              </item>
