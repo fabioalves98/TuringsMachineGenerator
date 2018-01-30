@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QSignalMapper>
 
 namespace Ui {
 class Settings;
@@ -41,6 +42,10 @@ private slots:
     void on_maxSySpinBox_valueChanged(int arg1);
     void on_minSySpinBox_valueChanged(int arg1);
     void on_haltSimCheck_stateChanged(int arg1);
+    void fixStates(int st);
+    void fixSymbols(int sy);
+
+    void on_haltStEdit_textEdited(const QString &arg1);
 
 private:
     void setDefaults();

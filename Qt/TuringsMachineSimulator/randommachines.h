@@ -40,7 +40,7 @@ private slots:
     void on_randBut_clicked();
     void on_saveBut_clicked();
     void on_nameEdit_textChanged();
-    void on_haltStEdit_textChanged();
+    void on_haltStEdit_textChanged(const QString &arg1);
 
 private:
     void clearStLayout();

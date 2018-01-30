@@ -223,6 +223,10 @@ void Settings::on_maxStSpinBox_valueChanged(int arg1)
             lEdit->setMaximumSize(QSize(50, ui->maxStSpinBox->height()));
             lEdit->setAlignment(Qt::AlignCenter);
             lEdit->setPlaceholderText(st);
+            QSignalMapper *sigMap = new QSignalMapper(this);
+            connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
+            sigMap->setMapping(lEdit, i);
+            connect(sigMap, SIGNAL(mapped(int)), SLOT(fixStates(int)));
             ui->stLayout->addWidget(lEdit);
         }
     }
@@ -284,6 +288,10 @@ void Settings::on_maxSySpinBox_valueChanged(int arg1)
             lEdit->setMaximumSize(QSize(50, ui->maxSySpinBox->height()));
             lEdit->setAlignment(Qt::AlignCenter);
             lEdit->setPlaceholderText(sy);
+            QSignalMapper *sigMap = new QSignalMapper(this);
+            connect(lEdit, SIGNAL(textChanged(QString)), sigMap, SLOT(map()));
+            sigMap->setMapping(lEdit, i);
+            connect(sigMap, SIGNAL(mapped(int)), SLOT(fixSymbols(int)));
             ui->syLayout->addWidget(lEdit);
         }
     }
@@ -315,5 +323,40 @@ void Settings::on_haltSimCheck_stateChanged(int arg1)
     }
     else {
         ui->haltSimSpinBox->setEnabled(false);
+    }
+}
+
+void Settings::fixStates(int st)
+{
+    QString text = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
+    QChar state;
+    if (text != nullptr) {
+        state = text.at(0);
+        dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setText(state);
+    }
+    else {
+        state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->placeholderText().at(0);
+        dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setPlaceholderText(state);
+    }
+}
+
+void Settings::fixSymbols(int sy)
+{
+    QString text = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
+    QChar symbol;
+    if (text != nullptr) {
+        symbol = text.at(0);
+        dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->setText(symbol);
+    }
+    else {
+        symbol = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->placeholderText().at(0);
+        dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->setPlaceholderText(symbol);
+    }
+}
+
+void Settings::on_haltStEdit_textEdited(const QString &arg1)
+{
+    if (arg1 != nullptr) {
+        ui->haltStEdit->setText(arg1.at(0));
     }
 }

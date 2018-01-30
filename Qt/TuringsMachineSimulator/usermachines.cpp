@@ -43,23 +43,23 @@ void UserMachines::start()
     QPixmap pixS(":rec/icons/slower");
     QIcon iconS(pixS);
     ui->slowerBt->setIcon(iconS);
-    ui->slowerBt->setIconSize(QSize(25, 20));
+    ui->slowerBt->setIconSize(QSize(19, 19));
     QPixmap pixF(":rec/icons/faster");
     QIcon iconF(pixF);
     ui->fasterBt->setIcon(iconF);
-    ui->fasterBt->setIconSize(QSize(25, 20));
+    ui->fasterBt->setIconSize(QSize(19, 19));
     QPixmap pixP(":rec/icons/pauseBt");
     QIcon iconP(pixP);
     ui->pauseBt->setIcon(iconP);
-    ui->pauseBt->setIconSize(QSize(25, 20));
+    ui->pauseBt->setIconSize(QSize(19, 19));
     QPixmap pixC(":rec/icons/play");
     QIcon iconC(pixC);
     ui->contBt->setIcon(iconC);
-    ui->contBt->setIconSize(QSize(25, 20));
+    ui->contBt->setIconSize(QSize(19, 19));
     QPixmap pixH(":rec/icons/stop");
     QIcon iconH(pixH);
     ui->stopBt->setIcon(iconH);
-    ui->stopBt->setIconSize(QSize(25, 20));
+    ui->stopBt->setIconSize(QSize(19, 19));
 
 
     // Setting the default tape item

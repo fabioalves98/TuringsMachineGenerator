@@ -55,6 +55,7 @@ private slots:
     void on_headPos_valueChanged(int arg1);
 
 private:
+    Ui::MachineSimulation *ui;
     void displayTape();
     Machine *mach;
     Tape *inTape;
@@ -65,7 +66,6 @@ private:
     int localDelayFormat;
     bool tableIsLoaded = false;
 
-    Ui::MachineSimulation *ui;
     Settings *set;
     QSize maxTapeSize = QSize(1, 1);
 };

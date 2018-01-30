@@ -19,7 +19,6 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -55,13 +54,11 @@ public:
     QPushButton *addTapeBt;
     QPushButton *loadTapeBt;
     QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
     QPushButton *pauseBt;
     QPushButton *contBt;
     QPushButton *stopBt;
     QPushButton *slowerBt;
     QPushButton *fasterBt;
-    QSpacerItem *horizontalSpacer_2;
     QStackedWidget *tableSim;
     QHBoxLayout *tableCtrlLt;
     QPushButton *addTableBt;
@@ -211,14 +208,10 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
-
         pauseBt = new QPushButton(layoutWidget);
         pauseBt->setObjectName(QStringLiteral("pauseBt"));
         pauseBt->setMinimumSize(QSize(30, 27));
-        pauseBt->setMaximumSize(QSize(30, 27));
+        pauseBt->setMaximumSize(QSize(16777215, 27));
         pauseBt->setFont(font2);
 
         horizontalLayout->addWidget(pauseBt);
@@ -226,7 +219,7 @@ public:
         contBt = new QPushButton(layoutWidget);
         contBt->setObjectName(QStringLiteral("contBt"));
         contBt->setMinimumSize(QSize(30, 27));
-        contBt->setMaximumSize(QSize(30, 27));
+        contBt->setMaximumSize(QSize(16777215, 27));
         contBt->setFont(font2);
 
         horizontalLayout->addWidget(contBt);
@@ -234,7 +227,7 @@ public:
         stopBt = new QPushButton(layoutWidget);
         stopBt->setObjectName(QStringLiteral("stopBt"));
         stopBt->setMinimumSize(QSize(30, 27));
-        stopBt->setMaximumSize(QSize(30, 27));
+        stopBt->setMaximumSize(QSize(16777215, 27));
         stopBt->setFont(font2);
 
         horizontalLayout->addWidget(stopBt);
@@ -242,20 +235,16 @@ public:
         slowerBt = new QPushButton(layoutWidget);
         slowerBt->setObjectName(QStringLiteral("slowerBt"));
         slowerBt->setMinimumSize(QSize(30, 27));
-        slowerBt->setMaximumSize(QSize(30, 27));
+        slowerBt->setMaximumSize(QSize(16777215, 27));
 
         horizontalLayout->addWidget(slowerBt);
 
         fasterBt = new QPushButton(layoutWidget);
         fasterBt->setObjectName(QStringLiteral("fasterBt"));
         fasterBt->setMinimumSize(QSize(30, 27));
-        fasterBt->setMaximumSize(QSize(30, 27));
+        fasterBt->setMaximumSize(QSize(16777215, 27));
 
         horizontalLayout->addWidget(fasterBt);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer_2);
 
 
         verticalLayout_6->addLayout(horizontalLayout);

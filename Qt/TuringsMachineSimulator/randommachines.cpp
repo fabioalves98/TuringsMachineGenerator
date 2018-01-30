@@ -78,7 +78,7 @@ void RandomMachines::quick() {
     QString name = set->getNamePrefix() +  QString::number(qrand()%(9*numDigitsName) + numDigitsName);
     QChar initState = (set->getRandInState() ? (states->at(qrand()%numSt)) : (set->getInState()));
     QChar blanckSymbol = symbols->at(0);
-    randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, 'H');
+    randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, haltState);
 }
 
 void RandomMachines::on_stSel_valueChanged(int arg1)
@@ -121,7 +121,16 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
 }
 
 void RandomMachines::changeHorHeader(int st) {
-   QString state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
+   QString text = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
+   QChar state;
+   if (text != nullptr) {
+       state = text.at(0);
+       dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setText(state);
+   }
+   else {
+       state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->placeholderText().at(0);
+       dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setPlaceholderText(state);
+   }
    ui->randTable->horizontalHeaderItem(st)->setText(state);
    ui->initStCBox->setItemText(st, state);
 }
@@ -177,7 +186,17 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
 }
 
 void RandomMachines::changeVerHeader(int sy) {
-    QString symbol = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
+    QString text = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
+    QChar symbol;
+    if (text != nullptr) {
+        symbol = text.at(0);
+        dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->setText(symbol);
+    }
+    else {
+        symbol = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->placeholderText().at(0);
+        dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->setPlaceholderText(symbol);
+    }
+
     ui->randTable->verticalHeaderItem(sy)->setText(symbol);
     ui->blanckSyCBox->setItemText(sy, symbol);
 }
@@ -258,10 +277,13 @@ void RandomMachines::on_nameEdit_textChanged()
     changeButState();
 }
 
-void RandomMachines::on_haltStEdit_textChanged()
+void RandomMachines::on_haltStEdit_textChanged(const QString &arg1)
 {
     generated = false;
     changeButState();
+    if (arg1 != nullptr) {
+        ui->haltStEdit->setText(arg1.at(0));
+    }
 }
 
 void RandomMachines::on_randBut_clicked()

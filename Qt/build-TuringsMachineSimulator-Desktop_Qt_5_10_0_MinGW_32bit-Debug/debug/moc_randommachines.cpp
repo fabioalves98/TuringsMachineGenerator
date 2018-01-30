@@ -78,7 +78,7 @@ static const uint qt_meta_data_RandomMachines[] = {
       10,    0,   72,    2, 0x08 /* Private */,
       11,    0,   73,    2, 0x08 /* Private */,
       12,    0,   74,    2, 0x08 /* Private */,
-      13,    0,   75,    2, 0x08 /* Private */,
+      13,    1,   75,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -89,7 +89,7 @@ static const uint qt_meta_data_RandomMachines[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    3,
 
        0        // eod
 };
@@ -108,7 +108,7 @@ void RandomMachines::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 5: _t->on_randBut_clicked(); break;
         case 6: _t->on_saveBut_clicked(); break;
         case 7: _t->on_nameEdit_textChanged(); break;
-        case 8: _t->on_haltStEdit_textChanged(); break;
+        case 8: _t->on_haltStEdit_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }
