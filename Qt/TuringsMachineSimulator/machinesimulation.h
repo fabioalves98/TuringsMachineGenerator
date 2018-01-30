@@ -43,22 +43,28 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 signals:
-    void selectTableCellSgn(int, int);
+    /*void selectTableCellSgn(int, int);
     void insertStateSgn(QString);
-    void insertTapeSgn(QString);
+    void insertTapeSgn(QString);*/
+    void updateUiSgn(int, int, int, QString, QString, QString);
     void changeStatusSgn(QString);
     void delayChanged(int);
 
 private slots:
-    void selectTableCellSlt(int st, int sy);
-    void insertStateSlt(QString state);
-    void insertTapeSlt(QString tape);
+    void updateUiSlt(int iter, int st, int sy, QString state, QString tape, QString status);
     void changeStatusSlt(QString status);
     void on_headPos_valueChanged(int arg1);
 
 private:
+    void selectTableCellSlt(int st, int sy);
+    void insertStateSlt(QString state);
+    void insertTapeSlt(QString tape);
+
     Ui::MachineSimulation *ui;
+    bool machHalted(int iterations);
     void displayTape();
+    bool uiReady();
+    void clearUi();
     Machine *mach;
     Tape *inTape;
     QString state;
@@ -67,6 +73,8 @@ private:
     bool halts;
     double localDelayFormat;
     bool tableIsLoaded = false;
+
+    bool uiIsReady;
 
     Settings *set;
     QSize maxTapeSize = QSize(1, 1);

@@ -56,8 +56,6 @@ void Settings::setDefaults() {
     // Settings for the simulation tab
     delayTime = 200;
     ui->delaySpinBox->setValue(delayTime);
-    decDelay = true;
-    ui->decDelayCheck->setChecked(decDelay);
     haltInXIt = false;
     ui->haltSimSpinBox->setEnabled(haltInXIt);
     iterTilHalt = 1000;
@@ -107,7 +105,6 @@ void Settings::closeEvent(QCloseEvent *event) {
         haltState = ui->haltStEdit->text().at(0);
     }
     delayTime = ui->delaySpinBox->value();
-    decDelay = ui->decDelayCheck->isChecked();
     haltInXIt = ui->haltSimCheck->isChecked();
     iterTilHalt = ui->haltSimSpinBox->value();
     close();
@@ -122,11 +119,6 @@ int Settings::getIterTilHalt()
 bool Settings::getHaltInXIt()
 {
     return haltInXIt;
-}
-
-bool Settings::getDecDelay()
-{
-    return decDelay;
 }
 
 QChar Settings::getHaltState()

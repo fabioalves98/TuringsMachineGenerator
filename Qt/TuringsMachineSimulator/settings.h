@@ -28,7 +28,6 @@ public:
     bool getRandInState();
     QChar getInState();
     QChar getHaltState();
-    bool getDecDelay();
     bool getHaltInXIt();
     int getIterTilHalt();
 
@@ -67,7 +66,6 @@ private:
     QChar inState;
     QChar haltState;
     int delayTime;
-    bool decDelay;
     bool haltInXIt;
     int iterTilHalt;
 

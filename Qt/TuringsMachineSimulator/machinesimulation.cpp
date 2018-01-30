@@ -57,9 +57,7 @@ void MachineSimulation::start() {
     connect(ui->statesList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
     connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->statesList->verticalScrollBar(), SLOT(setValue(int)));
 
-    connect(this, SIGNAL(insertTapeSgn(QString)), this, SLOT(insertTapeSlt(QString)));
-    connect(this, SIGNAL(insertStateSgn(QString)), this, SLOT(insertStateSlt(QString)));
-    connect(this, SIGNAL(selectTableCellSgn(int,int)), this, SLOT(selectTableCellSlt(int,int)));
+    connect(this, SIGNAL(updateUiSgn(int,int,int,QString,QString,QString)), this, SLOT(updateUiSlt(int,int,int,QString,QString,QString)));
     connect(this, SIGNAL(changeStatusSgn(QString)), this, SLOT(changeStatusSlt(QString)));
 
     statusBar()->showMessage("No Status");
@@ -214,6 +212,29 @@ void MachineSimulation::displayTape() {
     ui->inTape->setItemWidget(inTapeItem, inTapeText);
 }
 
+bool MachineSimulation::uiReady()
+{
+    return uiIsReady;
+}
+
+void MachineSimulation::clearUi()
+{
+    delete ui->simList->item(0);
+    delete ui->tapeList->item(0);
+    delete ui->statesList->item(0);
+}
+
+void MachineSimulation::updateUiSlt(int iter, int st, int sy, QString state, QString tape, QString status) {
+    if (iter > 100) {
+        clearUi();
+    }
+    selectTableCellSlt(st, sy);
+    insertStateSlt(state);
+    insertTapeSlt(tape);
+    changeStatusSlt(status);
+    uiIsReady = true;
+}
+
 void MachineSimulation::resizeEvent(QResizeEvent *event)
 {
     resizeTable();
@@ -263,16 +284,14 @@ void MachineSimulation::simulate() {
     int iterations = 0;
     int maxIter = set->getIterTilHalt();
     bool haltWhenMaxIter = set->getHaltInXIt();
-    //bool decDelay = set->getDecDelay();
 
     std::list<QChar> tape;
     QString tapeStr;
     do {
         if (pauseSim) {
             QThread::msleep(10);
-            QCoreApplication::processEvents();
-            if (haltSim) {
-                break;
+            if (machHalted(iterations)) {
+                return;
             }
             else {
                 continue;
@@ -305,44 +324,48 @@ void MachineSimulation::simulate() {
         }
         int st = mach->getStates()->indexOf(mach->getCurrentState());
         int sy = mach->getSymbols()->indexOf(mach->getCurrentSymbol());
-        emit selectTableCellSgn(st, sy);
-        emit insertStateSgn(mach->getCurrentState());
-        emit insertTapeSgn(tapeStr);
+
+        uiIsReady = false;
+        emit updateUiSgn(iterations, st, sy, mach->getCurrentState(), tapeStr, "Simulating - " + QString::number(iterations) + " iterations");
 
         for (int i = 0; i < localDelayFormat; i++) {
             QThread::msleep(10);
-            QCoreApplication::processEvents();
-            if (mach->halted()) {
-                emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations");
-                state = "TableLoaded";
-                halts = true;
-                return;
-            }
-            if (haltSim) {
-                emit changeStatusSgn("The machine halted by user's order");
-                state = "TableLoaded";
+            if (machHalted(iterations)) {
                 return;
             }
         }
-        // To Fix
-        /*if (decDelay && localDelayFormat > 1) {
-            if (iterations % 10 == 0) {
-                localDelayFormat--;
+        while (!uiReady()) {
+            QThread::msleep(1);
+            if (machHalted(iterations)) {
+                return;
             }
-        }*/
+        }
         iterations++;
         if ((iterations > maxIter) && haltWhenMaxIter) {
             emit changeStatusSgn("The machine reached maximum number of iterations");
             return;
         }
         mach->advance();
-        emit changeStatusSgn("Simulating - " + QString::number(iterations) + " iterations");
     }
     while (true);
 }
 
+bool MachineSimulation::machHalted(int iterations) {
+    if (mach->halted()) {
+        emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations");
+        state = "TableLoaded";
+        halts = true;
+        return true;
+    }
+    if (haltSim) {
+        emit changeStatusSgn("The machine halted by user's order");
+        state = "TableLoaded";
+        return true;
+    }
+    return false;
+}
+
 void MachineSimulation::selectTableCellSlt(int st, int sy) {
-    //ui->tableView->setFocus();
     if (st >= 0) {
         ui->tableView->clearSelection();
         QModelIndex model = ui->tableView->model()->index(sy, st);
@@ -407,6 +430,8 @@ void MachineSimulation::changeStatusSlt(QString status) {
 }
 
 void MachineSimulation::pause() {
+    QString message = statusBar()->currentMessage();
+    statusBar()->showMessage("Paused" + message.split("Simulating").at(1));
     state = "Pause";
     pauseSim = true;
 }
@@ -427,15 +452,22 @@ bool MachineSimulation::halted() {
 
 void MachineSimulation::decreaseSpeed()
 {
-    localDelayFormat = localDelayFormat * 1.2;
+    if (localDelayFormat < 5) {
+        localDelayFormat++;
+    }
+    else {
+        localDelayFormat = localDelayFormat * 1.2;
+    }
     emit delayChanged(localDelayFormat);
 }
 
 void MachineSimulation::increaseSpeed()
 {
-    localDelayFormat = localDelayFormat * 0.8;
-    if (localDelayFormat < 5) {
-        localDelayFormat = 5;
+    if (localDelayFormat < 5 && localDelayFormat > 0) {
+        localDelayFormat--;
+    }
+    else {
+        localDelayFormat = localDelayFormat * 0.8;
     }
     emit delayChanged(localDelayFormat);
 }

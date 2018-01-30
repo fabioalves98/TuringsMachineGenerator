@@ -86,7 +86,6 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_2;
     QSpinBox *delaySpinBox;
-    QCheckBox *decDelayCheck;
     QSpacerItem *horizontalSpacer;
     QGroupBox *groupBox_3;
     QHBoxLayout *horizontalLayout_6;
@@ -386,12 +385,6 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_3);
 
-        decDelayCheck = new QCheckBox(groupBox_2);
-        decDelayCheck->setObjectName(QStringLiteral("decDelayCheck"));
-        decDelayCheck->setFont(font2);
-
-        verticalLayout->addWidget(decDelayCheck);
-
 
         horizontalLayout_4->addLayout(verticalLayout);
 
@@ -451,7 +444,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -477,7 +470,6 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(randomTables), QApplication::translate("Settings", "Quick Random Tables", nullptr));
         groupBox_2->setTitle(QApplication::translate("Settings", "Iteration Delay", nullptr));
         label_2->setText(QApplication::translate("Settings", "Delay between iterations (ms):", nullptr));
-        decDelayCheck->setText(QApplication::translate("Settings", "Decrease delay during simulation", nullptr));
         groupBox_3->setTitle(QApplication::translate("Settings", "Halt Simulation", nullptr));
         haltSimCheck->setText(QApplication::translate("Settings", "Halt Simulation in ", nullptr));
         label_5->setText(QApplication::translate("Settings", "iterations", nullptr));
