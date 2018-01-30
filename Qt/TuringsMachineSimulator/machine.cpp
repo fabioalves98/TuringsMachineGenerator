@@ -45,7 +45,6 @@ Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<
             transFunct.insert(key, act);
         }
     }
-    blanckSym = bSy;
     initState = iSt;
     haltState = hSt;
 }
@@ -54,7 +53,7 @@ void Machine::start(Tape *inTape) {
     tape.clear();
     tape = inTape->getTape();
     pState = initState;
-    cSymbol = blanckSym;
+    blanckSym = inTape->getBlanckSym();
     head = tape.begin();
     int headPos = (inTape->getTapePos() > 0) ? inTape->getTapePos() : 1;
     std::advance(head, headPos);
@@ -75,27 +74,32 @@ void Machine::advance() {
     cSymbol = *head;
     QString key = makeKey(pState, cSymbol);
     action move = transFunct[key];
-    *head = move.wSymbol;
-    if (move.mTape == 'R') {
-        if (startP == 0){
-            tape.push_front(blanckSym);
+    if (move.wSymbol != nullptr) {
+        *head = move.wSymbol;
+        if (move.mTape == 'R') {
+            if (startP == 0){
+                tape.push_front(blanckSym);
+            }
+            else{
+                startP--;
+                endP--;
+            }
+            head = std::prev(head);
         }
-        else{
-            startP--;
-            endP--;
+        else {
+            startP++;
+            endP++;
+            head = std::next(head);
+            if (tape.size() < endP) {
+                tape.push_back(blanckSym);
+            }
         }
-        head = std::prev(head);
+        pState = move.nState;
+        count++;
     }
     else {
-        startP++;
-        endP++;
-        head = std::next(head);
-        if (tape.size() < endP) {
-            tape.push_back(blanckSym);
-        }
+        pState = haltState;
     }
-    pState = move.nState;
-    count++;
 }
 
 QChar Machine::getCurrentState() {
@@ -214,10 +218,7 @@ void Machine::removeSpaces(QString *line) {
 void Machine::processInfo(QString line) {
     QString type = line.mid(0, 2);
     line.replace(" ", "");
-    if (type == "bs") {
-        blanckSym = line.at(3);
-    }
-    else if (type == "is") {
+    if (type == "is") {
         initState = line.at(3);
     }
     else if (type == "fs") {

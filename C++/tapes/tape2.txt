@@ -1,2 +1,3 @@
-10
-acabcbabcbacbcabcabcbacbacbcb
+hp: 10
+bs: a
+acabcbabc000acbcabcabcbacbacbcb

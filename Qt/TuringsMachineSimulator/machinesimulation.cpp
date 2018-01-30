@@ -229,7 +229,7 @@ void MachineSimulation::displayTape() {
                 break;
             }
             case 2: {
-                propValue->setText(QString(mach->getBlanckSym()));
+                propValue->setText(QString(inTape->getBlanckSym()));
                 break;
             }
         }

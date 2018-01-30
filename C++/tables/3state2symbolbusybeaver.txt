@@ -1,5 +1,4 @@
 begin_info
-bs: 0
 is: A
 fs: H
 begin_table
