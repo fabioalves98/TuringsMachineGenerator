@@ -20,7 +20,6 @@
 #include "machinesimulation.h"
 #include "randommachines.h"
 #include "editmachines.h"
-#include "edittapes.h"
 
 namespace Ui {
 class UserMachines;

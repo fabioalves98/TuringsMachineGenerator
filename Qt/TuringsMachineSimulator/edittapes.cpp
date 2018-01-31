@@ -1,10 +1,11 @@
 #include "edittapes.h"
 #include "ui_edittapes.h"
 
-EditTapes::EditTapes(Tape *toEdit, int tapePos, bool tapeEdited, QWidget *parent) :
+EditTapes::EditTapes(std::list<QChar> toEdit, QChar bSym, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::EditTapes),
-    tape(toEdit)
+    tape(toEdit),
+    blanckSym(bSym)
 {
     ui->setupUi(this);
     this->setWindowTitle("Tape Edition");
@@ -33,15 +34,8 @@ EditTapes::EditTapes(Tape *toEdit, int tapePos, bool tapeEdited, QWidget *parent
     ui->plusRightBt->setIconSize(QSize(25, 25));
     ui->plusRightBt->setMaximumHeight(35);
 
-    if (tapeEdited) {
-        tapeList = tape->getEditedTape(tapePos);
-    }
-    else {
-        tapeList = tape->getTempTape(tapePos);
-    }
-
-    ui->blanckSymLEdit->setPlaceholderText(tape->getBlanckSym());
-    ui->blanckSymLEdit->setText(tape->getBlanckSym());
+    ui->blanckSymLEdit->setPlaceholderText(blanckSym);
+    ui->blanckSymLEdit->setText(blanckSym);
 }
 
 EditTapes::~EditTapes()
@@ -55,7 +49,7 @@ void EditTapes::loadTape() {
     QWidget *widget = new QWidget;
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addStretch();
-    for (auto it = tapeList.begin(); it != tapeList.end(); it++) {
+    for (auto it = tape.begin(); it != tape.end(); it++) {
         QLineEdit *lEdit = new QLineEdit;
         lEdit->setMaximumWidth(30);
         QFont font = lEdit->font();
@@ -75,6 +69,16 @@ void EditTapes::loadTape() {
     ui->tapeList->setItemWidget(item, widget);
 }
 
+std::list<QChar> EditTapes::getTape()
+{
+    return tape;
+}
+
+QChar EditTapes::getBlanckSym()
+{
+    return blanckSym;
+}
+
 bool EditTapes::isReady()
 {
     return ready;
@@ -85,43 +89,38 @@ bool EditTapes::isEdited()
     return edited;
 }
 
-void EditTapes::applyEdits()
-{
-    tape->setEditedTape(tapeList);
-}
-
 void EditTapes::on_plusLeftBt_clicked()
 {
     updateTape();
-    tapeList.push_front(tape->getBlanckSym());
+    tape.push_front(blanckSym);
     loadTape();
 }
 
 void EditTapes::on_minusLeftBt_clicked()
 {
     updateTape();
-    tapeList.pop_front();
+    tape.pop_front();
     loadTape();
 }
 
 void EditTapes::on_minusRightBt_clicked()
 {
     updateTape();
-    tapeList.pop_back();
+    tape.pop_back();
     loadTape();
 }
 
 void EditTapes::on_plusRightBt_clicked()
 {
     updateTape();
-    tapeList.push_back(tape->getBlanckSym());
+    tape.push_back(blanckSym);
     loadTape();
 }
 
 void EditTapes::updateTape()
 {
     QHBoxLayout *layout = dynamic_cast<QHBoxLayout*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout());
-    auto it = tapeList.begin();
+    auto it = tape.begin();
     for (int i = 1; i < layout->count() - 1; i++) {
         QString text = dynamic_cast<QLineEdit*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout()->itemAt(i)->widget())->text();
         if (text != nullptr) {
@@ -138,12 +137,11 @@ void EditTapes::updateTape()
 void EditTapes::on_blanckSymLEdit_textChanged(const QString &arg1)
 {
     if (arg1 != nullptr) {
-        tape->setBlanckSym(arg1.at(0));
+        blanckSym = arg1.at(0);
     }
     else {
-        tape->setBlanckSym(ui->blanckSymLEdit->placeholderText().at(0));
+        blanckSym = ui->blanckSymLEdit->placeholderText().at(0);
     }
-    qDebug() << arg1;
 }
 
 void EditTapes::on_saveBt_clicked()
@@ -154,9 +152,6 @@ void EditTapes::on_saveBt_clicked()
 
 void EditTapes::on_restoreBt_clicked()
 {
-    tapeList = tape->getTape();
-    ui->blanckSymLEdit->setPlaceholderText(tape->getDefBlanckSym());
-    ui->blanckSymLEdit->setText(tape->getDefBlanckSym());
-    loadTape();
+    ready = true;
     edited = false;
 }

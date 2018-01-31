@@ -10,6 +10,7 @@
 #include "machine.h"
 #include "tape.h"
 #include "settings.h"
+#include "edittapes.h"
 
 namespace Ui {
 class MachineSimulation;
@@ -23,9 +24,8 @@ public:
     MachineSimulation(Machine *mach, Tape *tape, QWidget *parent = 0);
     void setMachine(Machine* mach);
     void setTape(Tape* tape);
-    void setEditedTape(bool value);
-    bool isTapeEdited();
     Tape *getTape();
+    void editTape();
     void start();
     void display();
     void displayTape();
@@ -37,8 +37,6 @@ public:
     void decreaseSpeed();
     void increaseSpeed();
     int getLocalDelay();
-    void setTempHeadPos();
-    int getTempHeadPos();
     QString getState();
     ~MachineSimulation();
 
@@ -68,9 +66,14 @@ private:
     bool uiReady();
     void clearUi();
     Machine *mach;
-    Tape *inTape;
+
+    Tape *defTape;
+    std::list<QChar> editedTape;
+    std::list<QChar> tempTape;
+    QChar blanckSym;
     int tempHeadPos;
-    bool editedTape = false;
+    bool tapeEdited;
+
     QString state;
     bool haltSim;
     bool pauseSim;

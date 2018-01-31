@@ -5,7 +5,7 @@ MachineSimulation::MachineSimulation(Machine *mach, Tape *tape, QWidget *parent)
     QMainWindow(parent),
     ui(new Ui::MachineSimulation),
     mach(mach),
-    inTape(tape)
+    defTape(tape)
 {
     ui->setupUi(this);
 }
@@ -40,8 +40,9 @@ void MachineSimulation::start() {
     set = Settings::getInstance();
     localDelayFormat = set->getDelayTime()/10;
 
-    if (inTape != nullptr) tempHeadPos = inTape->getTapePos();
-
+    if (defTape != nullptr) {
+        setTape(defTape);
+    }
 
     ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);
 
@@ -76,24 +77,41 @@ void MachineSimulation::setMachine(Machine *mach) {
 }
 
 void MachineSimulation::setTape(Tape *tape) {
-    this->inTape = tape;
-    tempHeadPos = inTape->getTapePos();
-    displayTape();
-}
-
-void MachineSimulation::setEditedTape(bool value)
-{
-    editedTape = value;
-}
-
-bool MachineSimulation::isTapeEdited()
-{
-    return editedTape;
+    this->defTape = tape;
+    tapeEdited = false;
+    tempTape = defTape->getTape();
+    tempHeadPos = defTape->getTapePos();
+    blanckSym = defTape->getBlanckSym();
+    on_headPos_valueChanged(tempHeadPos);
 }
 
 Tape *MachineSimulation::getTape()
 {
-    return inTape;
+    return defTape;
+}
+
+void MachineSimulation::editTape()
+{
+    EditTapes *edit = new EditTapes(tempTape, blanckSym);
+    edit->show();
+    edit->loadTape();
+    while (!edit->isReady()) {
+            QThread::msleep(10);
+            QCoreApplication::processEvents();
+            if (!edit->isVisible()) {
+                return;
+            }
+    }
+    if (edit->isEdited()) {
+        tapeEdited = true;
+        editedTape = edit->getTape();
+        blanckSym = edit->getBlanckSym();
+        on_headPos_valueChanged(editedTape.size()/2);
+    }
+    else {
+        setTape(defTape);
+    }
+    edit->close();
 }
 
 void MachineSimulation::display() {
@@ -188,20 +206,13 @@ void MachineSimulation::display() {
 
 void MachineSimulation::displayTape() {
     ui->headPos->setValue(tempHeadPos);
-    std::list<QChar> tape;
-    if (editedTape) {
-        tape = inTape->getEditedTape(tempHeadPos);
-    }
-    else {
-        tape = inTape->getTempTape(tempHeadPos);
-    }
     if (tempHeadPos<= 0) {
         tempHeadPos = 1;
     }
-    std::list<QChar>::iterator tapeIt = tape.begin();
+    std::list<QChar>::iterator tapeIt = tempTape.begin();
     QString tapeStr;
-    int offset = tape.size()/2 - tempHeadPos;
-    for (int i = 0; i < tape.size(); i++) {
+    int offset = tempTape.size()/2 - tempHeadPos;
+    for (int i = 0; i < tempTape.size(); i++) {
         if (i == tempHeadPos) tapeStr.append(" ");
         tapeStr.append("|");
         tapeStr.append(*tapeIt);
@@ -209,7 +220,7 @@ void MachineSimulation::displayTape() {
         if (i == tempHeadPos) tapeStr.append(" ");
         tapeIt++;
     }
-    if (tape.size() % 2 == 0) {
+    if (tempTape.size() % 2 == 0) {
         tapeStr.append("   ");
     }
     if (offset > 0) {
@@ -233,7 +244,7 @@ void MachineSimulation::displayTape() {
 
     ui->tapePropList->clear();
     QStringList properties;
-    properties << " Name: " << " Initial Size: " << " Blanck Symbol: ";
+    properties << " Name: " << " Size: " << " Blanck Symbol: ";
     for (QString prop : properties) {
         QListWidgetItem *newProI = new QListWidgetItem;
         QWidget *newProW = new QWidget;
@@ -245,25 +256,20 @@ void MachineSimulation::displayTape() {
         QLabel *propValue = new QLabel;
         switch(properties.indexOf(prop)) {
             case 0: {
-                if (editedTape) {
-                    propValue->setText(inTape->getName() + " - Edited");
+                if (tapeEdited) {
+                    propValue->setText(defTape->getName() + " - Edited");
                 }
                 else {
-                    propValue->setText(inTape->getName());
+                    propValue->setText(defTape->getName());
                 }
                 break;
             }
             case 1: {
-                propValue->setText(QString::number(inTape->getTapeSize()));
+                propValue->setText(QString::number(tempTape.size()));
                 break;
             }
             case 2: {
-                if (editedTape) {
-                    propValue->setText(QString(inTape->getBlanckSym()));
-                }
-                else {
-                    propValue->setText(QString(inTape->getDefBlanckSym()));
-                }
+                propValue->setText(QString(blanckSym));
                 break;
             }
         }
@@ -345,12 +351,7 @@ void MachineSimulation::simulate() {
     ui->simList->clear();
     ui->statesList->clear();
     ui->tapeList->clear();
-    if (editedTape) {
-        mach->start(inTape->getEditedTape(tempHeadPos), tempHeadPos, inTape->getBlanckSym());
-    }
-    else {
-        mach->start(inTape->getTempTape(tempHeadPos), inTape->getTapePos(), inTape->getDefBlanckSym());
-    }
+    mach->start(tempTape, tempHeadPos, blanckSym);
 
     int iterations = 0;
     int maxIter = set->getIterTilHalt();
@@ -548,22 +549,39 @@ int MachineSimulation::getLocalDelay()
     return int(localDelayFormat);
 }
 
-void MachineSimulation::setTempHeadPos()
-{
-    tempHeadPos = 1;
-}
-
-int MachineSimulation::getTempHeadPos()
-{
-    return tempHeadPos;
-}
-
 QString MachineSimulation::getState() {
     return state;
 }
 
 void MachineSimulation::on_headPos_valueChanged(int arg1)
 {
-    tempHeadPos = arg1;
+    if (tapeEdited) {
+        tempHeadPos = arg1;
+        tempTape = editedTape;
+        if (signed(tempHeadPos) >= signed(tempTape.size() - 1)) {
+            for (int i = tempTape.size() - 1; i <= tempHeadPos; i++) {
+                tempTape.push_back(blanckSym);
+            }
+        }
+        else if (tempHeadPos <= 0) {
+            for (int i = tempHeadPos; i <= 0; i++) {
+                tempTape.push_front(blanckSym);
+            }
+        }
+    }
+    else {
+        tempHeadPos = arg1;
+        tempTape = defTape->getTape();
+        if (signed(tempHeadPos) >= signed(tempTape.size() - 1)) {
+            for (int i = tempTape.size() - 1; i <= tempHeadPos; i++) {
+                tempTape.push_back(blanckSym);
+            }
+        }
+        else if (tempHeadPos <= 0) {
+            for (int i = tempHeadPos; i <= 0; i++) {
+                tempTape.push_front(blanckSym);
+            }
+        }
+    }
     displayTape();
 }

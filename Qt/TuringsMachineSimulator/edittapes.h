@@ -13,11 +13,12 @@ class EditTapes : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit EditTapes(Tape *toEdit, int tapePos, bool tapeEdited, QWidget *parent = 0);
+    explicit EditTapes(std::list<QChar> toEdit, QChar bSym, QWidget *parent = 0);
     void loadTape();
+    std::list<QChar> getTape();
+    QChar getBlanckSym();
     bool isReady();
     bool isEdited();
-    void applyEdits();
     ~EditTapes();
 
 private slots:
@@ -27,14 +28,13 @@ private slots:
     void on_plusRightBt_clicked();
     void on_blanckSymLEdit_textChanged(const QString &arg1);
     void on_saveBt_clicked();
-
     void on_restoreBt_clicked();
 
 private:
     void updateTape();
     Ui::EditTapes *ui;
-    Tape *tape;
-    std::list<QChar> tapeList;
+    std::list<QChar> tape;
+    QChar blanckSym;
     bool edited = false;
     bool ready = false;
 };

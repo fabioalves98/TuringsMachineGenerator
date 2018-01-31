@@ -487,7 +487,8 @@ void UserMachines::on_editTableBt_clicked()
         dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->display();
     }
     else {
-        bool tapeEdited = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->isTapeEdited();
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->editTape();
+        /*bool tapeEdited = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->isTapeEdited();
         int tempHeadPos = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getTempHeadPos();
         EditTapes *edit = new EditTapes(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getTape(), tempHeadPos, tapeEdited);
         edit->show();
@@ -508,7 +509,7 @@ void UserMachines::on_editTableBt_clicked()
         }
         dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setTempHeadPos();
         edit->close();
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->displayTape();
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->displayTape();*/
     }
 }
 
