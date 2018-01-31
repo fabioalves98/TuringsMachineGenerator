@@ -466,7 +466,10 @@ void UserMachines::on_qRandTableBt_clicked()
         enSimButtons(sim->getState());
     }
     else {
-        // Quick Random Tape
+        RandomTapes *rand = new RandomTapes;
+        rand->quick();
+        Tape *quick = rand->getTape();
+        addTape(quick);
     }
 }
 

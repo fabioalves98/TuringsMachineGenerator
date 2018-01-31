@@ -16,6 +16,7 @@ class RandomTapes : public QMainWindow
 
 public:
     explicit RandomTapes(QWidget *parent = 0);
+    void quick();
     bool isReady();
     Tape *getTape();
     ~RandomTapes();

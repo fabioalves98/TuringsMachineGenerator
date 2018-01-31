@@ -54,7 +54,6 @@ void Machine::start(std::list<QChar> inTape, int inPos, QChar bSym) {
     tape = inTape;
     pState = initState;
     blanckSym = bSym;
-    qDebug() << blanckSym;
     head = tape.begin();
     int headPos = (inPos > 0) ? inPos : 1;
     std::advance(head, headPos);

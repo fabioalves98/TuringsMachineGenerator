@@ -18,6 +18,23 @@ RandomTapes::RandomTapes(QWidget *parent) :
     generated = false;
 }
 
+void RandomTapes::quick()
+{
+    QVector<QChar> symbols;
+    for (int i = 0; i < 10; i++) {
+        symbols.append(QString::number(i).at(0));
+    }
+    QString name = "Quick Random Tape - " + QString::number(qrand() % 9000 + 1000);
+    int tapeSize = qrand() % 50;
+    std::list<QChar> tape;
+    for (int i = 0; i < tapeSize; i++) {
+        tape.push_back(symbols.at(qrand() % symbols.size()));
+    }
+    QChar blanckSym = symbols.at(qrand() % symbols.size());
+    int headPos = tape.size()/2;
+    rand = new Tape(name, tape, blanckSym, headPos);
+}
+
 bool RandomTapes::isReady()
 {
     return ready;
