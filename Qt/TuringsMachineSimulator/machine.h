@@ -12,7 +12,7 @@ class Machine
 public:
     Machine(QFile *fileName);
     Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt);
-    void start(Tape *inTape);
+    void start(std::list<QChar> inTape, int inPos, QChar bSym);
     void advance();
     bool halted();
     void halt();

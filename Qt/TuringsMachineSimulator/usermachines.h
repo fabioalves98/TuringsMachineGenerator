@@ -20,6 +20,7 @@
 #include "machinesimulation.h"
 #include "randommachines.h"
 #include "editmachines.h"
+#include "edittapes.h"
 
 namespace Ui {
 class UserMachines;
@@ -51,7 +52,6 @@ private slots:
     void on_cRandTableBt_clicked();
     void on_editTableBt_clicked();
     void on_qRandTableBt_clicked();
-    void on_addTapeBt_clicked();
     void selTapeButtons(int item);
     void on_loadTapeBt_clicked();
     void on_saveTableBt_clicked();
@@ -59,10 +59,12 @@ private slots:
     void on_slowerBt_clicked();
     void on_fasterBt_clicked();
     void delayUpdated(int delay);
+    void on_buttonSelect_currentIndexChanged(int index);
 
 private:
     bool addMachine(Machine* toAdd);
     void addTape(QString mode);
+    bool machOrTape();
     void enSimButtons(QString state);
     QStringList states;
     QString selected;

@@ -34,9 +34,11 @@ class Ui_RandomMachines
 public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_5;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *horizontalLayout_6;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout;
     QLabel *nameLabel;
+    QHBoxLayout *horizontalLayout_2;
     QLabel *stLabel;
     QLabel *syLabel;
     QVBoxLayout *verticalLayout_2;
@@ -71,38 +73,48 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayout_5 = new QVBoxLayout(centralwidget);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         nameLabel = new QLabel(centralwidget);
         nameLabel->setObjectName(QStringLiteral("nameLabel"));
-        nameLabel->setMaximumSize(QSize(60, 27));
+        nameLabel->setMaximumSize(QSize(16777215, 16777215));
         QFont font;
         font.setPointSize(14);
         nameLabel->setFont(font);
         nameLabel->setFrameShape(QFrame::Panel);
         nameLabel->setFrameShadow(QFrame::Raised);
 
-        verticalLayout->addWidget(nameLabel);
+        horizontalLayout->addWidget(nameLabel);
 
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         stLabel = new QLabel(centralwidget);
         stLabel->setObjectName(QStringLiteral("stLabel"));
-        stLabel->setMaximumSize(QSize(64, 27));
+        stLabel->setMaximumSize(QSize(16777215, 16777215));
         stLabel->setFont(font);
         stLabel->setFrameShape(QFrame::Panel);
         stLabel->setFrameShadow(QFrame::Raised);
 
-        verticalLayout->addWidget(stLabel);
+        horizontalLayout_2->addWidget(stLabel);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
 
         syLabel = new QLabel(centralwidget);
         syLabel->setObjectName(QStringLiteral("syLabel"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(syLabel->sizePolicy().hasHeightForWidth());
         syLabel->setSizePolicy(sizePolicy);
-        syLabel->setMaximumSize(QSize(82, 27));
+        syLabel->setMaximumSize(QSize(16777215, 16777215));
         syLabel->setFont(font);
         syLabel->setFrameShape(QFrame::Panel);
         syLabel->setFrameShadow(QFrame::Raised);
@@ -110,7 +122,7 @@ public:
         verticalLayout->addWidget(syLabel);
 
 
-        horizontalLayout->addLayout(verticalLayout);
+        horizontalLayout_6->addLayout(verticalLayout);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
@@ -125,6 +137,9 @@ public:
         stSel = new QSpinBox(centralwidget);
         stSel->setObjectName(QStringLiteral("stSel"));
         stSel->setMaximumSize(QSize(46, 26));
+        QFont font1;
+        font1.setPointSize(10);
+        stSel->setFont(font1);
         stSel->setMaximum(25);
 
         horizontalLayout_3->addWidget(stSel);
@@ -146,6 +161,7 @@ public:
         sySel = new QSpinBox(centralwidget);
         sySel->setObjectName(QStringLiteral("sySel"));
         sySel->setMaximumSize(QSize(46, 26));
+        sySel->setFont(font1);
         sySel->setMaximum(10);
 
         horizontalLayout_4->addWidget(sySel);
@@ -163,72 +179,87 @@ public:
         verticalLayout_2->addLayout(horizontalLayout_4);
 
 
-        horizontalLayout->addLayout(verticalLayout_2);
+        horizontalLayout_6->addLayout(verticalLayout_2);
 
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         label = new QLabel(centralwidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setMinimumSize(QSize(101, 0));
-        label->setMaximumSize(QSize(101, 27));
+        label->setMinimumSize(QSize(0, 0));
+        label->setMaximumSize(QSize(16777215, 16777215));
         label->setFont(font);
         label->setFrameShape(QFrame::Panel);
         label->setFrameShadow(QFrame::Raised);
-        label->setAlignment(Qt::AlignCenter);
+        label->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         verticalLayout_3->addWidget(label);
 
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setMinimumSize(QSize(130, 0));
-        label_2->setMaximumSize(QSize(130, 27));
+        label_2->setMinimumSize(QSize(0, 0));
+        label_2->setMaximumSize(QSize(16777215, 16777215));
         label_2->setFont(font);
         label_2->setFrameShape(QFrame::Panel);
         label_2->setFrameShadow(QFrame::Raised);
-        label_2->setAlignment(Qt::AlignCenter);
+        label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         verticalLayout_3->addWidget(label_2);
 
         label_3 = new QLabel(centralwidget);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setMinimumSize(QSize(91, 0));
-        label_3->setMaximumSize(QSize(91, 27));
+        label_3->setMinimumSize(QSize(0, 0));
+        label_3->setMaximumSize(QSize(16777215, 16777215));
         label_3->setFont(font);
         label_3->setFrameShape(QFrame::Panel);
         label_3->setFrameShadow(QFrame::Raised);
-        label_3->setAlignment(Qt::AlignCenter);
+        label_3->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         verticalLayout_3->addWidget(label_3);
 
 
-        horizontalLayout->addLayout(verticalLayout_3);
+        horizontalLayout_6->addLayout(verticalLayout_3);
 
         verticalLayout_4 = new QVBoxLayout();
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         initStCBox = new QComboBox(centralwidget);
         initStCBox->setObjectName(QStringLiteral("initStCBox"));
-        initStCBox->setMaximumSize(QSize(41, 16777215));
+        QSizePolicy sizePolicy1(QSizePolicy::Ignored, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(initStCBox->sizePolicy().hasHeightForWidth());
+        initStCBox->setSizePolicy(sizePolicy1);
+        initStCBox->setMinimumSize(QSize(40, 0));
+        initStCBox->setMaximumSize(QSize(16777215, 16777215));
+        initStCBox->setFont(font1);
 
         verticalLayout_4->addWidget(initStCBox);
 
         blanckSyCBox = new QComboBox(centralwidget);
         blanckSyCBox->setObjectName(QStringLiteral("blanckSyCBox"));
-        blanckSyCBox->setMaximumSize(QSize(41, 16777215));
+        sizePolicy1.setHeightForWidth(blanckSyCBox->sizePolicy().hasHeightForWidth());
+        blanckSyCBox->setSizePolicy(sizePolicy1);
+        blanckSyCBox->setMinimumSize(QSize(40, 0));
+        blanckSyCBox->setMaximumSize(QSize(16777215, 16777215));
+        blanckSyCBox->setFont(font1);
 
         verticalLayout_4->addWidget(blanckSyCBox);
 
         haltStEdit = new QLineEdit(centralwidget);
         haltStEdit->setObjectName(QStringLiteral("haltStEdit"));
-        haltStEdit->setMaximumSize(QSize(41, 16777215));
+        sizePolicy1.setHeightForWidth(haltStEdit->sizePolicy().hasHeightForWidth());
+        haltStEdit->setSizePolicy(sizePolicy1);
+        haltStEdit->setMinimumSize(QSize(40, 0));
+        haltStEdit->setMaximumSize(QSize(16777215, 16777215));
+        haltStEdit->setFont(font1);
         haltStEdit->setAlignment(Qt::AlignCenter);
 
         verticalLayout_4->addWidget(haltStEdit);
 
 
-        horizontalLayout->addLayout(verticalLayout_4);
+        horizontalLayout_6->addLayout(verticalLayout_4);
 
 
-        verticalLayout_5->addLayout(horizontalLayout);
+        verticalLayout_5->addLayout(horizontalLayout_6);
 
         randTable = new QTableWidget(centralwidget);
         randTable->setObjectName(QStringLiteral("randTable"));
@@ -239,8 +270,6 @@ public:
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         randBut = new QPushButton(centralwidget);
         randBut->setObjectName(QStringLiteral("randBut"));
-        QFont font1;
-        font1.setPointSize(10);
         randBut->setFont(font1);
 
         horizontalLayout_5->addWidget(randBut);

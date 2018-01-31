@@ -58,7 +58,7 @@
             <enum>QFrame::Raised</enum>
            </property>
            <property name="text">
-            <string>Table's Specification</string>
+            <string>Machine's Table</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -100,7 +100,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <property name="text">
-             <string>Table's Properties</string>
+             <string>Machine's Properties</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -403,7 +403,7 @@
               <enum>QFrame::Raised</enum>
              </property>
              <property name="text">
-              <string>Table's Simulation</string>
+              <string>Simulation</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -443,7 +443,7 @@
               <enum>QFrame::Raised</enum>
              </property>
              <property name="text">
-              <string>Tape</string>
+              <string>Current Tape</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>

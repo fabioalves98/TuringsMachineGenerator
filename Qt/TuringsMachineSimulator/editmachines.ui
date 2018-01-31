@@ -34,8 +34,8 @@
        <widget class="QLabel" name="label">
         <property name="minimumSize">
          <size>
-          <width>301</width>
-          <height>30</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
@@ -50,10 +50,13 @@
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Select the Cell you want to Edit</string>
+         <string> Select the cells you want to edit </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="margin">
+         <number>2</number>
         </property>
        </widget>
       </item>
@@ -94,8 +97,8 @@
        <widget class="QLabel" name="writeLabel">
         <property name="minimumSize">
          <size>
-          <width>125</width>
-          <height>31</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
@@ -110,7 +113,7 @@
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Write Symbol</string>
+         <string> Write Symbol </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -149,8 +152,8 @@
        <widget class="QLabel" name="moveLabel">
         <property name="minimumSize">
          <size>
-          <width>100</width>
-          <height>31</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
@@ -165,7 +168,7 @@
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Move Tape</string>
+         <string> Move Tape </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -204,8 +207,8 @@
        <widget class="QLabel" name="nextLabel">
         <property name="minimumSize">
          <size>
-          <width>95</width>
-          <height>31</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
@@ -220,7 +223,7 @@
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Next State</string>
+         <string> Next State </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -276,8 +279,8 @@
        <widget class="QLabel" name="inStateLabel">
         <property name="minimumSize">
          <size>
-          <width>105</width>
-          <height>31</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -298,7 +301,7 @@
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Initial State</string>
+         <string> Initial State </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -337,8 +340,8 @@
        <widget class="QLabel" name="hltStateLabel">
         <property name="minimumSize">
          <size>
-          <width>90</width>
-          <height>31</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
@@ -353,7 +356,7 @@
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Halt State</string>
+         <string> Halt State </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -396,7 +399,7 @@
        <widget class="QPushButton" name="changeBut">
         <property name="font">
          <font>
-          <pointsize>10</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
@@ -408,7 +411,7 @@
        <widget class="QPushButton" name="saveBut">
         <property name="font">
          <font>
-          <pointsize>10</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">

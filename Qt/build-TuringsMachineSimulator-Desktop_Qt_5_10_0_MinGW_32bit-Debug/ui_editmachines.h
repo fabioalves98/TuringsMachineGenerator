@@ -76,13 +76,14 @@ public:
 
         label = new QLabel(centralwidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setMinimumSize(QSize(301, 30));
+        label->setMinimumSize(QSize(0, 0));
         QFont font;
         font.setPointSize(16);
         label->setFont(font);
         label->setFrameShape(QFrame::Panel);
         label->setFrameShadow(QFrame::Raised);
         label->setAlignment(Qt::AlignCenter);
+        label->setMargin(2);
 
         horizontalLayout_2->addWidget(label);
 
@@ -106,7 +107,7 @@ public:
 
         writeLabel = new QLabel(centralwidget);
         writeLabel->setObjectName(QStringLiteral("writeLabel"));
-        writeLabel->setMinimumSize(QSize(125, 31));
+        writeLabel->setMinimumSize(QSize(0, 0));
         QFont font1;
         font1.setPointSize(14);
         writeLabel->setFont(font1);
@@ -129,7 +130,7 @@ public:
 
         moveLabel = new QLabel(centralwidget);
         moveLabel->setObjectName(QStringLiteral("moveLabel"));
-        moveLabel->setMinimumSize(QSize(100, 31));
+        moveLabel->setMinimumSize(QSize(0, 0));
         moveLabel->setFont(font1);
         moveLabel->setFrameShape(QFrame::Panel);
         moveLabel->setFrameShadow(QFrame::Raised);
@@ -150,7 +151,7 @@ public:
 
         nextLabel = new QLabel(centralwidget);
         nextLabel->setObjectName(QStringLiteral("nextLabel"));
-        nextLabel->setMinimumSize(QSize(95, 31));
+        nextLabel->setMinimumSize(QSize(0, 0));
         nextLabel->setFont(font1);
         nextLabel->setFrameShape(QFrame::Panel);
         nextLabel->setFrameShadow(QFrame::Raised);
@@ -180,7 +181,7 @@ public:
 
         inStateLabel = new QLabel(centralwidget);
         inStateLabel->setObjectName(QStringLiteral("inStateLabel"));
-        inStateLabel->setMinimumSize(QSize(105, 31));
+        inStateLabel->setMinimumSize(QSize(0, 0));
         inStateLabel->setMaximumSize(QSize(16777215, 16777215));
         inStateLabel->setFont(font1);
         inStateLabel->setFrameShape(QFrame::Panel);
@@ -202,7 +203,7 @@ public:
 
         hltStateLabel = new QLabel(centralwidget);
         hltStateLabel->setObjectName(QStringLiteral("hltStateLabel"));
-        hltStateLabel->setMinimumSize(QSize(90, 31));
+        hltStateLabel->setMinimumSize(QSize(0, 0));
         hltStateLabel->setFont(font1);
         hltStateLabel->setFrameShape(QFrame::Panel);
         hltStateLabel->setFrameShadow(QFrame::Raised);
@@ -229,7 +230,7 @@ public:
         changeBut = new QPushButton(centralwidget);
         changeBut->setObjectName(QStringLiteral("changeBut"));
         QFont font2;
-        font2.setPointSize(10);
+        font2.setPointSize(12);
         changeBut->setFont(font2);
 
         horizontalLayout_5->addWidget(changeBut);
@@ -253,12 +254,12 @@ public:
     void retranslateUi(QMainWindow *EditMachines)
     {
         EditMachines->setWindowTitle(QApplication::translate("EditMachines", "MainWindow", nullptr));
-        label->setText(QApplication::translate("EditMachines", "Select the Cell you want to Edit", nullptr));
-        writeLabel->setText(QApplication::translate("EditMachines", "Write Symbol", nullptr));
-        moveLabel->setText(QApplication::translate("EditMachines", "Move Tape", nullptr));
-        nextLabel->setText(QApplication::translate("EditMachines", "Next State", nullptr));
-        inStateLabel->setText(QApplication::translate("EditMachines", "Initial State", nullptr));
-        hltStateLabel->setText(QApplication::translate("EditMachines", "Halt State", nullptr));
+        label->setText(QApplication::translate("EditMachines", " Select the cells you want to edit ", nullptr));
+        writeLabel->setText(QApplication::translate("EditMachines", " Write Symbol ", nullptr));
+        moveLabel->setText(QApplication::translate("EditMachines", " Move Tape ", nullptr));
+        nextLabel->setText(QApplication::translate("EditMachines", " Next State ", nullptr));
+        inStateLabel->setText(QApplication::translate("EditMachines", " Initial State ", nullptr));
+        hltStateLabel->setText(QApplication::translate("EditMachines", " Halt State ", nullptr));
         changeBut->setText(QApplication::translate("EditMachines", "Change", nullptr));
         saveBut->setText(QApplication::translate("EditMachines", "Save", nullptr));
     } // retranslateUi

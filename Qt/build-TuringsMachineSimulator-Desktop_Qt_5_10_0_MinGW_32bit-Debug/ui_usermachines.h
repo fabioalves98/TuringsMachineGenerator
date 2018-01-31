@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -51,7 +52,6 @@ public:
     QLabel *tapesLabel;
     QListWidget *tapesList;
     QHBoxLayout *horizontalLayout_3;
-    QPushButton *addTapeBt;
     QPushButton *loadTapeBt;
     QHBoxLayout *horizontalLayout;
     QPushButton *pauseBt;
@@ -62,6 +62,7 @@ public:
     QLabel *delayLb;
     QStackedWidget *tableSim;
     QHBoxLayout *tableCtrlLt;
+    QComboBox *buttonSelect;
     QPushButton *addTableBt;
     QPushButton *editTableBt;
     QPushButton *saveTableBt;
@@ -80,7 +81,9 @@ public:
         centralwidget = new QWidget(UserMachines);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayout_7 = new QVBoxLayout(centralwidget);
+        verticalLayout_7->setSpacing(6);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
+        verticalLayout_7->setContentsMargins(5, 5, 5, 5);
         listSplit = new QSplitter(centralwidget);
         listSplit->setObjectName(QStringLiteral("listSplit"));
         listSplit->setOrientation(Qt::Horizontal);
@@ -150,7 +153,7 @@ public:
         simBt->setObjectName(QStringLiteral("simBt"));
         simBt->setMinimumSize(QSize(0, 0));
         QFont font2;
-        font2.setPointSize(12);
+        font2.setPointSize(14);
         simBt->setFont(font2);
 
         verticalLayout_2->addWidget(simBt);
@@ -188,12 +191,6 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        addTapeBt = new QPushButton(layoutWidget2);
-        addTapeBt->setObjectName(QStringLiteral("addTapeBt"));
-        addTapeBt->setFont(font1);
-
-        horizontalLayout_3->addWidget(addTapeBt);
-
         loadTapeBt = new QPushButton(layoutWidget2);
         loadTapeBt->setObjectName(QStringLiteral("loadTapeBt"));
         loadTapeBt->setFont(font1);
@@ -213,7 +210,9 @@ public:
         pauseBt->setObjectName(QStringLiteral("pauseBt"));
         pauseBt->setMinimumSize(QSize(30, 27));
         pauseBt->setMaximumSize(QSize(16777215, 27));
-        pauseBt->setFont(font2);
+        QFont font3;
+        font3.setPointSize(12);
+        pauseBt->setFont(font3);
 
         horizontalLayout->addWidget(pauseBt);
 
@@ -221,7 +220,7 @@ public:
         contBt->setObjectName(QStringLiteral("contBt"));
         contBt->setMinimumSize(QSize(30, 27));
         contBt->setMaximumSize(QSize(16777215, 27));
-        contBt->setFont(font2);
+        contBt->setFont(font3);
 
         horizontalLayout->addWidget(contBt);
 
@@ -229,7 +228,7 @@ public:
         stopBt->setObjectName(QStringLiteral("stopBt"));
         stopBt->setMinimumSize(QSize(30, 27));
         stopBt->setMaximumSize(QSize(16777215, 27));
-        stopBt->setFont(font2);
+        stopBt->setFont(font3);
 
         horizontalLayout->addWidget(stopBt);
 
@@ -265,39 +264,48 @@ public:
 
         tableCtrlLt = new QHBoxLayout();
         tableCtrlLt->setObjectName(QStringLiteral("tableCtrlLt"));
+        buttonSelect = new QComboBox(centralwidget);
+        buttonSelect->addItem(QString());
+        buttonSelect->addItem(QString());
+        buttonSelect->setObjectName(QStringLiteral("buttonSelect"));
+        buttonSelect->setMaximumSize(QSize(90, 16777215));
+        buttonSelect->setFont(font3);
+
+        tableCtrlLt->addWidget(buttonSelect);
+
         addTableBt = new QPushButton(centralwidget);
         addTableBt->setObjectName(QStringLiteral("addTableBt"));
-        addTableBt->setFont(font2);
+        addTableBt->setFont(font3);
 
         tableCtrlLt->addWidget(addTableBt);
 
         editTableBt = new QPushButton(centralwidget);
         editTableBt->setObjectName(QStringLiteral("editTableBt"));
-        editTableBt->setFont(font2);
+        editTableBt->setFont(font3);
 
         tableCtrlLt->addWidget(editTableBt);
 
         saveTableBt = new QPushButton(centralwidget);
         saveTableBt->setObjectName(QStringLiteral("saveTableBt"));
-        saveTableBt->setFont(font2);
+        saveTableBt->setFont(font3);
 
         tableCtrlLt->addWidget(saveTableBt);
 
         qRandTableBt = new QPushButton(centralwidget);
         qRandTableBt->setObjectName(QStringLiteral("qRandTableBt"));
-        qRandTableBt->setFont(font2);
+        qRandTableBt->setFont(font3);
 
         tableCtrlLt->addWidget(qRandTableBt);
 
         cRandTableBt = new QPushButton(centralwidget);
         cRandTableBt->setObjectName(QStringLiteral("cRandTableBt"));
-        cRandTableBt->setFont(font2);
+        cRandTableBt->setFont(font3);
 
         tableCtrlLt->addWidget(cRandTableBt);
 
         settingsBt = new QPushButton(centralwidget);
         settingsBt->setObjectName(QStringLiteral("settingsBt"));
-        settingsBt->setFont(font2);
+        settingsBt->setFont(font3);
 
         tableCtrlLt->addWidget(settingsBt);
 
@@ -314,12 +322,11 @@ public:
     void retranslateUi(QMainWindow *UserMachines)
     {
         UserMachines->setWindowTitle(QApplication::translate("UserMachines", "MainWindow", nullptr));
-        tablesLabel->setText(QApplication::translate("UserMachines", "Machine's Tables", nullptr));
+        tablesLabel->setText(QApplication::translate("UserMachines", "Turing's Machines", nullptr));
         uselAllBt->setText(QApplication::translate("UserMachines", "Select All", nullptr));
         selAllBt->setText(QApplication::translate("UserMachines", "Unselect All", nullptr));
-        simBt->setText(QApplication::translate("UserMachines", "Simulate", nullptr));
+        simBt->setText(QApplication::translate("UserMachines", "Run", nullptr));
         tapesLabel->setText(QApplication::translate("UserMachines", "Tapes", nullptr));
-        addTapeBt->setText(QApplication::translate("UserMachines", "Add Tape", nullptr));
         loadTapeBt->setText(QApplication::translate("UserMachines", "Load Tape", nullptr));
         pauseBt->setText(QString());
         contBt->setText(QString());
@@ -327,11 +334,14 @@ public:
         slowerBt->setText(QString());
         fasterBt->setText(QString());
         delayLb->setText(QString());
-        addTableBt->setText(QApplication::translate("UserMachines", "Add Table File", nullptr));
-        editTableBt->setText(QApplication::translate("UserMachines", "Edit Table", nullptr));
-        saveTableBt->setText(QApplication::translate("UserMachines", "Save Table", nullptr));
-        qRandTableBt->setText(QApplication::translate("UserMachines", "Add Quick Random Table", nullptr));
-        cRandTableBt->setText(QApplication::translate("UserMachines", "Add Custom Random Table", nullptr));
+        buttonSelect->setItemText(0, QApplication::translate("UserMachines", "Machine", nullptr));
+        buttonSelect->setItemText(1, QApplication::translate("UserMachines", "Tape", nullptr));
+
+        addTableBt->setText(QString());
+        editTableBt->setText(QString());
+        saveTableBt->setText(QString());
+        qRandTableBt->setText(QString());
+        cRandTableBt->setText(QString());
         settingsBt->setText(QApplication::translate("UserMachines", "Help / Settings", nullptr));
     } // retranslateUi
 

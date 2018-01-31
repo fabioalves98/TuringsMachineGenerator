@@ -40,6 +40,9 @@ void MachineSimulation::start() {
     set = Settings::getInstance();
     localDelayFormat = set->getDelayTime()/10;
 
+    if (inTape != nullptr) tempHeadPos = inTape->getTapePos();
+
+
     ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);
 
     ui->tableView->verticalScrollBar()->setEnabled(false);
@@ -74,7 +77,23 @@ void MachineSimulation::setMachine(Machine *mach) {
 
 void MachineSimulation::setTape(Tape *tape) {
     this->inTape = tape;
+    tempHeadPos = inTape->getTapePos();
     displayTape();
+}
+
+void MachineSimulation::setEditedTape(bool value)
+{
+    editedTape = value;
+}
+
+bool MachineSimulation::isTapeEdited()
+{
+    return editedTape;
+}
+
+Tape *MachineSimulation::getTape()
+{
+    return inTape;
 }
 
 void MachineSimulation::display() {
@@ -168,21 +187,26 @@ void MachineSimulation::display() {
 }
 
 void MachineSimulation::displayTape() {
-    int headPos = inTape->getTapePos();
-    ui->headPos->setValue(headPos);
-    std::list<QChar> tape = inTape->getTape();
-    if (headPos <= 0) {
-        headPos = 1;
+    ui->headPos->setValue(tempHeadPos);
+    std::list<QChar> tape;
+    if (editedTape) {
+        tape = inTape->getEditedTape(tempHeadPos);
+    }
+    else {
+        tape = inTape->getTempTape(tempHeadPos);
+    }
+    if (tempHeadPos<= 0) {
+        tempHeadPos = 1;
     }
     std::list<QChar>::iterator tapeIt = tape.begin();
     QString tapeStr;
-    int offset = tape.size()/2 - headPos;
+    int offset = tape.size()/2 - tempHeadPos;
     for (int i = 0; i < tape.size(); i++) {
-        if (i == headPos) tapeStr.append(" ");
+        if (i == tempHeadPos) tapeStr.append(" ");
         tapeStr.append("|");
         tapeStr.append(*tapeIt);
         tapeStr.append("|");
-        if (i == headPos) tapeStr.append(" ");
+        if (i == tempHeadPos) tapeStr.append(" ");
         tapeIt++;
     }
     if (tape.size() % 2 == 0) {
@@ -221,7 +245,12 @@ void MachineSimulation::displayTape() {
         QLabel *propValue = new QLabel;
         switch(properties.indexOf(prop)) {
             case 0: {
-                propValue->setText(inTape->getName());
+                if (editedTape) {
+                    propValue->setText(inTape->getName() + " - Edited");
+                }
+                else {
+                    propValue->setText(inTape->getName());
+                }
                 break;
             }
             case 1: {
@@ -229,7 +258,12 @@ void MachineSimulation::displayTape() {
                 break;
             }
             case 2: {
-                propValue->setText(QString(inTape->getBlanckSym()));
+                if (editedTape) {
+                    propValue->setText(QString(inTape->getBlanckSym()));
+                }
+                else {
+                    propValue->setText(QString(inTape->getDefBlanckSym()));
+                }
                 break;
             }
         }
@@ -311,7 +345,12 @@ void MachineSimulation::simulate() {
     ui->simList->clear();
     ui->statesList->clear();
     ui->tapeList->clear();
-    mach->start(inTape);
+    if (editedTape) {
+        mach->start(inTape->getEditedTape(tempHeadPos), tempHeadPos, inTape->getBlanckSym());
+    }
+    else {
+        mach->start(inTape->getTempTape(tempHeadPos), inTape->getTapePos(), inTape->getDefBlanckSym());
+    }
 
     int iterations = 0;
     int maxIter = set->getIterTilHalt();
@@ -509,12 +548,22 @@ int MachineSimulation::getLocalDelay()
     return int(localDelayFormat);
 }
 
+void MachineSimulation::setTempHeadPos()
+{
+    tempHeadPos = 1;
+}
+
+int MachineSimulation::getTempHeadPos()
+{
+    return tempHeadPos;
+}
+
 QString MachineSimulation::getState() {
     return state;
 }
 
 void MachineSimulation::on_headPos_valueChanged(int arg1)
 {
-    inTape->setTapePos(arg1);
+    tempHeadPos = arg1;
     displayTape();
 }

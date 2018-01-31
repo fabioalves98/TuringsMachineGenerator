@@ -28,10 +28,11 @@ SOURCES += \
     machine.cpp \
     usermachines.cpp \
     randommachines.cpp \
-    editmachines.cpp \
     machinesimulation.cpp \
     tape.cpp \
-    settings.cpp
+    settings.cpp \
+    editmachines.cpp \
+    edittapes.cpp
 
 HEADERS += \
     machine.h \
@@ -40,14 +41,16 @@ HEADERS += \
     editmachines.h \
     machinesimulation.h \
     tape.h \
-    settings.h
+    settings.h \
+    edittapes.h
 
 FORMS += \
     usermachines.ui \
     randommachines.ui \
     editmachines.ui \
     machinesimulation.ui \
-    settings.ui
+    settings.ui \
+    edittapes.ui
 
 RESOURCES += \
     resource.qrc

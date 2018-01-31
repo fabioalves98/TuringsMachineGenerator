@@ -342,15 +342,15 @@ public:
     void retranslateUi(QMainWindow *MachineSimulation)
     {
         MachineSimulation->setWindowTitle(QApplication::translate("MachineSimulation", "MainWindow", nullptr));
-        tableLabel->setText(QApplication::translate("MachineSimulation", "Table's Specification", nullptr));
-        propLabel->setText(QApplication::translate("MachineSimulation", "Table's Properties", nullptr));
+        tableLabel->setText(QApplication::translate("MachineSimulation", "Machine's Table", nullptr));
+        propLabel->setText(QApplication::translate("MachineSimulation", "Machine's Properties", nullptr));
         label->setText(QApplication::translate("MachineSimulation", "Tape's Properties", nullptr));
         headPosLabel->setText(QApplication::translate("MachineSimulation", "Head", nullptr));
         statesLabel->setText(QApplication::translate("MachineSimulation", "States", nullptr));
         stateLabel->setText(QApplication::translate("MachineSimulation", "State", nullptr));
         inTapeLabel->setText(QApplication::translate("MachineSimulation", "Initial Tape", nullptr));
-        simLabel->setText(QApplication::translate("MachineSimulation", "Table's Simulation", nullptr));
-        tapeLabel->setText(QApplication::translate("MachineSimulation", "Tape", nullptr));
+        simLabel->setText(QApplication::translate("MachineSimulation", "Simulation", nullptr));
+        tapeLabel->setText(QApplication::translate("MachineSimulation", "Current Tape", nullptr));
     } // retranslateUi
 
 };

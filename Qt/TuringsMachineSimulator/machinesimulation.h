@@ -23,8 +23,12 @@ public:
     MachineSimulation(Machine *mach, Tape *tape, QWidget *parent = 0);
     void setMachine(Machine* mach);
     void setTape(Tape* tape);
+    void setEditedTape(bool value);
+    bool isTapeEdited();
+    Tape *getTape();
     void start();
     void display();
+    void displayTape();
     void simulate();
     void pause();
     void cont();
@@ -33,6 +37,8 @@ public:
     void decreaseSpeed();
     void increaseSpeed();
     int getLocalDelay();
+    void setTempHeadPos();
+    int getTempHeadPos();
     QString getState();
     ~MachineSimulation();
 
@@ -59,11 +65,12 @@ private:
 
     Ui::MachineSimulation *ui;
     bool machHalted(int iterations);
-    void displayTape();
     bool uiReady();
     void clearUi();
     Machine *mach;
     Tape *inTape;
+    int tempHeadPos;
+    bool editedTape = false;
     QString state;
     bool haltSim;
     bool pauseSim;

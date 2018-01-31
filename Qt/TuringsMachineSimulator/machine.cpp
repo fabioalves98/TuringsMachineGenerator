@@ -49,13 +49,14 @@ Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<
     haltState = hSt;
 }
 
-void Machine::start(Tape *inTape) {
+void Machine::start(std::list<QChar> inTape, int inPos, QChar bSym) {
     tape.clear();
-    tape = inTape->getTape();
+    tape = inTape;
     pState = initState;
-    blanckSym = inTape->getBlanckSym();
+    blanckSym = bSym;
+    qDebug() << blanckSym;
     head = tape.begin();
-    int headPos = (inTape->getTapePos() > 0) ? inTape->getTapePos() : 1;
+    int headPos = (inPos > 0) ? inPos : 1;
     std::advance(head, headPos);
     startP = 0;
     endP = tape.size();

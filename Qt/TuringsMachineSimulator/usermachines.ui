@@ -20,6 +20,21 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_7">
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
     <item>
      <widget class="QSplitter" name="listSplit">
       <property name="orientation">
@@ -70,7 +85,7 @@
                    <enum>QFrame::Raised</enum>
                   </property>
                   <property name="text">
-                   <string>Machine's Tables</string>
+                   <string>Turing's Machines</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -127,11 +142,11 @@
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>12</pointsize>
+                  <pointsize>14</pointsize>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Simulate</string>
+                 <string>Run</string>
                 </property>
                </widget>
               </item>
@@ -183,18 +198,6 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QPushButton" name="addTapeBt">
-                <property name="font">
-                 <font>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Add Tape</string>
-                </property>
-               </widget>
-              </item>
               <item>
                <widget class="QPushButton" name="loadTapeBt">
                 <property name="font">
@@ -345,6 +348,31 @@
     <item>
      <layout class="QHBoxLayout" name="tableCtrlLt">
       <item>
+       <widget class="QComboBox" name="buttonSelect">
+        <property name="maximumSize">
+         <size>
+          <width>90</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>Machine</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Tape</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="addTableBt">
         <property name="font">
          <font>
@@ -352,7 +380,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Add Table File</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -364,7 +392,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Edit Table</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -376,7 +404,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Save Table</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -388,7 +416,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Add Quick Random Table</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -400,7 +428,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Add Custom Random Table</string>
+         <string/>
         </property>
        </widget>
       </item>

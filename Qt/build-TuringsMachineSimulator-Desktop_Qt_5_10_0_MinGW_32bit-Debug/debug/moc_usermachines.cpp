@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UserMachines_t {
-    QByteArrayData data[26];
-    char stringdata0[440];
+    QByteArrayData data[27];
+    char stringdata0[461];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,15 +48,16 @@ QT_MOC_LITERAL(13, 189, 17), // "on_contBt_clicked"
 QT_MOC_LITERAL(14, 207, 23), // "on_cRandTableBt_clicked"
 QT_MOC_LITERAL(15, 231, 22), // "on_editTableBt_clicked"
 QT_MOC_LITERAL(16, 254, 23), // "on_qRandTableBt_clicked"
-QT_MOC_LITERAL(17, 278, 20), // "on_addTapeBt_clicked"
-QT_MOC_LITERAL(18, 299, 14), // "selTapeButtons"
-QT_MOC_LITERAL(19, 314, 21), // "on_loadTapeBt_clicked"
-QT_MOC_LITERAL(20, 336, 22), // "on_saveTableBt_clicked"
-QT_MOC_LITERAL(21, 359, 21), // "on_settingsBt_clicked"
-QT_MOC_LITERAL(22, 381, 19), // "on_slowerBt_clicked"
-QT_MOC_LITERAL(23, 401, 19), // "on_fasterBt_clicked"
-QT_MOC_LITERAL(24, 421, 12), // "delayUpdated"
-QT_MOC_LITERAL(25, 434, 5) // "delay"
+QT_MOC_LITERAL(17, 278, 14), // "selTapeButtons"
+QT_MOC_LITERAL(18, 293, 21), // "on_loadTapeBt_clicked"
+QT_MOC_LITERAL(19, 315, 22), // "on_saveTableBt_clicked"
+QT_MOC_LITERAL(20, 338, 21), // "on_settingsBt_clicked"
+QT_MOC_LITERAL(21, 360, 19), // "on_slowerBt_clicked"
+QT_MOC_LITERAL(22, 380, 19), // "on_fasterBt_clicked"
+QT_MOC_LITERAL(23, 400, 12), // "delayUpdated"
+QT_MOC_LITERAL(24, 413, 5), // "delay"
+QT_MOC_LITERAL(25, 419, 35), // "on_buttonSelect_currentIndexC..."
+QT_MOC_LITERAL(26, 455, 5) // "index"
 
     },
     "UserMachines\0on_addTableBt_clicked\0\0"
@@ -66,10 +67,12 @@ QT_MOC_LITERAL(25, 434, 5) // "delay"
     "on_stopBt_clicked\0on_pauseBt_clicked\0"
     "on_contBt_clicked\0on_cRandTableBt_clicked\0"
     "on_editTableBt_clicked\0on_qRandTableBt_clicked\0"
-    "on_addTapeBt_clicked\0selTapeButtons\0"
-    "on_loadTapeBt_clicked\0on_saveTableBt_clicked\0"
-    "on_settingsBt_clicked\0on_slowerBt_clicked\0"
-    "on_fasterBt_clicked\0delayUpdated\0delay"
+    "selTapeButtons\0on_loadTapeBt_clicked\0"
+    "on_saveTableBt_clicked\0on_settingsBt_clicked\0"
+    "on_slowerBt_clicked\0on_fasterBt_clicked\0"
+    "delayUpdated\0delay\0"
+    "on_buttonSelect_currentIndexChanged\0"
+    "index"
 };
 #undef QT_MOC_LITERAL
 
@@ -99,14 +102,14 @@ static const uint qt_meta_data_UserMachines[] = {
       14,    0,  127,    2, 0x08 /* Private */,
       15,    0,  128,    2, 0x08 /* Private */,
       16,    0,  129,    2, 0x08 /* Private */,
-      17,    0,  130,    2, 0x08 /* Private */,
-      18,    1,  131,    2, 0x08 /* Private */,
+      17,    1,  130,    2, 0x08 /* Private */,
+      18,    0,  133,    2, 0x08 /* Private */,
       19,    0,  134,    2, 0x08 /* Private */,
       20,    0,  135,    2, 0x08 /* Private */,
       21,    0,  136,    2, 0x08 /* Private */,
       22,    0,  137,    2, 0x08 /* Private */,
-      23,    0,  138,    2, 0x08 /* Private */,
-      24,    1,  139,    2, 0x08 /* Private */,
+      23,    1,  138,    2, 0x08 /* Private */,
+      25,    1,  141,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -121,14 +124,14 @@ static const uint qt_meta_data_UserMachines[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   25,
+    QMetaType::Void, QMetaType::Int,   24,
+    QMetaType::Void, QMetaType::Int,   26,
 
        0        // eod
 };
@@ -151,14 +154,14 @@ void UserMachines::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 9: _t->on_cRandTableBt_clicked(); break;
         case 10: _t->on_editTableBt_clicked(); break;
         case 11: _t->on_qRandTableBt_clicked(); break;
-        case 12: _t->on_addTapeBt_clicked(); break;
-        case 13: _t->selTapeButtons((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->on_loadTapeBt_clicked(); break;
-        case 15: _t->on_saveTableBt_clicked(); break;
-        case 16: _t->on_settingsBt_clicked(); break;
-        case 17: _t->on_slowerBt_clicked(); break;
-        case 18: _t->on_fasterBt_clicked(); break;
-        case 19: _t->delayUpdated((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->selTapeButtons((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->on_loadTapeBt_clicked(); break;
+        case 14: _t->on_saveTableBt_clicked(); break;
+        case 15: _t->on_settingsBt_clicked(); break;
+        case 16: _t->on_slowerBt_clicked(); break;
+        case 17: _t->on_fasterBt_clicked(); break;
+        case 18: _t->delayUpdated((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->on_buttonSelect_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }

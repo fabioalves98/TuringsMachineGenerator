@@ -33,29 +33,66 @@ Tape::Tape(QFile *tapeFile)
             tape.push_back(tapeStr.at(i));
         }
     }
+    defBlanckSym = blanckSym;
 }
 
 QString Tape::getName() {
     return name;
 }
 
-std::list<QChar> Tape::getTape() {
+std::list<QChar> Tape::getTape()
+{
+    return tape;
+}
+
+std::list<QChar> Tape::getTempTape(int tempHeadPos) {
     tempTape = tape;
-    if (signed(headPos) >= signed(tape.size() - 1)) {
-        for (int i = tape.size() - 1; i <= headPos; i++) {
+    if (signed(tempHeadPos) >= signed(tape.size() - 1)) {
+        for (int i = tape.size() - 1; i <= tempHeadPos; i++) {
             tempTape.push_back(blanckSym);
         }
     }
-    else if (headPos <= 0) {
-        for (int i = headPos; i <= 0; i++) {
+    else if (tempHeadPos <= 0) {
+        for (int i = tempHeadPos; i <= 0; i++) {
             tempTape.push_front(blanckSym);
         }
     }
     return tempTape;
 }
 
+std::list<QChar> Tape::getEditedTape(int tempHeadPos)
+{
+    tempTape = editedTape;
+    if (signed(tempHeadPos) >= signed(editedTape.size() - 1)) {
+        for (int i = editedTape.size() - 1; i <= tempHeadPos; i++) {
+            tempTape.push_back(blanckSym);
+        }
+    }
+    else if (tempHeadPos <= 0) {
+        for (int i = tempHeadPos; i <= 0; i++) {
+            tempTape.push_front(blanckSym);
+        }
+    }
+    return tempTape;
+}
+
+void Tape::setEditedTape(std::list<QChar> inTape)
+{
+    editedTape = inTape;
+}
+
 QChar Tape::getBlanckSym() {
     return blanckSym;
+}
+
+QChar Tape::getDefBlanckSym()
+{
+    return defBlanckSym;
+}
+
+void Tape::setBlanckSym(QChar bs)
+{
+    blanckSym = bs;
 }
 
 int Tape::getTapeSize() {
@@ -66,6 +103,3 @@ int Tape::getTapePos() {
     return headPos;
 }
 
-void Tape::setTapePos(int pos) {
-    headPos = pos;
-}

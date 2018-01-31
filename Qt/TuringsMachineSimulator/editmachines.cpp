@@ -7,7 +7,7 @@ EditMachines::EditMachines(Machine *toEdit, QWidget *parent) :
     mach(toEdit)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Table Edition");
+    this->setWindowTitle("Machine Edition");
     this->setWindowModality(Qt::ApplicationModal);
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);

@@ -12,5 +12,7 @@
         <file>icons/pauseBt.png</file>
         <file>icons/play.png</file>
         <file>icons/stop.png</file>
+        <file>icons/minus.png</file>
+        <file>icons/plus.png</file>
     </qresource>
 </RCC>
