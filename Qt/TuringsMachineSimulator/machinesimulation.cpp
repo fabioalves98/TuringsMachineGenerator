@@ -114,6 +114,25 @@ void MachineSimulation::editTape()
     edit->close();
 }
 
+void MachineSimulation::saveTape()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Turing's Machine", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            qDebug() << "Error saving file";
+            return;
+    }
+    QTextStream out(&file);
+    out << "hp: " << ui->headPos->value() << endl;
+    out << "bs: " << blanckSym << endl;
+    for (auto it = tempTape.begin(); it != tempTape.end(); it++) {
+        out << *it;
+    }
+    out << endl;
+    file.flush();
+    file.close();
+}
+
 void MachineSimulation::display() {
     ui->tableView->clear();
     // Get the states, symbols and instructions, fill a table with them
@@ -373,10 +392,10 @@ void MachineSimulation::simulate() {
         int offset = mach->getTapeHeadOffset();
         tapeStr = "";
         int spacing = tape.size()/2 - offset;
-        for (QChar sym : tape) {
+        for (auto it = tape.begin(); it != tape.end(); it++) {
             if (spacing == 0) tapeStr.append(" ");
             tapeStr.append("|");
-            tapeStr.append(sym);
+            tapeStr.append(*it);
             tapeStr.append("|");
             if (spacing == 0) tapeStr.append(" ");
             spacing--;

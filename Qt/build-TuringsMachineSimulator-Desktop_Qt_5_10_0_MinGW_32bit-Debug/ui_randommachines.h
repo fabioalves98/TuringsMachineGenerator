@@ -68,7 +68,7 @@ public:
     {
         if (RandomMachines->objectName().isEmpty())
             RandomMachines->setObjectName(QStringLiteral("RandomMachines"));
-        RandomMachines->resize(800, 600);
+        RandomMachines->resize(800, 567);
         centralwidget = new QWidget(RandomMachines);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         verticalLayout_5 = new QVBoxLayout(centralwidget);
@@ -270,13 +270,15 @@ public:
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         randBut = new QPushButton(centralwidget);
         randBut->setObjectName(QStringLiteral("randBut"));
-        randBut->setFont(font1);
+        QFont font2;
+        font2.setPointSize(12);
+        randBut->setFont(font2);
 
         horizontalLayout_5->addWidget(randBut);
 
         saveBut = new QPushButton(centralwidget);
         saveBut->setObjectName(QStringLiteral("saveBut"));
-        saveBut->setFont(font1);
+        saveBut->setFont(font2);
 
         horizontalLayout_5->addWidget(saveBut);
 

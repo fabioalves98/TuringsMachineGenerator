@@ -8,6 +8,7 @@ INPUT(
 ./debug\settings.o
 ./debug\editmachines.o
 ./debug\edittapes.o
+./debug\randomtapes.o
 ./debug\qrc_resource.o
 ./debug\moc_usermachines.o
 ./debug\moc_randommachines.o
@@ -15,4 +16,5 @@ INPUT(
 ./debug\moc_machinesimulation.o
 ./debug\moc_settings.o
 ./debug\moc_edittapes.o
+./debug\moc_randomtapes.o
 );

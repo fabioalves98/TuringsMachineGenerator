@@ -268,8 +268,12 @@ public:
         buttonSelect->addItem(QString());
         buttonSelect->addItem(QString());
         buttonSelect->setObjectName(QStringLiteral("buttonSelect"));
-        buttonSelect->setMaximumSize(QSize(90, 16777215));
-        buttonSelect->setFont(font3);
+        buttonSelect->setMaximumSize(QSize(92, 16777215));
+        QFont font4;
+        font4.setPointSize(12);
+        font4.setBold(true);
+        font4.setWeight(75);
+        buttonSelect->setFont(font4);
 
         tableCtrlLt->addWidget(buttonSelect);
 

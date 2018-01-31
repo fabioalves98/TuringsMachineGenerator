@@ -19,6 +19,7 @@
 #include "settings.h"
 #include "machinesimulation.h"
 #include "randommachines.h"
+#include "randomtapes.h"
 #include "editmachines.h"
 
 namespace Ui {
@@ -62,7 +63,7 @@ private slots:
 
 private:
     bool addMachine(Machine* toAdd);
-    void addTape(QString mode);
+    bool addTape(Tape* toAdd);
     bool machOrTape();
     void enSimButtons(QString state);
     QStringList states;

@@ -9,6 +9,7 @@ class Tape
 {
 public:
     Tape(QFile *tapeFile);
+    Tape(QString name, std::list<QChar> tape, QChar blanckSym, int headPos);
     QString getName();
     std::list<QChar> getTape();
     QChar getBlanckSym();

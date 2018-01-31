@@ -32,7 +32,8 @@ SOURCES += \
     tape.cpp \
     settings.cpp \
     editmachines.cpp \
-    edittapes.cpp
+    edittapes.cpp \
+    randomtapes.cpp
 
 HEADERS += \
     machine.h \
@@ -42,7 +43,8 @@ HEADERS += \
     machinesimulation.h \
     tape.h \
     settings.h \
-    edittapes.h
+    edittapes.h \
+    randomtapes.h
 
 FORMS += \
     usermachines.ui \
@@ -50,7 +52,8 @@ FORMS += \
     editmachines.ui \
     machinesimulation.ui \
     settings.ui \
-    edittapes.ui
+    edittapes.ui \
+    randomtapes.ui
 
 RESOURCES += \
     resource.qrc

@@ -26,6 +26,7 @@ public:
     void setTape(Tape* tape);
     Tape *getTape();
     void editTape();
+    void saveTape();
     void start();
     void display();
     void displayTape();

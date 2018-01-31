@@ -351,13 +351,15 @@
        <widget class="QComboBox" name="buttonSelect">
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>92</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="font">
          <font>
           <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <item>

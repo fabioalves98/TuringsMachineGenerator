@@ -74,7 +74,7 @@ public:
         zTitleLabel->setMidLineWidth(0);
         zTitleLabel->setAlignment(Qt::AlignCenter);
         zTitleLabel->setWordWrap(false);
-        zTitleLabel->setMargin(3);
+        zTitleLabel->setMargin(0);
 
         Title->addWidget(zTitleLabel);
 
@@ -183,7 +183,7 @@ public:
     void retranslateUi(QMainWindow *EditTapes)
     {
         EditTapes->setWindowTitle(QApplication::translate("EditTapes", "MainWindow", nullptr));
-        zTitleLabel->setText(QApplication::translate("EditTapes", "Edit the symbols of the Tape", nullptr));
+        zTitleLabel->setText(QApplication::translate("EditTapes", " Edit the symbols of the Tape ", nullptr));
         plusLeftBt->setText(QString());
         minusLeftBt->setText(QString());
         minusRightBt->setText(QString());

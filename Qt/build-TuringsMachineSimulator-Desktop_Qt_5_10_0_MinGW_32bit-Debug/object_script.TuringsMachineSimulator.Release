@@ -8,6 +8,7 @@ INPUT(
 ./release\settings.o
 ./release\editmachines.o
 ./release\edittapes.o
+./release\randomtapes.o
 ./release\qrc_resource.o
 ./release\moc_usermachines.o
 ./release\moc_randommachines.o
@@ -15,4 +16,5 @@ INPUT(
 ./release\moc_machinesimulation.o
 ./release\moc_settings.o
 ./release\moc_edittapes.o
+./release\moc_randomtapes.o
 );

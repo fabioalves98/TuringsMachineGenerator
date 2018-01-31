@@ -66,7 +66,7 @@ void UserMachines::start()
     on_buttonSelect_currentIndexChanged(0);
 
     // Setting the default tape item
-    addTape("Default");
+    addTape(new Tape(new QFile));
 
     // Setting the possible states for the application
     states << "Init" << "TableLoaded" << "Sim" << "Pause";
@@ -107,7 +107,14 @@ void UserMachines::on_addTableBt_clicked()
         }
     }
     else {
-        addTape("Custom");
+        Tape *tape;
+        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+        if (!(fileD == nullptr)) {
+            QFile *tapeFile = new QFile(fileD);
+            tape = new Tape(tapeFile);
+        }
+        else return;
+        addTape(tape);
     }
 }
 
@@ -254,34 +261,23 @@ bool UserMachines::addMachine(Machine *toAdd) {
     }
 }
 
-void UserMachines::addTape(QString mode) {
-    Tape *newTape;
-    if (mode == "Default") {
-        newTape = new Tape(new QFile());
-    }
-    else {
-        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
-        if (!(fileD == nullptr)) {
-            QFile *tapeFile = new QFile(fileD);
-            newTape = new Tape(tapeFile);
-        }
-        else return;
-    }
+bool UserMachines::addTape(Tape *toAdd)
+{
     bool contains = false;
     foreach (Tape *tape, listTape) {
-        if (tape->getName() == newTape->getName()) {
+        if (tape->getName() == toAdd->getName()) {
             contains = true;
         }
     }
     if (!contains) {
-        listTape.append(newTape);
+        listTape.append(toAdd);
         ui->tapesList->clearSelection();
         QListWidgetItem *tapeItem = new QListWidgetItem;
 
         QWidget *widget = new QWidget;
         QHBoxLayout *layout = new QHBoxLayout;
 
-        QLabel *tapeName = new QLabel(newTape->getName());
+        QLabel *tapeName = new QLabel(toAdd->getName());
         tapeName->setFont(QFont("Meiryo", 11));
         layout->addWidget(tapeName);
 
@@ -298,15 +294,10 @@ void UserMachines::addTape(QString mode) {
         QPixmap myPix(QSize(20,20));
         myPix.fill(QColor(0, 0, 0, 0));
         QPainter painter(&myPix);
-        if (mode == "Default") {
-             painter.setBrush( Qt::white );
-        }
-        else {
-            int r = qrand() % 255;
-            int g = qrand() % 255;
-            int b = qrand() % 255;
-            painter.setBrush(QColor(r, g, b));
-        }
+        int r = qrand() % 255;
+        int g = qrand() % 255;
+        int b = qrand() % 255;
+        painter.setBrush(QColor(r, g, b));
         painter.drawEllipse(QPoint(10, 9), 7, 7);
         QLabel *label = new QLabel;
         label->setPixmap(myPix);
@@ -321,6 +312,10 @@ void UserMachines::addTape(QString mode) {
         ui->tapesList->addItem(tapeItem);
         ui->tapesList->setItemWidget(tapeItem, widget);
         ui->tapesList->setIconSize(QSize(20, 20));
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
@@ -355,7 +350,7 @@ void UserMachines::enSimButtons(QString state) {
         }
         case 2: {
             ui->editTableBt->setEnabled(false);
-            ui->saveTableBt->setEnabled(true);
+            ui->saveTableBt->setEnabled(false);
             ui->simBt->setEnabled(true);
             ui->selAllBt->setEnabled(true);
             ui->uselAllBt->setEnabled(true);
@@ -365,8 +360,8 @@ void UserMachines::enSimButtons(QString state) {
             break;
         }
         case 3: {
-            ui->editTableBt->setEnabled(true);
-            ui->saveTableBt->setEnabled(true);
+            ui->editTableBt->setEnabled(false);
+            ui->saveTableBt->setEnabled(false);
             ui->simBt->setEnabled(true);
             ui->selAllBt->setEnabled(true);
             ui->uselAllBt->setEnabled(true);
@@ -439,7 +434,19 @@ void UserMachines::on_cRandTableBt_clicked()
         enSimButtons(sim->getState());
     }
     else {
-        // Custom Random Tape
+        RandomTapes *rand = new RandomTapes;
+        rand->show();
+        while (!rand->isReady()) {
+                QThread::msleep(10);
+                QCoreApplication::processEvents();
+                if (!rand->isVisible()) {
+                    this->setEnabled(true);
+                    return;
+                }
+        }
+        Tape *randTape = rand->getTape();
+        rand->close();
+        addTape(randTape);
     }
 }
 
@@ -488,28 +495,6 @@ void UserMachines::on_editTableBt_clicked()
     }
     else {
         dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->editTape();
-        /*bool tapeEdited = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->isTapeEdited();
-        int tempHeadPos = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getTempHeadPos();
-        EditTapes *edit = new EditTapes(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getTape(), tempHeadPos, tapeEdited);
-        edit->show();
-        edit->loadTape();
-        while (!edit->isReady()) {
-                QThread::msleep(10);
-                QCoreApplication::processEvents();
-                if (!edit->isVisible()) {
-                    return;
-                }
-        }
-        if (edit->isEdited()) {
-            edit->applyEdits();
-            dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setEditedTape(true);
-        }
-        else {
-            dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setEditedTape(false);
-        }
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setTempHeadPos();
-        edit->close();
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->displayTape();*/
     }
 }
 
@@ -580,7 +565,7 @@ void UserMachines::on_saveTableBt_clicked()
         file.close();
     }
     else {
-        // Save Table File
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->saveTape();
     }
 }
 
