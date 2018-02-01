@@ -37,47 +37,79 @@ public:
     QVBoxLayout *verticalLayout_6;
     QTabWidget *tabWidget;
     QWidget *general;
-    QWidget *randomTables;
+    QWidget *RandomTables;
     QVBoxLayout *verticalLayout_8;
-    QGroupBox *groupBox;
+    QGroupBox *TableNameBox;
     QHBoxLayout *horizontalLayout;
-    QLabel *label;
-    QLineEdit *nameEdit;
-    QLabel *label_3;
-    QComboBox *nameRandNum;
-    QLabel *label_4;
-    QGroupBox *statesGBox;
+    QLabel *zNameLabel;
+    QLineEdit *tableNameEdit;
+    QLabel *zPlusLabel;
+    QComboBox *tableRandSuffix;
+    QLabel *zIntLabel;
+    QGroupBox *StatesBox;
     QHBoxLayout *horizontalLayout_5;
-    QVBoxLayout *stLabels;
-    QLabel *minStLabel;
-    QLabel *maxStLabel;
-    QLabel *inStLabel;
-    QLabel *hltStLabel;
-    QVBoxLayout *stSettings;
+    QVBoxLayout *StLabels;
+    QLabel *zMinStLabel;
+    QLabel *zMaxStLabel;
+    QLabel *zInStLabel;
+    QLabel *zHltStLabel;
+    QVBoxLayout *StSettings;
     QHBoxLayout *customStates;
     QVBoxLayout *stSpinBoxs;
     QSpinBox *minStSpinBox;
     QSpinBox *maxStSpinBox;
     QHBoxLayout *stLayout;
-    QSpacerItem *stSpinBoxSpacer;
+    QSpacerItem *zSpacer;
     QHBoxLayout *inState;
     QComboBox *inStCBox;
     QCheckBox *rInStCheck;
-    QSpacerItem *inStSpacer;
+    QSpacerItem *zSpacer_2;
     QHBoxLayout *haltState;
     QLineEdit *haltStEdit;
-    QSpacerItem *haltStSpacer;
-    QGroupBox *symbolsGBox;
+    QSpacerItem *zSpacer_3;
+    QGroupBox *SymbolsBox;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *syLabels;
-    QLabel *minSyLabel;
-    QLabel *maxSyLabel;
+    QLabel *zMinSyLabel;
+    QLabel *zMaxSyLabel;
     QVBoxLayout *sySpinBoxs;
     QSpinBox *minSySpinBox;
     QSpinBox *maxSySpinBox;
     QHBoxLayout *syLayout;
-    QSpacerItem *sySpinBoxerSpacer;
+    QSpacerItem *zSpacer_4;
     QSpacerItem *verticalSpacer;
+    QWidget *RandomTapes;
+    QVBoxLayout *verticalLayout_5;
+    QGroupBox *TapeNameBox;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *zLabel;
+    QLineEdit *tapeNameEdit;
+    QLabel *zLabel_2;
+    QComboBox *tapeRandSuffix;
+    QLabel *zLabel_3;
+    QGroupBox *TapeBox;
+    QHBoxLayout *horizontalLayout_12;
+    QVBoxLayout *TapeLabels;
+    QLabel *zLabel_7;
+    QLabel *zLabel_6;
+    QLabel *zLabel_5;
+    QLabel *zLabel_4;
+    QVBoxLayout *TapeSettings;
+    QHBoxLayout *zSymLayout;
+    QSpinBox *tapeSySBox;
+    QHBoxLayout *tapeSyLayout;
+    QSpacerItem *zSpacer_5;
+    QHBoxLayout *MinSize;
+    QSpinBox *tapeMinSizeSBox;
+    QSpacerItem *zSpacer_6;
+    QHBoxLayout *MaxSize;
+    QSpinBox *tapeMaxSizeSBox;
+    QSpacerItem *zSpacer_8;
+    QHBoxLayout *BlacnkSymbol;
+    QLineEdit *tapeBSymEdit;
+    QCheckBox *rBSyCheck;
+    QSpacerItem *zSpacer_7;
+    QSpacerItem *verticalSpacer_3;
     QWidget *simulation;
     QVBoxLayout *verticalLayout_2;
     QGroupBox *groupBox_2;
@@ -116,115 +148,116 @@ public:
         general = new QWidget();
         general->setObjectName(QStringLiteral("general"));
         tabWidget->addTab(general, QString());
-        randomTables = new QWidget();
-        randomTables->setObjectName(QStringLiteral("randomTables"));
-        verticalLayout_8 = new QVBoxLayout(randomTables);
+        RandomTables = new QWidget();
+        RandomTables->setObjectName(QStringLiteral("RandomTables"));
+        verticalLayout_8 = new QVBoxLayout(RandomTables);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
-        groupBox = new QGroupBox(randomTables);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
+        TableNameBox = new QGroupBox(RandomTables);
+        TableNameBox->setObjectName(QStringLiteral("TableNameBox"));
         QFont font1;
         font1.setPointSize(13);
-        groupBox->setFont(font1);
-        horizontalLayout = new QHBoxLayout(groupBox);
+        TableNameBox->setFont(font1);
+        horizontalLayout = new QHBoxLayout(TableNameBox);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        label = new QLabel(groupBox);
-        label->setObjectName(QStringLiteral("label"));
+        zNameLabel = new QLabel(TableNameBox);
+        zNameLabel->setObjectName(QStringLiteral("zNameLabel"));
+        zNameLabel->setMaximumSize(QSize(85, 16777215));
         QFont font2;
         font2.setPointSize(11);
-        label->setFont(font2);
+        zNameLabel->setFont(font2);
 
-        horizontalLayout->addWidget(label);
+        horizontalLayout->addWidget(zNameLabel);
 
-        nameEdit = new QLineEdit(groupBox);
-        nameEdit->setObjectName(QStringLiteral("nameEdit"));
+        tableNameEdit = new QLineEdit(TableNameBox);
+        tableNameEdit->setObjectName(QStringLiteral("tableNameEdit"));
         QFont font3;
-        font3.setPointSize(10);
-        nameEdit->setFont(font3);
+        font3.setPointSize(12);
+        tableNameEdit->setFont(font3);
 
-        horizontalLayout->addWidget(nameEdit);
+        horizontalLayout->addWidget(tableNameEdit);
 
-        label_3 = new QLabel(groupBox);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setFont(font2);
+        zPlusLabel = new QLabel(TableNameBox);
+        zPlusLabel->setObjectName(QStringLiteral("zPlusLabel"));
+        zPlusLabel->setFont(font2);
 
-        horizontalLayout->addWidget(label_3);
+        horizontalLayout->addWidget(zPlusLabel);
 
-        nameRandNum = new QComboBox(groupBox);
-        nameRandNum->setObjectName(QStringLiteral("nameRandNum"));
-        nameRandNum->setFont(font2);
+        tableRandSuffix = new QComboBox(TableNameBox);
+        tableRandSuffix->setObjectName(QStringLiteral("tableRandSuffix"));
+        tableRandSuffix->setMinimumSize(QSize(80, 0));
+        tableRandSuffix->setMaximumSize(QSize(80, 16777215));
+        tableRandSuffix->setFont(font3);
 
-        horizontalLayout->addWidget(nameRandNum);
+        horizontalLayout->addWidget(tableRandSuffix);
 
-        label_4 = new QLabel(groupBox);
-        label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setFont(font2);
+        zIntLabel = new QLabel(TableNameBox);
+        zIntLabel->setObjectName(QStringLiteral("zIntLabel"));
+        zIntLabel->setFont(font2);
 
-        horizontalLayout->addWidget(label_4);
+        horizontalLayout->addWidget(zIntLabel);
 
 
-        verticalLayout_8->addWidget(groupBox);
+        verticalLayout_8->addWidget(TableNameBox);
 
-        statesGBox = new QGroupBox(randomTables);
-        statesGBox->setObjectName(QStringLiteral("statesGBox"));
-        statesGBox->setFont(font1);
-        horizontalLayout_5 = new QHBoxLayout(statesGBox);
+        StatesBox = new QGroupBox(RandomTables);
+        StatesBox->setObjectName(QStringLiteral("StatesBox"));
+        StatesBox->setFont(font1);
+        horizontalLayout_5 = new QHBoxLayout(StatesBox);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
-        stLabels = new QVBoxLayout();
-        stLabels->setObjectName(QStringLiteral("stLabels"));
-        minStLabel = new QLabel(statesGBox);
-        minStLabel->setObjectName(QStringLiteral("minStLabel"));
+        StLabels = new QVBoxLayout();
+        StLabels->setObjectName(QStringLiteral("StLabels"));
+        zMinStLabel = new QLabel(StatesBox);
+        zMinStLabel->setObjectName(QStringLiteral("zMinStLabel"));
         QFont font4;
         font4.setPointSize(11);
         font4.setBold(false);
         font4.setWeight(50);
-        minStLabel->setFont(font4);
+        zMinStLabel->setFont(font4);
 
-        stLabels->addWidget(minStLabel);
+        StLabels->addWidget(zMinStLabel);
 
-        maxStLabel = new QLabel(statesGBox);
-        maxStLabel->setObjectName(QStringLiteral("maxStLabel"));
-        maxStLabel->setFont(font2);
+        zMaxStLabel = new QLabel(StatesBox);
+        zMaxStLabel->setObjectName(QStringLiteral("zMaxStLabel"));
+        zMaxStLabel->setFont(font2);
 
-        stLabels->addWidget(maxStLabel);
+        StLabels->addWidget(zMaxStLabel);
 
-        inStLabel = new QLabel(statesGBox);
-        inStLabel->setObjectName(QStringLiteral("inStLabel"));
-        inStLabel->setFont(font2);
+        zInStLabel = new QLabel(StatesBox);
+        zInStLabel->setObjectName(QStringLiteral("zInStLabel"));
+        zInStLabel->setFont(font2);
 
-        stLabels->addWidget(inStLabel);
+        StLabels->addWidget(zInStLabel);
 
-        hltStLabel = new QLabel(statesGBox);
-        hltStLabel->setObjectName(QStringLiteral("hltStLabel"));
-        hltStLabel->setFont(font2);
+        zHltStLabel = new QLabel(StatesBox);
+        zHltStLabel->setObjectName(QStringLiteral("zHltStLabel"));
+        zHltStLabel->setFont(font2);
 
-        stLabels->addWidget(hltStLabel);
+        StLabels->addWidget(zHltStLabel);
 
 
-        horizontalLayout_5->addLayout(stLabels);
+        horizontalLayout_5->addLayout(StLabels);
 
-        stSettings = new QVBoxLayout();
-        stSettings->setSpacing(6);
-        stSettings->setObjectName(QStringLiteral("stSettings"));
+        StSettings = new QVBoxLayout();
+        StSettings->setSpacing(6);
+        StSettings->setObjectName(QStringLiteral("StSettings"));
         customStates = new QHBoxLayout();
         customStates->setObjectName(QStringLiteral("customStates"));
         stSpinBoxs = new QVBoxLayout();
         stSpinBoxs->setSpacing(6);
         stSpinBoxs->setObjectName(QStringLiteral("stSpinBoxs"));
-        minStSpinBox = new QSpinBox(statesGBox);
+        minStSpinBox = new QSpinBox(StatesBox);
         minStSpinBox->setObjectName(QStringLiteral("minStSpinBox"));
         minStSpinBox->setMinimumSize(QSize(50, 30));
-        QFont font5;
-        font5.setPointSize(12);
-        minStSpinBox->setFont(font5);
+        minStSpinBox->setFont(font3);
         minStSpinBox->setMinimum(1);
         minStSpinBox->setMaximum(25);
 
         stSpinBoxs->addWidget(minStSpinBox);
 
-        maxStSpinBox = new QSpinBox(statesGBox);
+        maxStSpinBox = new QSpinBox(StatesBox);
         maxStSpinBox->setObjectName(QStringLiteral("maxStSpinBox"));
         maxStSpinBox->setMinimumSize(QSize(50, 30));
-        maxStSpinBox->setFont(font5);
+        maxStSpinBox->setFont(font3);
         maxStSpinBox->setMinimum(1);
         maxStSpinBox->setMaximum(25);
 
@@ -239,96 +272,100 @@ public:
 
         customStates->addLayout(stLayout);
 
-        stSpinBoxSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        customStates->addItem(stSpinBoxSpacer);
+        customStates->addItem(zSpacer);
 
 
-        stSettings->addLayout(customStates);
+        StSettings->addLayout(customStates);
 
         inState = new QHBoxLayout();
         inState->setObjectName(QStringLiteral("inState"));
-        inStCBox = new QComboBox(statesGBox);
+        inStCBox = new QComboBox(StatesBox);
         inStCBox->setObjectName(QStringLiteral("inStCBox"));
         inStCBox->setMinimumSize(QSize(50, 30));
         inStCBox->setMaximumSize(QSize(50, 30));
-        inStCBox->setFont(font5);
+        inStCBox->setFont(font3);
 
         inState->addWidget(inStCBox);
 
-        rInStCheck = new QCheckBox(statesGBox);
+        rInStCheck = new QCheckBox(StatesBox);
         rInStCheck->setObjectName(QStringLiteral("rInStCheck"));
-        rInStCheck->setFont(font3);
+        QFont font5;
+        font5.setPointSize(10);
+        rInStCheck->setFont(font5);
 
         inState->addWidget(rInStCheck);
 
-        inStSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        inState->addItem(inStSpacer);
+        inState->addItem(zSpacer_2);
 
 
-        stSettings->addLayout(inState);
+        StSettings->addLayout(inState);
 
         haltState = new QHBoxLayout();
         haltState->setObjectName(QStringLiteral("haltState"));
-        haltStEdit = new QLineEdit(statesGBox);
+        haltStEdit = new QLineEdit(StatesBox);
         haltStEdit->setObjectName(QStringLiteral("haltStEdit"));
         haltStEdit->setMinimumSize(QSize(50, 30));
         haltStEdit->setMaximumSize(QSize(50, 30));
-        haltStEdit->setFont(font5);
+        haltStEdit->setFont(font3);
+        haltStEdit->setMaxLength(1);
+        haltStEdit->setAlignment(Qt::AlignCenter);
 
         haltState->addWidget(haltStEdit);
 
-        haltStSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        haltState->addItem(haltStSpacer);
-
-
-        stSettings->addLayout(haltState);
+        haltState->addItem(zSpacer_3);
 
 
-        horizontalLayout_5->addLayout(stSettings);
+        StSettings->addLayout(haltState);
 
 
-        verticalLayout_8->addWidget(statesGBox);
+        horizontalLayout_5->addLayout(StSettings);
 
-        symbolsGBox = new QGroupBox(randomTables);
-        symbolsGBox->setObjectName(QStringLiteral("symbolsGBox"));
-        symbolsGBox->setFont(font1);
-        horizontalLayout_2 = new QHBoxLayout(symbolsGBox);
+
+        verticalLayout_8->addWidget(StatesBox);
+
+        SymbolsBox = new QGroupBox(RandomTables);
+        SymbolsBox->setObjectName(QStringLiteral("SymbolsBox"));
+        SymbolsBox->setFont(font1);
+        horizontalLayout_2 = new QHBoxLayout(SymbolsBox);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         syLabels = new QVBoxLayout();
         syLabels->setObjectName(QStringLiteral("syLabels"));
-        minSyLabel = new QLabel(symbolsGBox);
-        minSyLabel->setObjectName(QStringLiteral("minSyLabel"));
-        minSyLabel->setFont(font4);
+        zMinSyLabel = new QLabel(SymbolsBox);
+        zMinSyLabel->setObjectName(QStringLiteral("zMinSyLabel"));
+        zMinSyLabel->setFont(font4);
 
-        syLabels->addWidget(minSyLabel);
+        syLabels->addWidget(zMinSyLabel);
 
-        maxSyLabel = new QLabel(symbolsGBox);
-        maxSyLabel->setObjectName(QStringLiteral("maxSyLabel"));
-        maxSyLabel->setFont(font2);
+        zMaxSyLabel = new QLabel(SymbolsBox);
+        zMaxSyLabel->setObjectName(QStringLiteral("zMaxSyLabel"));
+        zMaxSyLabel->setFont(font2);
 
-        syLabels->addWidget(maxSyLabel);
+        syLabels->addWidget(zMaxSyLabel);
 
 
         horizontalLayout_2->addLayout(syLabels);
 
         sySpinBoxs = new QVBoxLayout();
         sySpinBoxs->setObjectName(QStringLiteral("sySpinBoxs"));
-        minSySpinBox = new QSpinBox(symbolsGBox);
+        minSySpinBox = new QSpinBox(SymbolsBox);
         minSySpinBox->setObjectName(QStringLiteral("minSySpinBox"));
         minSySpinBox->setMinimumSize(QSize(50, 30));
-        minSySpinBox->setFont(font5);
+        minSySpinBox->setFont(font3);
         minSySpinBox->setMinimum(1);
         minSySpinBox->setMaximum(10);
 
         sySpinBoxs->addWidget(minSySpinBox);
 
-        maxSySpinBox = new QSpinBox(symbolsGBox);
+        maxSySpinBox = new QSpinBox(SymbolsBox);
         maxSySpinBox->setObjectName(QStringLiteral("maxSySpinBox"));
         maxSySpinBox->setMinimumSize(QSize(50, 30));
-        maxSySpinBox->setFont(font5);
+        maxSySpinBox->setFont(font3);
         maxSySpinBox->setMinimum(1);
         maxSySpinBox->setMaximum(10);
 
@@ -342,18 +379,195 @@ public:
 
         horizontalLayout_2->addLayout(syLayout);
 
-        sySpinBoxerSpacer = new QSpacerItem(609, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_4 = new QSpacerItem(609, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(sySpinBoxerSpacer);
+        horizontalLayout_2->addItem(zSpacer_4);
 
 
-        verticalLayout_8->addWidget(symbolsGBox);
+        verticalLayout_8->addWidget(SymbolsBox);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_8->addItem(verticalSpacer);
 
-        tabWidget->addTab(randomTables, QString());
+        tabWidget->addTab(RandomTables, QString());
+        RandomTapes = new QWidget();
+        RandomTapes->setObjectName(QStringLiteral("RandomTapes"));
+        verticalLayout_5 = new QVBoxLayout(RandomTapes);
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        TapeNameBox = new QGroupBox(RandomTapes);
+        TapeNameBox->setObjectName(QStringLiteral("TapeNameBox"));
+        TapeNameBox->setFont(font1);
+        horizontalLayout_7 = new QHBoxLayout(TapeNameBox);
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        zLabel = new QLabel(TapeNameBox);
+        zLabel->setObjectName(QStringLiteral("zLabel"));
+        zLabel->setFont(font2);
+
+        horizontalLayout_7->addWidget(zLabel);
+
+        tapeNameEdit = new QLineEdit(TapeNameBox);
+        tapeNameEdit->setObjectName(QStringLiteral("tapeNameEdit"));
+        tapeNameEdit->setFont(font3);
+
+        horizontalLayout_7->addWidget(tapeNameEdit);
+
+        zLabel_2 = new QLabel(TapeNameBox);
+        zLabel_2->setObjectName(QStringLiteral("zLabel_2"));
+        zLabel_2->setFont(font2);
+
+        horizontalLayout_7->addWidget(zLabel_2);
+
+        tapeRandSuffix = new QComboBox(TapeNameBox);
+        tapeRandSuffix->setObjectName(QStringLiteral("tapeRandSuffix"));
+        tapeRandSuffix->setMinimumSize(QSize(80, 0));
+        tapeRandSuffix->setMaximumSize(QSize(80, 16777215));
+        tapeRandSuffix->setFont(font3);
+
+        horizontalLayout_7->addWidget(tapeRandSuffix);
+
+        zLabel_3 = new QLabel(TapeNameBox);
+        zLabel_3->setObjectName(QStringLiteral("zLabel_3"));
+        zLabel_3->setFont(font2);
+
+        horizontalLayout_7->addWidget(zLabel_3);
+
+
+        verticalLayout_5->addWidget(TapeNameBox);
+
+        TapeBox = new QGroupBox(RandomTapes);
+        TapeBox->setObjectName(QStringLiteral("TapeBox"));
+        TapeBox->setFont(font1);
+        horizontalLayout_12 = new QHBoxLayout(TapeBox);
+        horizontalLayout_12->setObjectName(QStringLiteral("horizontalLayout_12"));
+        TapeLabels = new QVBoxLayout();
+        TapeLabels->setObjectName(QStringLiteral("TapeLabels"));
+        zLabel_7 = new QLabel(TapeBox);
+        zLabel_7->setObjectName(QStringLiteral("zLabel_7"));
+        zLabel_7->setFont(font2);
+
+        TapeLabels->addWidget(zLabel_7);
+
+        zLabel_6 = new QLabel(TapeBox);
+        zLabel_6->setObjectName(QStringLiteral("zLabel_6"));
+        zLabel_6->setFont(font2);
+
+        TapeLabels->addWidget(zLabel_6);
+
+        zLabel_5 = new QLabel(TapeBox);
+        zLabel_5->setObjectName(QStringLiteral("zLabel_5"));
+        zLabel_5->setFont(font2);
+
+        TapeLabels->addWidget(zLabel_5);
+
+        zLabel_4 = new QLabel(TapeBox);
+        zLabel_4->setObjectName(QStringLiteral("zLabel_4"));
+        zLabel_4->setFont(font2);
+
+        TapeLabels->addWidget(zLabel_4);
+
+
+        horizontalLayout_12->addLayout(TapeLabels);
+
+        TapeSettings = new QVBoxLayout();
+        TapeSettings->setObjectName(QStringLiteral("TapeSettings"));
+        zSymLayout = new QHBoxLayout();
+        zSymLayout->setObjectName(QStringLiteral("zSymLayout"));
+        tapeSySBox = new QSpinBox(TapeBox);
+        tapeSySBox->setObjectName(QStringLiteral("tapeSySBox"));
+        tapeSySBox->setMinimumSize(QSize(0, 30));
+        tapeSySBox->setFont(font3);
+        tapeSySBox->setMinimum(1);
+        tapeSySBox->setMaximum(10);
+
+        zSymLayout->addWidget(tapeSySBox);
+
+        tapeSyLayout = new QHBoxLayout();
+        tapeSyLayout->setObjectName(QStringLiteral("tapeSyLayout"));
+
+        zSymLayout->addLayout(tapeSyLayout);
+
+        zSpacer_5 = new QSpacerItem(258, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        zSymLayout->addItem(zSpacer_5);
+
+
+        TapeSettings->addLayout(zSymLayout);
+
+        MinSize = new QHBoxLayout();
+        MinSize->setObjectName(QStringLiteral("MinSize"));
+        tapeMinSizeSBox = new QSpinBox(TapeBox);
+        tapeMinSizeSBox->setObjectName(QStringLiteral("tapeMinSizeSBox"));
+        tapeMinSizeSBox->setMinimumSize(QSize(0, 30));
+        tapeMinSizeSBox->setFont(font3);
+        tapeMinSizeSBox->setMinimum(3);
+
+        MinSize->addWidget(tapeMinSizeSBox);
+
+        zSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        MinSize->addItem(zSpacer_6);
+
+
+        TapeSettings->addLayout(MinSize);
+
+        MaxSize = new QHBoxLayout();
+        MaxSize->setObjectName(QStringLiteral("MaxSize"));
+        tapeMaxSizeSBox = new QSpinBox(TapeBox);
+        tapeMaxSizeSBox->setObjectName(QStringLiteral("tapeMaxSizeSBox"));
+        tapeMaxSizeSBox->setMinimumSize(QSize(0, 30));
+        tapeMaxSizeSBox->setMinimum(3);
+
+        MaxSize->addWidget(tapeMaxSizeSBox);
+
+        zSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        MaxSize->addItem(zSpacer_8);
+
+
+        TapeSettings->addLayout(MaxSize);
+
+        BlacnkSymbol = new QHBoxLayout();
+        BlacnkSymbol->setObjectName(QStringLiteral("BlacnkSymbol"));
+        tapeBSymEdit = new QLineEdit(TapeBox);
+        tapeBSymEdit->setObjectName(QStringLiteral("tapeBSymEdit"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(tapeBSymEdit->sizePolicy().hasHeightForWidth());
+        tapeBSymEdit->setSizePolicy(sizePolicy);
+        tapeBSymEdit->setMinimumSize(QSize(45, 30));
+        tapeBSymEdit->setMaximumSize(QSize(45, 16777215));
+        tapeBSymEdit->setFont(font3);
+        tapeBSymEdit->setMaxLength(1);
+        tapeBSymEdit->setAlignment(Qt::AlignCenter);
+
+        BlacnkSymbol->addWidget(tapeBSymEdit);
+
+        rBSyCheck = new QCheckBox(TapeBox);
+        rBSyCheck->setObjectName(QStringLiteral("rBSyCheck"));
+        rBSyCheck->setFont(font5);
+
+        BlacnkSymbol->addWidget(rBSyCheck);
+
+        zSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        BlacnkSymbol->addItem(zSpacer_7);
+
+
+        TapeSettings->addLayout(BlacnkSymbol);
+
+
+        horizontalLayout_12->addLayout(TapeSettings);
+
+
+        verticalLayout_5->addWidget(TapeBox);
+
+        verticalSpacer_3 = new QSpacerItem(20, 267, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_5->addItem(verticalSpacer_3);
+
+        tabWidget->addTab(RandomTapes, QString());
         simulation = new QWidget();
         simulation->setObjectName(QStringLiteral("simulation"));
         verticalLayout_2 = new QVBoxLayout(simulation);
@@ -444,7 +658,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -454,20 +668,31 @@ public:
     {
         Settings->setWindowTitle(QApplication::translate("Settings", "MainWindow", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(general), QApplication::translate("Settings", "General", nullptr));
-        groupBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
-        label->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));
-        label_3->setText(QApplication::translate("Settings", "+", nullptr));
-        label_4->setText(QApplication::translate("Settings", "Random integer", nullptr));
-        statesGBox->setTitle(QApplication::translate("Settings", "States", nullptr));
-        minStLabel->setText(QApplication::translate("Settings", "Minimum:", nullptr));
-        maxStLabel->setText(QApplication::translate("Settings", "Maximum:", nullptr));
-        inStLabel->setText(QApplication::translate("Settings", "Initial State:", nullptr));
-        hltStLabel->setText(QApplication::translate("Settings", "Halt State:", nullptr));
+        TableNameBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
+        zNameLabel->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));
+        zPlusLabel->setText(QApplication::translate("Settings", "+", nullptr));
+        zIntLabel->setText(QApplication::translate("Settings", "Random integer", nullptr));
+        StatesBox->setTitle(QApplication::translate("Settings", "States", nullptr));
+        zMinStLabel->setText(QApplication::translate("Settings", "Minimum:", nullptr));
+        zMaxStLabel->setText(QApplication::translate("Settings", "Maximum:", nullptr));
+        zInStLabel->setText(QApplication::translate("Settings", "Initial State:", nullptr));
+        zHltStLabel->setText(QApplication::translate("Settings", "Halt State:", nullptr));
         rInStCheck->setText(QApplication::translate("Settings", "Random", nullptr));
-        symbolsGBox->setTitle(QApplication::translate("Settings", "Symbols", nullptr));
-        minSyLabel->setText(QApplication::translate("Settings", "Minimum:", nullptr));
-        maxSyLabel->setText(QApplication::translate("Settings", "Maximum:", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(randomTables), QApplication::translate("Settings", "Quick Random Tables", nullptr));
+        SymbolsBox->setTitle(QApplication::translate("Settings", "Symbols", nullptr));
+        zMinSyLabel->setText(QApplication::translate("Settings", "Minimum:", nullptr));
+        zMaxSyLabel->setText(QApplication::translate("Settings", "Maximum:", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(RandomTables), QApplication::translate("Settings", "Quick Random Tables", nullptr));
+        TapeNameBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
+        zLabel->setText(QApplication::translate("Settings", "Name Prefix:", nullptr));
+        zLabel_2->setText(QApplication::translate("Settings", "+", nullptr));
+        zLabel_3->setText(QApplication::translate("Settings", "Random integer", nullptr));
+        TapeBox->setTitle(QApplication::translate("Settings", "Tape", nullptr));
+        zLabel_7->setText(QApplication::translate("Settings", "Symbols:", nullptr));
+        zLabel_6->setText(QApplication::translate("Settings", "Minimum Size:", nullptr));
+        zLabel_5->setText(QApplication::translate("Settings", "Maximum Size:", nullptr));
+        zLabel_4->setText(QApplication::translate("Settings", "Blanck Symbol:", nullptr));
+        rBSyCheck->setText(QApplication::translate("Settings", "Random", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(RandomTapes), QApplication::translate("Settings", "Quick Random Tapes", nullptr));
         groupBox_2->setTitle(QApplication::translate("Settings", "Iteration Delay", nullptr));
         label_2->setText(QApplication::translate("Settings", "Delay between iterations (ms):", nullptr));
         groupBox_3->setTitle(QApplication::translate("Settings", "Halt Simulation", nullptr));

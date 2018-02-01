@@ -8,6 +8,7 @@ RandomTapes::RandomTapes(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Random Tape Creation");
     this->setWindowModality(Qt::ApplicationModal);
+    set = Settings::getInstance();
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
     ui->bSymEdit->setPlaceholderText("0");
@@ -20,17 +21,15 @@ RandomTapes::RandomTapes(QWidget *parent) :
 
 void RandomTapes::quick()
 {
-    QVector<QChar> symbols;
-    for (int i = 0; i < 10; i++) {
-        symbols.append(QString::number(i).at(0));
-    }
-    QString name = "Quick Random Tape - " + QString::number(qrand() % 9000 + 1000);
-    int tapeSize = qrand() % 50;
+    int numDigitsName = pow(10, set->getRandTapeSuffix() - 1);
+    QString name = set->getRandTapeName() + QString::number(qrand() % (9*numDigitsName) + numDigitsName);
+    int tapeSize = qrand() % (set->getTapeMaxSize() - set->getTapeMinSize()) + set->getTapeMinSize();
+    QVector<QChar> *symbols = set->getTapeSymbols();
     std::list<QChar> tape;
     for (int i = 0; i < tapeSize; i++) {
-        tape.push_back(symbols.at(qrand() % symbols.size()));
+        tape.push_back(symbols->at(qrand() % symbols->size()));
     }
-    QChar blanckSym = symbols.at(qrand() % symbols.size());
+    QChar blanckSym = (set->getRandBSym() ? (symbols->at(qrand() % symbols->size())) : (set->getBlanckSymbol()));
     int headPos = tape.size()/2;
     rand = new Tape(name, tape, blanckSym, headPos);
 }

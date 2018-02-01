@@ -32,26 +32,43 @@ Settings* Settings::getInstance() {
 
 void Settings::setDefaults() {
     // Settings for the quick random tables tab
-    namePrefix = "Quick Random - ";
-    ui->nameEdit->setPlaceholderText(namePrefix);
+    randTableName = "Quick Random Table - ";
+    randTapeName = "Quick Random Tape - ";
+    ui->tableNameEdit->setPlaceholderText(randTableName);
+    ui->tapeNameEdit->setPlaceholderText(randTapeName);
     for (int i = 2; i < 8; i++) {
-        ui->nameRandNum->addItem(QString::number(i) + " digit");
+        ui->tableRandSuffix->addItem(QString::number(i) + " digit");
+        ui->tapeRandSuffix->addItem(QString::number(i) + " digit");
     }
-    randSuffix = 4;
-    ui->nameRandNum->setCurrentIndex(randSuffix - 2);
+    randTableSuffix = 4;
+    randTapeSuffix = 3;
+    ui->tableRandSuffix->setCurrentIndex(randTableSuffix - 2);
+    ui->tapeRandSuffix->setCurrentIndex(randTapeSuffix - 2);
     haltState = 'H';
-    ui->haltStEdit->setPlaceholderText(QString(haltState));
-    ui->haltStEdit->setAlignment(Qt::AlignCenter);
+    ui->haltStEdit->setPlaceholderText(haltState);
     randInState = true;
     ui->rInStCheck->setChecked(randInState);
-    minSt = 2; maxSt = 10;
-    ui->minStSpinBox->setValue(minSt);
-    ui->maxStSpinBox->setValue(maxSt);
-    minSy = 2; maxSy = 10;
-    ui->minSySpinBox->setValue(minSy);
-    ui->maxSySpinBox->setValue(maxSy);
-    fillStatesNSymbols();
+    tableMinSt = 2; tableMaxSt = 10;
+    ui->minStSpinBox->setValue(tableMinSt);
+    ui->maxStSpinBox->setValue(tableMaxSt);
+    tableMinSy = 2; tableMaxSy = 10;
+    ui->minSySpinBox->setValue(tableMinSy);
+    ui->maxSySpinBox->setValue(tableMaxSy);
     inState = ui->inStCBox->itemText(0).at(0);
+
+    // Settings for the quick random tapes tab
+    numTapeSymbols = 2;
+    ui->tapeSySBox->setValue(numTapeSymbols);
+    tapeMaxSize = 10;
+    ui->tapeMaxSizeSBox->setValue(tapeMaxSize);
+    tapeMinSize = 2;
+    ui->tapeMinSizeSBox->setValue(tapeMinSize);
+    blanckSym = '0';
+    ui->tapeBSymEdit->setPlaceholderText(blanckSym);
+    randBSym = true;
+    ui->rBSyCheck->setChecked(randBSym);
+
+    fillStatesNSymbols();
 
     // Settings for the simulation tab
     delayTime = 200;
@@ -65,37 +82,45 @@ void Settings::setDefaults() {
 void Settings::fillStatesNSymbols() {
     for (int i = 0; i < ui->stLayout->count(); i++) {
         if (dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->text() == nullptr) {
-            states.append(dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->placeholderText().at(0));
+            tableStates.append(dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->placeholderText().at(0));
         }
         else {
-            states.append(dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->text().at(0));
+            tableStates.append(dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->text().at(0));
         }
     }
     for (int i = 0; i < ui->syLayout->count(); i++) {
         if (dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->text() == nullptr) {
-            symbols.append(dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->placeholderText().at(0));
+            tableSymbols.append(dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->placeholderText().at(0));
         }
         else {
-            symbols.append(dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->text().at(0));
+            tableSymbols.append(dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(i)->widget())->text().at(0));
+        }
+    }
+    for (int i = 0; i < ui->tapeSyLayout->count(); i++) {
+        if (dynamic_cast<QLineEdit*>(ui->tapeSyLayout->itemAt(i)->widget())->text() == nullptr) {
+            tapeSymbols.append(dynamic_cast<QLineEdit*>(ui->tapeSyLayout->itemAt(i)->widget())->placeholderText().at(0));
+        }
+        else {
+            tapeSymbols.append(dynamic_cast<QLineEdit*>(ui->tapeSyLayout->itemAt(i)->widget())->text().at(0));
         }
     }
 }
 
 void Settings::closeEvent(QCloseEvent *event) {
-    if (ui->nameEdit->text() == nullptr) {
-        namePrefix = ui->nameEdit->placeholderText();
+    // Saving quick random machine settings
+    if (ui->tableNameEdit->text() == nullptr) {
+        randTableName = ui->tableNameEdit->placeholderText();
     }
     else {
-        namePrefix = ui->nameEdit->text();
+        randTableName = ui->tableNameEdit->text();
     }
-    randSuffix = ui->nameRandNum->currentIndex() + 2;
-    minSt = ui->minStSpinBox->value();
-    maxSt = ui->maxStSpinBox->value();
-    states.clear();
-    minSy = ui->minSySpinBox->value();
-    maxSy = ui->maxSySpinBox->value();
-    symbols.clear();
-    fillStatesNSymbols();
+    randTableSuffix = ui->tableRandSuffix->currentIndex() + 2;
+    tableMinSt = ui->minStSpinBox->value();
+    tableMaxSt = ui->maxStSpinBox->value();
+    tableStates.clear();
+    tableMinSy = ui->minSySpinBox->value();
+    tableMaxSy = ui->maxSySpinBox->value();
+    tableSymbols.clear();
     randInState = ui->rInStCheck->isChecked();
     inState = ui->inStCBox->currentText().at(0);
     if (ui->haltStEdit->text() == nullptr) {
@@ -104,9 +129,35 @@ void Settings::closeEvent(QCloseEvent *event) {
     else {
         haltState = ui->haltStEdit->text().at(0);
     }
+
+    // Saving the quick random tape settings
+    if (ui->tapeNameEdit->text() == nullptr) {
+        randTapeName = ui->tapeNameEdit->placeholderText();
+    }
+    else {
+        randTapeName = ui->tapeNameEdit->text();
+    }
+    randTapeSuffix = ui->tapeRandSuffix->currentIndex() + 2;
+    numTapeSymbols = ui->tapeSySBox->value();
+    tapeSymbols.clear();
+    tapeMaxSize = ui->tapeMaxSizeSBox->value();
+    tapeMinSize = ui->tapeMinSizeSBox->value();
+    randBSym = ui->rBSyCheck->isChecked();
+    if (ui->tapeBSymEdit->text() == nullptr) {
+        blanckSym = ui->tapeBSymEdit->placeholderText().at(0);
+    }
+    else {
+        blanckSym = ui->tapeBSymEdit->text().at(0);
+    }
+
+    // Saving common settings
+    fillStatesNSymbols();
+
+    // Saving simulation settings
     delayTime = ui->delaySpinBox->value();
     haltInXIt = ui->haltSimCheck->isChecked();
     iterTilHalt = ui->haltSimSpinBox->value();
+
     close();
     QWidget::closeEvent(event);
 }
@@ -126,6 +177,41 @@ QChar Settings::getHaltState()
     return haltState;
 }
 
+QString Settings::getRandTapeName()
+{
+    return randTapeName;
+}
+
+int Settings::getRandTapeSuffix()
+{
+    return randTapeSuffix;
+}
+
+int Settings::getTapeMaxSize()
+{
+    return tapeMaxSize;
+}
+
+int Settings::getTapeMinSize()
+{
+    return tapeMinSize;
+}
+
+QVector<QChar> *Settings::getTapeSymbols()
+{
+    return &tapeSymbols;
+}
+
+bool Settings::getRandBSym()
+{
+    return randBSym;
+}
+
+QChar Settings::getBlanckSymbol()
+{
+    return blanckSym;
+}
+
 QChar Settings::getInState()
 {
     return inState;
@@ -136,44 +222,44 @@ bool Settings::getRandInState()
     return randInState;
 }
 
-QVector<QChar>* Settings::getSymbols()
+QVector<QChar>* Settings::getTableSymbols()
 {
-    return &symbols;
+    return &tableSymbols;
 }
 
-QVector<QChar>* Settings::getStates()
+QVector<QChar>* Settings::getTableStates()
 {
-    return &states;
+    return &tableStates;
 }
 
-int Settings::getMaxSy()
+int Settings::getTableMaxSy()
 {
-    return maxSy;
+    return tableMaxSy;
 }
 
-int Settings::getMinSy()
+int Settings::getTableMinSy()
 {
-    return minSy;
+    return tableMinSy;
 }
 
-int Settings::getMaxSt()
+int Settings::getTableMaxSt()
 {
-    return maxSt;
+    return tableMaxSt;
 }
 
-int Settings::getMinSt()
+int Settings::getTableMinSt()
 {
-    return minSt;
+    return tableMinSt;
 }
 
-int Settings::getRandSuffix()
+int Settings::getRandTableSuffix()
 {
-    return randSuffix;
+    return randTableSuffix;
 }
 
-QString Settings::getNamePrefix()
+QString Settings::getRandTableName()
 {
-    return namePrefix;
+    return randTableName;
 }
 
 int Settings::getDelayTime()
@@ -301,6 +387,15 @@ void Settings::clearSyLayout() {
     }
 }
 
+void Settings::clearTapeSyLayout()
+{
+    QLayoutItem *item;
+    while((item = ui->tapeSyLayout->takeAt(0))) {
+        delete item->widget();
+        delete item;
+    }
+}
+
 void Settings::on_minSySpinBox_valueChanged(int arg1)
 {
     if (arg1 > ui->maxSySpinBox->value()) {
@@ -346,9 +441,25 @@ void Settings::fixSymbols(int sy)
     }
 }
 
-void Settings::on_haltStEdit_textEdited(const QString &arg1)
+void Settings::on_tapeSySBox_valueChanged(int arg1)
 {
-    if (arg1 != nullptr) {
-        ui->haltStEdit->setText(arg1.at(0));
+    clearTapeSyLayout();
+    tapeSymbols.clear();
+    for (int i = 0; i < arg1; i++) {
+        QLineEdit *lEdit = new QLineEdit;
+        lEdit->setMaximumSize(QSize(50, ui->tapeSySBox->height()));
+        lEdit->setAlignment(Qt::AlignCenter);
+        lEdit->setPlaceholderText(QString::number(i).at(0));
+        ui->tapeSyLayout->addWidget(lEdit);
+    }
+}
+
+void Settings::on_rBSyCheck_stateChanged(int arg1)
+{
+    if (arg1 > 1) {
+        ui->tapeBSymEdit->setEnabled(false);
+    }
+    else {
+        ui->tapeBSymEdit->setEnabled(true);
     }
 }

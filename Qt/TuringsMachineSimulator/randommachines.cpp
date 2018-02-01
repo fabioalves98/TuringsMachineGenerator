@@ -40,17 +40,17 @@ void RandomMachines::resizeEvent(QResizeEvent *event)
 void RandomMachines::quick() {
     states->clear();
     symbols->clear();
-    int maxSt = set->getMaxSt();
-    int minSt = set->getMinSt();
-    int maxSy = set->getMaxSy();
-    int minSy = set->getMinSy();
+    int maxSt = set->getTableMaxSt();
+    int minSt = set->getTableMinSt();
+    int maxSy = set->getTableMaxSy();
+    int minSy = set->getTableMinSy();
     int numSt = qrand() % ((maxSt - minSt) + 1) + minSt;
     int numSy = qrand() % ((maxSy - minSy) + 1) + minSy;
     for (int i = 0; i < numSt; i++) {
-        states->append(set->getStates()->at(i));
+        states->append(set->getTableStates()->at(i));
         }
     for (int i = 0; i < numSy; i++) {
-        symbols->append(set->getSymbols()->at(i));
+        symbols->append(set->getTableSymbols()->at(i));
     }
     int haltAct;
     haltAct = qrand() % (numSt * numSy);
@@ -59,7 +59,7 @@ void RandomMachines::quick() {
     for (int i = 0; i < numSy; i++) {
         for (int j = 0; j < numSt; j++) {
             QString action;
-            action.append(symbols->at(qrand()%numSy));
+            action.append(symbols->at(qrand() % numSy));
             action.append((qrand()%2 == 1) ? "R" : "L");
             if (haltAct != 0) {
                 action.append(states->at(qrand()%numSt));
@@ -74,9 +74,9 @@ void RandomMachines::quick() {
             transFunct.insert(key, action);
         }
     }
-    int numDigitsName = pow(10, set->getRandSuffix() - 1);
-    QString name = set->getNamePrefix() +  QString::number(qrand()%(9*numDigitsName) + numDigitsName);
-    QChar initState = (set->getRandInState() ? (states->at(qrand()%numSt)) : (set->getInState()));
+    int numDigitsName = pow(10, set->getRandTableSuffix() - 1);
+    QString name = set->getRandTableName() +  QString::number(qrand() % (9*numDigitsName) + numDigitsName);
+    QChar initState = (set->getRandInState() ? (states->at(qrand() % numSt)) : (set->getInState()));
     QChar blanckSymbol = symbols->at(0);
     randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, haltState);
 }

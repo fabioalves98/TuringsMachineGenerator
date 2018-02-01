@@ -5,6 +5,7 @@
 #include <QTime>
 #include <QDebug>
 #include "tape.h"
+#include "settings.h"
 
 namespace Ui {
 class RandomTapes;
@@ -29,6 +30,7 @@ private slots:
 
 private:
     Ui::RandomTapes *ui;
+    Settings *set;
     void clearSymLayout();
     void changeButState();
     Tape *rand;

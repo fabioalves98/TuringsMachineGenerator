@@ -15,19 +15,29 @@ class Settings : public QMainWindow
 
 public:
     static Settings* getInstance();
-    int getDelayTime();
-    void setDelayTime(int value);
-    QString getNamePrefix();
-    int getRandSuffix();
-    int getMinSt();
-    int getMaxSt();
-    int getMinSy();
-    int getMaxSy();
-    QVector<QChar> *getStates();
-    QVector<QChar> *getSymbols();
+
+    QString getRandTableName();
+    int getRandTableSuffix();
+    int getTableMinSt();
+    int getTableMaxSt();
+    int getTableMinSy();
+    int getTableMaxSy();
+    QVector<QChar> *getTableStates();
+    QVector<QChar> *getTableSymbols();
     bool getRandInState();
     QChar getInState();
     QChar getHaltState();
+
+    QString getRandTapeName();
+    int getRandTapeSuffix();
+    int getTapeMaxSize();
+    int getTapeMinSize();
+    QVector<QChar> *getTapeSymbols();
+    bool getRandBSym();
+    QChar getBlanckSymbol();
+
+    int getDelayTime();
+    void setDelayTime(int value);
     bool getHaltInXIt();
     int getIterTilHalt();
 
@@ -43,32 +53,46 @@ private slots:
     void on_haltSimCheck_stateChanged(int arg1);
     void fixStates(int st);
     void fixSymbols(int sy);
-
-    void on_haltStEdit_textEdited(const QString &arg1);
+    void on_tapeSySBox_valueChanged(int arg1);
+    void on_rBSyCheck_stateChanged(int arg1);
 
 private:
     void setDefaults();
     void fillStatesNSymbols();
     void clearStLayout();
     void clearSyLayout();
+    void clearTapeSyLayout();
     static Settings* instance;
     explicit Settings(QWidget *parent = 0);
     ~Settings();
     Ui::Settings *ui;
 
-    QString namePrefix;
-    int randSuffix;
-    int minSt, maxSt;
-    int minSy, maxSy;
-    QVector<QChar> states;
-    QVector<QChar> symbols;
+    // Quick Random Table Settings
+    QString randTableName;
+    int randTableSuffix;
+    int tableMinSt, tableMaxSt;
+    int tableMinSy, tableMaxSy;
+    QVector<QChar> tableStates;
+    QVector<QChar> tableSymbols;
     bool randInState;
     QChar inState;
     QChar haltState;
+
+    // Quick Random Tape Settings
+    QString randTapeName;
+    int randTapeSuffix;
+    int numTapeSymbols;
+    QVector<QChar> tapeSymbols;
+    int tapeMaxSize, tapeMinSize;
+    bool randBSym;
+    QChar blanckSym;
+
+    // Simulation Settings
     int delayTime;
     bool haltInXIt;
     int iterTilHalt;
 
+    // Settings Settings
     QString abc;
     int prevState = 0;
     int prevSymbol = 0;
