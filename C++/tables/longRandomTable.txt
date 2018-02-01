@@ -1,8 +1,5 @@
-begin_info
-bs: 0
 is: A
-fs: H
-begin_table
+hs: H
   *    A    B    C    D    E    F    G    I    J    K  
   0   2LK  6LG  6RJ  6RA  0RF  3RE  4LC  6LA  5RA  0RD 
   1   3LF  6LF  4LE  7LJ  4RJ  1LK  3LI  6RC  4LD  0RD 
@@ -12,4 +9,3 @@ begin_table
   5   0LF  5RG  0RI  7LF  1LJ  1RC  1LD  4LK  4RI  0RD 
   6   3LF  0LK  1RK  0RC  3LE  6RA  4RK  6LF  3LD  3RD 
   7   7RA  5RJ  5LJ  0RA  2RD  5RH  2RB  3LB  0RB  0RE 
-end_table

@@ -33,10 +33,6 @@ public:
     static void verifyTable(QString fileName);
 
 private:
-    bool changeState(QString line, bool *i, bool *t);
-    void removeSpaces(QString *line);
-    void processInfo(QString line);
-    void processTable(QString line);
     QString makeKey(QChar st, QChar sy);
     void printTape(QChar st, int begin, int end);
     bool customTape = false;

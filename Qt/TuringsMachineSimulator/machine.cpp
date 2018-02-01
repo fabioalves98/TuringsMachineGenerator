@@ -2,29 +2,54 @@
 
 Machine::Machine(QFile *tableFile) {
     if (!tableFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Error Opening Table File" << endl;
+        qDebug() << "Error Opening Machine File" << endl;
         return;
     }
     QFileInfo *tableInfo = new QFileInfo(*tableFile);
     fileName = tableInfo->baseName();
-    bool info = false, table = false;
     QTextStream in(tableFile);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        if (changeState(line, &info, &table)) {
-            continue;
+    for (int i = 0; i < 2; i++) {
+        QString prop = in.readLine();
+        prop.replace(" ", ""); prop.replace(":", "");
+        if ((prop.mid(0, 2) == "is") && (initState == nullptr)) {
+            initState = prop.at(2);
+        }
+        else if ((prop.mid(0, 2) == "hs") && (haltState == nullptr)) {
+            haltState = prop.at(2);
         }
         else {
-            if (info) {
-                removeSpaces(&line);
-                processInfo(line);
+            qDebug() << "Error Reading Machine File";
+        }
+    }
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        line.replace(" ", "");
+        if (line.at(0) == '*') {
+            line = line.mid(1);
+            for (QChar c : line) {
+                states.push_back(c);
             }
-            else if (table) {
-                removeSpaces(&line);
-                processTable(line);
-            }
-            else {
-                break;
+        }
+        else if (line == nullptr) {
+            qDebug() << "reached end";
+            break;
+        }
+        else {
+            symbols.push_back(line.at(0));
+            line = line.mid(1);
+            int count = 0;
+            while (line.length() != 0) {
+                QString elem = line.mid(0,3);
+                line = line.mid(3);
+                QChar state = states.at(count);
+                QChar symbol = symbols.last();
+                QString key = makeKey(state, symbol);
+                action act;
+                act.wSymbol = elem.at(0);
+                act.mTape = elem.at(1);
+                act.nState = elem.at(2);
+                transFunct.insert(key, act);
+                count++;
             }
         }
     }
@@ -190,70 +215,6 @@ void Machine::printTape(QChar st, int begin, int end) {
         toPrint.append("]");
     }
     qDebug() << toPrint;
-}
-
-bool Machine::changeState(QString line, bool *i, bool *t) {
-    if (line == "begin_info") {
-            *i = true;
-            return true;
-        }
-        else if (line == "begin_table") {
-            *i = false;
-            *t = true;
-            return true;
-        }
-        else if (line == "end_table") {
-            *t = false;
-            return true;
-        }
-    else {
-        return false;
-    }
-}
-
-void Machine::removeSpaces(QString *line) {
-    line->replace(" ", "");
-}
-
-void Machine::processInfo(QString line) {
-    QString type = line.mid(0, 2);
-    line.replace(" ", "");
-    if (type == "is") {
-        initState = line.at(3);
-    }
-    else if (type == "fs") {
-        haltState = line.at(3);
-    }
-    else {
-        qDebug() << "ERROR Processing Table Info" << endl;
-    }
-}
-
-void Machine::processTable(QString line) {
-    if (line.at(0) == '*') {
-        line = line.mid(1);
-        for (QChar c : line) {
-            states.push_back(c);
-        }
-    }
-    else {
-        symbols.push_back(line.at(0));
-        line = line.mid(1);
-        int count = 0;
-        while (line.length() != 0) {
-            QString elem = line.mid(0,3);
-            line = line.mid(3);
-            QChar state = states.at(count);
-            QChar symbol = symbols.last();
-            QString key = makeKey(state, symbol);
-            action act;
-            act.wSymbol = elem.at(0);
-            act.mTape = elem.at(1);
-            act.nState = elem.at(2);
-            transFunct.insert(key, act);
-            count++;
-        }
-    }
 }
 
 QString Machine::makeKey(QChar st, QChar sy) {

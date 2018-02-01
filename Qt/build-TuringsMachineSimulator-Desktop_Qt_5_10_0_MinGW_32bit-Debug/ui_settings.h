@@ -23,8 +23,10 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -36,7 +38,19 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_6;
     QTabWidget *tabWidget;
-    QWidget *general;
+    QWidget *Genereal;
+    QVBoxLayout *verticalLayout_3;
+    QGroupBox *Usage;
+    QHBoxLayout *horizontalLayout_8;
+    QTextBrowser *usageTBrows;
+    QSplitter *generalSplit;
+    QGroupBox *MachineConf;
+    QHBoxLayout *horizontalLayout_9;
+    QTextBrowser *machineTBrows;
+    QGroupBox *TapeConf;
+    QHBoxLayout *horizontalLayout_10;
+    QTextBrowser *tapeTBrows;
+    QSpacerItem *verticalSpacer;
     QWidget *RandomTables;
     QVBoxLayout *verticalLayout_8;
     QGroupBox *TableNameBox;
@@ -77,7 +91,7 @@ public:
     QSpinBox *maxSySpinBox;
     QHBoxLayout *syLayout;
     QSpacerItem *zSpacer_4;
-    QSpacerItem *verticalSpacer;
+    QSpacerItem *zSpacer_9;
     QWidget *RandomTapes;
     QVBoxLayout *verticalLayout_5;
     QGroupBox *TapeNameBox;
@@ -145,17 +159,81 @@ public:
         QFont font;
         font.setPointSize(14);
         tabWidget->setFont(font);
-        general = new QWidget();
-        general->setObjectName(QStringLiteral("general"));
-        tabWidget->addTab(general, QString());
+        Genereal = new QWidget();
+        Genereal->setObjectName(QStringLiteral("Genereal"));
+        verticalLayout_3 = new QVBoxLayout(Genereal);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        Usage = new QGroupBox(Genereal);
+        Usage->setObjectName(QStringLiteral("Usage"));
+        QFont font1;
+        font1.setPointSize(13);
+        Usage->setFont(font1);
+        horizontalLayout_8 = new QHBoxLayout(Usage);
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        usageTBrows = new QTextBrowser(Usage);
+        usageTBrows->setObjectName(QStringLiteral("usageTBrows"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(usageTBrows->sizePolicy().hasHeightForWidth());
+        usageTBrows->setSizePolicy(sizePolicy);
+        usageTBrows->setMinimumSize(QSize(0, 65));
+        usageTBrows->setMaximumSize(QSize(16777215, 65));
+        usageTBrows->setFrameShape(QFrame::NoFrame);
+
+        horizontalLayout_8->addWidget(usageTBrows);
+
+
+        verticalLayout_3->addWidget(Usage);
+
+        generalSplit = new QSplitter(Genereal);
+        generalSplit->setObjectName(QStringLiteral("generalSplit"));
+        generalSplit->setOrientation(Qt::Horizontal);
+        generalSplit->setHandleWidth(1);
+        MachineConf = new QGroupBox(generalSplit);
+        MachineConf->setObjectName(QStringLiteral("MachineConf"));
+        MachineConf->setFont(font1);
+        horizontalLayout_9 = new QHBoxLayout(MachineConf);
+        horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
+        machineTBrows = new QTextBrowser(MachineConf);
+        machineTBrows->setObjectName(QStringLiteral("machineTBrows"));
+        sizePolicy.setHeightForWidth(machineTBrows->sizePolicy().hasHeightForWidth());
+        machineTBrows->setSizePolicy(sizePolicy);
+        machineTBrows->setMinimumSize(QSize(460, 155));
+        machineTBrows->setMaximumSize(QSize(16777215, 155));
+
+        horizontalLayout_9->addWidget(machineTBrows);
+
+        generalSplit->addWidget(MachineConf);
+        TapeConf = new QGroupBox(generalSplit);
+        TapeConf->setObjectName(QStringLiteral("TapeConf"));
+        TapeConf->setFont(font1);
+        horizontalLayout_10 = new QHBoxLayout(TapeConf);
+        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        tapeTBrows = new QTextBrowser(TapeConf);
+        tapeTBrows->setObjectName(QStringLiteral("tapeTBrows"));
+        sizePolicy.setHeightForWidth(tapeTBrows->sizePolicy().hasHeightForWidth());
+        tapeTBrows->setSizePolicy(sizePolicy);
+        tapeTBrows->setMinimumSize(QSize(263, 155));
+        tapeTBrows->setMaximumSize(QSize(16777215, 155));
+
+        horizontalLayout_10->addWidget(tapeTBrows);
+
+        generalSplit->addWidget(TapeConf);
+
+        verticalLayout_3->addWidget(generalSplit);
+
+        verticalSpacer = new QSpacerItem(20, 144, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_3->addItem(verticalSpacer);
+
+        tabWidget->addTab(Genereal, QString());
         RandomTables = new QWidget();
         RandomTables->setObjectName(QStringLiteral("RandomTables"));
         verticalLayout_8 = new QVBoxLayout(RandomTables);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         TableNameBox = new QGroupBox(RandomTables);
         TableNameBox->setObjectName(QStringLiteral("TableNameBox"));
-        QFont font1;
-        font1.setPointSize(13);
         TableNameBox->setFont(font1);
         horizontalLayout = new QHBoxLayout(TableNameBox);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
@@ -386,9 +464,9 @@ public:
 
         verticalLayout_8->addWidget(SymbolsBox);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        zSpacer_9 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout_8->addItem(verticalSpacer);
+        verticalLayout_8->addItem(zSpacer_9);
 
         tabWidget->addTab(RandomTables, QString());
         RandomTapes = new QWidget();
@@ -531,11 +609,11 @@ public:
         BlacnkSymbol->setObjectName(QStringLiteral("BlacnkSymbol"));
         tapeBSymEdit = new QLineEdit(TapeBox);
         tapeBSymEdit->setObjectName(QStringLiteral("tapeBSymEdit"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(tapeBSymEdit->sizePolicy().hasHeightForWidth());
-        tapeBSymEdit->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(tapeBSymEdit->sizePolicy().hasHeightForWidth());
+        tapeBSymEdit->setSizePolicy(sizePolicy1);
         tapeBSymEdit->setMinimumSize(QSize(45, 30));
         tapeBSymEdit->setMaximumSize(QSize(45, 16777215));
         tapeBSymEdit->setFont(font3);
@@ -658,7 +736,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -667,7 +745,35 @@ public:
     void retranslateUi(QMainWindow *Settings)
     {
         Settings->setWindowTitle(QApplication::translate("Settings", "MainWindow", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(general), QApplication::translate("Settings", "General", nullptr));
+        Usage->setTitle(QApplication::translate("Settings", "Usage", nullptr));
+        usageTBrows->setHtml(QApplication::translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">This program reproduces the behavior of a Turing's Machine in a given tape filled with symbols. It acepts both machine's and tape's configurations as text files. It can also generate, edit and save them with the default configuration.</span></p></body></html>", nullptr));
+        MachineConf->setTitle(QApplication::translate("Settings", "Machine's File Configuration", nullptr));
+        machineTBrows->setHtml(QApplication::translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">is: A		 </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Initial State</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">hs: H		</span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\"> // Halt State</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+                        "indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">  *    A    B    C	 </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// vHeader = States</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">  0   1RB  0RC  1LC	 </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// hHeader = Symbols</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">  1   1RH  1RB  1LA	 </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Ex: 1RB</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e"
+                        "7e;\">		 // When the machine is in the state A and the head reads a '0', it will write a '1', move the tape to the right ('R') and jump to the state 'B'</span></p></body></html>", nullptr));
+        TapeConf->setTitle(QApplication::translate("Settings", "Tape's File Configuration", nullptr));
+        tapeTBrows->setHtml(QApplication::translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">hp: 4	  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Head Position</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">bs: 1	  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Blanck Symbol</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-blo"
+                        "ck-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">0101011100  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Tape Content</span></p></body></html>", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(Genereal), QApplication::translate("Settings", "General", nullptr));
         TableNameBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
         zNameLabel->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));
         zPlusLabel->setText(QApplication::translate("Settings", "+", nullptr));

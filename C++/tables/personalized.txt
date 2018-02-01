@@ -1,9 +1,5 @@
-begin_info
-bs: o
 is: X
-fs: H
-begin_table
+hs: H
   *    X    P    T
   o   xRP  xRT  xLX
   x   xLP  xLT  xRH
-end_table

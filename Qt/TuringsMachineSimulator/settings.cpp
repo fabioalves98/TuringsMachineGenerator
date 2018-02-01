@@ -12,7 +12,10 @@ Settings::Settings(QWidget *parent) :
     abc = "ABCDEFGIJKLMNOPQRSTUVWXYZ";
     this->setWindowModality(Qt::ApplicationModal);
     ui->tabWidget->setCurrentIndex(0);
-
+    QList<int> sizes = ui->generalSplit->sizes();
+    sizes[0] = (int)ui->generalSplit->width()*0.63;
+    sizes[1] = (int)ui->generalSplit->width()*0.37;
+    ui->generalSplit->setSizes(sizes);
     setDefaults();
 
     statusBar()->showMessage("Changes will be applied automatically by closing this window.");
