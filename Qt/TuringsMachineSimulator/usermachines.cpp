@@ -10,6 +10,10 @@ UserMachines::UserMachines(QWidget *parent) :
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
     QThreadPool::globalInstance()->setMaxThreadCount(8);
+
+    // Getting the global Settings Settings
+    set = Settings::getInstance();
+    connect(set, SIGNAL(loadPresetSgn(Machine*)), this, SLOT(loadPresetSlt(Machine*)));
 }
 
 UserMachines::~UserMachines()
@@ -28,9 +32,6 @@ void UserMachines::start()
     sizes[0] = (int)ui->tapeSplit->width()*0.70;
     sizes[1] = (int)ui->tapeSplit->width()*0.30;
     ui->tapeSplit->setSizes(sizes);
-
-    // Getting the global Settings Settings
-    set = Settings::getInstance();
 
     // Setting the default display
     MachineSimulation *newMach = new MachineSimulation(nullptr, nullptr);
@@ -79,6 +80,19 @@ void UserMachines::start()
 void UserMachines::closeEvent(QCloseEvent *event) {
     close();
     QWidget::closeEvent(event);
+}
+
+void UserMachines::loadPresetSlt(Machine* preset)
+{
+    if (addMachine(preset)) {
+        MachineSimulation *sim = new MachineSimulation(preset, listTape.at(0));
+        connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
+        ui->tableSim->insertWidget(listMach.size(), sim);
+        ui->tableSim->setCurrentIndex(listMach.size());
+        sim->start();
+        sim->display();
+        enSimButtons(sim->getState());
+    }
 }
 
 void UserMachines::close() {

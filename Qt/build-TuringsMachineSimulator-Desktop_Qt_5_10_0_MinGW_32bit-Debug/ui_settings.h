@@ -21,6 +21,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QSplitter>
@@ -50,6 +51,12 @@ public:
     QGroupBox *TapeConf;
     QHBoxLayout *horizontalLayout_10;
     QTextBrowser *tapeTBrows;
+    QGroupBox *groupBox;
+    QHBoxLayout *horizontalLayout_11;
+    QComboBox *presetsCBox;
+    QPushButton *loadPresetBt;
+    QLabel *label;
+    QSpacerItem *zSpacer_10;
     QSpacerItem *verticalSpacer;
     QWidget *RandomTables;
     QVBoxLayout *verticalLayout_8;
@@ -223,6 +230,42 @@ public:
 
         verticalLayout_3->addWidget(generalSplit);
 
+        groupBox = new QGroupBox(Genereal);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setFont(font1);
+        horizontalLayout_11 = new QHBoxLayout(groupBox);
+        horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
+        presetsCBox = new QComboBox(groupBox);
+        presetsCBox->setObjectName(QStringLiteral("presetsCBox"));
+
+        horizontalLayout_11->addWidget(presetsCBox);
+
+        loadPresetBt = new QPushButton(groupBox);
+        loadPresetBt->setObjectName(QStringLiteral("loadPresetBt"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(loadPresetBt->sizePolicy().hasHeightForWidth());
+        loadPresetBt->setSizePolicy(sizePolicy1);
+        QFont font2;
+        font2.setPointSize(11);
+        loadPresetBt->setFont(font2);
+
+        horizontalLayout_11->addWidget(loadPresetBt);
+
+        label = new QLabel(groupBox);
+        label->setObjectName(QStringLiteral("label"));
+        label->setFont(font2);
+
+        horizontalLayout_11->addWidget(label);
+
+        zSpacer_10 = new QSpacerItem(491, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_11->addItem(zSpacer_10);
+
+
+        verticalLayout_3->addWidget(groupBox);
+
         verticalSpacer = new QSpacerItem(20, 144, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_3->addItem(verticalSpacer);
@@ -240,8 +283,6 @@ public:
         zNameLabel = new QLabel(TableNameBox);
         zNameLabel->setObjectName(QStringLiteral("zNameLabel"));
         zNameLabel->setMaximumSize(QSize(85, 16777215));
-        QFont font2;
-        font2.setPointSize(11);
         zNameLabel->setFont(font2);
 
         horizontalLayout->addWidget(zNameLabel);
@@ -609,11 +650,11 @@ public:
         BlacnkSymbol->setObjectName(QStringLiteral("BlacnkSymbol"));
         tapeBSymEdit = new QLineEdit(TapeBox);
         tapeBSymEdit->setObjectName(QStringLiteral("tapeBSymEdit"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(tapeBSymEdit->sizePolicy().hasHeightForWidth());
-        tapeBSymEdit->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(tapeBSymEdit->sizePolicy().hasHeightForWidth());
+        tapeBSymEdit->setSizePolicy(sizePolicy2);
         tapeBSymEdit->setMinimumSize(QSize(45, 30));
         tapeBSymEdit->setMaximumSize(QSize(45, 16777215));
         tapeBSymEdit->setFont(font3);
@@ -773,6 +814,9 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">bs: 1	  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Blanck Symbol</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-blo"
                         "ck-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">0101011100  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Tape Content</span></p></body></html>", nullptr));
+        groupBox->setTitle(QApplication::translate("Settings", "Load Machine's Presets", nullptr));
+        loadPresetBt->setText(QApplication::translate("Settings", "Load", nullptr));
+        label->setText(QApplication::translate("Settings", "Description", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Genereal), QApplication::translate("Settings", "General", nullptr));
         TableNameBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
         zNameLabel->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));

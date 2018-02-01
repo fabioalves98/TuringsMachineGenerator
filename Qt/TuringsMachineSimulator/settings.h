@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QSignalMapper>
+#include "machine.h"
 
 namespace Ui {
 class Settings;
@@ -44,6 +45,9 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+signals:
+    loadPresetSgn(Machine*);
+
 private slots:
     void on_maxStSpinBox_valueChanged(int arg1);
     void on_minStSpinBox_valueChanged(int arg1);
@@ -55,9 +59,12 @@ private slots:
     void fixSymbols(int sy);
     void on_tapeSySBox_valueChanged(int arg1);
     void on_rBSyCheck_stateChanged(int arg1);
+    void on_loadPresetBt_clicked();
 
 private:
     void setDefaults();
+    void loadPresets();
+    void createPreset(QString name, QVector<QChar> states, QVector<QChar> symbols, QStringList cells, QChar inSt, QChar haltState);
     void fillStatesNSymbols();
     void clearStLayout();
     void clearSyLayout();
@@ -66,6 +73,9 @@ private:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
     Ui::Settings *ui;
+
+    // Presets
+    QVector<Machine*> presets;
 
     // Quick Random Table Settings
     QString randTableName;

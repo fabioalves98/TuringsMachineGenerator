@@ -24,15 +24,14 @@ Machine::Machine(QFile *tableFile) {
     while (!in.atEnd()) {
         QString line = in.readLine();
         line.replace(" ", "");
+        if (line.isEmpty()) {
+            break;
+        }
         if (line.at(0) == '*') {
             line = line.mid(1);
             for (QChar c : line) {
                 states.push_back(c);
             }
-        }
-        else if (line == nullptr) {
-            qDebug() << "reached end";
-            break;
         }
         else {
             symbols.push_back(line.at(0));
@@ -55,14 +54,14 @@ Machine::Machine(QFile *tableFile) {
     }
 }
 
-Machine::Machine(QString *name, QVector<QChar> *sts, QVector<QChar> *syms, QMap<QString, QString> *tFunct, QChar iSt, QChar bSy, QChar hSt) {
-    fileName = *name;
-    states = *sts;
-    symbols = *syms;
+Machine::Machine(QString name, QVector<QChar> sts, QVector<QChar> syms, QMap<QString, QString> tFunct, QChar iSt, QChar hSt) {
+    fileName = name;
+    states = sts;
+    symbols = syms;
     for (QChar st : states) {
         for (QChar sy : symbols) {
             QString key = makeKey(st, sy);
-            QString move = tFunct->value(key);
+            QString move = tFunct.value(key);
             action act;
             act.wSymbol = move.at(0);
             act.mTape = move.at(1);
@@ -111,7 +110,7 @@ void Machine::advance() {
             }
             head = std::prev(head);
         }
-        else {
+        else if (move.mTape == 'L'){
             startP++;
             endP++;
             head = std::next(head);

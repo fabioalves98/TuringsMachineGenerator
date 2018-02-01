@@ -77,8 +77,7 @@ void RandomMachines::quick() {
     int numDigitsName = pow(10, set->getRandTableSuffix() - 1);
     QString name = set->getRandTableName() +  QString::number(qrand() % (9*numDigitsName) + numDigitsName);
     QChar initState = (set->getRandInState() ? (states->at(qrand() % numSt)) : (set->getInState()));
-    QChar blanckSymbol = symbols->at(0);
-    randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, haltState);
+    randMach = new Machine(name, *states, *symbols, transFunct, initState, haltState);
 }
 
 void RandomMachines::on_stSel_valueChanged(int arg1)
@@ -351,9 +350,8 @@ void RandomMachines::on_saveBut_clicked()
     }
     QString name = ui->nameEdit->toPlainText();
     QChar initState = ui->initStCBox->currentText().at(0);
-    QChar blanckSymbol = ui->blanckSyCBox->currentText().at(0);
     QChar haltState = (ui->haltStEdit->text() == "" ? ui->haltStEdit->placeholderText().at(0) : ui->haltStEdit->text().at(0));
-    randMach = new Machine(&name, states, symbols, &transFunct, initState, blanckSymbol, haltState);
+    randMach = new Machine(name, *states, *symbols, transFunct, initState, haltState);
     ready = true;
 }
 

@@ -40,6 +40,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
+    void loadPresetSlt(Machine* preset);
     void on_addTableBt_clicked();
     void on_simBt_clicked();
     void on_uselAllBt_clicked();

@@ -17,7 +17,7 @@ Settings::Settings(QWidget *parent) :
     sizes[1] = (int)ui->generalSplit->width()*0.37;
     ui->generalSplit->setSizes(sizes);
     setDefaults();
-
+    loadPresets();
     statusBar()->showMessage("Changes will be applied automatically by closing this window.");
 }
 
@@ -80,6 +80,50 @@ void Settings::setDefaults() {
     ui->haltSimSpinBox->setEnabled(haltInXIt);
     iterTilHalt = 1000;
     ui->haltSimSpinBox->setValue(iterTilHalt);
+}
+
+void Settings::loadPresets()
+{
+    QString name;
+    QVector<QChar> states, symbols;
+    QChar initState, haltState;
+    QStringList cells;
+
+    // Creating the 3 state BusyBeaver preset
+    name = "3stateBusyBeaver";
+    ui->presetsCBox->addItem(name);
+    states.append('A'); states.append('B'); states.append('C');
+    symbols.append('0'); symbols.append('1');
+    initState = 'A', haltState = 'H';
+    cells << "1RB" << "1LA" << "1LB" << "1LC" << "1RB" << "1RH";
+    createPreset(name, states, symbols, cells, initState, haltState);
+
+    // Creating the 4 state BusyBeaver preset
+    name = "4stateBusyBeaver";
+    ui->presetsCBox->addItem(name);
+    states.append('D');
+    cells.clear();
+    cells << "1RB" << "1LA" << "1RH" << "1RD" << "1LB" << "0LC" << "1LD" << "0RA";
+    createPreset(name, states, symbols, cells, initState, haltState);
+
+}
+
+void Settings::createPreset(QString name, QVector<QChar> states, QVector<QChar> symbols, QStringList cells, QChar inSt, QChar htSt)
+{
+    QMap<QString, QString> tFunct;
+    int index = 0;
+    QString key;
+    for (int i = 0; i < symbols.size(); i++) {
+        for (int j = 0; j < states.size(); j++) {
+            key.clear();
+            key.append(states.at(j));
+            key.append(symbols.at(i));
+            tFunct.insert(key, cells.at(index));
+            index++;
+        }
+    }
+    Machine *threeBusy = new Machine(name, states, symbols, tFunct, inSt, htSt);
+    presets.append(threeBusy);
 }
 
 void Settings::fillStatesNSymbols() {
@@ -465,4 +509,9 @@ void Settings::on_rBSyCheck_stateChanged(int arg1)
     else {
         ui->tapeBSymEdit->setEnabled(true);
     }
+}
+
+void Settings::on_loadPresetBt_clicked()
+{
+    emit loadPresetSgn(presets.at(ui->presetsCBox->currentIndex()));
 }
