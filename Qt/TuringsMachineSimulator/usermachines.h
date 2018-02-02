@@ -14,6 +14,7 @@
 #include <QMovie>
 #include <QPainter>
 #include <QPixmap>
+#include <QMenu>
 #include "machine.h"
 #include "tape.h"
 #include "settings.h"
@@ -46,7 +47,7 @@ private slots:
     void on_uselAllBt_clicked();
     void on_selAllBt_clicked();
     void finishSim(QString tableName);
-    void getMachToDispay(QListWidgetItem* item);
+    void getMachToDispay();
     void on_stopBt_clicked();
     void on_pauseBt_clicked();
     void on_contBt_clicked();
@@ -61,6 +62,8 @@ private slots:
     void on_fasterBt_clicked();
     void delayUpdatedSlt(int delay);
     void on_buttonSelect_currentIndexChanged(int index);
+    void showContextMenu(const QPoint &pos);
+    void deleteItem();
 
 private:
     bool addMachine(Machine* toAdd);

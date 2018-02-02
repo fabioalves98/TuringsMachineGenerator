@@ -14,6 +14,9 @@ UserMachines::UserMachines(QWidget *parent) :
     // Getting the global Settings Settings
     set = Settings::getInstance();
     connect(set, SIGNAL(loadPresetSgn(Machine*)), this, SLOT(loadPresetSlt(Machine*)));
+
+    ui->tablesList->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tablesList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint&)));
 }
 
 UserMachines::~UserMachines()
@@ -74,7 +77,8 @@ void UserMachines::start()
     enSimButtons("Init");
 
     // Changing the machine view according to the table selected
-    connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay(QListWidgetItem*)));
+    connect(ui->tablesList, SIGNAL(itemSelectionChanged()), this, SLOT(getMachToDispay()));
+    connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay()));
 }
 
 void UserMachines::closeEvent(QCloseEvent *event) {
@@ -204,10 +208,9 @@ void UserMachines::finishSim(QString tableName) {
     }
 }
 
-void UserMachines::getMachToDispay(QListWidgetItem *item) {
-    for (int i = 0; i < listMach.size(); i++) {
-        if (listMach.at(i)->getFileName() == dynamic_cast<QLabel*>(ui->tablesList->itemWidget(item)->layout()->itemAt(0)->widget())->text()) {
-            selected = dynamic_cast<QLabel*>(ui->tablesList->itemWidget(item)->layout()->itemAt(0)->widget())->text();
+void UserMachines::getMachToDispay() {
+    for (int i = 0; i < ui->tablesList->count(); i++) {
+        if (ui->tablesList->item(i)->isSelected()) {
             ui->tableSim->setCurrentIndex(i + 1);
             dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->resizeTable();
             enSimButtons(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState());
@@ -622,6 +625,25 @@ void UserMachines::on_buttonSelect_currentIndexChanged(int index)
             ui->qRandTableBt->setText("Add Quick Random Tape");
             ui->cRandTableBt->setText("Add Custom Random Tape");
             break;
+        }
+    }
+}
+
+void UserMachines::showContextMenu(const QPoint &pos)
+{
+    QPoint globalPos = ui->tablesList->mapToGlobal(pos);
+    QMenu myMenu;
+    myMenu.addAction(QIcon(QPixmap(":rec/icons/cancel")), "Delete",  this, SLOT(deleteItem()));
+    myMenu.exec(globalPos);
+}
+
+void UserMachines::deleteItem()
+{
+    for (int i = 0; i < ui->tablesList->count(); i++) {
+        if (ui->tablesList->item(i)->isSelected()) {
+            delete ui->tablesList->item(i);
+            delete ui->tableSim->widget(i+1);
+            listMach.remove(i);
         }
     }
 }
