@@ -1,5 +1,0 @@
-is: A
-hs: H
-  *    A    B    C    D
-  0   1RB  1LA  1RH  1RD
-  1   1LB  0LC  1LD  0RA

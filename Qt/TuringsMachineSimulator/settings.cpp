@@ -86,26 +86,68 @@ void Settings::loadPresets()
 {
     QString name;
     QVector<QChar> states, symbols;
-    QChar initState, haltState;
     QStringList cells;
 
     // Creating the 3 state BusyBeaver preset
-    name = "3stateBusyBeaver";
+    name = "3 State Busy Beaver";
     ui->presetsCBox->addItem(name);
     states.append('A'); states.append('B'); states.append('C');
     symbols.append('0'); symbols.append('1');
-    initState = 'A', haltState = 'H';
     cells << "1RB" << "1LA" << "1LB" << "1LC" << "1RB" << "1RH";
-    createPreset(name, states, symbols, cells, initState, haltState);
+    createPreset(name, states, symbols, cells, 'A', 'H');
 
     // Creating the 4 state BusyBeaver preset
-    name = "4stateBusyBeaver";
+    name = "4 State Busy Beaver";
     ui->presetsCBox->addItem(name);
     states.append('D');
     cells.clear();
     cells << "1RB" << "1LA" << "1RH" << "1RD" << "1LB" << "0LC" << "1LD" << "0RA";
-    createPreset(name, states, symbols, cells, initState, haltState);
+    createPreset(name, states, symbols, cells, 'A', 'H');
 
+    // Creating the Turring Sequence preset
+    name = "Turring's Sequence";
+    ui->presetsCBox->addItem(name);
+    states.clear();
+    for (int i = 0; i < 16; i++) {
+        states.append(abc.at(i));
+        if (i == 6) states.append('H');
+    }
+    symbols.clear();
+    symbols.append('.'); symbols.append('1'); symbols.append('0'); symbols.append('e'); symbols.append('x');
+    cells.clear();
+    cells << "eLB" << "eLC" << "0LD" << ".LE" << "0RF" << ".RG" << ".*G" << "xRI" << ".RJ" << ".RG" << "1RM" << ".LK" << ".RN" << ".RM" << "0RP" << ".RG" << ".LO";
+    cells << "eLB" << "eLC" << "0LD" << "1LE" << "0RF" << "1RG" << "1LH" << "xRI" << "1RJ" << "1RG" << "1LL" << "1LK" << "1*M" << "1RM" << "1LQ" << "1RG" << "1LO";
+    cells << "eLB" << "eLC" << "0LD" << "0LE" << "0RF" << "0RG" << "0*K" << "xRI" << "0RJ" << "0RG" << "0LL" << "0LK" << "0*M" << "0RM" << "0LQ" << "0RG" << "0LO";
+    cells << "eLB" << "eLC" << "0LD" << "eLE" << "0RF" << "eRG" << "e*G" << "xRI" << "eRJ" << "eRG" << "eLL" << "eLK" << "eLO" << "eRM" << "eLQ" << "eRG" << "eLO";
+    cells << "eLB" << "eLC" << "0LD" << "xLE" << "0RF" << "xRG" << "x*G" << "xRI" << "xRJ" << "xRG" << "xLL" << "xLK" << ".LK" << "xRM" << "xLQ" << "xRG" << "xLO";
+    createPreset(name, states, symbols, cells, 'A', 'Z');
+
+    // Creating the Binary to Decimal Converter
+    name = "Bin2Dec Converter";
+    ui->presetsCBox->addItem(name);
+    states.clear();
+    for (int i = 0; i < 8; i++) {
+        states.append(abc.at(i));
+        if (i == 6) states.append('H');
+    }
+    symbols.clear();
+    symbols.append('.');
+    for (int i = 0; i < 10; i++) {
+        symbols.append(QString::number(i).at(0));
+    }
+    cells.clear();
+    cells << ".LA" << ".RD" << ".LA" << ".LG" << ".RF" << "1LC" << ".RH" << ".RH" << ".LZ";
+    cells << "0LB" << "0LB" << "0LC" << "1RD" << "0RE" << "1LC" << ".LG" << "0RI" << "0RI";
+    cells << "1LB" << "1LB" << "1LC" << "0RE" << "1RE" << "2LC" << ".LG" << "1RI" << "1RI";
+    cells << "2LB" << "2LB" << "2LC" << "2*D" << "2RE" << "3LC" << ".LG" << "2RI" << "2RI";
+    cells << "3LB" << "3LB" << "3LC" << "3*D" << "3RE" << "4LC" << ".LG" << "3RI" << "3RI";
+    cells << "4LB" << "4LB" << "4LC" << "4*D" << "4RE" << "5LC" << ".LG" << "4RI" << "4RI";
+    cells << "5LB" << "5LB" << "5LC" << "5*D" << "5RE" << "6LC" << ".LG" << "5RI" << "5RI";
+    cells << "6LB" << "6LB" << "6LC" << "6*D" << "6RE" << "7LC" << ".LG" << "6RI" << "6RI";
+    cells << "7LB" << "7LB" << "7LC" << "7*D" << "7RE" << "8LC" << ".LG" << "7RI" << "7RI";
+    cells << "8LB" << "8LB" << "8LC" << "8*D" << "8RE" << "9LC" << ".LG" << "8RI" << "8RI";
+    cells << "9LB" << "9LB" << "9LC" << "9*D" << "9RE" << "0RF" << ".LG" << "9RI" << "9RI";
+    createPreset(name, states, symbols, cells, 'A', 'Z');
 }
 
 void Settings::createPreset(QString name, QVector<QChar> states, QVector<QChar> symbols, QStringList cells, QChar inSt, QChar htSt)

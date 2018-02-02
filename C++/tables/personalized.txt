@@ -1,5 +1,0 @@
-is: X
-hs: H
-  *    X    P    T
-  o   xRP  xRT  xLX
-  x   xLP  xLT  xRH

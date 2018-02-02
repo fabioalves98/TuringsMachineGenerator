@@ -40,7 +40,7 @@ public:
     QVBoxLayout *verticalLayout_6;
     QTabWidget *tabWidget;
     QWidget *Genereal;
-    QVBoxLayout *verticalLayout_3;
+    QVBoxLayout *verticalLayout_4;
     QGroupBox *Usage;
     QHBoxLayout *horizontalLayout_8;
     QTextBrowser *usageTBrows;
@@ -52,11 +52,12 @@ public:
     QHBoxLayout *horizontalLayout_10;
     QTextBrowser *tapeTBrows;
     QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_11;
     QComboBox *presetsCBox;
     QPushButton *loadPresetBt;
-    QLabel *label;
     QSpacerItem *zSpacer_10;
+    QTextBrowser *presetDescTBrows;
     QSpacerItem *verticalSpacer;
     QWidget *RandomTables;
     QVBoxLayout *verticalLayout_8;
@@ -168,8 +169,8 @@ public:
         tabWidget->setFont(font);
         Genereal = new QWidget();
         Genereal->setObjectName(QStringLiteral("Genereal"));
-        verticalLayout_3 = new QVBoxLayout(Genereal);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_4 = new QVBoxLayout(Genereal);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         Usage = new QGroupBox(Genereal);
         Usage->setObjectName(QStringLiteral("Usage"));
         QFont font1;
@@ -191,7 +192,7 @@ public:
         horizontalLayout_8->addWidget(usageTBrows);
 
 
-        verticalLayout_3->addWidget(Usage);
+        verticalLayout_4->addWidget(Usage);
 
         generalSplit = new QSplitter(Genereal);
         generalSplit->setObjectName(QStringLiteral("generalSplit"));
@@ -228,15 +229,18 @@ public:
 
         generalSplit->addWidget(TapeConf);
 
-        verticalLayout_3->addWidget(generalSplit);
+        verticalLayout_4->addWidget(generalSplit);
 
         groupBox = new QGroupBox(Genereal);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setFont(font1);
-        horizontalLayout_11 = new QHBoxLayout(groupBox);
+        verticalLayout_3 = new QVBoxLayout(groupBox);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        horizontalLayout_11 = new QHBoxLayout();
         horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
         presetsCBox = new QComboBox(groupBox);
         presetsCBox->setObjectName(QStringLiteral("presetsCBox"));
+        presetsCBox->setMinimumSize(QSize(180, 0));
 
         horizontalLayout_11->addWidget(presetsCBox);
 
@@ -253,22 +257,26 @@ public:
 
         horizontalLayout_11->addWidget(loadPresetBt);
 
-        label = new QLabel(groupBox);
-        label->setObjectName(QStringLiteral("label"));
-        label->setFont(font2);
-
-        horizontalLayout_11->addWidget(label);
-
         zSpacer_10 = new QSpacerItem(491, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_11->addItem(zSpacer_10);
 
 
-        verticalLayout_3->addWidget(groupBox);
+        verticalLayout_3->addLayout(horizontalLayout_11);
+
+        presetDescTBrows = new QTextBrowser(groupBox);
+        presetDescTBrows->setObjectName(QStringLiteral("presetDescTBrows"));
+        presetDescTBrows->setMinimumSize(QSize(0, 70));
+        presetDescTBrows->setMaximumSize(QSize(16777215, 70));
+
+        verticalLayout_3->addWidget(presetDescTBrows);
+
+
+        verticalLayout_4->addWidget(groupBox);
 
         verticalSpacer = new QSpacerItem(20, 144, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout_3->addItem(verticalSpacer);
+        verticalLayout_4->addItem(verticalSpacer);
 
         tabWidget->addTab(Genereal, QString());
         RandomTables = new QWidget();
@@ -816,7 +824,6 @@ public:
                         "ck-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">0101011100  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Tape Content</span></p></body></html>", nullptr));
         groupBox->setTitle(QApplication::translate("Settings", "Load Machine's Presets", nullptr));
         loadPresetBt->setText(QApplication::translate("Settings", "Load", nullptr));
-        label->setText(QApplication::translate("Settings", "Description", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Genereal), QApplication::translate("Settings", "General", nullptr));
         TableNameBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
         zNameLabel->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));

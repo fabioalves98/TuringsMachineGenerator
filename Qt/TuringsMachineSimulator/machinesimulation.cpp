@@ -393,24 +393,22 @@ void MachineSimulation::simulate() {
         tapeStr = "";
         int spacing = tape.size()/2 - offset;
         for (auto it = tape.begin(); it != tape.end(); it++) {
-            if (spacing == 0) tapeStr.append(" ");
-            tapeStr.append("|");
+            if (spacing == 0) tapeStr.append(" |");
             tapeStr.append(*it);
-            tapeStr.append("|");
-            if (spacing == 0) tapeStr.append(" ");
+            if (spacing == 0) tapeStr.append("| ");
             spacing--;
         }
         if (tape.size() % 2 == 0) {
-            tapeStr.append("   ");
+            tapeStr.append(" ");
         }
         if (offset > 0) {
             for (int i = 0; i < abs(offset); i++) {
-                tapeStr.prepend("      ");
+                tapeStr.prepend("  ");
             }
         }
         else if (offset < 0) {
             for (int i = 0; i < abs(offset); i++) {
-                tapeStr.append("      ");
+                tapeStr.append("  ");
             }
         }
         int st = mach->getStates()->indexOf(mach->getCurrentState());

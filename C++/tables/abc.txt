@@ -1,6 +1,0 @@
-is: A
-hs: H
-  *    A    B    C  
-  a   cRB  bLA  cLB 
-  b   aLC  cRB  aRH 
-  c   aRB  bLC  aRA

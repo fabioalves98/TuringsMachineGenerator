@@ -1,0 +1,14 @@
+is: A
+hs: Z
+  *    A    B    C    D    E    F    G    H    I  
+  .   .LA  .RD  .LA  .LG  .RF  1LC  .RH  .RH  .LZ 
+  0   0LB  0LB  0LC  1RD  0RE  1LC  .LG  0RI  0RI 
+  1   1LB  1LB  1LC  0RE  1RE  2LC  .LG  1RI  1RI 
+  2   2LB  2LB  2LC  2*D  2RE  3LC  .LG  2RI  2RI 
+  3   3LB  3LB  3LC  3*D  3RE  4LC  .LG  3RI  3RI 
+  4   4LB  4LB  4LC  4*D  4RE  5LC  .LG  4RI  4RI 
+  5   5LB  5LB  5LC  5*D  5RE  6LC  .LG  5RI  5RI 
+  6   6LB  6LB  6LC  6*D  6RE  7LC  .LG  6RI  6RI 
+  7   7LB  7LB  7LC  7*D  7RE  8LC  .LG  7RI  7RI 
+  8   8LB  8LB  8LC  8*D  8RE  9LC  .LG  8RI  8RI 
+  9   9LB  9LB  9LC  9*D  9RE  0RF  .LG  9RI  9RI 
