@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MachineSimulation_t {
-    QByteArrayData data[16];
-    char stringdata0[158];
+    QByteArrayData data[18];
+    char stringdata0[182];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,24 +35,27 @@ QT_MOC_LITERAL(0, 0, 17), // "MachineSimulation"
 QT_MOC_LITERAL(1, 18, 11), // "updateUiSgn"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 15), // "changeStatusSgn"
-QT_MOC_LITERAL(4, 47, 12), // "delayChanged"
-QT_MOC_LITERAL(5, 60, 11), // "resizeTable"
-QT_MOC_LITERAL(6, 72, 11), // "updateUiSlt"
-QT_MOC_LITERAL(7, 84, 4), // "iter"
-QT_MOC_LITERAL(8, 89, 2), // "st"
-QT_MOC_LITERAL(9, 92, 2), // "sy"
-QT_MOC_LITERAL(10, 95, 5), // "state"
-QT_MOC_LITERAL(11, 101, 4), // "tape"
-QT_MOC_LITERAL(12, 106, 6), // "status"
-QT_MOC_LITERAL(13, 113, 15), // "changeStatusSlt"
-QT_MOC_LITERAL(14, 129, 23), // "on_headPos_valueChanged"
-QT_MOC_LITERAL(15, 153, 4) // "arg1"
+QT_MOC_LITERAL(4, 47, 15), // "delayChangedSgn"
+QT_MOC_LITERAL(5, 63, 11), // "resizeTable"
+QT_MOC_LITERAL(6, 75, 11), // "updateUiSlt"
+QT_MOC_LITERAL(7, 87, 4), // "iter"
+QT_MOC_LITERAL(8, 92, 2), // "st"
+QT_MOC_LITERAL(9, 95, 2), // "sy"
+QT_MOC_LITERAL(10, 98, 5), // "state"
+QT_MOC_LITERAL(11, 104, 4), // "tape"
+QT_MOC_LITERAL(12, 109, 6), // "status"
+QT_MOC_LITERAL(13, 116, 15), // "changeStatusSlt"
+QT_MOC_LITERAL(14, 132, 14), // "updateDelaySlt"
+QT_MOC_LITERAL(15, 147, 5), // "delay"
+QT_MOC_LITERAL(16, 153, 23), // "on_headPos_valueChanged"
+QT_MOC_LITERAL(17, 177, 4) // "arg1"
 
     },
     "MachineSimulation\0updateUiSgn\0\0"
-    "changeStatusSgn\0delayChanged\0resizeTable\0"
-    "updateUiSlt\0iter\0st\0sy\0state\0tape\0"
-    "status\0changeStatusSlt\0on_headPos_valueChanged\0"
+    "changeStatusSgn\0delayChangedSgn\0"
+    "resizeTable\0updateUiSlt\0iter\0st\0sy\0"
+    "state\0tape\0status\0changeStatusSlt\0"
+    "updateDelaySlt\0delay\0on_headPos_valueChanged\0"
     "arg1"
 };
 #undef QT_MOC_LITERAL
@@ -63,7 +66,7 @@ static const uint qt_meta_data_MachineSimulation[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,15 +74,16 @@ static const uint qt_meta_data_MachineSimulation[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    6,   49,    2, 0x06 /* Public */,
-       3,    1,   62,    2, 0x06 /* Public */,
-       4,    1,   65,    2, 0x06 /* Public */,
+       1,    6,   54,    2, 0x06 /* Public */,
+       3,    1,   67,    2, 0x06 /* Public */,
+       4,    1,   70,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   68,    2, 0x0a /* Public */,
-       6,    6,   69,    2, 0x08 /* Private */,
-      13,    1,   82,    2, 0x08 /* Private */,
-      14,    1,   85,    2, 0x08 /* Private */,
+       5,    0,   73,    2, 0x0a /* Public */,
+       6,    6,   74,    2, 0x08 /* Private */,
+      13,    1,   87,    2, 0x08 /* Private */,
+      14,    1,   90,    2, 0x08 /* Private */,
+      16,    1,   93,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString,    2,    2,    2,    2,    2,    2,
@@ -91,6 +95,7 @@ static const uint qt_meta_data_MachineSimulation[] = {
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString,    7,    8,    9,   10,   11,   12,
     QMetaType::Void, QMetaType::QString,   12,
     QMetaType::Void, QMetaType::Int,   15,
+    QMetaType::Void, QMetaType::Int,   17,
 
        0        // eod
 };
@@ -103,11 +108,12 @@ void MachineSimulation::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         switch (_id) {
         case 0: _t->updateUiSgn((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
         case 1: _t->changeStatusSgn((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 2: _t->delayChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->delayChangedSgn((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->resizeTable(); break;
         case 4: _t->updateUiSlt((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
         case 5: _t->changeStatusSlt((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 6: _t->on_headPos_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->updateDelaySlt((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->on_headPos_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -128,7 +134,7 @@ void MachineSimulation::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         }
         {
             typedef void (MachineSimulation::*_t)(int );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MachineSimulation::delayChanged)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MachineSimulation::delayChangedSgn)) {
                 *result = 2;
                 return;
             }
@@ -161,13 +167,13 @@ int MachineSimulation::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
@@ -187,7 +193,7 @@ void MachineSimulation::changeStatusSgn(QString _t1)
 }
 
 // SIGNAL 2
-void MachineSimulation::delayChanged(int _t1)
+void MachineSimulation::delayChangedSgn(int _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);

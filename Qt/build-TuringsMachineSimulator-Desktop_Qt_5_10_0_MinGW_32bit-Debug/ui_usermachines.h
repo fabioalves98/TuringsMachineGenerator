@@ -20,7 +20,6 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -61,7 +60,6 @@ public:
     QPushButton *slowerBt;
     QPushButton *fasterBt;
     QLabel *delayLb;
-    QSpinBox *spinBox;
     QStackedWidget *tableSim;
     QHBoxLayout *tableCtrlLt;
     QComboBox *buttonSelect;
@@ -253,17 +251,6 @@ public:
         delayLb->setAlignment(Qt::AlignCenter);
 
         horizontalLayout->addWidget(delayLb);
-
-        spinBox = new QSpinBox(layoutWidget);
-        spinBox->setObjectName(QStringLiteral("spinBox"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(spinBox->sizePolicy().hasHeightForWidth());
-        spinBox->setSizePolicy(sizePolicy);
-        spinBox->setMaximum(1000000);
-
-        horizontalLayout->addWidget(spinBox);
 
 
         verticalLayout_6->addLayout(horizontalLayout);

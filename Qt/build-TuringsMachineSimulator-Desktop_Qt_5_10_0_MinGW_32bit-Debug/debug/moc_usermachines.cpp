@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UserMachines_t {
     QByteArrayData data[30];
-    char stringdata0[491];
+    char stringdata0[494];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -57,10 +57,10 @@ QT_MOC_LITERAL(22, 345, 22), // "on_saveTableBt_clicked"
 QT_MOC_LITERAL(23, 368, 21), // "on_settingsBt_clicked"
 QT_MOC_LITERAL(24, 390, 19), // "on_slowerBt_clicked"
 QT_MOC_LITERAL(25, 410, 19), // "on_fasterBt_clicked"
-QT_MOC_LITERAL(26, 430, 12), // "delayUpdated"
-QT_MOC_LITERAL(27, 443, 5), // "delay"
-QT_MOC_LITERAL(28, 449, 35), // "on_buttonSelect_currentIndexC..."
-QT_MOC_LITERAL(29, 485, 5) // "index"
+QT_MOC_LITERAL(26, 430, 15), // "delayUpdatedSlt"
+QT_MOC_LITERAL(27, 446, 5), // "delay"
+QT_MOC_LITERAL(28, 452, 35), // "on_buttonSelect_currentIndexC..."
+QT_MOC_LITERAL(29, 488, 5) // "index"
 
     },
     "UserMachines\0loadPresetSlt\0\0Machine*\0"
@@ -74,7 +74,7 @@ QT_MOC_LITERAL(29, 485, 5) // "index"
     "selTapeButtons\0on_loadTapeBt_clicked\0"
     "on_saveTableBt_clicked\0on_settingsBt_clicked\0"
     "on_slowerBt_clicked\0on_fasterBt_clicked\0"
-    "delayUpdated\0delay\0"
+    "delayUpdatedSlt\0delay\0"
     "on_buttonSelect_currentIndexChanged\0"
     "index"
 };
@@ -167,7 +167,7 @@ void UserMachines::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 16: _t->on_settingsBt_clicked(); break;
         case 17: _t->on_slowerBt_clicked(); break;
         case 18: _t->on_fasterBt_clicked(); break;
-        case 19: _t->delayUpdated((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->delayUpdatedSlt((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 20: _t->on_buttonSelect_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }

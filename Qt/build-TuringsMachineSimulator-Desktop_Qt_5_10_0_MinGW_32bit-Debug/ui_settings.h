@@ -37,7 +37,7 @@ class Ui_Settings
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_6;
+    QHBoxLayout *horizontalLayout_13;
     QTabWidget *tabWidget;
     QWidget *Genereal;
     QVBoxLayout *verticalLayout_4;
@@ -58,6 +58,9 @@ public:
     QPushButton *loadPresetBt;
     QSpacerItem *zSpacer_10;
     QTextBrowser *presetDescTBrows;
+    QHBoxLayout *horizontalLayout_15;
+    QSpacerItem *zSpacer_11;
+    QPushButton *defaultSetBt;
     QSpacerItem *verticalSpacer;
     QWidget *RandomTables;
     QVBoxLayout *verticalLayout_8;
@@ -133,7 +136,13 @@ public:
     QSpacerItem *zSpacer_7;
     QSpacerItem *verticalSpacer_3;
     QWidget *simulation;
-    QVBoxLayout *verticalLayout_2;
+    QVBoxLayout *verticalLayout_6;
+    QGroupBox *groupBox_3;
+    QHBoxLayout *horizontalLayout_6;
+    QCheckBox *haltSimCheck;
+    QSpinBox *haltSimSpinBox;
+    QLabel *label_5;
+    QSpacerItem *horizontalSpacer_2;
     QGroupBox *groupBox_2;
     QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout;
@@ -141,12 +150,14 @@ public:
     QLabel *label_2;
     QSpinBox *delaySpinBox;
     QSpacerItem *horizontalSpacer;
-    QGroupBox *groupBox_3;
-    QHBoxLayout *horizontalLayout_6;
-    QCheckBox *haltSimCheck;
-    QSpinBox *haltSimSpinBox;
-    QLabel *label_5;
-    QSpacerItem *horizontalSpacer_2;
+    QGroupBox *groupBox_4;
+    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_14;
+    QLabel *label;
+    QSpinBox *simHistSBox;
+    QLabel *label_3;
+    QSpacerItem *horizontalSpacer_3;
+    QLabel *label_4;
     QSpacerItem *verticalSpacer_2;
     QWidget *about;
     QStatusBar *statusBar;
@@ -155,13 +166,11 @@ public:
     {
         if (Settings->objectName().isEmpty())
             Settings->setObjectName(QStringLiteral("Settings"));
-        Settings->resize(800, 600);
+        Settings->resize(854, 599);
         centralwidget = new QWidget(Settings);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout_6 = new QVBoxLayout(centralwidget);
-        verticalLayout_6->setSpacing(0);
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
-        verticalLayout_6->setContentsMargins(3, 3, 3, 3);
+        horizontalLayout_13 = new QHBoxLayout(centralwidget);
+        horizontalLayout_13->setObjectName(QStringLiteral("horizontalLayout_13"));
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         QFont font;
@@ -274,6 +283,23 @@ public:
 
         verticalLayout_4->addWidget(groupBox);
 
+        horizontalLayout_15 = new QHBoxLayout();
+        horizontalLayout_15->setObjectName(QStringLiteral("horizontalLayout_15"));
+        zSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_15->addItem(zSpacer_11);
+
+        defaultSetBt = new QPushButton(Genereal);
+        defaultSetBt->setObjectName(QStringLiteral("defaultSetBt"));
+        QFont font3;
+        font3.setPointSize(12);
+        defaultSetBt->setFont(font3);
+
+        horizontalLayout_15->addWidget(defaultSetBt);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_15);
+
         verticalSpacer = new QSpacerItem(20, 144, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer);
@@ -297,8 +323,6 @@ public:
 
         tableNameEdit = new QLineEdit(TableNameBox);
         tableNameEdit->setObjectName(QStringLiteral("tableNameEdit"));
-        QFont font3;
-        font3.setPointSize(12);
         tableNameEdit->setFont(font3);
 
         horizontalLayout->addWidget(tableNameEdit);
@@ -697,8 +721,40 @@ public:
         tabWidget->addTab(RandomTapes, QString());
         simulation = new QWidget();
         simulation->setObjectName(QStringLiteral("simulation"));
-        verticalLayout_2 = new QVBoxLayout(simulation);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_6 = new QVBoxLayout(simulation);
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        groupBox_3 = new QGroupBox(simulation);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        groupBox_3->setFont(font1);
+        horizontalLayout_6 = new QHBoxLayout(groupBox_3);
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        haltSimCheck = new QCheckBox(groupBox_3);
+        haltSimCheck->setObjectName(QStringLiteral("haltSimCheck"));
+        haltSimCheck->setFont(font2);
+
+        horizontalLayout_6->addWidget(haltSimCheck);
+
+        haltSimSpinBox = new QSpinBox(groupBox_3);
+        haltSimSpinBox->setObjectName(QStringLiteral("haltSimSpinBox"));
+        haltSimSpinBox->setMinimum(1);
+        haltSimSpinBox->setMaximum(10000000);
+        haltSimSpinBox->setValue(1);
+
+        horizontalLayout_6->addWidget(haltSimSpinBox);
+
+        label_5 = new QLabel(groupBox_3);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setFont(font2);
+
+        horizontalLayout_6->addWidget(label_5);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_6->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_6->addWidget(groupBox_3);
+
         groupBox_2 = new QGroupBox(simulation);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         groupBox_2->setFont(font1);
@@ -719,7 +775,7 @@ public:
         delaySpinBox->setMinimum(50);
         delaySpinBox->setMaximum(1000000);
         delaySpinBox->setSingleStep(50);
-        delaySpinBox->setValue(200);
+        delaySpinBox->setValue(50);
 
         horizontalLayout_3->addWidget(delaySpinBox);
 
@@ -734,49 +790,60 @@ public:
         horizontalLayout_4->addItem(horizontalSpacer);
 
 
-        verticalLayout_2->addWidget(groupBox_2);
+        verticalLayout_6->addWidget(groupBox_2);
 
-        groupBox_3 = new QGroupBox(simulation);
-        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setFont(font1);
-        horizontalLayout_6 = new QHBoxLayout(groupBox_3);
-        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
-        haltSimCheck = new QCheckBox(groupBox_3);
-        haltSimCheck->setObjectName(QStringLiteral("haltSimCheck"));
-        haltSimCheck->setFont(font2);
+        groupBox_4 = new QGroupBox(simulation);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        groupBox_4->setFont(font1);
+        verticalLayout_2 = new QVBoxLayout(groupBox_4);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        horizontalLayout_14 = new QHBoxLayout();
+        horizontalLayout_14->setObjectName(QStringLiteral("horizontalLayout_14"));
+        label = new QLabel(groupBox_4);
+        label->setObjectName(QStringLiteral("label"));
+        label->setFont(font2);
 
-        horizontalLayout_6->addWidget(haltSimCheck);
+        horizontalLayout_14->addWidget(label);
 
-        haltSimSpinBox = new QSpinBox(groupBox_3);
-        haltSimSpinBox->setObjectName(QStringLiteral("haltSimSpinBox"));
-        haltSimSpinBox->setMinimum(1);
-        haltSimSpinBox->setMaximum(10000000);
+        simHistSBox = new QSpinBox(groupBox_4);
+        simHistSBox->setObjectName(QStringLiteral("simHistSBox"));
+        simHistSBox->setMinimum(1);
+        simHistSBox->setMaximum(1000);
 
-        horizontalLayout_6->addWidget(haltSimSpinBox);
+        horizontalLayout_14->addWidget(simHistSBox);
 
-        label_5 = new QLabel(groupBox_3);
-        label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setFont(font2);
+        label_3 = new QLabel(groupBox_4);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setFont(font2);
 
-        horizontalLayout_6->addWidget(label_5);
+        horizontalLayout_14->addWidget(label_3);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_6->addItem(horizontalSpacer_2);
+        horizontalLayout_14->addItem(horizontalSpacer_3);
 
 
-        verticalLayout_2->addWidget(groupBox_3);
+        verticalLayout_2->addLayout(horizontalLayout_14);
+
+        label_4 = new QLabel(groupBox_4);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setFont(font2);
+
+        verticalLayout_2->addWidget(label_4);
+
+
+        verticalLayout_6->addWidget(groupBox_4);
 
         verticalSpacer_2 = new QSpacerItem(20, 418, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout_2->addItem(verticalSpacer_2);
+        verticalLayout_6->addItem(verticalSpacer_2);
 
         tabWidget->addTab(simulation, QString());
         about = new QWidget();
         about->setObjectName(QStringLiteral("about"));
         tabWidget->addTab(about, QString());
 
-        verticalLayout_6->addWidget(tabWidget);
+        horizontalLayout_13->addWidget(tabWidget);
 
         Settings->setCentralWidget(centralwidget);
         statusBar = new QStatusBar(Settings);
@@ -785,7 +852,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -824,6 +891,7 @@ public:
                         "ck-indent:0; text-indent:0px;\"><span style=\" font-family:'Consolas'; font-size:11pt;\">0101011100  </span><span style=\" font-family:'Consolas'; font-size:11pt; color:#7e7e7e;\">// Tape Content</span></p></body></html>", nullptr));
         groupBox->setTitle(QApplication::translate("Settings", "Load Machine's Presets", nullptr));
         loadPresetBt->setText(QApplication::translate("Settings", "Load", nullptr));
+        defaultSetBt->setText(QApplication::translate("Settings", "Set Default Settings", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(Genereal), QApplication::translate("Settings", "General", nullptr));
         TableNameBox->setTitle(QApplication::translate("Settings", "Name Generation", nullptr));
         zNameLabel->setText(QApplication::translate("Settings", "Name Prefix: ", nullptr));
@@ -850,11 +918,15 @@ public:
         zLabel_4->setText(QApplication::translate("Settings", "Blanck Symbol:", nullptr));
         rBSyCheck->setText(QApplication::translate("Settings", "Random", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(RandomTapes), QApplication::translate("Settings", "Quick Random Tapes", nullptr));
-        groupBox_2->setTitle(QApplication::translate("Settings", "Iteration Delay", nullptr));
-        label_2->setText(QApplication::translate("Settings", "Delay between iterations (ms):", nullptr));
         groupBox_3->setTitle(QApplication::translate("Settings", "Halt Simulation", nullptr));
         haltSimCheck->setText(QApplication::translate("Settings", "Halt Simulation in ", nullptr));
         label_5->setText(QApplication::translate("Settings", "iterations", nullptr));
+        groupBox_2->setTitle(QApplication::translate("Settings", "Iteration Delay", nullptr));
+        label_2->setText(QApplication::translate("Settings", "Delay between iterations (ms):", nullptr));
+        groupBox_4->setTitle(QApplication::translate("Settings", "Simulation History", nullptr));
+        label->setText(QApplication::translate("Settings", "Save the previous ", nullptr));
+        label_3->setText(QApplication::translate("Settings", "iterations", nullptr));
+        label_4->setText(QApplication::translate("Settings", "The higher the number, the slower the simulation will be.", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(simulation), QApplication::translate("Settings", "Simulation", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(about), QApplication::translate("Settings", "About", nullptr));
     } // retranslateUi

@@ -50,11 +50,12 @@ protected:
 signals:
     void updateUiSgn(int, int, int, QString, QString, QString);
     void changeStatusSgn(QString);
-    void delayChanged(int);
+    void delayChangedSgn(int);
 
 private slots:
     void updateUiSlt(int iter, int st, int sy, QString state, QString tape, QString status);
     void changeStatusSlt(QString status);
+    void updateDelaySlt(int delay);
     void on_headPos_valueChanged(int arg1);
 
 private:
@@ -64,8 +65,6 @@ private:
 
     Ui::MachineSimulation *ui;
     bool machHalted(int iterations);
-    bool uiReady();
-    void clearUi();
     Machine *mach;
 
     Tape *defTape;

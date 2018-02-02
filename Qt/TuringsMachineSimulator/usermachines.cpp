@@ -86,7 +86,7 @@ void UserMachines::loadPresetSlt(Machine* preset)
 {
     if (addMachine(preset)) {
         MachineSimulation *sim = new MachineSimulation(preset, listTape.at(0));
-        connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
+        connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
         ui->tableSim->insertWidget(listMach.size(), sim);
         ui->tableSim->setCurrentIndex(listMach.size());
         sim->start();
@@ -440,7 +440,7 @@ void UserMachines::on_cRandTableBt_clicked()
         rand->close();
         addMachine(randMach);
         MachineSimulation *sim = new MachineSimulation(randMach, listTape.at(0));
-        connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
+        connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
         ui->tableSim->insertWidget(listMach.size(), sim);
         ui->tableSim->setCurrentIndex(listMach.size());
         sim->start();
@@ -472,7 +472,7 @@ void UserMachines::on_qRandTableBt_clicked()
         Machine *quick = rand->getRandMach();
         addMachine(quick);
         MachineSimulation *sim = new MachineSimulation(quick, listTape.at(0));
-        connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
+        connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
         ui->tableSim->insertWidget(listMach.size(), sim);
         ui->tableSim->setCurrentIndex(listMach.size());
         sim->start();
@@ -597,29 +597,31 @@ void UserMachines::on_fasterBt_clicked()
     dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->increaseSpeed();
 }
 
-void UserMachines::delayUpdated(int delay)
+void UserMachines::delayUpdatedSlt(int delay)
 {
-    ui->delayLb->setText(QString::number(delay*10) + " ms");
+    if (dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState() != "Sim") {
+        ui->delayLb->setText(QString::number(delay*10) + " ms");
+    }
 }
 
 void UserMachines::on_buttonSelect_currentIndexChanged(int index)
 {
     switch(index) {
-    case 0: {
-        ui->addTableBt->setText("Add Machine File");
-        ui->editTableBt->setText("Edit Machine");
-        ui->saveTableBt->setText("Save Machine");
-        ui->qRandTableBt->setText("Add Quick Random Machine");
-        ui->cRandTableBt->setText("Add Custom Random Machine");
-        break;
-    }
-    case 1: {
-        ui->addTableBt->setText("Add Tape File");
-        ui->editTableBt->setText("Edit Tape");
-        ui->saveTableBt->setText("Save Tape");
-        ui->qRandTableBt->setText("Add Quick Random Tape");
-        ui->cRandTableBt->setText("Add Custom Random Tape");
-        break;
-    }
+        case 0: {
+            ui->addTableBt->setText("Add Machine File");
+            ui->editTableBt->setText("Edit Machine");
+            ui->saveTableBt->setText("Save Machine");
+            ui->qRandTableBt->setText("Add Quick Random Machine");
+            ui->cRandTableBt->setText("Add Custom Random Machine");
+            break;
+        }
+        case 1: {
+            ui->addTableBt->setText("Add Tape File");
+            ui->editTableBt->setText("Edit Tape");
+            ui->saveTableBt->setText("Save Tape");
+            ui->qRandTableBt->setText("Add Quick Random Tape");
+            ui->cRandTableBt->setText("Add Custom Random Tape");
+            break;
+        }
     }
 }

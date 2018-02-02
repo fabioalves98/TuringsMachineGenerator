@@ -38,15 +38,16 @@ public:
     QChar getBlanckSymbol();
 
     int getDelayTime();
-    void setDelayTime(int value);
     bool getHaltInXIt();
     int getIterTilHalt();
+    int getSimHistory();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 signals:
     loadPresetSgn(Machine*);
+    delayChangedSgn(int);
 
 private slots:
     void on_maxStSpinBox_valueChanged(int arg1);
@@ -61,6 +62,8 @@ private slots:
     void on_rBSyCheck_stateChanged(int arg1);
     void on_loadPresetBt_clicked();
     void on_presetsCBox_currentIndexChanged(int index);
+
+    void on_defaultSetBt_clicked();
 
 private:
     void setDefaults();
@@ -102,6 +105,7 @@ private:
     int delayTime;
     bool haltInXIt;
     int iterTilHalt;
+    int simHistory;
 
     // Settings Settings
     QString abc;

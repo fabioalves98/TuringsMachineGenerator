@@ -38,6 +38,7 @@ void MachineSimulation::start() {
     ui->simSplit->setSizes(sizes);
     // Gettings the global Settings
     set = Settings::getInstance();
+    connect(set, SIGNAL(delayChangedSgn(int)), this, SLOT(updateDelaySlt(int)));
     localDelayFormat = set->getDelayTime()/10;
 
     if (defTape != nullptr) {
@@ -301,21 +302,12 @@ void MachineSimulation::displayTape() {
     }
 }
 
-bool MachineSimulation::uiReady()
-{
-    return uiIsReady;
-}
-
-void MachineSimulation::clearUi()
-{
-    delete ui->simList->item(0);
-    delete ui->tapeList->item(0);
-    delete ui->statesList->item(0);
-}
-
 void MachineSimulation::updateUiSlt(int iter, int st, int sy, QString state, QString tape, QString status) {
-    if (iter > 100) {
-        clearUi();
+    int toClean = ui->simList->count()  - set->getSimHistory();
+    for (int i = 0; i < toClean; i++) {
+         delete ui->simList->item(0);
+         delete ui->tapeList->item(0);
+         delete ui->statesList->item(0);
     }
     selectTableCellSlt(st, sy);
     insertStateSlt(state);
@@ -371,12 +363,11 @@ void MachineSimulation::simulate() {
     mach->start(tempTape, tempHeadPos, blanckSym);
 
     int iterations = 0;
-    int maxIter = set->getIterTilHalt();
-    bool haltWhenMaxIter = set->getHaltInXIt();
 
     std::list<QChar> tape;
     QString tapeStr;
-    do {
+
+    while (true) {
         if (pauseSim) {
             QThread::msleep(10);
             if (machHalted(iterations)) {
@@ -388,7 +379,7 @@ void MachineSimulation::simulate() {
         }
         tape = mach->getTape();
         int offset = mach->getTapeHeadOffset();
-        tapeStr = "";
+        tapeStr.clear();
         int spacing = tape.size()/2 - offset;
         for (auto it = tape.begin(); it != tape.end(); it++) {
             if (spacing == 0) tapeStr.append(" |");
@@ -421,20 +412,15 @@ void MachineSimulation::simulate() {
                 return;
             }
         }
-        while (!uiReady()) {
+        while (!uiIsReady) {
             QThread::msleep(1);
             if (machHalted(iterations)) {
                 return;
             }
         }
         iterations++;
-        if ((iterations > maxIter) && haltWhenMaxIter) {
-            emit changeStatusSgn("The machine reached maximum number of iterations");
-            return;
-        }
         mach->advance();
     }
-    while (true);
 }
 
 bool MachineSimulation::machHalted(int iterations) {
@@ -444,12 +430,19 @@ bool MachineSimulation::machHalted(int iterations) {
         halts = true;
         return true;
     }
-    if (haltSim) {
-        emit changeStatusSgn("The machine halted by user's order");
+    else if (haltSim) {
+        emit changeStatusSgn("The machine halted by user's order. Iterations: " + QString::number(iterations));
         state = "TableLoaded";
         return true;
     }
-    return false;
+    else if ((iterations > set->getIterTilHalt()) && set->getHaltInXIt()) {
+        emit changeStatusSgn("The machine reached maximum number of iterations: " + QString::number(iterations));
+        state = "TableLoaded";
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void MachineSimulation::selectTableCellSlt(int st, int sy) {
@@ -516,6 +509,14 @@ void MachineSimulation::changeStatusSlt(QString status) {
     statusBar()->showMessage(status);
 }
 
+void MachineSimulation::updateDelaySlt(int delay)
+{
+    if (state != "Sim") {
+        localDelayFormat = delay/10;
+        emit delayChangedSgn(localDelayFormat);
+    }
+}
+
 void MachineSimulation::pause() {
     QString message = statusBar()->currentMessage();
     statusBar()->showMessage("Paused" + message.split("Simulating").at(1));
@@ -545,7 +546,7 @@ void MachineSimulation::decreaseSpeed()
     else {
         localDelayFormat = localDelayFormat * 1.2;
     }
-    emit delayChanged(localDelayFormat);
+    emit delayChangedSgn(localDelayFormat);
 }
 
 void MachineSimulation::increaseSpeed()
@@ -556,7 +557,7 @@ void MachineSimulation::increaseSpeed()
     else {
         localDelayFormat = localDelayFormat * 0.8;
     }
-    emit delayChanged(localDelayFormat);
+    emit delayChangedSgn(localDelayFormat);
 }
 
 int MachineSimulation::getLocalDelay()

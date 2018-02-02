@@ -59,7 +59,7 @@ private slots:
     void on_settingsBt_clicked();
     void on_slowerBt_clicked();
     void on_fasterBt_clicked();
-    void delayUpdated(int delay);
+    void delayUpdatedSlt(int delay);
     void on_buttonSelect_currentIndexChanged(int index);
 
 private:

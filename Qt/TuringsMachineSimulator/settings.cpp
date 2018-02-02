@@ -76,10 +76,13 @@ void Settings::setDefaults() {
     // Settings for the simulation tab
     delayTime = 200;
     ui->delaySpinBox->setValue(delayTime);
-    haltInXIt = false;
+    haltInXIt = true;
+    ui->haltSimCheck->setChecked(haltInXIt);
     ui->haltSimSpinBox->setEnabled(haltInXIt);
     iterTilHalt = 1000;
     ui->haltSimSpinBox->setValue(iterTilHalt);
+    simHistory = 100;
+    ui->simHistSBox->setValue(simHistory);
 }
 
 void Settings::loadPresets()
@@ -262,8 +265,10 @@ void Settings::closeEvent(QCloseEvent *event) {
 
     // Saving simulation settings
     delayTime = ui->delaySpinBox->value();
+    emit delayChangedSgn(delayTime);
     haltInXIt = ui->haltSimCheck->isChecked();
     iterTilHalt = ui->haltSimSpinBox->value();
+    simHistory = ui->simHistSBox->value();
 
     close();
     QWidget::closeEvent(event);
@@ -272,6 +277,11 @@ void Settings::closeEvent(QCloseEvent *event) {
 int Settings::getIterTilHalt()
 {
     return iterTilHalt;
+}
+
+int Settings::getSimHistory()
+{
+    return simHistory;
 }
 
 bool Settings::getHaltInXIt()
@@ -372,11 +382,6 @@ QString Settings::getRandTableName()
 int Settings::getDelayTime()
 {
     return delayTime;
-}
-
-void Settings::setDelayTime(int value)
-{
-    delayTime = value;
 }
 
 void Settings::on_maxStSpinBox_valueChanged(int arg1)
@@ -626,4 +631,9 @@ void Settings::on_presetsCBox_currentIndexChanged(int index)
             break;
         }
     }
+}
+
+void Settings::on_defaultSetBt_clicked()
+{
+    setDefaults();
 }
