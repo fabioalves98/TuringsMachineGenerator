@@ -60,6 +60,7 @@ private slots:
     void on_tapeSySBox_valueChanged(int arg1);
     void on_rBSyCheck_stateChanged(int arg1);
     void on_loadPresetBt_clicked();
+    void on_presetsCBox_currentIndexChanged(int index);
 
 private:
     void setDefaults();

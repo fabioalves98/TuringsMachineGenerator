@@ -557,11 +557,8 @@ void UserMachines::on_saveTableBt_clicked()
         }
         QTextStream out(&file);
         Machine *toSave = listMach.at(ui->tableSim->currentIndex() - 1);
-        out << "begin_info" << endl;
-        out << "bs: " << toSave->getBlanckSym() << endl;
         out << "is: " << toSave->getInitState() << endl;
         out << "fs: " << toSave->getHaltState() << endl;
-        out << "begin_table" << endl;
         QVector<QChar> *states = toSave->getStates();
         QVector<QChar> *symbols = toSave->getSymbols();
         out << "  *  ";
@@ -577,7 +574,6 @@ void UserMachines::on_saveTableBt_clicked()
             }
             out << endl;
         }
-        out << "end_table";
         file.flush();
         file.close();
     }

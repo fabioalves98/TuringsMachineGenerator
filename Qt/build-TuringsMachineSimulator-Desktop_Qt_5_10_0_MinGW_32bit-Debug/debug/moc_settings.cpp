@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Settings_t {
-    QByteArrayData data[18];
-    char stringdata0[314];
+    QByteArrayData data[20];
+    char stringdata0[355];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,9 @@ QT_MOC_LITERAL(13, 223, 10), // "fixSymbols"
 QT_MOC_LITERAL(14, 234, 2), // "sy"
 QT_MOC_LITERAL(15, 237, 26), // "on_tapeSySBox_valueChanged"
 QT_MOC_LITERAL(16, 264, 25), // "on_rBSyCheck_stateChanged"
-QT_MOC_LITERAL(17, 290, 23) // "on_loadPresetBt_clicked"
+QT_MOC_LITERAL(17, 290, 23), // "on_loadPresetBt_clicked"
+QT_MOC_LITERAL(18, 314, 34), // "on_presetsCBox_currentIndexCh..."
+QT_MOC_LITERAL(19, 349, 5) // "index"
 
     },
     "Settings\0loadPresetSgn\0\0Machine*\0"
@@ -60,7 +62,9 @@ QT_MOC_LITERAL(17, 290, 23) // "on_loadPresetBt_clicked"
     "on_haltSimCheck_stateChanged\0fixStates\0"
     "st\0fixSymbols\0sy\0on_tapeSySBox_valueChanged\0"
     "on_rBSyCheck_stateChanged\0"
-    "on_loadPresetBt_clicked"
+    "on_loadPresetBt_clicked\0"
+    "on_presetsCBox_currentIndexChanged\0"
+    "index"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +74,7 @@ static const uint qt_meta_data_Settings[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,20 +82,21 @@ static const uint qt_meta_data_Settings[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   74,    2, 0x06 /* Public */,
+       1,    1,   79,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   77,    2, 0x08 /* Private */,
-       6,    1,   80,    2, 0x08 /* Private */,
-       7,    1,   83,    2, 0x08 /* Private */,
-       8,    1,   86,    2, 0x08 /* Private */,
-       9,    1,   89,    2, 0x08 /* Private */,
-      10,    1,   92,    2, 0x08 /* Private */,
-      11,    1,   95,    2, 0x08 /* Private */,
-      13,    1,   98,    2, 0x08 /* Private */,
-      15,    1,  101,    2, 0x08 /* Private */,
-      16,    1,  104,    2, 0x08 /* Private */,
-      17,    0,  107,    2, 0x08 /* Private */,
+       4,    1,   82,    2, 0x08 /* Private */,
+       6,    1,   85,    2, 0x08 /* Private */,
+       7,    1,   88,    2, 0x08 /* Private */,
+       8,    1,   91,    2, 0x08 /* Private */,
+       9,    1,   94,    2, 0x08 /* Private */,
+      10,    1,   97,    2, 0x08 /* Private */,
+      11,    1,  100,    2, 0x08 /* Private */,
+      13,    1,  103,    2, 0x08 /* Private */,
+      15,    1,  106,    2, 0x08 /* Private */,
+      16,    1,  109,    2, 0x08 /* Private */,
+      17,    0,  112,    2, 0x08 /* Private */,
+      18,    1,  113,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Int, 0x80000000 | 3,    2,
@@ -108,6 +113,7 @@ static const uint qt_meta_data_Settings[] = {
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   19,
 
        0        // eod
 };
@@ -131,6 +137,7 @@ void Settings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 9: _t->on_tapeSySBox_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->on_rBSyCheck_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 11: _t->on_loadPresetBt_clicked(); break;
+        case 12: _t->on_presetsCBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -170,13 +177,13 @@ int Settings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

@@ -232,24 +232,22 @@ void MachineSimulation::displayTape() {
     QString tapeStr;
     int offset = tempTape.size()/2 - tempHeadPos;
     for (int i = 0; i < tempTape.size(); i++) {
-        if (i == tempHeadPos) tapeStr.append(" ");
-        tapeStr.append("|");
-        tapeStr.append(*tapeIt);
-        tapeStr.append("|");
-        if (i == tempHeadPos) tapeStr.append(" ");
+        if (i == tempHeadPos) tapeStr.append(" |");
+        tapeStr.append(*tapeIt);;
+        if (i == tempHeadPos) tapeStr.append("| ");
         tapeIt++;
     }
     if (tempTape.size() % 2 == 0) {
-        tapeStr.append("   ");
+        tapeStr.append(" ");
     }
     if (offset > 0) {
         for (int i = 0; i < abs(offset); i++) {
-            tapeStr.prepend("      ");
+            tapeStr.prepend("  ");
         }
     }
     else if (offset < 0) {
         for (int i = 0; i < abs(offset); i++) {
-            tapeStr.append("      ");
+            tapeStr.append("  ");
         }
     }
     QListWidgetItem *inTapeItem = new QListWidgetItem;

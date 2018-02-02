@@ -1,0 +1,8 @@
+is: A
+hs: Z
+  *    A    B    C    D    E    F    G    H    I    J
+  .   .LB  .RC  .RJ  .RF  .RG  xLA  1*H  .RI  .*I  .LZ
+  0   0LA  0LB  .RD  0RD  0RE  xLA  1*H  0LH  xLA  0RJ
+  1   1LA  1LB  .RE  1RD  1RE  yLA  0RG  1LH  yLA  1RJ
+  x   xLA  xLB  x*C  xRD  xRE  xRF  xRG  xRI  x*I  0RJ
+  y   yLA  yLB  y*C  yRD  yRE  yRF  yRG  yRI  y*I  1RJ

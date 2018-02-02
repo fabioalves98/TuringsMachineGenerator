@@ -266,8 +266,8 @@ public:
 
         presetDescTBrows = new QTextBrowser(groupBox);
         presetDescTBrows->setObjectName(QStringLiteral("presetDescTBrows"));
-        presetDescTBrows->setMinimumSize(QSize(0, 70));
-        presetDescTBrows->setMaximumSize(QSize(16777215, 70));
+        presetDescTBrows->setMinimumSize(QSize(0, 48));
+        presetDescTBrows->setMaximumSize(QSize(16777215, 48));
 
         verticalLayout_3->addWidget(presetDescTBrows);
 
@@ -785,7 +785,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Settings);

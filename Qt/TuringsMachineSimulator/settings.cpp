@@ -122,7 +122,7 @@ void Settings::loadPresets()
     cells << "eLB" << "eLC" << "0LD" << "xLE" << "0RF" << "xRG" << "x*G" << "xRI" << "xRJ" << "xRG" << "xLL" << "xLK" << ".LK" << "xRM" << "xLQ" << "xRG" << "xLO";
     createPreset(name, states, symbols, cells, 'A', 'Z');
 
-    // Creating the Binary to Decimal Converter
+    // Creating the Binary to Decimal Converter preset
     name = "Bin2Dec Converter";
     ui->presetsCBox->addItem(name);
     states.clear();
@@ -147,6 +147,24 @@ void Settings::loadPresets()
     cells << "7LB" << "7LB" << "7LC" << "7*D" << "7RE" << "8LC" << ".LG" << "7RI" << "7RI";
     cells << "8LB" << "8LB" << "8LC" << "8*D" << "8RE" << "9LC" << ".LG" << "8RI" << "8RI";
     cells << "9LB" << "9LB" << "9LC" << "9*D" << "9RE" << "0RF" << ".LG" << "9RI" << "9RI";
+    createPreset(name, states, symbols, cells, 'A', 'Z');
+
+    // Creating the Binary Addition preset
+    name = "Binary Addition";
+    ui->presetsCBox->addItem(name);
+    states.clear();
+    for (int i = 0; i < 9; i++) {
+        states.append(abc.at(i));
+        if (i == 6) states.append('H');
+    }
+    symbols.clear();
+    symbols.append('.'); symbols.append('0'); symbols.append('1'); symbols.append('x'); symbols.append('y');
+    cells.clear();
+    cells << ".LB" << ".RC" << ".RJ" << ".RF" << ".RG" << "xLA" << "1*H" << ".RI" << ".*I" << ".LZ";
+    cells << "0LA" << "0LB" << ".RD" << "0RD" << "0RE" << "xLA" << "1*H" << "0LH" << "xLA" << "0RJ";
+    cells << "1LA" << "1LB" << ".RE" << "1RD" << "1RE" << "yLA" << "0RG" << "1LH" << "yLA" << "1RJ";
+    cells << "xLA" << "xLB" << "x*C" << "xRD" << "xRE" << "xRF" << "xRG" << "xRI" << "x*I" << "0RJ";
+    cells << "yLA" << "yLB" << "y*C" << "yRD" << "yRE" << "yRF" << "yRG" << "yRI" << "y*I" << "1RJ";
     createPreset(name, states, symbols, cells, 'A', 'Z');
 }
 
@@ -556,4 +574,56 @@ void Settings::on_rBSyCheck_stateChanged(int arg1)
 void Settings::on_loadPresetBt_clicked()
 {
     emit loadPresetSgn(presets.at(ui->presetsCBox->currentIndex()));
+}
+
+void Settings::on_presetsCBox_currentIndexChanged(int index)
+{
+    QString desc;
+    switch (index) {
+        case 0: {
+            desc.append("Has 3 states and given a blanck tape (0's) it will write the most 1's it can until halting.\n");
+            desc.append("Tape: Empty tape with the blanck symbol equal to the fisrt symbol of the machine.");
+            ui->presetDescTBrows->setText(desc);
+            QFont font = ui->presetDescTBrows->font();
+            font.setPointSize(11);
+            ui->presetDescTBrows->setFont(font);
+            break;
+        }
+        case 1: {
+            desc.append("Has 4 states and given a blanck tape (0's) it will write the most 1's it can until halting.\n");
+            desc.append("Tape: Empty tape with the blanck symbol equal to the fisrt symbol of the machine.");
+            ui->presetDescTBrows->setText(desc);
+            QFont font = ui->presetDescTBrows->font();
+            font.setPointSize(11);
+            ui->presetDescTBrows->setFont(font);
+            break;
+        }
+        case 2: {
+            desc.append("It will write the sequence 0010110111011110... in the even cells of the tape.\n");
+            desc.append("Tape: Empty tape with the blanck symbol equal to the fisrt symbol of the machine.");
+            ui->presetDescTBrows->setText(desc);
+            QFont font = ui->presetDescTBrows->font();
+            font.setPointSize(11);
+            ui->presetDescTBrows->setFont(font);
+            break;
+        }
+        case 3: {
+            desc.append("Converts a number from binary to decimal. Head must be the most significant bit.\n");
+            desc.append("Tape: Binary number with the blanck symbol equal to the fisrt symbol of the machine.");
+            ui->presetDescTBrows->setText(desc);
+            QFont font = ui->presetDescTBrows->font();
+            font.setPointSize(11);
+            ui->presetDescTBrows->setFont(font);
+            break;
+        }
+        case 4: {
+            desc.append("Adds two binary numbers. Head must be the most significant bit of the first operand.\n");
+            desc.append("Tape: 2 binary number separated by the blanck symbol wich should be equal to the fisrt symbol of the machine.");
+            ui->presetDescTBrows->setText(desc);
+            QFont font = ui->presetDescTBrows->font();
+            font.setPointSize(11);
+            ui->presetDescTBrows->setFont(font);
+            break;
+        }
+    }
 }
