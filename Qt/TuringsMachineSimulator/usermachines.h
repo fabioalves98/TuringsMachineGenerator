@@ -54,7 +54,7 @@ private slots:
     void on_cRandTableBt_clicked();
     void on_editTableBt_clicked();
     void on_qRandTableBt_clicked();
-    void selTapeButtons(int item);
+    void selTapeButtons(QString name);
     void on_loadTapeBt_clicked();
     void on_saveTableBt_clicked();
     void on_settingsBt_clicked();
@@ -62,8 +62,8 @@ private slots:
     void on_fasterBt_clicked();
     void delayUpdatedSlt(int delay);
     void on_buttonSelect_currentIndexChanged(int index);
-    void showContextMenu(const QPoint &pos);
-    void deleteItem();
+    void showMachineContextMenu(const QPoint &pos);
+    void showTapeContextMenu(const QPoint &pos);
 
 private:
     bool addMachine(Machine* toAdd);

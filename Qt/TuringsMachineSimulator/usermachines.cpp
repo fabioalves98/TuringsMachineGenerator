@@ -16,7 +16,9 @@ UserMachines::UserMachines(QWidget *parent) :
     connect(set, SIGNAL(loadPresetSgn(Machine*)), this, SLOT(loadPresetSlt(Machine*)));
 
     ui->tablesList->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->tablesList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint&)));
+    connect(ui->tablesList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showMachineContextMenu(const QPoint&)));
+    ui->tapesList->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tapesList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showTapeContextMenu(const QPoint)));
 }
 
 UserMachines::~UserMachines()
@@ -303,8 +305,8 @@ bool UserMachines::addTape(Tape *toAdd)
         QRadioButton *radio = new QRadioButton();
         QSignalMapper *sigMap = new QSignalMapper(this);
         connect(radio, SIGNAL(clicked(bool)), sigMap, SLOT(map()));
-        sigMap->setMapping(radio, ui->tapesList->count());
-        connect(sigMap, SIGNAL(mapped(int)), SLOT(selTapeButtons(int)));
+        sigMap->setMapping(radio, toAdd->getName());
+        connect(sigMap, SIGNAL(mapped(QString)), SLOT(selTapeButtons(QString)));
         layout->addWidget(radio);
         radio->click();
 
@@ -518,9 +520,9 @@ void UserMachines::on_editTableBt_clicked()
     }
 }
 
-void UserMachines::selTapeButtons(int item) {
+void UserMachines::selTapeButtons(QString name) {
     for (int i = 0; i < ui->tapesList->count(); i++) {
-        if (i == item) {
+        if (dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(0)->widget())->text() == name) {
             dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
         }
         else {
@@ -629,21 +631,31 @@ void UserMachines::on_buttonSelect_currentIndexChanged(int index)
     }
 }
 
-void UserMachines::showContextMenu(const QPoint &pos)
+void UserMachines::showMachineContextMenu(const QPoint &pos)
 {
-    QPoint globalPos = ui->tablesList->mapToGlobal(pos);
-    QMenu myMenu;
-    myMenu.addAction(QIcon(QPixmap(":rec/icons/cancel")), "Delete",  this, SLOT(deleteItem()));
-    myMenu.exec(globalPos);
+    QModelIndex index = ui->tablesList->indexAt(pos);
+    delete ui->tablesList->item(index.row());
+    delete ui->tableSim->widget(index.row() + 1);
+    listMach.remove(index.row());
 }
 
-void UserMachines::deleteItem()
+void UserMachines::showTapeContextMenu(const QPoint &pos)
 {
-    for (int i = 0; i < ui->tablesList->count(); i++) {
-        if (ui->tablesList->item(i)->isSelected()) {
-            delete ui->tablesList->item(i);
-            delete ui->tableSim->widget(i+1);
-            listMach.remove(i);
+    QModelIndex mIndex = ui->tapesList->indexAt(pos);
+    int index = mIndex.row();
+    Tape *toDel = listTape.at(index);
+    if (toDel->getName() != "Default") {
+        for (int i = 1; i < ui->tableSim->count(); i++) {
+            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->getTape()->getName() == toDel->getName()) {
+                dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->setTape(listTape.at(0));
+                QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(3)->widget())->pixmap());
+                dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i - 1))->layout()->itemAt(1)->widget())->setPixmap(pix);
+            }
         }
+        if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(index))->layout()->itemAt(2)->widget())->isChecked()) {
+            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(2)->widget())->setChecked(true);
+        }
+        listTape.remove(index);
+        delete ui->tapesList->item(index);
     }
 }

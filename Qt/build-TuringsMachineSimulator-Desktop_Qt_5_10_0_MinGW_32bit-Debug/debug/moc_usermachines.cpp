@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UserMachines_t {
     QByteArrayData data[32];
-    char stringdata0[508];
+    char stringdata0[524];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,7 +50,7 @@ QT_MOC_LITERAL(15, 215, 23), // "on_cRandTableBt_clicked"
 QT_MOC_LITERAL(16, 239, 22), // "on_editTableBt_clicked"
 QT_MOC_LITERAL(17, 262, 23), // "on_qRandTableBt_clicked"
 QT_MOC_LITERAL(18, 286, 14), // "selTapeButtons"
-QT_MOC_LITERAL(19, 301, 4), // "item"
+QT_MOC_LITERAL(19, 301, 4), // "name"
 QT_MOC_LITERAL(20, 306, 21), // "on_loadTapeBt_clicked"
 QT_MOC_LITERAL(21, 328, 22), // "on_saveTableBt_clicked"
 QT_MOC_LITERAL(22, 351, 21), // "on_settingsBt_clicked"
@@ -60,9 +60,9 @@ QT_MOC_LITERAL(25, 413, 15), // "delayUpdatedSlt"
 QT_MOC_LITERAL(26, 429, 5), // "delay"
 QT_MOC_LITERAL(27, 435, 35), // "on_buttonSelect_currentIndexC..."
 QT_MOC_LITERAL(28, 471, 5), // "index"
-QT_MOC_LITERAL(29, 477, 15), // "showContextMenu"
-QT_MOC_LITERAL(30, 493, 3), // "pos"
-QT_MOC_LITERAL(31, 497, 10) // "deleteItem"
+QT_MOC_LITERAL(29, 477, 22), // "showMachineContextMenu"
+QT_MOC_LITERAL(30, 500, 3), // "pos"
+QT_MOC_LITERAL(31, 504, 19) // "showTapeContextMenu"
 
     },
     "UserMachines\0loadPresetSlt\0\0Machine*\0"
@@ -73,12 +73,13 @@ QT_MOC_LITERAL(31, 497, 10) // "deleteItem"
     "on_pauseBt_clicked\0on_contBt_clicked\0"
     "on_cRandTableBt_clicked\0on_editTableBt_clicked\0"
     "on_qRandTableBt_clicked\0selTapeButtons\0"
-    "item\0on_loadTapeBt_clicked\0"
+    "name\0on_loadTapeBt_clicked\0"
     "on_saveTableBt_clicked\0on_settingsBt_clicked\0"
     "on_slowerBt_clicked\0on_fasterBt_clicked\0"
     "delayUpdatedSlt\0delay\0"
     "on_buttonSelect_currentIndexChanged\0"
-    "index\0showContextMenu\0pos\0deleteItem"
+    "index\0showMachineContextMenu\0pos\0"
+    "showTapeContextMenu"
 };
 #undef QT_MOC_LITERAL
 
@@ -118,7 +119,7 @@ static const uint qt_meta_data_UserMachines[] = {
       25,    1,  154,    2, 0x08 /* Private */,
       27,    1,  157,    2, 0x08 /* Private */,
       29,    1,  160,    2, 0x08 /* Private */,
-      31,    0,  163,    2, 0x08 /* Private */,
+      31,    1,  163,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -134,7 +135,7 @@ static const uint qt_meta_data_UserMachines[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   19,
+    QMetaType::Void, QMetaType::QString,   19,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -143,7 +144,7 @@ static const uint qt_meta_data_UserMachines[] = {
     QMetaType::Void, QMetaType::Int,   26,
     QMetaType::Void, QMetaType::Int,   28,
     QMetaType::Void, QMetaType::QPoint,   30,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,   30,
 
        0        // eod
 };
@@ -167,7 +168,7 @@ void UserMachines::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 10: _t->on_cRandTableBt_clicked(); break;
         case 11: _t->on_editTableBt_clicked(); break;
         case 12: _t->on_qRandTableBt_clicked(); break;
-        case 13: _t->selTapeButtons((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->selTapeButtons((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 14: _t->on_loadTapeBt_clicked(); break;
         case 15: _t->on_saveTableBt_clicked(); break;
         case 16: _t->on_settingsBt_clicked(); break;
@@ -175,8 +176,8 @@ void UserMachines::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 18: _t->on_fasterBt_clicked(); break;
         case 19: _t->delayUpdatedSlt((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 20: _t->on_buttonSelect_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: _t->showContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 22: _t->deleteItem(); break;
+        case 21: _t->showMachineContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 22: _t->showTapeContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
         default: ;
         }
     }
