@@ -8,49 +8,23 @@ MachineSimulation::MachineSimulation(Machine *mach, Tape *tape, QWidget *parent)
     defTape(tape)
 {
     ui->setupUi(this);
-}
 
-MachineSimulation::~MachineSimulation()
-{
-    delete ui;
-}
-
-void MachineSimulation::start() {
-    // Setting the size of the simulation container
-    QList<int> sizes = ui->tableSplit->sizes();
-    sizes[0] = (int)ui->tableSplit->height()*0.45;
-    sizes[1] = (int)ui->tableSplit->height()*0.55;
-    ui->tableSplit->setSizes(sizes);
-    // Setting the size of the table view container
-    sizes = ui->specSplit->sizes();
-    sizes[0] = (int)ui->specSplit->width()*0.6;
-    sizes[1] = (int)ui->specSplit->width()*0.4;
-    ui->specSplit->setSizes(sizes);
-    // Settings the size of the properties view container
-    sizes = ui->propSplit->sizes();
-    sizes[0] = (int)ui->propSplit->width()*0.58;
-    sizes[1] = (int)ui->propSplit->width()*0.42;
-    ui->propSplit->setSizes(sizes);
-    // Setting the size of the states container
-    sizes = ui->simSplit->sizes();
-    sizes[0] = (int)ui->simSplit->width()*0.1;
-    sizes[1] = (int)ui->simSplit->width()*0.9;
-    ui->simSplit->setSizes(sizes);
     // Gettings the global Settings
     set = Settings::getInstance();
     connect(set, SIGNAL(delayChangedSgn(int)), this, SLOT(updateDelaySlt(int)));
     localDelayFormat = set->getDelayTime()/10;
-
-    if (defTape != nullptr) {
+    if (defTape != nullptr)
+    {
         setTape(defTape);
     }
 
+    // Disabling selection in table view
     ui->tableView->setSelectionMode(QAbstractItemView::NoSelection);
 
+    // Enabling or Disabling scroll bars
     ui->tableView->verticalScrollBar()->setEnabled(false);
     ui->tableView->horizontalScrollBar()->setEnabled(false);
     ui->tapeList->verticalScrollBar()->setEnabled(false);
-
     ui->statesList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->statesList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->stateList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -60,93 +34,68 @@ void MachineSimulation::start() {
     ui->tapeList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->inTape->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
+    // Adding the single item to teh state list
     ui->stateList->addItem(new QListWidgetItem);
 
+    // Conecting the signals for table resize
     connect(ui->specSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
     connect(ui->tableSplit, SIGNAL(splitterMoved(int,int)), this, SLOT(resizeTable()));
+
+    // Synchronizing scroll bars
     connect(ui->statesList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->simList->verticalScrollBar(), SLOT(setValue(int)));
     connect(ui->simList->verticalScrollBar(), SIGNAL(valueChanged(int)), ui->statesList->verticalScrollBar(), SLOT(setValue(int)));
 
-    connect(this, SIGNAL(updateUiSgn(int,int,int,QString,QString,QString)), this, SLOT(updateUiSlt(int,int,int,QString,QString,QString)));
+    // Connecting Ui signals and slots
+    connect(this, SIGNAL(updateUiSgn(int,int,QString,QString,QString)), this, SLOT(updateUiSlt(int,int,QString,QString,QString)));
     connect(this, SIGNAL(changeStatusSgn(QString)), this, SLOT(changeStatusSlt(QString)));
-
     statusBar()->showMessage("No Status");
 }
 
-void MachineSimulation::setMachine(Machine *mach) {
-    this->mach = mach;
-}
-
-void MachineSimulation::setTape(Tape *tape) {
-    this->defTape = tape;
-    tapeEdited = false;
-    tempTape = defTape->getTape();
-    tempHeadPos = defTape->getTapePos();
-    blanckSym = defTape->getBlanckSym();
-    on_headPos_valueChanged(tempHeadPos);
-}
-
-Tape *MachineSimulation::getTape()
+MachineSimulation::~MachineSimulation()
 {
-    return defTape;
+    delete ui;
 }
 
-void MachineSimulation::editTape()
+void MachineSimulation::changeStatusSlt(QString status)
 {
-    EditTapes *edit = new EditTapes(tempTape, blanckSym);
-    edit->show();
-    edit->loadTape();
-    while (!edit->isReady()) {
-            QThread::msleep(10);
-            QCoreApplication::processEvents();
-            if (!edit->isVisible()) {
-                return;
-            }
-    }
-    if (edit->isEdited()) {
-        tapeEdited = true;
-        editedTape = edit->getTape();
-        blanckSym = edit->getBlanckSym();
-        on_headPos_valueChanged(editedTape.size()/2);
-    }
-    else {
-        setTape(defTape);
-    }
-    edit->close();
+    statusBar()->showMessage(status);
 }
 
-void MachineSimulation::saveTape()
+void MachineSimulation::cont()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save Turing's Machine", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-            qDebug() << "Error saving file";
-            return;
-    }
-    QTextStream out(&file);
-    out << "hp: " << ui->headPos->value() << endl;
-    out << "bs: " << blanckSym << endl;
-    for (auto it = tempTape.begin(); it != tempTape.end(); it++) {
-        out << *it;
-    }
-    out << endl;
-    file.flush();
-    file.close();
+    state = "Sim";
+    pauseSim = false;
 }
 
-void MachineSimulation::display() {
+void MachineSimulation::decreaseSpeed()
+{
+    if (localDelayFormat < 5)
+    {
+        localDelayFormat++;
+    }
+    else
+    {
+        localDelayFormat = localDelayFormat * 1.2;
+    }
+    emit delayChangedSgn(localDelayFormat);
+}
+
+void MachineSimulation::displayMachine()
+{
     ui->tableView->clear();
-    // Get the states, symbols and instructions, fill a table with them
     QVector<QChar> *symbols = mach->getSymbols();
     QVector<QChar> *states = mach->getStates();
     ui->tableView->setRowCount(symbols->size());
     ui->tableView->setColumnCount(states->size());
-    for (int i = 0, k = 0; i < symbols->size(); i++) {
+    for (int i = 0, k = 0; i < symbols->size(); i++)
+    {
         QTableWidgetItem *vHeader = new QTableWidgetItem(symbols->at(i));
         vHeader->setFont(QFont("Meiryo", 11));
         ui->tableView->setVerticalHeaderItem(i, vHeader);
-        for (int j = 0; j < states->size(); j++, k++) {
-            if (i == 0) {
+        for (int j = 0; j < states->size(); j++, k++)
+        {
+            if (i == 0)
+            {
                 QTableWidgetItem *hHeader = new QTableWidgetItem(states->at(j));
                 hHeader->setFont(QFont("Meiryo", 11));
                 ui->tableView->setHorizontalHeaderItem(j, hHeader);
@@ -162,7 +111,6 @@ void MachineSimulation::display() {
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->tablePropList->clear();
-    // Get the remaining properties, and fill the PropertiesList
     QStringList properties;
     properties << " Name: " << " Symbols: " << " States: " << " Inicial State: " << " Halt State: ";
     for (QString prop : properties) {
@@ -174,35 +122,43 @@ void MachineSimulation::display() {
         propName->setFont(QFont("Meiryo", 11, QFont::Bold));
         layout->addWidget(propName);
         QLabel *propValue = new QLabel;
-        switch(properties.indexOf(prop)) {
-            case 0: {
+        switch(properties.indexOf(prop))
+        {
+            case 0:
+            {
                 propValue->setText(mach->getFileName());
                 break;
             }
-            case 1: {
+            case 1:
+            {
                 QString *symbolsStr = new QString;
-                for (QChar symbol : *mach->getSymbols()) {
+                for (QChar symbol : *mach->getSymbols())
+                {
                     symbolsStr->append(symbol);
                     symbolsStr->append((" "));
                 }
                 propValue->setText(*symbolsStr);
                 break;
             }
-            case 2: {
+            case 2:
+            {
                 QString *statesStr = new QString;
-                for (QChar state : *mach->getStates()) {
+                for (QChar state : *mach->getStates())
+                {
                     statesStr->append(state);
                     statesStr->append((" "));
                 }
                 propValue->setText(*statesStr);
                 break;
             }
-            case 3: {
+            case 3:
+            {
                 QString iSt(mach->getInitState());
                 propValue->setText(iSt);
                 break;
             }
-            case 4: {
+            case 4:
+            {
                 QString hSt(mach->getHaltState());
                 propValue->setText(hSt);
                 break;
@@ -221,33 +177,41 @@ void MachineSimulation::display() {
     tableIsLoaded = true;
     resizeTable();
     state = "TableLoaded";
-    statusBar()->showMessage("Machine is Loaded");
+    changeStatusSlt("Machine is Loaded");
 }
 
-void MachineSimulation::displayTape() {
+void MachineSimulation::displayTape()
+{
     ui->headPos->setValue(tempHeadPos);
-    if (tempHeadPos<= 0) {
+    if (tempHeadPos<= 0)
+    {
         tempHeadPos = 1;
     }
     std::list<QChar>::iterator tapeIt = tempTape.begin();
     QString tapeStr;
     int offset = tempTape.size()/2 - tempHeadPos;
-    for (int i = 0; i < tempTape.size(); i++) {
+    for (int i = 0; i < tempTape.size(); i++)
+    {
         if (i == tempHeadPos) tapeStr.append(" |");
         tapeStr.append(*tapeIt);;
         if (i == tempHeadPos) tapeStr.append("| ");
         tapeIt++;
     }
-    if (tempTape.size() % 2 == 0) {
+    if (tempTape.size() % 2 == 0)
+    {
         tapeStr.append(" ");
     }
-    if (offset > 0) {
-        for (int i = 0; i < abs(offset); i++) {
+    if (offset > 0)
+    {
+        for (int i = 0; i < abs(offset); i++)
+        {
             tapeStr.prepend("  ");
         }
     }
-    else if (offset < 0) {
-        for (int i = 0; i < abs(offset); i++) {
+    else if (offset < 0)
+    {
+        for (int i = 0; i < abs(offset); i++)
+        {
             tapeStr.append("  ");
         }
     }
@@ -263,7 +227,8 @@ void MachineSimulation::displayTape() {
     ui->tapePropList->clear();
     QStringList properties;
     properties << " Name: " << " Size: " << " Blanck Symbol: ";
-    for (QString prop : properties) {
+    for (QString prop : properties)
+    {
         QListWidgetItem *newProI = new QListWidgetItem;
         QWidget *newProW = new QWidget;
         QHBoxLayout *layout = new QHBoxLayout;
@@ -272,21 +237,27 @@ void MachineSimulation::displayTape() {
         propName->setFont(QFont("Meiryo", 11, QFont::Bold));
         layout->addWidget(propName);
         QLabel *propValue = new QLabel;
-        switch(properties.indexOf(prop)) {
-            case 0: {
-                if (tapeEdited) {
+        switch(properties.indexOf(prop))
+        {
+            case 0:
+            {
+                if (tapeEdited)
+                {
                     propValue->setText(defTape->getName() + " - Edited");
                 }
-                else {
+                else
+                {
                     propValue->setText(defTape->getName());
                 }
                 break;
             }
-            case 1: {
+            case 1:
+            {
                 propValue->setText(QString::number(tempTape.size()));
                 break;
             }
-            case 2: {
+            case 2:
+            {
                 propValue->setText(QString(blanckSym));
                 break;
             }
@@ -302,158 +273,69 @@ void MachineSimulation::displayTape() {
     }
 }
 
-void MachineSimulation::updateUiSlt(int iter, int st, int sy, QString state, QString tape, QString status) {
-    int toClean = ui->simList->count()  - set->getSimHistory();
-    for (int i = 0; i < toClean; i++) {
-         delete ui->simList->item(0);
-         delete ui->tapeList->item(0);
-         delete ui->statesList->item(0);
-    }
-    selectTableCellSlt(st, sy);
-    insertStateSlt(state);
-    insertTapeSlt(tape);
-    changeStatusSlt(status);
-    uiIsReady = true;
-}
-
-void MachineSimulation::resizeEvent(QResizeEvent *event)
+void MachineSimulation::editTape()
 {
-    resizeTable();
-    update();
-    QWidget::resizeEvent(event);
+    EditTapes *edit = new EditTapes(tempTape, blanckSym);
+    edit->show();
+    edit->loadTape();
+    while (!edit->isReady())
+    {
+        QThread::msleep(10);
+        QCoreApplication::processEvents();
+        if (!edit->isVisible())
+        {
+            return;
+        }
+    }
+    if (edit->isEdited())
+    {
+        tapeEdited = true;
+        editedTape = edit->getTape();
+        blanckSym = edit->getBlanckSym();
+        on_headPos_valueChanged(editedTape.size()/2);
+    }
+    else
+    {
+        setTape(defTape);
+    }
+    edit->close();
 }
 
-void MachineSimulation::resizeTable() {
-    if (tableIsLoaded) {
-        int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
-        int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
-        int horExccess = (ui->tableView->width() - ui->tableView->verticalHeader()->width()) - ui->tableView->columnCount()*columnWidth;
-        int verExccess = (ui->tableView->height() - ui->tableView->horizontalHeader()->height()) - ui->tableView->rowCount()*rowHeigth;
-        for (int i = 0; i < ui->tableView->rowCount(); i++) {
-            if (verExccess > 1) {
-                ui->tableView->setRowHeight(i, rowHeigth + 1);
-                verExccess--;
-            }
-            else {
-                ui->tableView->setRowHeight(i, rowHeigth);
-            }
-
-        }
-        for (int i = 0; i < ui->tableView->columnCount(); i++) {
-            if (horExccess > 1) {
-                ui->tableView->setColumnWidth(i, columnWidth + 1);
-                horExccess--;
-            }
-            else {
-                ui->tableView->setColumnWidth(i, columnWidth);
-            }
-        }
-    }
+int MachineSimulation::getLocalDelay()
+{
+    return int(localDelayFormat);
 }
 
-void MachineSimulation::simulate() {
-    if (!tableIsLoaded) return;
-    state = "Sim";
-    haltSim = false;
-    pauseSim = false;
-    halts = false;
-    ui->simList->clear();
-    ui->statesList->clear();
-    ui->tapeList->clear();
-    mach->start(tempTape, tempHeadPos, blanckSym);
-
-    int iterations = 0;
-
-    std::list<QChar> tape;
-    QString tapeStr;
-
-    while (true) {
-        if (pauseSim) {
-            QThread::msleep(10);
-            if (machHalted(iterations)) {
-                return;
-            }
-            else {
-                continue;
-            }
-        }
-        tape = mach->getTape();
-        int offset = mach->getTapeHeadOffset();
-        tapeStr.clear();
-        int spacing = tape.size()/2 - offset;
-        for (auto it = tape.begin(); it != tape.end(); it++) {
-            if (spacing == 0) tapeStr.append(" |");
-            tapeStr.append(*it);
-            if (spacing == 0) tapeStr.append("| ");
-            spacing--;
-        }
-        if (tape.size() % 2 == 0) {
-            tapeStr.append(" ");
-        }
-        if (offset > 0) {
-            for (int i = 0; i < abs(offset); i++) {
-                tapeStr.prepend("  ");
-            }
-        }
-        else if (offset < 0) {
-            for (int i = 0; i < abs(offset); i++) {
-                tapeStr.append("  ");
-            }
-        }
-        int st = mach->getStates()->indexOf(mach->getCurrentState());
-        int sy = mach->getSymbols()->indexOf(mach->getCurrentSymbol());
-
-        uiIsReady = false;
-        emit updateUiSgn(iterations, st, sy, mach->getCurrentState(), tapeStr, "Simulating - " + QString::number(iterations) + " iterations");
-
-        for (int i = 0; i < localDelayFormat; i++) {
-            QThread::msleep(10);
-            if (machHalted(iterations)) {
-                return;
-            }
-        }
-        while (!uiIsReady) {
-            QThread::msleep(1);
-            if (machHalted(iterations)) {
-                return;
-            }
-        }
-        iterations++;
-        mach->advance();
-    }
+QString MachineSimulation::getState()
+{
+    return state;
 }
 
-bool MachineSimulation::machHalted(int iterations) {
-    if (mach->halted()) {
-        emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations");
-        state = "TableLoaded";
-        halts = true;
-        return true;
-    }
-    else if (haltSim) {
-        emit changeStatusSgn("The machine halted by user's order. Iterations: " + QString::number(iterations));
-        state = "TableLoaded";
-        return true;
-    }
-    else if ((iterations > set->getIterTilHalt()) && set->getHaltInXIt()) {
-        emit changeStatusSgn("The machine reached maximum number of iterations: " + QString::number(iterations));
-        state = "TableLoaded";
-        return true;
-    }
-    else {
-        return false;
-    }
+Tape *MachineSimulation::getTape()
+{
+    return defTape;
 }
 
-void MachineSimulation::selectTableCellSlt(int st, int sy) {
-    if (st >= 0) {
-        ui->tableView->clearSelection();
-        QModelIndex model = ui->tableView->model()->index(sy, st);
-        ui->tableView->selectionModel()->select(model, QItemSelectionModel::Select);
-    }
+bool MachineSimulation::halted()
+{
+    return halts;
 }
 
-void MachineSimulation::insertStateSlt(QString state) {
+void MachineSimulation::increaseSpeed()
+{
+    if (localDelayFormat < 5 && localDelayFormat > 0)
+    {
+        localDelayFormat--;
+    }
+    else
+    {
+        localDelayFormat = localDelayFormat * 0.8;
+    }
+    emit delayChangedSgn(localDelayFormat);
+}
+
+void MachineSimulation::insertStateSlt(QString state)
+{
     QListWidgetItem *newStateI = new QListWidgetItem;
     QLabel *statesText = new QLabel;
     statesText->setText(state);
@@ -472,7 +354,8 @@ void MachineSimulation::insertStateSlt(QString state) {
     ui->stateList->setItemWidget(ui->stateList->item(0), stateText);
 }
 
-void MachineSimulation::insertTapeSlt(QString toUpdate) {
+void MachineSimulation::insertTapeSlt(QString toUpdate)
+{
     QListWidgetItem *tableTextI = new QListWidgetItem;
     QLabel *tableText = new QLabel;
     tableText->setText(toUpdate);
@@ -505,99 +388,294 @@ void MachineSimulation::insertTapeSlt(QString toUpdate) {
     ui->tapeList->update();
 }
 
-void MachineSimulation::changeStatusSlt(QString status) {
-    statusBar()->showMessage(status);
-}
-
-void MachineSimulation::updateDelaySlt(int delay)
+bool MachineSimulation::machHalted(int iterations)
 {
-    if (state != "Sim") {
-        localDelayFormat = delay/10;
-        emit delayChangedSgn(localDelayFormat);
+    if (mach->halted())
+    {
+        emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations");
+        state = "TableLoaded";
+        halts = true;
+        return true;
+    }
+    else if (haltSim)
+    {
+        emit changeStatusSgn("The machine halted by user's order. Iterations: " + QString::number(iterations));
+        state = "TableLoaded";
+        return true;
+    }
+    else if ((iterations > set->getIterTilHalt()) && set->getHaltInXIt())
+    {
+        emit changeStatusSgn("The machine reached maximum number of iterations: " + QString::number(iterations));
+        state = "TableLoaded";
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
-void MachineSimulation::pause() {
+void MachineSimulation::on_headPos_valueChanged(int arg1)
+{
+    if (tapeEdited)
+    {
+        tempHeadPos = arg1;
+        tempTape = editedTape;
+        if (signed(tempHeadPos) >= signed(tempTape.size() - 1))
+        {
+            for (int i = tempTape.size() - 1; i <= tempHeadPos; i++)
+            {
+                tempTape.push_back(blanckSym);
+            }
+        }
+        else if (tempHeadPos <= 0)
+        {
+            for (int i = tempHeadPos; i <= 0; i++)
+            {
+                tempTape.push_front(blanckSym);
+            }
+        }
+    }
+    else
+    {
+        tempHeadPos = arg1;
+        tempTape = defTape->getTape();
+        if (signed(tempHeadPos) >= signed(tempTape.size() - 1))
+        {
+            for (int i = tempTape.size() - 1; i <= tempHeadPos; i++)
+            {
+                tempTape.push_back(blanckSym);
+            }
+        }
+        else if (tempHeadPos <= 0)
+        {
+            for (int i = tempHeadPos; i <= 0; i++)
+            {
+                tempTape.push_front(blanckSym);
+            }
+        }
+    }
+    displayTape();
+}
+
+void MachineSimulation::pause()
+{
     QString message = statusBar()->currentMessage();
     statusBar()->showMessage("Paused" + message.split("Simulating").at(1));
     state = "Pause";
     pauseSim = true;
 }
 
-void MachineSimulation::cont() {
-    state = "Sim";
-    pauseSim = false;
+void MachineSimulation::resizeEvent(QResizeEvent *event)
+{
+    resizeTable();
+    update();
+    QWidget::resizeEvent(event);
 }
 
-void MachineSimulation::stop() {
+void MachineSimulation::resizeTable()
+{
+    if (tableIsLoaded)
+    {
+        int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
+        int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
+        int horExccess = (ui->tableView->width() - ui->tableView->verticalHeader()->width()) - ui->tableView->columnCount()*columnWidth;
+        int verExccess = (ui->tableView->height() - ui->tableView->horizontalHeader()->height()) - ui->tableView->rowCount()*rowHeigth;
+        for (int i = 0; i < ui->tableView->rowCount(); i++)
+        {
+            if (verExccess > 1)
+            {
+                ui->tableView->setRowHeight(i, rowHeigth + 1);
+                verExccess--;
+            }
+            else
+            {
+                ui->tableView->setRowHeight(i, rowHeigth);
+            }
+
+        }
+        for (int i = 0; i < ui->tableView->columnCount(); i++)
+        {
+            if (horExccess > 1)
+            {
+                ui->tableView->setColumnWidth(i, columnWidth + 1);
+                horExccess--;
+            }
+            else
+            {
+                ui->tableView->setColumnWidth(i, columnWidth);
+            }
+        }
+    }
+}
+
+void MachineSimulation::saveTape()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Turing's Machine", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        qDebug() << "Error saving file";
+        return;
+    }
+    QTextStream out(&file);
+    out << "hp: " << ui->headPos->value() << endl;
+    out << "bs: " << blanckSym << endl;
+    for (auto it = tempTape.begin(); it != tempTape.end(); it++)
+    {
+        out << *it;
+    }
+    out << endl;
+    file.flush();
+    file.close();
+}
+
+void MachineSimulation::selectTableCellSlt(int st, int sy)
+{
+    if (st >= 0)
+    {
+        ui->tableView->clearSelection();
+        QModelIndex model = ui->tableView->model()->index(sy, st);
+        ui->tableView->selectionModel()->select(model, QItemSelectionModel::Select);
+    }
+}
+
+void MachineSimulation::setMachine(Machine *mach)
+{
+    this->mach = mach;
+}
+
+void MachineSimulation::setTape(Tape *tape)
+{
+    this->defTape = tape;
+    tapeEdited = false;
+    tempTape = defTape->getTape();
+    tempHeadPos = defTape->getTapePos();
+    blanckSym = defTape->getBlanckSym();
+    on_headPos_valueChanged(tempHeadPos);
+}
+
+void MachineSimulation::simulate()
+{
+    if (!tableIsLoaded) return;
+    state = "Sim";
+    haltSim = false;
+    pauseSim = false;
+    halts = false;
+    ui->simList->clear();
+    ui->statesList->clear();
+    ui->tapeList->clear();
+    mach->start(tempTape, tempHeadPos, blanckSym);
+
+    int iterations = 0;
+
+    std::list<QChar> tape;
+    QString tapeStr;
+
+    while (true) {
+        if (pauseSim)
+        {
+            QThread::msleep(10);
+            if (machHalted(iterations)) return;
+            else continue;
+        }
+        tape = mach->getTape();
+        int offset = mach->getTapeHeadOffset();
+        tapeStr.clear();
+        int spacing = tape.size()/2 - offset;
+        for (auto it = tape.begin(); it != tape.end(); it++)
+        {
+            if (spacing == 0) tapeStr.append(" |");
+            tapeStr.append(*it);
+            if (spacing == 0) tapeStr.append("| ");
+            spacing--;
+        }
+        if (tape.size() % 2 == 0)
+        {
+            tapeStr.append(" ");
+        }
+        if (offset > 0)
+        {
+            for (int i = 0; i < abs(offset); i++)
+            {
+                tapeStr.prepend("  ");
+            }
+        }
+        else if (offset < 0)
+        {
+            for (int i = 0; i < abs(offset); i++)
+            {
+                tapeStr.append("  ");
+            }
+        }
+        int st = mach->getStates()->indexOf(mach->getCurrentState());
+        int sy = mach->getSymbols()->indexOf(mach->getCurrentSymbol());
+
+        uiIsReady = false;
+        emit updateUiSgn(st, sy, mach->getCurrentState(), tapeStr, "Simulating - " + QString::number(iterations) + " iterations");
+
+        for (int i = 0; i < localDelayFormat; i++)
+        {
+            QThread::msleep(10);
+            if (machHalted(iterations)) return;
+        }
+        while (!uiIsReady) {
+            QThread::msleep(1);
+            if (machHalted(iterations)) return;
+        }
+        iterations++;
+        mach->advance();
+    }
+}
+
+void MachineSimulation::start()
+{
+    // Setting the sizes of the containers
+    QList<int> sizes = ui->tableSplit->sizes();
+    sizes[0] = (int)ui->tableSplit->height()*0.45;
+    sizes[1] = (int)ui->tableSplit->height()*0.55;
+    ui->tableSplit->setSizes(sizes);
+    sizes = ui->specSplit->sizes();
+    sizes[0] = (int)ui->specSplit->width()*0.6;
+    sizes[1] = (int)ui->specSplit->width()*0.4;
+    ui->specSplit->setSizes(sizes);
+    sizes = ui->propSplit->sizes();
+    sizes[0] = (int)ui->propSplit->width()*0.58;
+    sizes[1] = (int)ui->propSplit->width()*0.42;
+    ui->propSplit->setSizes(sizes);
+    sizes = ui->simSplit->sizes();
+    sizes[0] = (int)ui->simSplit->width()*0.1;
+    sizes[1] = (int)ui->simSplit->width()*0.9;
+    ui->simSplit->setSizes(sizes);
+}
+
+void MachineSimulation::stop()
+{
     state = "TableLoaded";
     haltSim = true;
 }
 
-bool MachineSimulation::halted() {
-    return halts;
-}
-
-void MachineSimulation::decreaseSpeed()
+void MachineSimulation::updateDelaySlt(int delay)
 {
-    if (localDelayFormat < 5) {
-        localDelayFormat++;
+    if (state != "Sim")
+    {
+        localDelayFormat = delay/10;
+        emit delayChangedSgn(localDelayFormat);
     }
-    else {
-        localDelayFormat = localDelayFormat * 1.2;
-    }
-    emit delayChangedSgn(localDelayFormat);
 }
 
-void MachineSimulation::increaseSpeed()
+void MachineSimulation::updateUiSlt(int st, int sy, QString state, QString tape, QString status)
 {
-    if (localDelayFormat < 5 && localDelayFormat > 0) {
-        localDelayFormat--;
+    int toClean = ui->simList->count()  - set->getSimHistory();
+    for (int i = 0; i < toClean; i++)
+    {
+         delete ui->simList->item(0);
+         delete ui->tapeList->item(0);
+         delete ui->statesList->item(0);
     }
-    else {
-        localDelayFormat = localDelayFormat * 0.8;
-    }
-    emit delayChangedSgn(localDelayFormat);
-}
-
-int MachineSimulation::getLocalDelay()
-{
-    return int(localDelayFormat);
-}
-
-QString MachineSimulation::getState() {
-    return state;
-}
-
-void MachineSimulation::on_headPos_valueChanged(int arg1)
-{
-    if (tapeEdited) {
-        tempHeadPos = arg1;
-        tempTape = editedTape;
-        if (signed(tempHeadPos) >= signed(tempTape.size() - 1)) {
-            for (int i = tempTape.size() - 1; i <= tempHeadPos; i++) {
-                tempTape.push_back(blanckSym);
-            }
-        }
-        else if (tempHeadPos <= 0) {
-            for (int i = tempHeadPos; i <= 0; i++) {
-                tempTape.push_front(blanckSym);
-            }
-        }
-    }
-    else {
-        tempHeadPos = arg1;
-        tempTape = defTape->getTape();
-        if (signed(tempHeadPos) >= signed(tempTape.size() - 1)) {
-            for (int i = tempTape.size() - 1; i <= tempHeadPos; i++) {
-                tempTape.push_back(blanckSym);
-            }
-        }
-        else if (tempHeadPos <= 0) {
-            for (int i = tempHeadPos; i <= 0; i++) {
-                tempTape.push_front(blanckSym);
-            }
-        }
-    }
-    displayTape();
+    selectTableCellSlt(st, sy);
+    insertStateSlt(state);
+    insertTapeSlt(tape);
+    changeStatusSlt(status);
+    uiIsReady = true;
 }

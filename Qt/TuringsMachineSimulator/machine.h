@@ -12,10 +12,12 @@ class Machine
 public:
     Machine(QFile *fileName);
     Machine(QString name, QVector<QChar> sts, QVector<QChar> syms, QMap<QString, QString> tFunct, QChar iSt, QChar hSt);
+    // Control functions
     void start(std::list<QChar> inTape, int inPos, QChar bSym);
     void advance();
     bool halted();
     void halt();
+    // Getters and Setters
     QChar getCurrentState();
     QChar getCurrentSymbol();
     std::list<QChar> getTape();
@@ -30,7 +32,6 @@ public:
     QVector<QChar> *getSymbols();
     void setTransFunct(QMap<QString, QString> *tFunct);
     QString funct(QChar State, QChar Symbol);
-    static void verifyTable(QString fileName);
 
 private:
     QString makeKey(QChar st, QChar sy);
@@ -41,6 +42,7 @@ private:
         QChar mTape;
         QChar nState;
     };
+    // Machine variables
     QVector<QChar> states;
     QVector<QChar> symbols;
     std::list<QChar> tape;
@@ -49,7 +51,7 @@ private:
     QChar blanckSym;
     QChar initState;
     QChar haltState;
-
+    // Simulation varaibles
     QChar pState;
     QChar cSymbol;
     std::list<QChar>::iterator head;

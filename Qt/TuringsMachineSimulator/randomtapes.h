@@ -29,10 +29,12 @@ private slots:
     void on_saveBt_clicked();
 
 private:
-    Ui::RandomTapes *ui;
-    Settings *set;
     void clearSymLayout();
     void changeButState();
+    // Class variables
+    Ui::RandomTapes *ui;
+    Settings *set;
+    // Tape variables
     Tape *rand;
     bool generated;
     bool ready;

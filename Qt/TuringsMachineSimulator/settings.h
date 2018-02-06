@@ -16,7 +16,7 @@ class Settings : public QMainWindow
 
 public:
     static Settings* getInstance();
-
+    // Random Machine Settings
     QString getRandTableName();
     int getRandTableSuffix();
     int getTableMinSt();
@@ -28,7 +28,7 @@ public:
     bool getRandInState();
     QChar getInState();
     QChar getHaltState();
-
+    // Random Tape Settings
     QString getRandTapeName();
     int getRandTapeSuffix();
     int getTapeMaxSize();
@@ -36,7 +36,7 @@ public:
     QVector<QChar> *getTapeSymbols();
     bool getRandBSym();
     QChar getBlanckSymbol();
-
+    // Simulation Settings
     int getDelayTime();
     bool getHaltInXIt();
     int getIterTilHalt();
@@ -56,13 +56,10 @@ private slots:
     void on_maxSySpinBox_valueChanged(int arg1);
     void on_minSySpinBox_valueChanged(int arg1);
     void on_haltSimCheck_stateChanged(int arg1);
-    void fixStates(int st);
-    void fixSymbols(int sy);
     void on_tapeSySBox_valueChanged(int arg1);
     void on_rBSyCheck_stateChanged(int arg1);
     void on_loadPresetBt_clicked();
     void on_presetsCBox_currentIndexChanged(int index);
-
     void on_defaultSetBt_clicked();
 
 private:
@@ -77,10 +74,8 @@ private:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
     Ui::Settings *ui;
-
     // Presets
     QVector<Machine*> presets;
-
     // Quick Random Table Settings
     QString randTableName;
     int randTableSuffix;
@@ -91,7 +86,6 @@ private:
     bool randInState;
     QChar inState;
     QChar haltState;
-
     // Quick Random Tape Settings
     QString randTapeName;
     int randTapeSuffix;
@@ -100,13 +94,11 @@ private:
     int tapeMaxSize, tapeMinSize;
     bool randBSym;
     QChar blanckSym;
-
     // Simulation Settings
     int delayTime;
     bool haltInXIt;
     int iterTilHalt;
     int simHistory;
-
     // Settings Settings
     QString abc;
     int prevState = 0;

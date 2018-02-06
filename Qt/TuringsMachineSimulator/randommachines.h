@@ -47,7 +47,11 @@ private:
     void clearSyLayout();
     void changeButState();
     void resizeTable();
+    // Class variables
+    Ui::RandomMachines *ui;
+    Settings *set;
     QString abc;
+    // Random Machine variables
     QVector<QChar> *states;
     QVector<QChar> *symbols;
     Machine *randMach;
@@ -56,9 +60,6 @@ private:
     bool ready = false;
     int prevState = 0;
     int prevSymbol = 0;
-
-    Ui::RandomMachines *ui;
-    Settings *set;
 };
 
 #endif // RANDOMMACHINES_H

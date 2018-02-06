@@ -329,6 +329,10 @@ debug/moc_usermachines.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWindo
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPixmap \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMenu \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qmenu.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
 		../TuringsMachineSimulator/machine.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
@@ -1108,6 +1112,15 @@ debug/moc_settings.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWindow \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
+		../TuringsMachineSimulator/machine.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/settings.h \
 		debug/moc_predefs.h \
 		C:/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -1342,6 +1355,14 @@ debug/moc_randomtapes.cpp: C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMainWindow
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		../TuringsMachineSimulator/settings.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
+		../TuringsMachineSimulator/machine.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
 		../TuringsMachineSimulator/randomtapes.h \
 		debug/moc_predefs.h \
 		C:/Qt/5.10.0/mingw53_32/bin/moc.exe
@@ -1556,6 +1577,10 @@ debug/main.o: ../TuringsMachineSimulator/main.cpp ../TuringsMachineSimulator/use
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPixmap \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMenu \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qmenu.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
 		../TuringsMachineSimulator/machine.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
@@ -1942,6 +1967,10 @@ debug/usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMach
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/QPixmap \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QMenu \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qmenu.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
 		../TuringsMachineSimulator/machine.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
@@ -2082,33 +2111,7 @@ debug/usermachines.o: ../TuringsMachineSimulator/usermachines.cpp ../TuringsMach
 		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
 		../TuringsMachineSimulator/randomtapes.h \
 		../TuringsMachineSimulator/editmachines.h \
-		ui_usermachines.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QComboBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcombobox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSplitter \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qsplitter.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QStackedWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstackedwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		ui_usermachines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\usermachines.o ..\TuringsMachineSimulator\usermachines.cpp
 
 debug/randommachines.o: ../TuringsMachineSimulator/randommachines.cpp ../TuringsMachineSimulator/randommachines.h \
@@ -2246,58 +2249,7 @@ debug/randommachines.o: ../TuringsMachineSimulator/randommachines.cpp ../Turings
 		../TuringsMachineSimulator/tape.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		../TuringsMachineSimulator/settings.h \
-		ui_randommachines.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QComboBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcombobox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpinBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QTableWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtablewidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QTextEdit \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtextedit.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextdocument.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		ui_randommachines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\randommachines.o ..\TuringsMachineSimulator\randommachines.cpp
 
 debug/machinesimulation.o: ../TuringsMachineSimulator/machinesimulation.cpp ../TuringsMachineSimulator/machinesimulation.h \
@@ -2558,51 +2510,7 @@ debug/machinesimulation.o: ../TuringsMachineSimulator/machinesimulation.cpp ../T
 		../TuringsMachineSimulator/settings.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
 		../TuringsMachineSimulator/edittapes.h \
-		ui_machinesimulation.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QListWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpinBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSplitter \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qsplitter.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QTableWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtablewidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		ui_machinesimulation.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\machinesimulation.o ..\TuringsMachineSimulator\machinesimulation.cpp
 
 debug/tape.o: ../TuringsMachineSimulator/tape.cpp ../TuringsMachineSimulator/tape.h \
@@ -2787,65 +2695,16 @@ debug/settings.o: ../TuringsMachineSimulator/settings.cpp ../TuringsMachineSimul
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
-		ui_settings.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QCheckBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcheckbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QComboBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcombobox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QGroupBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgroupbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLineEdit \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextcursor.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpinBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QTabWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		../TuringsMachineSimulator/machine.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		../TuringsMachineSimulator/tape.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
+		ui_settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\settings.o ..\TuringsMachineSimulator\settings.cpp
 
 debug/editmachines.o: ../TuringsMachineSimulator/editmachines.cpp ../TuringsMachineSimulator/editmachines.h \
@@ -2968,54 +2827,7 @@ debug/editmachines.o: ../TuringsMachineSimulator/editmachines.cpp ../TuringsMach
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
 		../TuringsMachineSimulator/tape.h \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
-		ui_editmachines.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QComboBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qcombobox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QTableWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtablewidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		ui_editmachines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\editmachines.o ..\TuringsMachineSimulator\editmachines.cpp
 
 debug/edittapes.o: ../TuringsMachineSimulator/edittapes.cpp ../TuringsMachineSimulator/edittapes.h \
@@ -3130,59 +2942,7 @@ debug/edittapes.o: ../TuringsMachineSimulator/edittapes.cpp ../TuringsMachineSim
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
-		ui_edittapes.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLineEdit \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextcursor.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QListWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		ui_edittapes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\edittapes.o ..\TuringsMachineSimulator\edittapes.cpp
 
 debug/randomtapes.o: ../TuringsMachineSimulator/randomtapes.cpp ../TuringsMachineSimulator/randomtapes.h \
@@ -3299,61 +3059,15 @@ debug/randomtapes.o: ../TuringsMachineSimulator/randomtapes.cpp ../TuringsMachin
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFile \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/QFileInfo \
 		C:/Qt/5.10.0/mingw53_32/include/QtCore/qfileinfo.h \
-		ui_randomtapes.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QLineEdit \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextcursor.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QListWidget \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistwidget.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qlistview.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QSpinBox \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/qspinbox.h \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/5.10.0/mingw53_32/include/QtWidgets/QWidget
+		../TuringsMachineSimulator/settings.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QSignalMapper \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qsignalmapper.h \
+		../TuringsMachineSimulator/machine.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QDir \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qdir.h \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/QLinkedList \
+		C:/Qt/5.10.0/mingw53_32/include/QtCore/qlinkedlist.h \
+		ui_randomtapes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\randomtapes.o ..\TuringsMachineSimulator\randomtapes.cpp
 
 debug/qrc_resource.o: debug/qrc_resource.cpp 

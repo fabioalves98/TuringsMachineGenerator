@@ -11,29 +11,24 @@ EditTapes::EditTapes(std::list<QChar> toEdit, QChar bSym, QWidget *parent) :
     this->setWindowTitle("Tape Edition");
     this->setWindowModality(Qt::ApplicationModal);
 
+    // Setting the scroll bar always on
     ui->tapeList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    QPixmap plusL(":rec/icons/plus");
-    QIcon iconPL(plusL);
-    ui->plusLeftBt->setIcon(iconPL);
+    // Assigning icons to the resize buttons
+    ui->plusLeftBt->setIcon(QIcon(QPixmap(":rec/icons/plus")));
     ui->plusLeftBt->setIconSize(QSize(25, 25));
     ui->plusLeftBt->setMaximumHeight(35);
-    QPixmap minusL(":rec/icons/minus");
-    QIcon iconML(minusL);
-    ui->minusLeftBt->setIcon(iconML);
+    ui->minusLeftBt->setIcon(QIcon(QPixmap(":rec/icons/minus")));
     ui->minusLeftBt->setIconSize(QSize(25, 25));
     ui->minusLeftBt->setMaximumHeight(35);
-    QPixmap minusR(":rec/icons/minus");
-    QIcon iconMR(minusR);
-    ui->minusRightBt->setIcon(iconMR);
+    ui->minusRightBt->setIcon(QIcon(QPixmap(":rec/icons/minus")));
     ui->minusRightBt->setIconSize(QSize(25, 25));
     ui->minusRightBt->setMaximumHeight(35);
-    QPixmap plusR(":rec/icons/plus");
-    QIcon iconPR(plusR);
-    ui->plusRightBt->setIcon(iconPR);
+    ui->plusRightBt->setIcon(QIcon(QPixmap(":rec/icons/plus")));
     ui->plusRightBt->setIconSize(QSize(25, 25));
     ui->plusRightBt->setMaximumHeight(35);
 
+    // Initializing the blanck symbol line edit
     ui->blanckSymLEdit->setPlaceholderText(blanckSym);
     ui->blanckSymLEdit->setText(blanckSym);
 }
@@ -43,13 +38,35 @@ EditTapes::~EditTapes()
     delete ui;
 }
 
-void EditTapes::loadTape() {
+QChar EditTapes::getBlanckSym()
+{
+    return blanckSym;
+}
+
+std::list<QChar> EditTapes::getTape()
+{
+    return tape;
+}
+
+bool EditTapes::isEdited()
+{
+    return edited;
+}
+
+bool EditTapes::isReady()
+{
+    return ready;
+}
+
+void EditTapes::loadTape()
+{
     ui->tapeList->clear();
     QListWidgetItem *item = new QListWidgetItem;
     QWidget *widget = new QWidget;
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addStretch();
-    for (auto it = tape.begin(); it != tape.end(); it++) {
+    for (auto it = tape.begin(); it != tape.end(); it++)
+    {
         QLineEdit *lEdit = new QLineEdit;
         lEdit->setMaximumWidth(30);
         QFont font = lEdit->font();
@@ -69,31 +86,16 @@ void EditTapes::loadTape() {
     ui->tapeList->setItemWidget(item, widget);
 }
 
-std::list<QChar> EditTapes::getTape()
+void EditTapes::on_blanckSymLEdit_textChanged(const QString &arg1)
 {
-    return tape;
-}
-
-QChar EditTapes::getBlanckSym()
-{
-    return blanckSym;
-}
-
-bool EditTapes::isReady()
-{
-    return ready;
-}
-
-bool EditTapes::isEdited()
-{
-    return edited;
-}
-
-void EditTapes::on_plusLeftBt_clicked()
-{
-    updateTape();
-    tape.push_front(blanckSym);
-    loadTape();
+    if (arg1 != nullptr)
+    {
+        blanckSym = arg1.at(0);
+    }
+    else
+    {
+        blanckSym = ui->blanckSymLEdit->placeholderText().at(0);
+    }
 }
 
 void EditTapes::on_minusLeftBt_clicked()
@@ -110,6 +112,13 @@ void EditTapes::on_minusRightBt_clicked()
     loadTape();
 }
 
+void EditTapes::on_plusLeftBt_clicked()
+{
+    updateTape();
+    tape.push_front(blanckSym);
+    loadTape();
+}
+
 void EditTapes::on_plusRightBt_clicked()
 {
     updateTape();
@@ -117,31 +126,10 @@ void EditTapes::on_plusRightBt_clicked()
     loadTape();
 }
 
-void EditTapes::updateTape()
+void EditTapes::on_restoreBt_clicked()
 {
-    QHBoxLayout *layout = dynamic_cast<QHBoxLayout*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout());
-    auto it = tape.begin();
-    for (int i = 1; i < layout->count() - 1; i++) {
-        QString text = dynamic_cast<QLineEdit*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout()->itemAt(i)->widget())->text();
-        if (text != nullptr) {
-            *it = text.at(0);
-        }
-        else {
-            *it = dynamic_cast<QLineEdit*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout()->itemAt(i)->widget())->placeholderText().at(0);
-        }
-        it++;
-    }
-    edited = true;
-}
-
-void EditTapes::on_blanckSymLEdit_textChanged(const QString &arg1)
-{
-    if (arg1 != nullptr) {
-        blanckSym = arg1.at(0);
-    }
-    else {
-        blanckSym = ui->blanckSymLEdit->placeholderText().at(0);
-    }
+    ready = true;
+    edited = false;
 }
 
 void EditTapes::on_saveBt_clicked()
@@ -150,8 +138,22 @@ void EditTapes::on_saveBt_clicked()
     ready = true;
 }
 
-void EditTapes::on_restoreBt_clicked()
+void EditTapes::updateTape()
 {
-    ready = true;
-    edited = false;
+    QHBoxLayout *layout = dynamic_cast<QHBoxLayout*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout());
+    auto it = tape.begin();
+    for (int i = 1; i < layout->count() - 1; i++)
+    {
+        QString text = dynamic_cast<QLineEdit*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout()->itemAt(i)->widget())->text();
+        if (text != nullptr)
+        {
+            *it = text.at(0);
+        }
+        else
+        {
+            *it = dynamic_cast<QLineEdit*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout()->itemAt(i)->widget())->placeholderText().at(0);
+        }
+        it++;
+    }
+    edited = true;
 }

@@ -53,12 +53,12 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QVBoxLayout *verticalLayout_3;
     QLabel *label;
-    QLabel *label_2;
     QLabel *label_3;
+    QSpacerItem *verticalSpacer;
     QVBoxLayout *verticalLayout_4;
     QComboBox *initStCBox;
-    QComboBox *blanckSyCBox;
     QLineEdit *haltStEdit;
+    QSpacerItem *verticalSpacer_2;
     QTableWidget *randTable;
     QHBoxLayout *horizontalLayout_5;
     QPushButton *randBut;
@@ -185,7 +185,7 @@ public:
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         label = new QLabel(centralwidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setMinimumSize(QSize(0, 0));
+        label->setMinimumSize(QSize(0, 26));
         label->setMaximumSize(QSize(16777215, 16777215));
         label->setFont(font);
         label->setFrameShape(QFrame::Panel);
@@ -194,20 +194,9 @@ public:
 
         verticalLayout_3->addWidget(label);
 
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setMinimumSize(QSize(0, 0));
-        label_2->setMaximumSize(QSize(16777215, 16777215));
-        label_2->setFont(font);
-        label_2->setFrameShape(QFrame::Panel);
-        label_2->setFrameShadow(QFrame::Raised);
-        label_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        verticalLayout_3->addWidget(label_2);
-
         label_3 = new QLabel(centralwidget);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setMinimumSize(QSize(0, 0));
+        label_3->setMinimumSize(QSize(0, 26));
         label_3->setMaximumSize(QSize(16777215, 16777215));
         label_3->setFont(font);
         label_3->setFrameShape(QFrame::Panel);
@@ -215,6 +204,10 @@ public:
         label_3->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         verticalLayout_3->addWidget(label_3);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Preferred);
+
+        verticalLayout_3->addItem(verticalSpacer);
 
 
         horizontalLayout_6->addLayout(verticalLayout_3);
@@ -228,32 +221,26 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(initStCBox->sizePolicy().hasHeightForWidth());
         initStCBox->setSizePolicy(sizePolicy1);
-        initStCBox->setMinimumSize(QSize(40, 0));
+        initStCBox->setMinimumSize(QSize(40, 26));
         initStCBox->setMaximumSize(QSize(16777215, 16777215));
         initStCBox->setFont(font1);
 
         verticalLayout_4->addWidget(initStCBox);
 
-        blanckSyCBox = new QComboBox(centralwidget);
-        blanckSyCBox->setObjectName(QStringLiteral("blanckSyCBox"));
-        sizePolicy1.setHeightForWidth(blanckSyCBox->sizePolicy().hasHeightForWidth());
-        blanckSyCBox->setSizePolicy(sizePolicy1);
-        blanckSyCBox->setMinimumSize(QSize(40, 0));
-        blanckSyCBox->setMaximumSize(QSize(16777215, 16777215));
-        blanckSyCBox->setFont(font1);
-
-        verticalLayout_4->addWidget(blanckSyCBox);
-
         haltStEdit = new QLineEdit(centralwidget);
         haltStEdit->setObjectName(QStringLiteral("haltStEdit"));
         sizePolicy1.setHeightForWidth(haltStEdit->sizePolicy().hasHeightForWidth());
         haltStEdit->setSizePolicy(sizePolicy1);
-        haltStEdit->setMinimumSize(QSize(40, 0));
+        haltStEdit->setMinimumSize(QSize(40, 26));
         haltStEdit->setMaximumSize(QSize(16777215, 16777215));
         haltStEdit->setFont(font1);
         haltStEdit->setAlignment(Qt::AlignCenter);
 
         verticalLayout_4->addWidget(haltStEdit);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Preferred);
+
+        verticalLayout_4->addItem(verticalSpacer_2);
 
 
         horizontalLayout_6->addLayout(verticalLayout_4);
@@ -299,7 +286,6 @@ public:
         stLabel->setText(QApplication::translate("RandomMachines", "States", nullptr));
         syLabel->setText(QApplication::translate("RandomMachines", "Symbols", nullptr));
         label->setText(QApplication::translate("RandomMachines", "Initial State", nullptr));
-        label_2->setText(QApplication::translate("RandomMachines", "Blanck Symbol", nullptr));
         label_3->setText(QApplication::translate("RandomMachines", "Halt State", nullptr));
         haltStEdit->setPlaceholderText(QApplication::translate("RandomMachines", "H", nullptr));
         randBut->setText(QApplication::translate("RandomMachines", "Random", nullptr));

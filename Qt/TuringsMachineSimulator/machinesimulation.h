@@ -22,14 +22,15 @@ class MachineSimulation : public QMainWindow
 
 public:
     MachineSimulation(Machine *mach, Tape *tape, QWidget *parent = 0);
+    void start();
+    // Main Functions
     void setMachine(Machine* mach);
     void setTape(Tape* tape);
     Tape *getTape();
     void editTape();
     void saveTape();
-    void start();
-    void display();
-    void displayTape();
+    void displayMachine();
+    // Simulation control
     void simulate();
     void pause();
     void cont();
@@ -48,43 +49,42 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 signals:
-    void updateUiSgn(int, int, int, QString, QString, QString);
+    void updateUiSgn(int, int, QString, QString, QString);
     void changeStatusSgn(QString);
     void delayChangedSgn(int);
 
 private slots:
-    void updateUiSlt(int iter, int st, int sy, QString state, QString tape, QString status);
+    void updateUiSlt(int st, int sy, QString state, QString tape, QString status);
     void changeStatusSlt(QString status);
     void updateDelaySlt(int delay);
     void on_headPos_valueChanged(int arg1);
 
 private:
+    void displayTape();
     void selectTableCellSlt(int st, int sy);
     void insertStateSlt(QString state);
     void insertTapeSlt(QString tape);
-
+    // Class
     Ui::MachineSimulation *ui;
-    bool machHalted(int iterations);
+    bool uiIsReady;
+    Settings *set;
+    // Machine
     Machine *mach;
-
+    bool machHalted(int iterations);
+    // Tape
     Tape *defTape;
     std::list<QChar> editedTape;
     std::list<QChar> tempTape;
     QChar blanckSym;
     int tempHeadPos;
     bool tapeEdited;
-
+    // Simulation
     QString state;
     bool haltSim;
     bool pauseSim;
     bool halts;
     double localDelayFormat;
     bool tableIsLoaded = false;
-
-    bool uiIsReady;
-
-    Settings *set;
-    QSize maxTapeSize = QSize(1, 1);
 };
 
 #endif // MACHINESIMULATION_H

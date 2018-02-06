@@ -314,7 +314,7 @@ void UserMachines::loadPresetSlt(Machine* preset)
         ui->tableSim->insertWidget(listMach.size(), sim);
         ui->tableSim->setCurrentIndex(listMach.size());
         sim->start();
-        sim->display();
+        sim->displayMachine();
         enSimButtons(sim->getState());
     }
 }
@@ -341,7 +341,7 @@ void UserMachines::on_addBt_clicked()
                 ui->tableSim->insertWidget(listMach.size(), sim);
                 ui->tableSim->setCurrentIndex(listMach.size());
                 sim->start();
-                sim->display();
+                sim->displayMachine();
                 enSimButtons(sim->getState());
             }
         }
@@ -408,7 +408,7 @@ void UserMachines::on_cRandBt_clicked()
         ui->tableSim->insertWidget(listMach.size(), sim);
         ui->tableSim->setCurrentIndex(listMach.size());
         sim->start();
-        sim->display();
+        sim->displayMachine();
         enSimButtons(sim->getState());
     }
     else
@@ -458,7 +458,7 @@ void UserMachines::on_editBt_clicked()
         }
         edit->close();
         dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setMachine(edited);
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->display();
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->displayMachine();
     }
     else
     {
@@ -523,7 +523,7 @@ void UserMachines::on_qRandBt_clicked()
         ui->tableSim->insertWidget(listMach.size(), sim);
         ui->tableSim->setCurrentIndex(listMach.size());
         sim->start();
-        sim->display();
+        sim->displayMachine();
         enSimButtons(sim->getState());
     }
     else
@@ -711,7 +711,7 @@ void UserMachines::showTapeContextMenu(const QPoint &pos)
 
 void UserMachines::start()
 {
-    // Setting the size of the table list container
+    // Setting the sizes of the conatiners
     QList<int> sizes = ui->listSplit->sizes();
     sizes[0] = (int)ui->listSplit->width()*0.25;
     sizes[1] = (int)ui->listSplit->width()*0.75;

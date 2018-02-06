@@ -74,13 +74,12 @@ private:
     bool addTape(Tape* toAdd);
     bool machOrTape();
     void enSimButtons(QString state);
+    Ui::UserMachines *ui;
+    Settings *set;
     QStringList states;
     QString selected;
     QVector<Machine*> listMach;
     QVector<Tape*> listTape;
-
-    Ui::UserMachines *ui;
-    Settings *set;
 };
 
 #endif // USERMACHINES_H
