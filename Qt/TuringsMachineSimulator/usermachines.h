@@ -34,34 +34,38 @@ class UserMachines : public QMainWindow
 public:
     explicit UserMachines(QWidget *parent = 0);
     void start();
-    void close();
     ~UserMachines();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
+    // Main functions
+    void on_addBt_clicked();
+    void on_editBt_clicked();
+    void on_saveBt_clicked();
+    void on_qRandBt_clicked();
+    void on_cRandBt_clicked();
+    void on_settingsBt_clicked();
     void loadPresetSlt(Machine* preset);
-    void on_addTableBt_clicked();
-    void on_simBt_clicked();
-    void on_uselAllBt_clicked();
-    void on_selAllBt_clicked();
-    void finishSim(QString tableName);
+    void on_buttonSelect_currentIndexChanged(int index);
     void getMachToDispay();
-    void on_stopBt_clicked();
+    void selTapeButtons(QString name);
+    // Machine List Functions
+    void on_selAllBt_clicked();
+    void on_uSelAllBt_clicked();
+    // Tape List Functions
+    void on_loadTapeBt_clicked();
+    // Simulation Functions
+    void on_simBt_clicked();
     void on_pauseBt_clicked();
     void on_contBt_clicked();
-    void on_cRandTableBt_clicked();
-    void on_editTableBt_clicked();
-    void on_qRandTableBt_clicked();
-    void selTapeButtons(QString name);
-    void on_loadTapeBt_clicked();
-    void on_saveTableBt_clicked();
-    void on_settingsBt_clicked();
+    void on_stopBt_clicked();
     void on_slowerBt_clicked();
     void on_fasterBt_clicked();
     void delayUpdatedSlt(int delay);
-    void on_buttonSelect_currentIndexChanged(int index);
+    void finishSim(QString tableName);
+    // Machine and Tape Deletion
     void showMachineContextMenu(const QPoint &pos);
     void showTapeContextMenu(const QPoint &pos);
 

@@ -7,16 +7,42 @@ UserMachines::UserMachines(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Turing's Machine Generator");
-    QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
     QThreadPool::globalInstance()->setMaxThreadCount(8);
 
-    // Getting the global Settings Settings
+    // Seed generation for random numbers
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
+
+    // Getting the global Settings
     set = Settings::getInstance();
     connect(set, SIGNAL(loadPresetSgn(Machine*)), this, SLOT(loadPresetSlt(Machine*)));
 
-    ui->tablesList->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->tablesList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showMachineContextMenu(const QPoint&)));
+    // Setting the possible states for the application
+    states << "Init" << "TableLoaded" << "Sim" << "Pause";
+    enSimButtons("Init");
+
+    // Changing the machine view according to the table selected
+    connect(ui->machList, SIGNAL(itemSelectionChanged()), this, SLOT(getMachToDispay()));
+    connect(ui->machList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay()));
+
+    // Settings the initial buttons
+    on_buttonSelect_currentIndexChanged(0);
+
+    // Setting the icons for controlling simulation speed
+    ui->slowerBt->setIcon(QIcon(QPixmap(":rec/icons/slower")));
+    ui->slowerBt->setIconSize(QSize(19, 19));
+    ui->fasterBt->setIcon(QIcon(QPixmap(":rec/icons/faster")));
+    ui->fasterBt->setIconSize(QSize(19, 19));
+    ui->pauseBt->setIcon(QIcon(QPixmap(":rec/icons/pauseBt")));
+    ui->pauseBt->setIconSize(QSize(19, 19));
+    ui->contBt->setIcon(QIcon(QPixmap(":rec/icons/play")));
+    ui->contBt->setIconSize(QSize(19, 19));
+    ui->stopBt->setIcon(QIcon(QPixmap(":rec/icons/stop")));
+    ui->stopBt->setIconSize(QSize(19, 19));
+
+    // Creating the Context Menus action for machine and tape deletion
+    ui->machList->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->machList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showMachineContextMenu(const QPoint&)));
     ui->tapesList->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tapesList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showTapeContextMenu(const QPoint)));
 }
@@ -26,219 +52,29 @@ UserMachines::~UserMachines()
     delete ui;
 }
 
-void UserMachines::start()
+bool UserMachines::addMachine(Machine *toAdd)
 {
-    // Setting the size of the table list container
-    QList<int> sizes = ui->listSplit->sizes();
-    sizes[0] = (int)ui->listSplit->width()*0.25;
-    sizes[1] = (int)ui->listSplit->width()*0.75;
-    ui->listSplit->setSizes(sizes);
-    sizes = ui->tapeSplit->sizes();
-    sizes[0] = (int)ui->tapeSplit->width()*0.70;
-    sizes[1] = (int)ui->tapeSplit->width()*0.30;
-    ui->tapeSplit->setSizes(sizes);
-
-    // Setting the default display
-    MachineSimulation *newMach = new MachineSimulation(nullptr, nullptr);
-    ui->tableSim->insertWidget(0, newMach);
-    ui->tableSim->setCurrentIndex(0);
-    newMach->start();
-    newMach->setEnabled(false);
-    ui->delayLb->setText("--- ms");
-
-    // Setting the icons for controlling simulation speed
-    QPixmap pixS(":rec/icons/slower");
-    QIcon iconS(pixS);
-    ui->slowerBt->setIcon(iconS);
-    ui->slowerBt->setIconSize(QSize(19, 19));
-    QPixmap pixF(":rec/icons/faster");
-    QIcon iconF(pixF);
-    ui->fasterBt->setIcon(iconF);
-    ui->fasterBt->setIconSize(QSize(19, 19));
-    QPixmap pixP(":rec/icons/pauseBt");
-    QIcon iconP(pixP);
-    ui->pauseBt->setIcon(iconP);
-    ui->pauseBt->setIconSize(QSize(19, 19));
-    QPixmap pixC(":rec/icons/play");
-    QIcon iconC(pixC);
-    ui->contBt->setIcon(iconC);
-    ui->contBt->setIconSize(QSize(19, 19));
-    QPixmap pixH(":rec/icons/stop");
-    QIcon iconH(pixH);
-    ui->stopBt->setIcon(iconH);
-    ui->stopBt->setIconSize(QSize(19, 19));
-
-    // Settings the initial buttons
-    on_buttonSelect_currentIndexChanged(0);
-
-    // Setting the default tape item
-    addTape(new Tape(new QFile));
-
-    // Setting the possible states for the application
-    states << "Init" << "TableLoaded" << "Sim" << "Pause";
-    enSimButtons("Init");
-
-    // Changing the machine view according to the table selected
-    connect(ui->tablesList, SIGNAL(itemSelectionChanged()), this, SLOT(getMachToDispay()));
-    connect(ui->tablesList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay()));
-}
-
-void UserMachines::closeEvent(QCloseEvent *event) {
-    close();
-    QWidget::closeEvent(event);
-}
-
-void UserMachines::loadPresetSlt(Machine* preset)
-{
-    if (addMachine(preset)) {
-        MachineSimulation *sim = new MachineSimulation(preset, listTape.at(0));
-        connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
-        ui->tableSim->insertWidget(listMach.size(), sim);
-        ui->tableSim->setCurrentIndex(listMach.size());
-        sim->start();
-        sim->display();
-        enSimButtons(sim->getState());
-    }
-}
-
-void UserMachines::close() {
-    for (int i = 1; i < ui->tableSim->count(); i++) {
-        dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->stop();
-    }
-}
-
-void UserMachines::on_addTableBt_clicked()
-{
-    if (machOrTape()) {
-        // Initialize new Table, and display it
-        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
-        if (!(fileD == nullptr)) {
-            QFile *tableFile = new QFile(fileD);
-            Machine *mach = new Machine(tableFile);
-            if (addMachine(mach)) {
-                MachineSimulation *sim = new MachineSimulation(mach, listTape.at(0));
-                connect(sim, SIGNAL(delayChanged(int)), this, SLOT(delayUpdated(int)));
-                ui->tableSim->insertWidget(listMach.size(), sim);
-                ui->tableSim->setCurrentIndex(listMach.size());
-                sim->start();
-                sim->display();
-                enSimButtons(sim->getState());
-            }
-        }
-    }
-    else {
-        Tape *tape;
-        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
-        if (!(fileD == nullptr)) {
-            QFile *tapeFile = new QFile(fileD);
-            tape = new Tape(tapeFile);
-        }
-        else return;
-        addTape(tape);
-    }
-}
-
-void UserMachines::on_uselAllBt_clicked()
-{
-    for (int i = 0; i < ui->tablesList->count(); i++) {
-        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setChecked(true);
-    }
-}
-
-void UserMachines::on_selAllBt_clicked()
-{
-    for (int i = 0; i < ui->tablesList->count(); i++) {
-        dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
-    }
-}
-
-void UserMachines::on_simBt_clicked()
-{
-    int index = ui->tableSim->currentIndex() - 1;
-    if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->isChecked()) {
-        enSimButtons("Sim");
-    }
-    for (int i = 0; i < ui->tablesList->count(); i++) {
-        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->isChecked()) {
-            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
-            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setEnabled(false);
-            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->stop();
-            QThread::msleep(20);
-            QCoreApplication::processEvents();
-
-            QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->clear();
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->setMovie(loading);
-            loading->setScaledSize(QSize(20, 20));
-            loading->start();
-
-            MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1));
-
-            QFutureWatcher<void> *watcher = new QFutureWatcher<void>;
-            QFuture<void> fut = QtConcurrent::run(toSim, &MachineSimulation::simulate);
-            watcher->setFuture(fut);
-
-            QSignalMapper *sigMap = new QSignalMapper(this);
-            connect(watcher, SIGNAL(finished()), sigMap, SLOT(map()));
-            QString tableName = dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(0)->widget())->text();
-            sigMap->setMapping(watcher, tableName);
-            connect(sigMap, SIGNAL(mapped(QString)), this, SLOT(finishSim(QString)));
-        }
-    }
-}
-
-void UserMachines::finishSim(QString tableName) {    
-    for (int i = 0; i < listMach.size(); i++) {
-        if (listMach.at(i)->getFileName() == tableName) {
-            dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->setEnabled(true);
-            delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->movie();
-            QPixmap icon;
-            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->halted()) {
-                icon.load(":/rec/icons/check");
-            }
-            else {
-                icon.load(":/rec/icons/question");
-            }
-            icon = icon.scaled(20, 20);
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->clear();
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(4)->widget())->setPixmap(icon);
-            break;
-        }
-    }
-    if (selected == tableName) {
-        enSimButtons("TableLoaded");
-    }
-}
-
-void UserMachines::getMachToDispay() {
-    for (int i = 0; i < ui->tablesList->count(); i++) {
-        if (ui->tablesList->item(i)->isSelected()) {
-            ui->tableSim->setCurrentIndex(i + 1);
-            dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->resizeTable();
-            enSimButtons(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState());
-            ui->delayLb->setText(QString::number(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getLocalDelay()*10) + " ms");
-            break;
-        }
-    }
-}
-
-bool UserMachines::addMachine(Machine *toAdd) {
-    // Get the name of the table, list it in the TablesList
+    // Checking if machine already exists
     bool contains = false;
-    foreach (Machine *mach, listMach) {
-        if (mach->getFileName() == toAdd->getFileName()) {
+    foreach (Machine *mach, listMach)
+    {
+        if (mach->getFileName() == toAdd->getFileName())
+        {
             contains = true;
         }
     }
-    if (!contains) {
+    if (!contains)
+    {
+        // Creates machine item and adds it to the list
         listMach.append(toAdd);
-        ui->tablesList->clearSelection();
-        QListWidgetItem *tableItem = new QListWidgetItem;
+        ui->machList->clearSelection();
 
+        QListWidgetItem *machItem = new QListWidgetItem;
         QWidget *widget = new QWidget;
         QHBoxLayout *layout = new QHBoxLayout;
 
         selected = toAdd->getFileName();
+
         QLabel *tableName = new QLabel(selected);
         tableName->setFont(QFont("Meiryo", 11));
         layout->addWidget(tableName);
@@ -264,35 +100,41 @@ bool UserMachines::addMachine(Machine *toAdd) {
 
         widget->setLayout(layout);
 
-        tableItem->setIcon(QIcon(":/rec/icons/table.png"));
+        machItem->setIcon(QIcon(":/rec/icons/table.png"));
 
-        ui->tablesList->addItem(tableItem);
-        ui->tablesList->setItemWidget(tableItem, widget);
-        ui->tablesList->setIconSize(QSize(20, 20));
+        ui->machList->addItem(machItem);
+        ui->machList->setItemWidget(machItem, widget);
+        ui->machList->setIconSize(QSize(20, 20));
 
         ui->delayLb->setText(QString::number(set->getDelayTime()) + " ms");
 
-        tableItem->setSelected(true);
+        machItem->setSelected(true);
         return true;
     }
-    else {
+    else
+    {
         return false;
     }
 }
 
 bool UserMachines::addTape(Tape *toAdd)
 {
+    // Checking if tape already exists
     bool contains = false;
-    foreach (Tape *tape, listTape) {
-        if (tape->getName() == toAdd->getName()) {
+    foreach (Tape *tape, listTape)
+    {
+        if (tape->getName() == toAdd->getName())
+        {
             contains = true;
         }
     }
-    if (!contains) {
+    if (!contains)
+    {
+        // Creates new tape item and adds it to the list
         listTape.append(toAdd);
         ui->tapesList->clearSelection();
-        QListWidgetItem *tapeItem = new QListWidgetItem;
 
+        QListWidgetItem *tapeItem = new QListWidgetItem;
         QWidget *widget = new QWidget;
         QHBoxLayout *layout = new QHBoxLayout;
 
@@ -303,7 +145,7 @@ bool UserMachines::addTape(Tape *toAdd)
         layout->addStretch();
 
         QRadioButton *radio = new QRadioButton();
-        QSignalMapper *sigMap = new QSignalMapper(this);
+        QSignalMapper *sigMap = new QSignalMapper;
         connect(radio, SIGNAL(clicked(bool)), sigMap, SLOT(map()));
         sigMap->setMapping(radio, toAdd->getName());
         connect(sigMap, SIGNAL(mapped(QString)), SLOT(selTapeButtons(QString)));
@@ -333,57 +175,84 @@ bool UserMachines::addTape(Tape *toAdd)
         ui->tapesList->setIconSize(QSize(20, 20));
         return true;
     }
-    else {
+    else
+    {
         return false;
     }
 }
 
-bool UserMachines::machOrTape()
+void UserMachines::closeEvent(QCloseEvent *event)
 {
-    return ui->buttonSelect->currentIndex() == 0;
+    for (int i = 1; i < ui->tableSim->count(); i++)
+    {
+        dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->stop();
+    }
+    QWidget::closeEvent(event);
 }
 
-void UserMachines::enSimButtons(QString state) {
-    switch(states.indexOf(state)) {
-        case 0: {
-            ui->editTableBt->setEnabled(false);
-            ui->saveTableBt->setEnabled(false);
+void UserMachines::delayUpdatedSlt(int delay)
+{
+    if (dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState() != "Sim")
+    {
+        ui->delayLb->setText(QString::number(delay*10) + " ms");
+    }
+}
+
+void UserMachines::enSimButtons(QString state)
+{
+    switch(states.indexOf(state))
+    {
+        // Initial Case (No machines loaded)
+        case 0:
+        {
+            ui->editBt->setEnabled(false);
+            ui->saveBt->setEnabled(false);
             ui->simBt->setEnabled(false);
+            ui->loadTapeBt->setEnabled(false);
             ui->selAllBt->setEnabled(false);
-            ui->uselAllBt->setEnabled(false);
+            ui->uSelAllBt->setEnabled(false);
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
             break;
         }
-        case 1: {
-            ui->editTableBt->setEnabled(true);
-            ui->saveTableBt->setEnabled(true);
+        // Machine is loaded
+        case 1:
+        {
+            ui->editBt->setEnabled(true);
+            ui->saveBt->setEnabled(true);
             ui->simBt->setEnabled(true);
+            ui->loadTapeBt->setEnabled(true);
             ui->selAllBt->setEnabled(true);
-            ui->uselAllBt->setEnabled(true);
+            ui->uSelAllBt->setEnabled(true);
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(false);
             break;
         }
-        case 2: {
-            ui->editTableBt->setEnabled(false);
-            ui->saveTableBt->setEnabled(false);
+        // Machine is simulating
+        case 2:
+        {
+            ui->editBt->setEnabled(false);
+            ui->saveBt->setEnabled(false);
             ui->simBt->setEnabled(true);
+            ui->loadTapeBt->setEnabled(true);
             ui->selAllBt->setEnabled(true);
-            ui->uselAllBt->setEnabled(true);
+            ui->uSelAllBt->setEnabled(true);
             ui->pauseBt->setEnabled(true);
             ui->contBt->setEnabled(false);
             ui->stopBt->setEnabled(true);
             break;
         }
-        case 3: {
-            ui->editTableBt->setEnabled(false);
-            ui->saveTableBt->setEnabled(false);
+        // Machine is paused
+        case 3:
+        {
+            ui->editBt->setEnabled(false);
+            ui->saveBt->setEnabled(false);
             ui->simBt->setEnabled(true);
+            ui->loadTapeBt->setEnabled(true);
             ui->selAllBt->setEnabled(true);
-            ui->uselAllBt->setEnabled(true);
+            ui->uSelAllBt->setEnabled(true);
             ui->pauseBt->setEnabled(false);
             ui->contBt->setEnabled(true);
             ui->stopBt->setEnabled(true);
@@ -392,26 +261,114 @@ void UserMachines::enSimButtons(QString state) {
     }
 }
 
-void UserMachines::on_stopBt_clicked()
+void UserMachines::finishSim(QString tableName)
 {
-    MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
-    toStop->stop();
-    int index = ui->tableSim->currentIndex() - 1;
-    dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(3)->widget())->setEnabled(true);
-    enSimButtons(toStop->getState());
+    for (int i = 0; i < listMach.size(); i++)
+    {
+        if (listMach.at(i)->getFileName() == tableName)
+        {
+            dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setEnabled(true);
+            delete dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->movie();
+            QPixmap icon;
+            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->halted())
+            {
+                icon.load(":/rec/icons/check");
+            }
+            else
+            {
+                icon.load(":/rec/icons/question");
+            }
+            icon = icon.scaled(20, 20);
+            dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->clear();
+            dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->setPixmap(icon);
+            break;
+        }
+    }
+    if (selected == tableName)
+    {
+        enSimButtons("TableLoaded");
+    }
 }
 
-void UserMachines::on_pauseBt_clicked()
+void UserMachines::getMachToDispay()
 {
-    MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
-    toPause->pause();
-    int index = ui->tableSim->currentIndex() - 1;
-    delete dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->movie();
-    QPixmap icon(":/rec/icons/pause");
-    icon = icon.scaled(20, 20);
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->clear();
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->setPixmap(icon);
-    enSimButtons(toPause->getState());
+    for (int i = 0; i < ui->machList->count(); i++)
+    {
+        if (ui->machList->item(i)->isSelected())
+        {
+            ui->tableSim->setCurrentIndex(i + 1);
+            dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->resizeTable();
+            enSimButtons(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState());
+            ui->delayLb->setText(QString::number(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getLocalDelay()*10) + " ms");
+            break;
+        }
+    }
+}
+
+void UserMachines::loadPresetSlt(Machine* preset)
+{
+    if (addMachine(preset))
+    {
+        MachineSimulation *sim = new MachineSimulation(preset, listTape.at(0));
+        connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
+        ui->tableSim->insertWidget(listMach.size(), sim);
+        ui->tableSim->setCurrentIndex(listMach.size());
+        sim->start();
+        sim->display();
+        enSimButtons(sim->getState());
+    }
+}
+
+bool UserMachines::machOrTape()
+{
+    return ui->buttonSelect->currentIndex() == 0;
+}
+
+void UserMachines::on_addBt_clicked()
+{
+    if (machOrTape())
+    {
+        // Initialize new Machine from file
+        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Turing's Machine Table", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+        if (!(fileD == nullptr))
+        {
+            QFile *tableFile = new QFile(fileD);
+            Machine *mach = new Machine(tableFile);
+            if (addMachine(mach))
+            {
+                MachineSimulation *sim = new MachineSimulation(mach, listTape.at(0));
+                connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
+                ui->tableSim->insertWidget(listMach.size(), sim);
+                ui->tableSim->setCurrentIndex(listMach.size());
+                sim->start();
+                sim->display();
+                enSimButtons(sim->getState());
+            }
+        }
+    }
+    else
+    {
+        // Initailize new Tape from file
+        Tape *tape;
+        QString fileD = QFileDialog::getOpenFileName(this, "Open a Text File containing a Tape's Description", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
+        if (!(fileD == nullptr))
+        {
+            QFile *tapeFile = new QFile(fileD);
+            tape = new Tape(tapeFile);
+        }
+        else return;
+        addTape(tape);
+    }
+}
+
+void UserMachines::on_buttonSelect_currentIndexChanged(int index)
+{
+    QString mOrT = (index == 0) ? "Machine" : "Tape";
+    ui->addBt->setText("Add " + mOrT + " File");
+    ui->editBt->setText("Edit " + mOrT);
+    ui->saveBt->setText("Save " + mOrT);
+    ui->qRandBt->setText("Add Quick Random " + mOrT);
+    ui->cRandBt->setText("Add Custom Random " + mOrT);
 }
 
 void UserMachines::on_contBt_clicked()
@@ -420,27 +377,29 @@ void UserMachines::on_contBt_clicked()
     toCont->cont();
     int index = ui->tableSim->currentIndex() - 1;
     QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->clear();
-    dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(index))->layout()->itemAt(4)->widget())->setMovie(loading);
+    dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->setMovie(loading);
     loading->setScaledSize(QSize(20, 20));
     loading->start();
     enSimButtons(toCont->getState());
 }
 
-void UserMachines::on_cRandTableBt_clicked()
+void UserMachines::on_cRandBt_clicked()
 {
-    if (machOrTape()) {
+    if (machOrTape())
+    {
+        // Creates custom random machine
         RandomMachines *rand = new RandomMachines;
         rand->show();
-        while (!rand->isReady()) {
+        while (!rand->isReady())
+        {
                 QThread::msleep(10);
                 QCoreApplication::processEvents();
-                if (!rand->isVisible()) {
-                    this->setEnabled(true);
+                if (!rand->isVisible())
+                {
                     return;
                 }
         }
-        this->setEnabled(true);
         Machine *randMach = rand->getRandMach();
         rand->close();
         addMachine(randMach);
@@ -452,14 +411,17 @@ void UserMachines::on_cRandTableBt_clicked()
         sim->display();
         enSimButtons(sim->getState());
     }
-    else {
+    else
+    {
+        // Creates custom random tape
         RandomTapes *rand = new RandomTapes;
         rand->show();
-        while (!rand->isReady()) {
+        while (!rand->isReady())
+        {
                 QThread::msleep(10);
                 QCoreApplication::processEvents();
-                if (!rand->isVisible()) {
-                    this->setEnabled(true);
+                if (!rand->isVisible())
+                {
                     return;
                 }
         }
@@ -469,9 +431,89 @@ void UserMachines::on_cRandTableBt_clicked()
     }
 }
 
-void UserMachines::on_qRandTableBt_clicked()
+void UserMachines::on_editBt_clicked()
 {
-    if (machOrTape()) {
+    if (machOrTape())
+    {
+        // Edits the selected machine
+        EditMachines *edit = new EditMachines(listMach.at(ui->tableSim->currentIndex() - 1));
+        edit->show();
+        edit->loadTable();
+        while (!edit->isReady())
+        {
+                QThread::msleep(10);
+                QCoreApplication::processEvents();
+                if (!edit->isVisible())
+                {
+                    return;
+                }
+        }
+        Machine *edited = edit->getEditMach();
+        for (int i = 0; i < listMach.size(); i++)
+        {
+            if (listMach.at(i)->getFileName() == edited->getFileName())
+            {
+                listMach.replace(i, edited);
+            }
+        }
+        edit->close();
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setMachine(edited);
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->display();
+    }
+    else
+    {
+        // Edits the selected machine's tape
+        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->editTape();
+    }
+}
+
+void UserMachines::on_fasterBt_clicked()
+{
+    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->increaseSpeed();
+}
+
+void UserMachines::on_loadTapeBt_clicked()
+{
+    Tape *toLoad;
+    int tapeListIndex = 0;
+    for (int i = 0; i < ui->tapesList->count(); i++)
+    {
+        if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->isChecked())
+        {
+            toLoad = listTape.at(i);
+            tapeListIndex = i;
+            break;
+        }
+    }
+    for (int i = 0; i < ui->machList->count(); i++)
+    {
+        if (dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->isChecked())
+        {
+            QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(tapeListIndex))->layout()->itemAt(3)->widget())->pixmap());
+            dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(1)->widget())->setPixmap(pix);
+            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i + 1))->setTape(toLoad);
+        }
+    }
+}
+
+void UserMachines::on_pauseBt_clicked()
+{
+    MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    toPause->pause();
+    int index = ui->tableSim->currentIndex() - 1;
+    delete dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->movie();
+    QPixmap icon(":/rec/icons/pause");
+    icon = icon.scaled(20, 20);
+    dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->clear();
+    dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->setPixmap(icon);
+    enSimButtons(toPause->getState());
+}
+
+void UserMachines::on_qRandBt_clicked()
+{
+    if (machOrTape())
+    {
+        // Creates a quick random machine
         RandomMachines *rand = new RandomMachines;
         rand->quick();
         Machine *quick = rand->getRandMach();
@@ -484,7 +526,9 @@ void UserMachines::on_qRandTableBt_clicked()
         sim->display();
         enSimButtons(sim->getState());
     }
-    else {
+    else
+    {
+        // Creates a quick random tape
         RandomTapes *rand = new RandomTapes;
         rand->quick();
         Tape *quick = rand->getTape();
@@ -492,71 +536,15 @@ void UserMachines::on_qRandTableBt_clicked()
     }
 }
 
-void UserMachines::on_editTableBt_clicked()
+void UserMachines::on_saveBt_clicked()
 {
-    if (machOrTape()) {
-        EditMachines *edit = new EditMachines(listMach.at(ui->tableSim->currentIndex() - 1));
-        edit->show();
-        edit->loadTable();
-        while (!edit->isReady()) {
-                QThread::msleep(10);
-                QCoreApplication::processEvents();
-                if (!edit->isVisible()) {
-                    return;
-                }
-        }
-        Machine *edited = edit->getEditMach();
-        for (int i = 0; i < listMach.size(); i++) {
-            if (listMach.at(i)->getFileName() == edited->getFileName()) {
-                listMach.replace(i, edited);
-            }
-        }
-        edit->close();
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setMachine(edited);
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->display();
-    }
-    else {
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->editTape();
-    }
-}
-
-void UserMachines::selTapeButtons(QString name) {
-    for (int i = 0; i < ui->tapesList->count(); i++) {
-        if (dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(0)->widget())->text() == name) {
-            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
-        }
-        else {
-            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
-        }
-    }
-}
-
-void UserMachines::on_loadTapeBt_clicked()
-{
-    Tape *toLoad;
-    int tapeListIndex = 0;
-    for (int i = 0; i < ui->tapesList->count(); i++) {
-        if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->isChecked()) {
-            toLoad = listTape.at(i);
-            tapeListIndex = i;
-            break;
-        }
-    }
-    for (int i = 0; i < ui->tablesList->count(); i++) {
-        if (dynamic_cast<QCheckBox*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(3)->widget())->isChecked()) {
-            QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(tapeListIndex))->layout()->itemAt(3)->widget())->pixmap());
-            dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i))->layout()->itemAt(1)->widget())->setPixmap(pix);
-            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i + 1))->setTape(toLoad);
-        }
-    }
-}
-
-void UserMachines::on_saveTableBt_clicked()
-{
-    if (machOrTape()) {
+    if (machOrTape())
+    {
+        // Saves the selected machine
         QString fileName = QFileDialog::getSaveFileName(this, "Save Turing's Machine", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
         QFile file(fileName);
-        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        if (!file.open(QFile::WriteOnly | QFile::Text))
+        {
                 qDebug() << "Error saving file";
                 return;
         }
@@ -567,10 +555,16 @@ void UserMachines::on_saveTableBt_clicked()
         QVector<QChar> *states = toSave->getStates();
         QVector<QChar> *symbols = toSave->getSymbols();
         out << "  *  ";
-        for (int i = - 1; i < symbols->size(); i++) {
-            if (i >= 0) out << "  " << symbols->at(i) << "  ";
-            for (int j = 0; j < states->size(); j++) {
-                if (i < 0) {
+        for (int i = - 1; i < symbols->size(); i++)
+        {
+            if (i >= 0)
+            {
+                out << "  " << symbols->at(i) << "  ";
+            }
+            for (int j = 0; j < states->size(); j++)
+            {
+                if (i < 0)
+                {
                     out << "  " << states->at(j) << "  ";
                 }
                 else {
@@ -582,8 +576,21 @@ void UserMachines::on_saveTableBt_clicked()
         file.flush();
         file.close();
     }
-    else {
+    else
+    {
+        // Saves the selected machine's tape
         dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->saveTape();
+    }
+}
+
+void UserMachines::on_selAllBt_clicked()
+{
+    for (int i = 0; i < ui->machList->count(); i++)
+    {
+        if (dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->isEnabled())
+        {
+            dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setChecked(true);
+        }
     }
 }
 
@@ -592,51 +599,89 @@ void UserMachines::on_settingsBt_clicked()
     set->show();
 }
 
+void UserMachines::on_simBt_clicked()
+{
+    int index = ui->tableSim->currentIndex() - 1;
+    if (dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(3)->widget())->isChecked())
+    {
+        enSimButtons("Sim");
+    }
+    for (int i = 0; i < ui->machList->count(); i++)
+    {
+        if (dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->isChecked())
+        {
+            dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
+            dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setEnabled(false);
+            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->stop();
+
+            QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
+            dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->clear();
+            dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->setMovie(loading);
+            loading->setScaledSize(QSize(20, 20));
+            loading->start();
+
+            MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1));
+
+            QFutureWatcher<void> *watcher = new QFutureWatcher<void>;
+            QFuture<void> fut = QtConcurrent::run(toSim, &MachineSimulation::simulate);
+            watcher->setFuture(fut);
+
+            QSignalMapper *sigMap = new QSignalMapper(this);
+            connect(watcher, SIGNAL(finished()), sigMap, SLOT(map()));
+            QString tableName = dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(0)->widget())->text();
+            sigMap->setMapping(watcher, tableName);
+            connect(sigMap, SIGNAL(mapped(QString)), this, SLOT(finishSim(QString)));
+        }
+    }
+}
+
 void UserMachines::on_slowerBt_clicked()
 {
     dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->decreaseSpeed();
 }
 
-void UserMachines::on_fasterBt_clicked()
+void UserMachines::on_stopBt_clicked()
 {
-    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->increaseSpeed();
+    MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    toStop->stop();
+    int index = ui->tableSim->currentIndex() - 1;
+    dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(3)->widget())->setEnabled(true);
+    enSimButtons(toStop->getState());
 }
 
-void UserMachines::delayUpdatedSlt(int delay)
+void UserMachines::on_uSelAllBt_clicked()
 {
-    if (dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState() != "Sim") {
-        ui->delayLb->setText(QString::number(delay*10) + " ms");
+    for (int i = 0; i < ui->machList->count(); i++)
+    {
+        dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
     }
 }
 
-void UserMachines::on_buttonSelect_currentIndexChanged(int index)
+void UserMachines::selTapeButtons(QString name)
 {
-    switch(index) {
-        case 0: {
-            ui->addTableBt->setText("Add Machine File");
-            ui->editTableBt->setText("Edit Machine");
-            ui->saveTableBt->setText("Save Machine");
-            ui->qRandTableBt->setText("Add Quick Random Machine");
-            ui->cRandTableBt->setText("Add Custom Random Machine");
-            break;
+    for (int i = 0; i < ui->tapesList->count(); i++)
+    {
+        if (dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(0)->widget())->text() == name)
+        {
+            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(true);
         }
-        case 1: {
-            ui->addTableBt->setText("Add Tape File");
-            ui->editTableBt->setText("Edit Tape");
-            ui->saveTableBt->setText("Save Tape");
-            ui->qRandTableBt->setText("Add Quick Random Tape");
-            ui->cRandTableBt->setText("Add Custom Random Tape");
-            break;
+        else
+        {
+            dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(i))->layout()->itemAt(2)->widget())->setChecked(false);
         }
     }
 }
 
 void UserMachines::showMachineContextMenu(const QPoint &pos)
 {
-    QModelIndex index = ui->tablesList->indexAt(pos);
-    delete ui->tablesList->item(index.row());
+    QModelIndex index = ui->machList->indexAt(pos);
+    delete ui->machList->item(index.row());
     delete ui->tableSim->widget(index.row() + 1);
     listMach.remove(index.row());
+    if (ui->machList->count() == 0)
+    {
+        enSimButtons("Init");
+    }
 }
 
 void UserMachines::showTapeContextMenu(const QPoint &pos)
@@ -644,18 +689,46 @@ void UserMachines::showTapeContextMenu(const QPoint &pos)
     QModelIndex mIndex = ui->tapesList->indexAt(pos);
     int index = mIndex.row();
     Tape *toDel = listTape.at(index);
-    if (toDel->getName() != "Default") {
-        for (int i = 1; i < ui->tableSim->count(); i++) {
-            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->getTape()->getName() == toDel->getName()) {
+    if (toDel->getName() != "Default")
+    {
+        for (int i = 1; i < ui->tableSim->count(); i++)
+        {
+            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->getTape()->getName() == toDel->getName())
+            {
                 dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->setTape(listTape.at(0));
                 QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(3)->widget())->pixmap());
-                dynamic_cast<QLabel*>(ui->tablesList->itemWidget(ui->tablesList->item(i - 1))->layout()->itemAt(1)->widget())->setPixmap(pix);
+                dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i - 1))->layout()->itemAt(1)->widget())->setPixmap(pix);
             }
         }
-        if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(index))->layout()->itemAt(2)->widget())->isChecked()) {
+        if (dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(index))->layout()->itemAt(2)->widget())->isChecked())
+        {
             dynamic_cast<QRadioButton*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(2)->widget())->setChecked(true);
         }
         listTape.remove(index);
         delete ui->tapesList->item(index);
     }
+}
+
+void UserMachines::start()
+{
+    // Setting the size of the table list container
+    QList<int> sizes = ui->listSplit->sizes();
+    sizes[0] = (int)ui->listSplit->width()*0.25;
+    sizes[1] = (int)ui->listSplit->width()*0.75;
+    ui->listSplit->setSizes(sizes);
+    sizes = ui->tapeSplit->sizes();
+    sizes[0] = (int)ui->tapeSplit->width()*0.70;
+    sizes[1] = (int)ui->tapeSplit->width()*0.30;
+    ui->tapeSplit->setSizes(sizes);
+
+    // Setting the default display
+    MachineSimulation *newMach = new MachineSimulation(nullptr, nullptr);
+    ui->tableSim->insertWidget(0, newMach);
+    ui->tableSim->setCurrentIndex(0);
+    newMach->start();
+    newMach->setEnabled(false);
+    ui->delayLb->setText("--- ms");
+
+    // Setting the default tape item
+    addTape(new Tape(new QFile));
 }
