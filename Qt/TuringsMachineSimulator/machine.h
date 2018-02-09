@@ -12,6 +12,7 @@ class Machine
 public:
     Machine(QFile *fileName);
     Machine(QString name, QVector<QChar> sts, QVector<QChar> syms, QMap<QString, QString> tFunct, QChar iSt, QChar hSt);
+    bool isValid();
     // Control functions
     void start(std::list<QChar> inTape, int inPos, QChar bSym);
     void advance();
@@ -43,6 +44,7 @@ private:
         QChar nState;
     };
     // Machine variables
+    bool valid;
     QVector<QChar> states;
     QVector<QChar> symbols;
     std::list<QChar> tape;

@@ -8,6 +8,7 @@ EditMachines::EditMachines(Machine *toEdit, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Machine Edition");
+    this->setWindowIcon(QIcon(QPixmap(":rec/icons/edit")));
     this->setWindowModality(Qt::ApplicationModal);
 
     // Controlling scroll bars
@@ -27,6 +28,7 @@ EditMachines::~EditMachines()
 
 void EditMachines::fillComBoxes()
 {
+    // Fills the combo boxes with the machine's symbols and states
     foreach (QChar sym, *mach->getSymbols())
     {
         ui->writeCBox->addItem(sym);
@@ -76,16 +78,19 @@ void EditMachines::fillComBoxes()
 
 Machine *EditMachines::getEditMach()
 {
+    // Returns the edited machine
     return mach;
 }
 
 bool EditMachines::isReady()
 {
+    // Checks if the machine is ready to be returned
     return ready;
 }
 
 void EditMachines::loadTable()
 {
+    // Fills the table with the machine's description
     QVector<QChar> *symbols = mach->getSymbols();
     QVector<QChar> *states = mach->getStates();
     ui->tableView->setRowCount(symbols->size());
@@ -121,6 +126,7 @@ void EditMachines::loadTable()
 
 void EditMachines::on_changeBut_clicked()
 {
+    // Applies the changes to the tabç+le
     QString act;
     act.append(ui->writeCBox->itemText(ui->writeCBox->currentIndex()));
     act.append(ui->moveCBox->itemText(ui->moveCBox->currentIndex()).at(0));
@@ -135,6 +141,7 @@ void EditMachines::on_changeBut_clicked()
 
 void EditMachines::on_saveBut_clicked()
 {
+    // Saves the changes to the machine's transition function
     QMap<QString, QString> tFunct;
     QVector<QChar> *states = mach->getStates();
     QVector<QChar> *symbols = mach->getSymbols();
@@ -156,6 +163,7 @@ void EditMachines::on_saveBut_clicked()
 
 void EditMachines::on_tableView_cellClicked(int row, int column)
 {
+    // Changes the combo boxes selected items based on the selected cell
     QString act = ui->tableView->item(row, column)->text();
     QVector<QChar> *states = mach->getStates();
     QVector<QChar> *symbols = mach->getSymbols();
@@ -180,6 +188,7 @@ void EditMachines::on_tableView_cellClicked(int row, int column)
 
 void EditMachines::resizeEvent(QResizeEvent *event)
 {
+    // Is called whenever the windows is resized
     resizeTable();
     update();
     QWidget::resizeEvent(event);
@@ -187,6 +196,7 @@ void EditMachines::resizeEvent(QResizeEvent *event)
 
 void EditMachines::resizeTable()
 {
+    // Resizes the table according to the container dimensions
     if (tableIsLoaded)
     {
         int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();

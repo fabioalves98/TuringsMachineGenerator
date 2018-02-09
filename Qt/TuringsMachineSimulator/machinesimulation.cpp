@@ -53,22 +53,34 @@ MachineSimulation::MachineSimulation(Machine *mach, Tape *tape, QWidget *parent)
 
 MachineSimulation::~MachineSimulation()
 {
-    delete ui;
+    haltSim = true;
+    delete ui;    
 }
 
 void MachineSimulation::changeStatusSlt(QString status)
 {
+    // Changes the content of the status bar
     statusBar()->showMessage(status);
+}
+
+void MachineSimulation::clearUi()
+{
+    ui->simList->clear();
+    ui->statesList->clear();
+    ui->tapeList->clear();
+    ui->stateList->setItemWidget(ui->stateList->item(0), new QLabel(""));
 }
 
 void MachineSimulation::cont()
 {
+    // Changes the signals to continue the simulation
     state = "Sim";
     pauseSim = false;
 }
 
 void MachineSimulation::decreaseSpeed()
 {
+    // Increases the simulatin delay
     if (localDelayFormat < 5)
     {
         localDelayFormat++;
@@ -82,6 +94,7 @@ void MachineSimulation::decreaseSpeed()
 
 void MachineSimulation::displayMachine()
 {
+    // Displays the machine's description and properties
     ui->tableView->clear();
     QVector<QChar> *symbols = mach->getSymbols();
     QVector<QChar> *states = mach->getStates();
@@ -182,6 +195,7 @@ void MachineSimulation::displayMachine()
 
 void MachineSimulation::displayTape()
 {
+    // Displays the tape's description and properties
     ui->headPos->setValue(tempHeadPos);
     if (tempHeadPos<= 0)
     {
@@ -275,6 +289,7 @@ void MachineSimulation::displayTape()
 
 void MachineSimulation::editTape()
 {
+    // Opens the tape edition window to edit the selected machine's tape
     EditTapes *edit = new EditTapes(tempTape, blanckSym);
     edit->show();
     edit->loadTape();
@@ -303,26 +318,31 @@ void MachineSimulation::editTape()
 
 int MachineSimulation::getLocalDelay()
 {
+    // Returns the custom delay value
     return int(localDelayFormat);
 }
 
 QString MachineSimulation::getState()
 {
+    // Returns the state of the machne
     return state;
 }
 
 Tape *MachineSimulation::getTape()
 {
+    // Returns the tape object
     return defTape;
 }
 
 bool MachineSimulation::halted()
 {
+    // Checks if the machine halted
     return halts;
 }
 
 void MachineSimulation::increaseSpeed()
 {
+    // Decreases the simulation delay
     if (localDelayFormat < 5 && localDelayFormat > 0)
     {
         localDelayFormat--;
@@ -336,6 +356,7 @@ void MachineSimulation::increaseSpeed()
 
 void MachineSimulation::insertStateSlt(QString state)
 {
+    // Inserts the last iteration's state into the state list
     QListWidgetItem *newStateI = new QListWidgetItem;
     QLabel *statesText = new QLabel;
     statesText->setText(state);
@@ -356,6 +377,7 @@ void MachineSimulation::insertStateSlt(QString state)
 
 void MachineSimulation::insertTapeSlt(QString toUpdate)
 {
+    // Inserts the last iteration's tape into the tape history list
     QListWidgetItem *tableTextI = new QListWidgetItem;
     QLabel *tableText = new QLabel;
     tableText->setText(toUpdate);
@@ -390,6 +412,7 @@ void MachineSimulation::insertTapeSlt(QString toUpdate)
 
 bool MachineSimulation::machHalted(int iterations)
 {
+    // Checks if the mahcine halted
     if (mach->halted())
     {
         emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations");
@@ -417,6 +440,7 @@ bool MachineSimulation::machHalted(int iterations)
 
 void MachineSimulation::on_headPos_valueChanged(int arg1)
 {
+    // Changes the position of the machine's head in the tape
     if (tapeEdited)
     {
         tempHeadPos = arg1;
@@ -460,6 +484,7 @@ void MachineSimulation::on_headPos_valueChanged(int arg1)
 
 void MachineSimulation::pause()
 {
+    // Pauses the simulation
     QString message = statusBar()->currentMessage();
     statusBar()->showMessage("Paused" + message.split("Simulating").at(1));
     state = "Pause";
@@ -468,6 +493,7 @@ void MachineSimulation::pause()
 
 void MachineSimulation::resizeEvent(QResizeEvent *event)
 {
+    // Is called whenever the window is resized
     resizeTable();
     update();
     QWidget::resizeEvent(event);
@@ -475,6 +501,7 @@ void MachineSimulation::resizeEvent(QResizeEvent *event)
 
 void MachineSimulation::resizeTable()
 {
+	// Resizes the table acording to the container dimenssions
     if (tableIsLoaded)
     {
         int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
@@ -511,6 +538,7 @@ void MachineSimulation::resizeTable()
 
 void MachineSimulation::saveTape()
 {
+	// Saves the currentky displayed machine
     QString fileName = QFileDialog::getSaveFileName(this, "Save Turing's Machine", QDir::homePath(), "Text Files (*.txt);;All Files(*)");
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text))
@@ -532,6 +560,7 @@ void MachineSimulation::saveTape()
 
 void MachineSimulation::selectTableCellSlt(int st, int sy)
 {
+	// Selects the table cell of the current state and current symbol
     if (st >= 0)
     {
         ui->tableView->clearSelection();
@@ -542,11 +571,13 @@ void MachineSimulation::selectTableCellSlt(int st, int sy)
 
 void MachineSimulation::setMachine(Machine *mach)
 {
+	// Changes the machine object
     this->mach = mach;
 }
 
 void MachineSimulation::setTape(Tape *tape)
 {
+	// Chnages the tape object
     this->defTape = tape;
     tapeEdited = false;
     tempTape = defTape->getTape();
@@ -557,6 +588,7 @@ void MachineSimulation::setTape(Tape *tape)
 
 void MachineSimulation::simulate()
 {
+	// Starts the machine's simulation
     if (!tableIsLoaded) return;
     state = "Sim";
     haltSim = false;
@@ -651,12 +683,14 @@ void MachineSimulation::start()
 
 void MachineSimulation::stop()
 {
+	// Stops the simulation
     state = "TableLoaded";
     haltSim = true;
 }
 
 void MachineSimulation::updateDelaySlt(int delay)
 {
+	// Changes the simulation delay if the machine is not simulating
     if (state != "Sim")
     {
         localDelayFormat = delay/10;
@@ -666,6 +700,7 @@ void MachineSimulation::updateDelaySlt(int delay)
 
 void MachineSimulation::updateUiSlt(int st, int sy, QString state, QString tape, QString status)
 {
+	// Updates the Ui elemtents with the information provided by the simulation
     int toClean = ui->simList->count()  - set->getSimHistory();
     for (int i = 0; i < toClean; i++)
     {

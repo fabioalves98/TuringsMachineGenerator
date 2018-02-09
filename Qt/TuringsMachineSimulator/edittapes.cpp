@@ -9,6 +9,7 @@ EditTapes::EditTapes(std::list<QChar> toEdit, QChar bSym, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Tape Edition");
+    this->setWindowIcon(QIcon(QPixmap(":rec/icons/edit")));
     this->setWindowModality(Qt::ApplicationModal);
 
     // Setting the scroll bar always on
@@ -40,26 +41,31 @@ EditTapes::~EditTapes()
 
 QChar EditTapes::getBlanckSym()
 {
+    // Returns the blanck symbol
     return blanckSym;
 }
 
 std::list<QChar> EditTapes::getTape()
 {
+    // Returns the tape
     return tape;
 }
 
 bool EditTapes::isEdited()
 {
+    // Checks if the tape was edited
     return edited;
 }
 
 bool EditTapes::isReady()
 {
+    // Checks if the tape is ready to be returned
     return ready;
 }
 
 void EditTapes::loadTape()
 {
+    // Loads the tape into the line edits
     ui->tapeList->clear();
     QListWidgetItem *item = new QListWidgetItem;
     QWidget *widget = new QWidget;
@@ -88,6 +94,7 @@ void EditTapes::loadTape()
 
 void EditTapes::on_blanckSymLEdit_textChanged(const QString &arg1)
 {
+    // Changes the blanck symbol
     if (arg1 != nullptr)
     {
         blanckSym = arg1.at(0);
@@ -100,6 +107,7 @@ void EditTapes::on_blanckSymLEdit_textChanged(const QString &arg1)
 
 void EditTapes::on_minusLeftBt_clicked()
 {
+    // Deletes an element on the left side of the tape
     updateTape();
     tape.pop_front();
     loadTape();
@@ -107,6 +115,7 @@ void EditTapes::on_minusLeftBt_clicked()
 
 void EditTapes::on_minusRightBt_clicked()
 {
+    // Deletes an element on the right side of the tape
     updateTape();
     tape.pop_back();
     loadTape();
@@ -114,6 +123,7 @@ void EditTapes::on_minusRightBt_clicked()
 
 void EditTapes::on_plusLeftBt_clicked()
 {
+    // Adds an element on the left side of the tape
     updateTape();
     tape.push_front(blanckSym);
     loadTape();
@@ -121,6 +131,7 @@ void EditTapes::on_plusLeftBt_clicked()
 
 void EditTapes::on_plusRightBt_clicked()
 {
+    // Adds an element on the right side of the tape
     updateTape();
     tape.push_back(blanckSym);
     loadTape();
@@ -128,18 +139,21 @@ void EditTapes::on_plusRightBt_clicked()
 
 void EditTapes::on_restoreBt_clicked()
 {
+    // Restore the tape to its original state
     ready = true;
     edited = false;
 }
 
 void EditTapes::on_saveBt_clicked()
 {
+    // Saves the tape
     updateTape();
     ready = true;
 }
 
 void EditTapes::updateTape()
 {
+    // Updates the values of the tape
     QHBoxLayout *layout = dynamic_cast<QHBoxLayout*>(ui->tapeList->itemWidget(ui->tapeList->item(0))->layout());
     auto it = tape.begin();
     for (int i = 1; i < layout->count() - 1; i++)

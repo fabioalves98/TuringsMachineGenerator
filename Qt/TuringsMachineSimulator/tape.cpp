@@ -2,6 +2,8 @@
 
 Tape::Tape(QFile *tapeFile)
 {
+    valid = false;
+    // Constructs a tape from a text file
     if (!tapeFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
         name = "Default";
@@ -17,22 +19,26 @@ Tape::Tape(QFile *tapeFile)
         QFileInfo *tapeInfo = new QFileInfo(*tapeFile);
         name = tapeInfo->baseName();
         QTextStream in(tapeFile);
-        QString prop = in.readLine();
-        if (prop.split(":").at(0) == "hp")
+        for (int i = 0; i < 2; i++)
         {
-            headPos = prop.split(" ").at(1).toInt();
-            prop = in.readLine();
-            blanckSym = prop.split(" ").at(1).at(0);
-        }
-        else if (prop.split(":").at(0) == "bs")
-        {
-            blanckSym = prop.split(" ").at(1).at(0);
-            prop = in.readLine();
-            headPos = prop.split(" ").at(1).toInt();
-        }
-        else
-        {
-            qDebug() << "Error Reading Tape File";
+            QString prop = in.readLine();
+            prop.replace(" ", ""); prop.replace(":", "");
+            if (prop.length() < 3)
+            {
+                return;
+            }
+            if (prop.mid(0, 2) == "hp")
+            {
+                headPos = prop.split("hp").at(1).toInt();
+            }
+            else if ((prop.mid(0, 2) == "bs") && (blanckSym == nullptr))
+            {
+                blanckSym = prop.at(2);
+            }
+            else
+            {
+                return;
+            }
         }
         QString tapeStr = in.readLine();
         for (int i = 0; i < tapeStr.length(); i++)
@@ -40,37 +46,50 @@ Tape::Tape(QFile *tapeFile)
             tape.push_back(tapeStr.at(i));
         }
     }
+    valid = true;
 }
 
 Tape::Tape(QString name, std::list<QChar> tape, QChar blanckSym, int headPos)
 {
+    // Creates a tape from the provided containers and variables
     this->name = name;
     this->tape = tape;
     this->blanckSym = blanckSym;
     this->headPos = headPos;
 }
 
+bool Tape::isValid()
+{
+    // Checks if the tape created is valid
+    return valid;
+}
+
 QChar Tape::getBlanckSym()
 {
+    // Returns the blanck symbol
     return blanckSym;
 }
 
 QString Tape::getName()
 {
+    // Returns the tape name
     return name;
 }
 
 std::list<QChar> Tape::getTape()
 {
+    // Returns the tape
     return tape;
 }
 
 int Tape::getTapePos()
 {
+    // Retruns the initial head position
     return headPos;
 }
 
 int Tape::getTapeSize()
 {
+    // Returns the tape size
     return tape.size();
 }

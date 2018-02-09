@@ -2,9 +2,10 @@
 
 Machine::Machine(QFile *tableFile)
 {
+    valid = false;
+    // Creates a machine from a text file
     if (!tableFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Error Opening Machine File" << endl;
         return;
     }
     QFileInfo *tableInfo = new QFileInfo(*tableFile);
@@ -14,6 +15,10 @@ Machine::Machine(QFile *tableFile)
     {
         QString prop = in.readLine();
         prop.replace(" ", ""); prop.replace(":", "");
+        if (prop.length() != 3)
+        {
+            return;
+        }
         if ((prop.mid(0, 2) == "is") && (initState == nullptr))
         {
             initState = prop.at(2);
@@ -24,7 +29,7 @@ Machine::Machine(QFile *tableFile)
         }
         else
         {
-            qDebug() << "Error Reading Machine File";
+            return;
         }
     }
     while (!in.atEnd())
@@ -45,6 +50,10 @@ Machine::Machine(QFile *tableFile)
         }
         else
         {
+            if (line.length() != (1 + 3*states.size()))
+            {
+               return;
+            }
             symbols.push_back(line.at(0));
             line = line.mid(1);
             int count = 0;
@@ -64,10 +73,12 @@ Machine::Machine(QFile *tableFile)
             }
         }
     }
+    valid = true;
 }
 
 Machine::Machine(QString name, QVector<QChar> sts, QVector<QChar> syms, QMap<QString, QString> tFunct, QChar iSt, QChar hSt)
 {
+    // Creates a machine from the provided containers and variables
     fileName = name;
     states = sts;
     symbols = syms;
@@ -88,8 +99,15 @@ Machine::Machine(QString name, QVector<QChar> sts, QVector<QChar> syms, QMap<QSt
     haltState = hSt;
 }
 
+bool Machine::isValid()
+{
+    // Checks if the machine created is valid
+    return valid;
+}
+
 void Machine::advance()
 {
+    // Advances one step in the simulation
     cSymbol = *head;
     QString key = makeKey(pState, cSymbol);
     action move = transFunct[key];
@@ -130,6 +148,7 @@ void Machine::advance()
 
 QString Machine::funct(QChar st, QChar sy)
 {
+    // Return the action correspondent to the key provided
     QString key = makeKey(st, sy);
     action move = transFunct.value(key);
     QString toReturn;
@@ -139,67 +158,80 @@ QString Machine::funct(QChar st, QChar sy)
 
 QChar Machine::getBlanckSym()
 {
+    // Returns the blanck symbol
     return blanckSym;
 }
 
 QChar Machine::getCurrentState()
 {
+    // Returns the current state
     return pState;
 }
 
 QChar Machine::getCurrentSymbol()
 {
+    // Returns the current symbol
     return *head;
 }
 
 QString Machine::getFileName()
 {
+    // Returns the name of the machine
     return fileName;
 }
 
 QChar Machine::getHaltState()
 {
+    // Returns the halt state
     return haltState;
 }
 
 QChar Machine::getInitState()
 {
+    // Returns the initial state
     return initState;
 }
 
 QVector<QChar> *Machine::getStates()
 {
+    // Returns the states list
     return &states;
 }
 
 QVector<QChar> *Machine::getSymbols()
 {
+    // Returns the symbols list
     return &symbols;
 }
 
 std::list<QChar> Machine::getTape()
 {
+    // Returns the tape
     return tape;
 }
 
 int Machine::getTapeHeadOffset()
 {
+    // Returns the offset of the heads position to the middle of the tape
     int index = tape.size()/2 - std::distance(tape.begin(), head);
     return index;
 }
 
 void Machine::halt()
 {
+    // Stops the simulation
     pState = haltState;
 }
 
 bool Machine::halted()
 {
+    // Checks if the machine halted
     return pState==haltState;
 }
 
 QString Machine::makeKey(QChar st, QChar sy)
 {
+    // Creates a key to access the transition function
     QString key;
     key.append(st);
     key.append(sy);
@@ -208,16 +240,19 @@ QString Machine::makeKey(QChar st, QChar sy)
 
 void Machine::setHaltState(QChar halt)
 {
+    // Changes the halt state
     haltState = halt;
 }
 
 void Machine::setInitState(QChar init)
 {
+    // Changes the initial state
     initState = init;
 }
 
 void Machine::setTransFunct(QMap<QString, QString> *tFunct)
 {
+    // Changes the transition function
     for (QChar st : states)
     {
         for (QChar sy : symbols)
@@ -235,6 +270,7 @@ void Machine::setTransFunct(QMap<QString, QString> *tFunct)
 
 void Machine::start(std::list<QChar> inTape, int inPos, QChar bSym)
 {
+    // Asigns a tape to the machine to start the simulation
     tape.clear();
     tape = inTape;
     pState = initState;

@@ -137,6 +137,11 @@ public:
     QSpacerItem *verticalSpacer_3;
     QWidget *simulation;
     QVBoxLayout *verticalLayout_6;
+    QGroupBox *groupBox_5;
+    QHBoxLayout *horizontalLayout_16;
+    QLabel *label_6;
+    QSpinBox *concurrentSim;
+    QSpacerItem *horizontalSpacer_4;
     QGroupBox *groupBox_3;
     QHBoxLayout *horizontalLayout_6;
     QCheckBox *haltSimCheck;
@@ -159,7 +164,6 @@ public:
     QSpacerItem *horizontalSpacer_3;
     QLabel *label_4;
     QSpacerItem *verticalSpacer_2;
-    QWidget *about;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *Settings)
@@ -723,6 +727,32 @@ public:
         simulation->setObjectName(QStringLiteral("simulation"));
         verticalLayout_6 = new QVBoxLayout(simulation);
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        groupBox_5 = new QGroupBox(simulation);
+        groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
+        groupBox_5->setFont(font1);
+        horizontalLayout_16 = new QHBoxLayout(groupBox_5);
+        horizontalLayout_16->setObjectName(QStringLiteral("horizontalLayout_16"));
+        label_6 = new QLabel(groupBox_5);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setFont(font2);
+
+        horizontalLayout_16->addWidget(label_6);
+
+        concurrentSim = new QSpinBox(groupBox_5);
+        concurrentSim->setObjectName(QStringLiteral("concurrentSim"));
+        concurrentSim->setMinimum(1);
+        concurrentSim->setMaximum(50);
+        concurrentSim->setValue(1);
+
+        horizontalLayout_16->addWidget(concurrentSim);
+
+        horizontalSpacer_4 = new QSpacerItem(338, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_16->addItem(horizontalSpacer_4);
+
+
+        verticalLayout_6->addWidget(groupBox_5);
+
         groupBox_3 = new QGroupBox(simulation);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
         groupBox_3->setFont(font1);
@@ -839,9 +869,6 @@ public:
         verticalLayout_6->addItem(verticalSpacer_2);
 
         tabWidget->addTab(simulation, QString());
-        about = new QWidget();
-        about->setObjectName(QStringLiteral("about"));
-        tabWidget->addTab(about, QString());
 
         horizontalLayout_13->addWidget(tabWidget);
 
@@ -852,7 +879,7 @@ public:
 
         retranslateUi(Settings);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Settings);
@@ -918,6 +945,8 @@ public:
         zLabel_4->setText(QApplication::translate("Settings", "Blanck Symbol:", nullptr));
         rBSyCheck->setText(QApplication::translate("Settings", "Random", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(RandomTapes), QApplication::translate("Settings", "Quick Random Tapes", nullptr));
+        groupBox_5->setTitle(QApplication::translate("Settings", "Concurrent Simulation", nullptr));
+        label_6->setText(QApplication::translate("Settings", "Number of machines that can be simulated simultaneously:", nullptr));
         groupBox_3->setTitle(QApplication::translate("Settings", "Halt Simulation", nullptr));
         haltSimCheck->setText(QApplication::translate("Settings", "Halt Simulation in ", nullptr));
         label_5->setText(QApplication::translate("Settings", "iterations", nullptr));
@@ -928,7 +957,6 @@ public:
         label_3->setText(QApplication::translate("Settings", "iterations", nullptr));
         label_4->setText(QApplication::translate("Settings", "The higher the number, the slower the simulation will be.", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(simulation), QApplication::translate("Settings", "Simulation", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(about), QApplication::translate("Settings", "About", nullptr));
     } // retranslateUi
 
 };

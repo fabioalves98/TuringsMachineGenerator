@@ -10,6 +10,7 @@ class Tape
 public:
     Tape(QFile *tapeFile);
     Tape(QString name, std::list<QChar> tape, QChar blanckSym, int headPos);
+    bool isValid();
     QString getName();
     std::list<QChar> getTape();
     QChar getBlanckSym();
@@ -17,6 +18,7 @@ public:
     int getTapePos();
 
 private:
+    bool valid;
     QString name;
     std::list<QChar> tape;
     QChar blanckSym;

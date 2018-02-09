@@ -37,6 +37,7 @@ public:
     bool getRandBSym();
     QChar getBlanckSymbol();
     // Simulation Settings
+    int getConcurrentSim();
     int getDelayTime();
     bool getHaltInXIt();
     int getIterTilHalt();
@@ -48,6 +49,7 @@ protected:
 signals:
     loadPresetSgn(Machine*);
     delayChangedSgn(int);
+    concurrentSimSgn();
 
 private slots:
     void on_maxStSpinBox_valueChanged(int arg1);
@@ -95,6 +97,7 @@ private:
     bool randBSym;
     QChar blanckSym;
     // Simulation Settings
+    int concurrentSim;
     int delayTime;
     bool haltInXIt;
     int iterTilHalt;

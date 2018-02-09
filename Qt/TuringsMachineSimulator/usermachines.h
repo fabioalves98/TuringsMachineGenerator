@@ -15,6 +15,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QMenu>
+#include <QMessageBox>
 #include "machine.h"
 #include "tape.h"
 #include "settings.h"
@@ -64,7 +65,8 @@ private slots:
     void on_slowerBt_clicked();
     void on_fasterBt_clicked();
     void delayUpdatedSlt(int delay);
-    void finishSim(QString tableName);
+    void concurrentSimSlt();
+    void finishSim(QString machName);
     // Machine and Tape Deletion
     void showMachineContextMenu(const QPoint &pos);
     void showTapeContextMenu(const QPoint &pos);

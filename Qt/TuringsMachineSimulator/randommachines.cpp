@@ -7,6 +7,7 @@ RandomMachines::RandomMachines(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Random Machine Creation");
+    this->setWindowIcon(QIcon(QPixmap(":rec/icons/random")));
     this->setWindowModality(Qt::ApplicationModal);
 
     // Setting class settings
@@ -40,6 +41,7 @@ RandomMachines::~RandomMachines()
 
 void RandomMachines::changeButState()
 {
+    // Changes the state of the buttons acording to the state of the machine creation
     ui->randBut->setEnabled(true);
     ui->saveBut->setEnabled(true);
     if (ui->stSel->text() == "" || ui->sySel->text() == "" || ui->stSel->text() == "0" || ui->sySel->text() == "0")
@@ -59,24 +61,26 @@ void RandomMachines::changeButState()
 
 void RandomMachines::changeHorHeader(int st)
 {
-   QString text = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
-   QChar state;
-   if (text != nullptr)
-   {
-       state = text.at(0);
-       dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setText(state);
-   }
-   else
-   {
-       state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->placeholderText().at(0);
-       dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setPlaceholderText(state);
-   }
-   ui->randTable->horizontalHeaderItem(st)->setText(state);
-   ui->initStCBox->setItemText(st, state);
+    // Changes the content of the table header according to the line edits
+    QString text = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->text();
+    QChar state;
+    if (text != nullptr)
+    {
+        state = text.at(0);
+        dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setText(state);
+    }
+    else
+    {
+        state = dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->placeholderText().at(0);
+        dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(st)->widget())->setPlaceholderText(state);
+    }
+    ui->randTable->horizontalHeaderItem(st)->setText(state);
+    ui->initStCBox->setItemText(st, state);
 }
 
 void RandomMachines::changeVerHeader(int sy)
 {
+    // Changes the content of the table header according to the line edits
     QString text = dynamic_cast<QLineEdit*>(ui->syLayout->itemAt(sy)->widget())->text();
     QChar symbol;
     if (text != nullptr)
@@ -94,6 +98,7 @@ void RandomMachines::changeVerHeader(int sy)
 
 void RandomMachines::clearStLayout()
 {
+    // Deletes all previous state line edits
     QLayoutItem *item;
     while((item = ui->stLayout->takeAt(0)))
     {
@@ -104,6 +109,7 @@ void RandomMachines::clearStLayout()
 
 void RandomMachines::clearSyLayout()
 {
+    // Deletes all previous state line edits
     QLayoutItem *item;
     while((item = ui->syLayout->takeAt(0)))
     {
@@ -114,22 +120,26 @@ void RandomMachines::clearSyLayout()
 
 Machine *RandomMachines::getRandMach()
 {
+    // Returns the randomly generated machines
     return randMach;
 }
 
 void RandomMachines::headersChanged()
 {
+    // Signals a change in the custom settings
     generated = false;
     changeButState();
 }
 
 bool RandomMachines::isReady()
 {
+    // Checks if the machine is ready to be returned
     return ready;
 }
 
 void RandomMachines::on_haltStEdit_textChanged(const QString &arg1)
 {
+    // Signals a change in the halt state line edit
     generated = false;
     changeButState();
     if (arg1 != nullptr)
@@ -140,11 +150,13 @@ void RandomMachines::on_haltStEdit_textChanged(const QString &arg1)
 
 void RandomMachines::on_nameEdit_textChanged()
 {
+    // Signals a change in the name edit
     changeButState();
 }
 
 void RandomMachines::on_randBut_clicked()
 {
+    // Fills the table cells with randomly geenrated symbols and states
     states->clear();
     symbols->clear();
     for (int i = 0; i < ui->randTable->columnCount(); i++)
@@ -189,6 +201,7 @@ void RandomMachines::on_randBut_clicked()
 
 void RandomMachines::on_saveBut_clicked()
 {
+    // Saves the tables cells into a Machine object
     QMap<QString, QString> transFunct;
     for (int i = 0; i < symbols->size(); i++)
     {
@@ -209,6 +222,7 @@ void RandomMachines::on_saveBut_clicked()
 
 void RandomMachines::on_stSel_valueChanged(int arg1)
 {
+    // Creates line edits for the user to edit the states of the machine
     ui->randTable->clearContents();
     ui->initStCBox->clear();
     clearStLayout();
@@ -252,6 +266,7 @@ void RandomMachines::on_stSel_valueChanged(int arg1)
 
 void RandomMachines::on_sySel_valueChanged(int arg1)
 {
+    // Creates line edits for the user to edit the symbols of the machine
     ui->randTable->clearContents();
     clearSyLayout();
     ui->randTable->setRowCount(arg1);
@@ -297,6 +312,7 @@ void RandomMachines::on_sySel_valueChanged(int arg1)
 
 void RandomMachines::quick()
 {
+    // Generates a machine with random properties extracted from the global settings
     states->clear();
     symbols->clear();
     int maxSt = set->getTableMaxSt();
@@ -348,6 +364,7 @@ void RandomMachines::quick()
 
 void RandomMachines::resizeEvent(QResizeEvent *event)
 {
+    // Is called whenever the window is resized
     resizeTable();
     update();
     QWidget::resizeEvent(event);
@@ -355,6 +372,7 @@ void RandomMachines::resizeEvent(QResizeEvent *event)
 
 void RandomMachines::resizeTable()
 {
+    // Resizes the table acording to the container dimenssions
     if (resizable)
     {
         if (ui->randTable->rowCount() == 0 && ui->randTable->columnCount() == 0)

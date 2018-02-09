@@ -14,5 +14,9 @@
         <file>icons/stop.png</file>
         <file>icons/minus.png</file>
         <file>icons/plus.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/machine.png</file>
+        <file>icons/random.png</file>
+        <file>icons/settings.png</file>
     </qresource>
 </RCC>

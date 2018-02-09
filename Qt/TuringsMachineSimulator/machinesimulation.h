@@ -30,6 +30,7 @@ public:
     void editTape();
     void saveTape();
     void displayMachine();
+    void clearUi();
     // Simulation control
     void simulate();
     void pause();

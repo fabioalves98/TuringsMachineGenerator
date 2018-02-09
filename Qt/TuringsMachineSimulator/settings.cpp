@@ -9,6 +9,7 @@ Settings::Settings(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Settings");
+    this->setWindowIcon(QIcon(QPixmap(":rec/icons/settings")));
     this->setWindowModality(Qt::ApplicationModal);
 
     // Initailizing class elements
@@ -26,6 +27,7 @@ Settings::~Settings()
 
 void Settings::clearStLayout()
 {
+    // Deletes all previous state line edits
     QLayoutItem *item;
     while((item = ui->stLayout->takeAt(0)))
     {
@@ -36,6 +38,7 @@ void Settings::clearStLayout()
 
 void Settings::clearSyLayout()
 {
+    // Deletes all previous symbol line edits
     QLayoutItem *item;
     while((item = ui->syLayout->takeAt(0)))
     {
@@ -46,6 +49,7 @@ void Settings::clearSyLayout()
 
 void Settings::clearTapeSyLayout()
 {
+    // Deletes all previous tape symbol line edits
     QLayoutItem *item;
     while((item = ui->tapeSyLayout->takeAt(0)))
     {
@@ -56,7 +60,7 @@ void Settings::clearTapeSyLayout()
 
 void Settings::closeEvent(QCloseEvent *event)
 {
-    // Saving quick random machine settings
+    // Saves quick random machine settings
     if (ui->tableNameEdit->text() == nullptr)
     {
         randTableName = ui->tableNameEdit->placeholderText();
@@ -83,7 +87,7 @@ void Settings::closeEvent(QCloseEvent *event)
         haltState = ui->haltStEdit->text().at(0);
     }
 
-    // Saving the quick random tape settings
+    // Saves the quick random tape settings
     if (ui->tapeNameEdit->text() == nullptr)
     {
         randTapeName = ui->tapeNameEdit->placeholderText();
@@ -107,10 +111,12 @@ void Settings::closeEvent(QCloseEvent *event)
         blanckSym = ui->tapeBSymEdit->text().at(0);
     }
 
-    // Saving common settings
+    // Saves common settings
     fillStatesNSymbols();
 
-    // Saving simulation settings
+    // Saves simulation settings
+    concurrentSim = ui->concurrentSim->value();
+    emit concurrentSimSgn();
     delayTime = ui->delaySpinBox->value();
     emit delayChangedSgn(delayTime);
     haltInXIt = ui->haltSimCheck->isChecked();
@@ -123,6 +129,7 @@ void Settings::closeEvent(QCloseEvent *event)
 
 void Settings::createPreset(QString name, QVector<QChar> states, QVector<QChar> symbols, QStringList cells, QChar inSt, QChar htSt)
 {
+    // Creates a preset and adds it to the preset list
     QMap<QString, QString> tFunct;
     int index = 0;
     QString key;
@@ -137,12 +144,13 @@ void Settings::createPreset(QString name, QVector<QChar> states, QVector<QChar> 
             index++;
         }
     }
-    Machine *threeBusy = new Machine(name, states, symbols, tFunct, inSt, htSt);
-    presets.append(threeBusy);
+    Machine *preset = new Machine(name, states, symbols, tFunct, inSt, htSt);
+    presets.append(preset);
 }
 
 void Settings::fillStatesNSymbols()
 {
+    // Fills the state/symbols/tape symbols containers with the ui info
     for (int i = 0; i < ui->stLayout->count(); i++)
     {
         if (dynamic_cast<QLineEdit*>(ui->stLayout->itemAt(i)->widget())->text() == nullptr)
@@ -180,26 +188,37 @@ void Settings::fillStatesNSymbols()
 
 QChar Settings::getBlanckSymbol()
 {
+    // Returns the blanck symbol
     return blanckSym;
+}
+
+int Settings::getConcurrentSim()
+{
+    // Returns the number of machines that can be simulated simultaneously
+    return concurrentSim;
 }
 
 int Settings::getDelayTime()
 {
+    // Returns the delay value
     return delayTime;
 }
 
 bool Settings::getHaltInXIt()
 {
+    // Checks if the simulation is suposed to halt in a number of iterations
     return haltInXIt;
 }
 
 QChar Settings::getHaltState()
 {
+    // Returns the halt state
     return haltState;
 }
 
 Settings* Settings::getInstance()
 {
+    // Returns the Setting instance
     if (instance == 0)
     {
         instance = new Settings;
@@ -209,91 +228,109 @@ Settings* Settings::getInstance()
 
 QChar Settings::getInState()
 {
+    // Returns initial state
     return inState;
 }
 
 int Settings::getIterTilHalt()
 {
+    // Return the maximum number of iterations
     return iterTilHalt;
 }
 
 bool Settings::getRandBSym()
 {
+    // Checks if the blanck symbol will be randomly generated
     return randBSym;
 }
 
 bool Settings::getRandInState()
 {
+    // Checks if the initial state will be randomly generated
     return randInState;
 }
 
 QString Settings::getRandTableName()
 {
+    // Returns the random machine name
     return randTableName;
 }
 
 int Settings::getRandTableSuffix()
 {
+    // Returns the number of digits the random machine name will have
     return randTableSuffix;
 }
 
 QString Settings::getRandTapeName()
 {
+    // Returns the random tape name
     return randTapeName;
 }
 
 int Settings::getRandTapeSuffix()
 {
+    // Returns the number of digits the random machine name will have
     return randTapeSuffix;
 }
 
 int Settings::getSimHistory()
 {
+    // Returns the number of iterations that will be saved in the simulation
     return simHistory;
 }
 
 int Settings::getTableMaxSt()
 {
+    // Returns the maximum number of states for the random mahine creation
     return tableMaxSt;
 }
 
 int Settings::getTableMaxSy()
 {
+    // Returns the maximum number of symbols for the random mahine creation
     return tableMaxSy;
 }
 
 int Settings::getTableMinSt()
 {
+    // Returns the minimum number of states for the random mahine creation
     return tableMinSt;
 }
 
 int Settings::getTableMinSy()
 {
+    // Returns the minumim number of symbols for the random mahine creation
     return tableMinSy;
 }
 
 QVector<QChar>* Settings::getTableStates()
 {
+    // Returns a list of states for the random machine creation
     return &tableStates;
 }
 
 QVector<QChar>* Settings::getTableSymbols()
 {
+    // Returns a list of symbols for the random machine creation
     return &tableSymbols;
 }
 
 int Settings::getTapeMaxSize()
 {
+    // Retruns the maximum size for the random tape creation
     return tapeMaxSize;
 }
 
 int Settings::getTapeMinSize()
 {
+    // Retruns the minimum size for the random tape creation
     return tapeMinSize;
 }
 
 QVector<QChar> *Settings::getTapeSymbols()
 {
+    // Returns a list of symbols for the random tape creation
     return &tapeSymbols;
 }
 
@@ -389,11 +426,13 @@ void Settings::loadPresets()
 
 void Settings::on_defaultSetBt_clicked()
 {
+    // Changes all variables to the default state
     setDefaults();
 }
 
 void Settings::on_haltSimCheck_stateChanged(int arg1)
 {
+    // Enables or disables the halt state choice
     if (arg1 > 1)
     {
         ui->haltSimSpinBox->setEnabled(true);
@@ -411,6 +450,7 @@ void Settings::on_loadPresetBt_clicked()
 
 void Settings::on_maxStSpinBox_valueChanged(int arg1)
 {
+    // Creates line edits to insert custom states
     ui->inStCBox->clear();
     QString previous;
     for (int i = 0; i < ui->stLayout->count(); i++)
@@ -458,6 +498,7 @@ void Settings::on_maxStSpinBox_valueChanged(int arg1)
 
 void Settings::on_maxSySpinBox_valueChanged(int arg1)
 {
+    // Creates line edits to insert custom symbols
     QString previous;
     for (int i = 0; i < ui->syLayout->count(); i++)
     {
@@ -502,6 +543,7 @@ void Settings::on_maxSySpinBox_valueChanged(int arg1)
 
 void Settings::on_minStSpinBox_valueChanged(int arg1)
 {
+    // Checks is the minimum value is above the maximum and fixes it
     if (arg1 > ui->maxStSpinBox->value())
     {
         ui->maxStSpinBox->setValue(arg1);
@@ -510,6 +552,7 @@ void Settings::on_minStSpinBox_valueChanged(int arg1)
 
 void Settings::on_minSySpinBox_valueChanged(int arg1)
 {
+    // Checks is the minimum value is above the maximum and fixes it
     if (arg1 > ui->maxSySpinBox->value())
     {
         ui->maxSySpinBox->setValue(arg1);
@@ -518,6 +561,7 @@ void Settings::on_minSySpinBox_valueChanged(int arg1)
 
 void Settings::on_presetsCBox_currentIndexChanged(int index)
 {
+    // Changes the preset description based on the choosen preset
     QString desc;
     switch (index)
     {
@@ -576,6 +620,7 @@ void Settings::on_presetsCBox_currentIndexChanged(int index)
 
 void Settings::on_rBSyCheck_stateChanged(int arg1)
 {
+    // Enables or disables the blanck symbol choice
     if (arg1 > 1)
     {
         ui->tapeBSymEdit->setEnabled(false);
@@ -588,6 +633,7 @@ void Settings::on_rBSyCheck_stateChanged(int arg1)
 
 void Settings::on_rInStCheck_stateChanged(int arg1)
 {
+    // Enables or disables the initial state choice
     if (arg1 > 1)
     {
         ui->inStCBox->setEnabled(false);
@@ -600,6 +646,7 @@ void Settings::on_rInStCheck_stateChanged(int arg1)
 
 void Settings::on_tapeSySBox_valueChanged(int arg1)
 {
+    // Sets the line edits for the tape's symbols edition
     clearTapeSyLayout();
     tapeSymbols.clear();
     for (int i = 0; i < arg1; i++)
@@ -655,6 +702,8 @@ void Settings::setDefaults() {
     fillStatesNSymbols();
 
     // Settings for the simulation tab
+    concurrentSim = 4;
+    ui->concurrentSim->setValue(concurrentSim);
     delayTime = 200;
     ui->delaySpinBox->setValue(delayTime);
     haltInXIt = true;

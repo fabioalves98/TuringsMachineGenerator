@@ -7,6 +7,7 @@ RandomTapes::RandomTapes(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Random Tape Creation");
+    this->setWindowIcon(QIcon(QPixmap(":rec/icons/random")));
     this->setWindowModality(Qt::ApplicationModal);
 
     // Setting class settings
@@ -32,6 +33,7 @@ RandomTapes::~RandomTapes()
 
 void RandomTapes::changeButState()
 {
+    // Changes the state of the buttons acording to the state of the machine creation
     if (generated)
     {
         ui->saveBt->setEnabled(true);
@@ -52,6 +54,7 @@ void RandomTapes::changeButState()
 
 void RandomTapes::clearSymLayout()
 {
+    // Deletes all previous state line edits
     QLayoutItem *item;
     while((item = ui->symLayout->takeAt(0)))
     {
@@ -62,16 +65,19 @@ void RandomTapes::clearSymLayout()
 
 Tape *RandomTapes::getTape()
 {
+    // Returns the tape object
     return rand;
 }
 
 bool RandomTapes::isReady()
 {
+    // Checks if the tape is ready to be returned
     return ready;
 }
 
 void RandomTapes::on_randBt_clicked()
 {
+    // Fills the tape line edits with randomly geenrated symbols
     QVector<QChar> symbols;
     for (int i = 0; i < ui->symSBox->value(); i++)
     {
@@ -96,6 +102,7 @@ void RandomTapes::on_randBt_clicked()
 
 void RandomTapes::on_saveBt_clicked()
 {
+    // Saves the randomly created tape into a tape object
     QString name = ui->nameEdit->text();
     if (name == nullptr) {
         name = ui->nameEdit->placeholderText();
@@ -130,6 +137,7 @@ void RandomTapes::on_saveBt_clicked()
 
 void RandomTapes::on_sizeSBox_valueChanged(int arg1)
 {
+    // Changes the size of the tape to be generated
     ui->tapeList->clear();
     QListWidgetItem *item = new QListWidgetItem;
     QWidget *widget = new QWidget;
@@ -165,6 +173,7 @@ void RandomTapes::on_sizeSBox_valueChanged(int arg1)
 
 void RandomTapes::on_symSBox_valueChanged(int arg1)
 {
+    // Sets the number of symbols to be inerted in the tape
     clearSymLayout();
     for (int i = 0; i < arg1; i++)
     {
@@ -183,6 +192,7 @@ void RandomTapes::on_symSBox_valueChanged(int arg1)
 
 void RandomTapes::quick()
 {
+    // Generates a tape with the random propertie extracted from the settings
     int numDigitsName = pow(10, set->getRandTapeSuffix() - 1);
     QString name = set->getRandTapeName() + QString::number(qrand() % (9*numDigitsName) + numDigitsName);
     int tapeSize = qrand() % (set->getTapeMaxSize() - set->getTapeMinSize()) + set->getTapeMinSize();
