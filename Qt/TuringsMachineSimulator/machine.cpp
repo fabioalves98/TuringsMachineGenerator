@@ -1,16 +1,16 @@
 #include "machine.h"
 
-Machine::Machine(QFile *tableFile)
+Machine::Machine(QFile *machFile)
 {
     valid = false;
     // Creates a machine from a text file
-    if (!tableFile->open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!machFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
         return;
     }
-    QFileInfo *tableInfo = new QFileInfo(*tableFile);
-    fileName = tableInfo->baseName();
-    QTextStream in(tableFile);
+    QFileInfo *machInfo = new QFileInfo(*machFile);
+    fileName = machInfo->baseName();
+    QTextStream in(machFile);
     for (int i = 0; i < 2; i++)
     {
         QString prop = in.readLine();

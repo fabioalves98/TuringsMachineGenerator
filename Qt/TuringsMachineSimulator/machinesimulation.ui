@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="zCentralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="spacing">
      <number>0</number>
@@ -40,12 +40,12 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QWidget" name="layoutWidget">
-        <layout class="QVBoxLayout" name="Specs">
+        <layout class="QVBoxLayout" name="zSpecsLayout">
          <property name="spacing">
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="tableLabel">
+          <widget class="QLabel" name="zLabel_7">
            <property name="font">
             <font>
              <pointsize>16</pointsize>
@@ -82,12 +82,12 @@
          <enum>Qt::Vertical</enum>
         </property>
         <widget class="QWidget" name="layoutWidget_2">
-         <layout class="QVBoxLayout" name="tableProp">
+         <layout class="QVBoxLayout" name="zTablePropLayout">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="propLabel">
+           <widget class="QLabel" name="zLabel_9">
             <property name="font">
              <font>
               <pointsize>16</pointsize>
@@ -111,17 +111,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="tablePropList"/>
+           <widget class="QListWidget" name="machPropList"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="layoutWidget">
-         <layout class="QVBoxLayout" name="tapeProp">
+         <layout class="QVBoxLayout" name="zTapePropLayout">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="zLabel_8">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -172,17 +172,17 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QWidget" name="layoutWidget">
-        <layout class="QVBoxLayout" name="rightSim">
+        <layout class="QVBoxLayout" name="zRightSimLayout">
          <property name="spacing">
           <number>2</number>
          </property>
          <item>
-          <layout class="QVBoxLayout" name="Head">
+          <layout class="QVBoxLayout" name="zHeadLayout">
            <property name="spacing">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="headPosLabel">
+            <widget class="QLabel" name="zLabel_4">
              <property name="minimumSize">
               <size>
                <width>70</width>
@@ -241,12 +241,12 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="States">
+          <layout class="QVBoxLayout" name="zStatesLayout">
            <property name="spacing">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="statesLabel">
+            <widget class="QLabel" name="zLabel_5">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -278,12 +278,12 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="State">
+          <layout class="QVBoxLayout" name="zStateLayout">
            <property name="spacing">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="stateLabel">
+            <widget class="QLabel" name="zLabel_6">
              <property name="maximumSize">
               <size>
                <width>16777215</width>
@@ -324,17 +324,17 @@
         </layout>
        </widget>
        <widget class="QWidget" name="layoutWidget">
-        <layout class="QVBoxLayout" name="leftSim">
+        <layout class="QVBoxLayout" name="zLeftSimLayout">
          <property name="spacing">
           <number>2</number>
          </property>
          <item>
-          <layout class="QVBoxLayout" name="InitialTape">
+          <layout class="QVBoxLayout" name="zInitialTapeLayout">
            <property name="spacing">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="inTapeLabel">
+            <widget class="QLabel" name="zLabel">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -379,12 +379,12 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="Tape">
+          <layout class="QVBoxLayout" name="zTapeLayout">
            <property name="spacing">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="simLabel">
+            <widget class="QLabel" name="zLabel_2">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -419,12 +419,12 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <layout class="QVBoxLayout" name="zCurTapeLayout">
            <property name="spacing">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="tapeLabel">
+            <widget class="QLabel" name="zLabel_3">
              <property name="maximumSize">
               <size>
                <width>16777215</width>

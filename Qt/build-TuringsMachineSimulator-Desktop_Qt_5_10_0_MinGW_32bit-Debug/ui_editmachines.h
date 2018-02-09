@@ -29,33 +29,33 @@ QT_BEGIN_NAMESPACE
 class Ui_EditMachines
 {
 public:
-    QWidget *centralwidget;
+    QWidget *zCentralwidget;
     QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_2;
-    QSpacerItem *horizontalSpacer_4;
-    QLabel *label;
-    QSpacerItem *horizontalSpacer;
+    QHBoxLayout *zTitleLayout;
+    QSpacerItem *zSpacer_2;
+    QLabel *zLabel;
+    QSpacerItem *zSpacer;
     QTableWidget *tableView;
-    QHBoxLayout *horizontalLayout;
-    QSpacerItem *spacer1;
-    QLabel *writeLabel;
+    QHBoxLayout *zActionLayout;
+    QSpacerItem *zSpacer_5;
+    QLabel *zLabel_4;
     QComboBox *writeCBox;
-    QSpacerItem *horizontalSpacer_2;
-    QLabel *moveLabel;
+    QSpacerItem *zSpacer_3;
+    QLabel *zLabel_3;
     QComboBox *moveCBox;
-    QSpacerItem *horizontalSpacer_3;
-    QLabel *nextLabel;
+    QSpacerItem *zSpacer_4;
+    QLabel *zLabel_2;
     QComboBox *nextCBox;
-    QSpacerItem *spacer2;
-    QHBoxLayout *horizontalLayout_3;
-    QSpacerItem *horizontalSpacer_6;
-    QLabel *inStateLabel;
+    QSpacerItem *zSpacer_6;
+    QHBoxLayout *zStateLayout;
+    QSpacerItem *zSpacer_8;
+    QLabel *zLabel_6;
     QComboBox *inStateCBox;
-    QSpacerItem *horizontalSpacer_5;
-    QLabel *hltStateLabel;
+    QSpacerItem *zSpacer_7;
+    QLabel *zLabel_5;
     QComboBox *hltStateCBox;
-    QSpacerItem *horizontalSpacer_7;
-    QHBoxLayout *horizontalLayout_5;
+    QSpacerItem *zSpacer_9;
+    QHBoxLayout *zButtonLayout;
     QPushButton *changeBut;
     QPushButton *saveBut;
 
@@ -64,187 +64,187 @@ public:
         if (EditMachines->objectName().isEmpty())
             EditMachines->setObjectName(QStringLiteral("EditMachines"));
         EditMachines->resize(800, 600);
-        centralwidget = new QWidget(EditMachines);
-        centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
+        zCentralwidget = new QWidget(EditMachines);
+        zCentralwidget->setObjectName(QStringLiteral("zCentralwidget"));
+        verticalLayout = new QVBoxLayout(zCentralwidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zTitleLayout = new QHBoxLayout();
+        zTitleLayout->setObjectName(QStringLiteral("zTitleLayout"));
+        zSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_4);
+        zTitleLayout->addItem(zSpacer_2);
 
-        label = new QLabel(centralwidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setMinimumSize(QSize(0, 0));
+        zLabel = new QLabel(zCentralwidget);
+        zLabel->setObjectName(QStringLiteral("zLabel"));
+        zLabel->setMinimumSize(QSize(0, 0));
         QFont font;
         font.setPointSize(16);
-        label->setFont(font);
-        label->setFrameShape(QFrame::Panel);
-        label->setFrameShadow(QFrame::Raised);
-        label->setAlignment(Qt::AlignCenter);
-        label->setMargin(2);
+        zLabel->setFont(font);
+        zLabel->setFrameShape(QFrame::Panel);
+        zLabel->setFrameShadow(QFrame::Raised);
+        zLabel->setAlignment(Qt::AlignCenter);
+        zLabel->setMargin(2);
 
-        horizontalLayout_2->addWidget(label);
+        zTitleLayout->addWidget(zLabel);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer);
+        zTitleLayout->addItem(zSpacer);
 
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout->addLayout(zTitleLayout);
 
-        tableView = new QTableWidget(centralwidget);
+        tableView = new QTableWidget(zCentralwidget);
         tableView->setObjectName(QStringLiteral("tableView"));
 
         verticalLayout->addWidget(tableView);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        spacer1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zActionLayout = new QHBoxLayout();
+        zActionLayout->setObjectName(QStringLiteral("zActionLayout"));
+        zSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(spacer1);
+        zActionLayout->addItem(zSpacer_5);
 
-        writeLabel = new QLabel(centralwidget);
-        writeLabel->setObjectName(QStringLiteral("writeLabel"));
-        writeLabel->setMinimumSize(QSize(0, 0));
+        zLabel_4 = new QLabel(zCentralwidget);
+        zLabel_4->setObjectName(QStringLiteral("zLabel_4"));
+        zLabel_4->setMinimumSize(QSize(0, 0));
         QFont font1;
         font1.setPointSize(14);
-        writeLabel->setFont(font1);
-        writeLabel->setFrameShape(QFrame::Panel);
-        writeLabel->setFrameShadow(QFrame::Raised);
-        writeLabel->setAlignment(Qt::AlignCenter);
+        zLabel_4->setFont(font1);
+        zLabel_4->setFrameShape(QFrame::Panel);
+        zLabel_4->setFrameShadow(QFrame::Raised);
+        zLabel_4->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout->addWidget(writeLabel);
+        zActionLayout->addWidget(zLabel_4);
 
-        writeCBox = new QComboBox(centralwidget);
+        writeCBox = new QComboBox(zCentralwidget);
         writeCBox->setObjectName(QStringLiteral("writeCBox"));
         writeCBox->setMaximumSize(QSize(51, 33));
         writeCBox->setFont(font1);
 
-        horizontalLayout->addWidget(writeCBox);
+        zActionLayout->addWidget(writeCBox);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(horizontalSpacer_2);
+        zActionLayout->addItem(zSpacer_3);
 
-        moveLabel = new QLabel(centralwidget);
-        moveLabel->setObjectName(QStringLiteral("moveLabel"));
-        moveLabel->setMinimumSize(QSize(0, 0));
-        moveLabel->setFont(font1);
-        moveLabel->setFrameShape(QFrame::Panel);
-        moveLabel->setFrameShadow(QFrame::Raised);
-        moveLabel->setAlignment(Qt::AlignCenter);
+        zLabel_3 = new QLabel(zCentralwidget);
+        zLabel_3->setObjectName(QStringLiteral("zLabel_3"));
+        zLabel_3->setMinimumSize(QSize(0, 0));
+        zLabel_3->setFont(font1);
+        zLabel_3->setFrameShape(QFrame::Panel);
+        zLabel_3->setFrameShadow(QFrame::Raised);
+        zLabel_3->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout->addWidget(moveLabel);
+        zActionLayout->addWidget(zLabel_3);
 
-        moveCBox = new QComboBox(centralwidget);
+        moveCBox = new QComboBox(zCentralwidget);
         moveCBox->setObjectName(QStringLiteral("moveCBox"));
         moveCBox->setMaximumSize(QSize(93, 33));
         moveCBox->setFont(font1);
 
-        horizontalLayout->addWidget(moveCBox);
+        zActionLayout->addWidget(moveCBox);
 
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(horizontalSpacer_3);
+        zActionLayout->addItem(zSpacer_4);
 
-        nextLabel = new QLabel(centralwidget);
-        nextLabel->setObjectName(QStringLiteral("nextLabel"));
-        nextLabel->setMinimumSize(QSize(0, 0));
-        nextLabel->setFont(font1);
-        nextLabel->setFrameShape(QFrame::Panel);
-        nextLabel->setFrameShadow(QFrame::Raised);
-        nextLabel->setAlignment(Qt::AlignCenter);
+        zLabel_2 = new QLabel(zCentralwidget);
+        zLabel_2->setObjectName(QStringLiteral("zLabel_2"));
+        zLabel_2->setMinimumSize(QSize(0, 0));
+        zLabel_2->setFont(font1);
+        zLabel_2->setFrameShape(QFrame::Panel);
+        zLabel_2->setFrameShadow(QFrame::Raised);
+        zLabel_2->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout->addWidget(nextLabel);
+        zActionLayout->addWidget(zLabel_2);
 
-        nextCBox = new QComboBox(centralwidget);
+        nextCBox = new QComboBox(zCentralwidget);
         nextCBox->setObjectName(QStringLiteral("nextCBox"));
         nextCBox->setMaximumSize(QSize(51, 33));
         nextCBox->setFont(font1);
 
-        horizontalLayout->addWidget(nextCBox);
+        zActionLayout->addWidget(nextCBox);
 
-        spacer2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(spacer2);
+        zActionLayout->addItem(zSpacer_6);
 
 
-        verticalLayout->addLayout(horizontalLayout);
+        verticalLayout->addLayout(zActionLayout);
 
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zStateLayout = new QHBoxLayout();
+        zStateLayout->setObjectName(QStringLiteral("zStateLayout"));
+        zSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_6);
+        zStateLayout->addItem(zSpacer_8);
 
-        inStateLabel = new QLabel(centralwidget);
-        inStateLabel->setObjectName(QStringLiteral("inStateLabel"));
-        inStateLabel->setMinimumSize(QSize(0, 0));
-        inStateLabel->setMaximumSize(QSize(16777215, 16777215));
-        inStateLabel->setFont(font1);
-        inStateLabel->setFrameShape(QFrame::Panel);
-        inStateLabel->setFrameShadow(QFrame::Raised);
-        inStateLabel->setAlignment(Qt::AlignCenter);
+        zLabel_6 = new QLabel(zCentralwidget);
+        zLabel_6->setObjectName(QStringLiteral("zLabel_6"));
+        zLabel_6->setMinimumSize(QSize(0, 0));
+        zLabel_6->setMaximumSize(QSize(16777215, 16777215));
+        zLabel_6->setFont(font1);
+        zLabel_6->setFrameShape(QFrame::Panel);
+        zLabel_6->setFrameShadow(QFrame::Raised);
+        zLabel_6->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_3->addWidget(inStateLabel);
+        zStateLayout->addWidget(zLabel_6);
 
-        inStateCBox = new QComboBox(centralwidget);
+        inStateCBox = new QComboBox(zCentralwidget);
         inStateCBox->setObjectName(QStringLiteral("inStateCBox"));
         inStateCBox->setMaximumSize(QSize(51, 31));
         inStateCBox->setFont(font1);
 
-        horizontalLayout_3->addWidget(inStateCBox);
+        zStateLayout->addWidget(inStateCBox);
 
-        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_5);
+        zStateLayout->addItem(zSpacer_7);
 
-        hltStateLabel = new QLabel(centralwidget);
-        hltStateLabel->setObjectName(QStringLiteral("hltStateLabel"));
-        hltStateLabel->setMinimumSize(QSize(0, 0));
-        hltStateLabel->setFont(font1);
-        hltStateLabel->setFrameShape(QFrame::Panel);
-        hltStateLabel->setFrameShadow(QFrame::Raised);
-        hltStateLabel->setAlignment(Qt::AlignCenter);
+        zLabel_5 = new QLabel(zCentralwidget);
+        zLabel_5->setObjectName(QStringLiteral("zLabel_5"));
+        zLabel_5->setMinimumSize(QSize(0, 0));
+        zLabel_5->setFont(font1);
+        zLabel_5->setFrameShape(QFrame::Panel);
+        zLabel_5->setFrameShadow(QFrame::Raised);
+        zLabel_5->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_3->addWidget(hltStateLabel);
+        zStateLayout->addWidget(zLabel_5);
 
-        hltStateCBox = new QComboBox(centralwidget);
+        hltStateCBox = new QComboBox(zCentralwidget);
         hltStateCBox->setObjectName(QStringLiteral("hltStateCBox"));
         hltStateCBox->setMaximumSize(QSize(51, 31));
         hltStateCBox->setFont(font1);
 
-        horizontalLayout_3->addWidget(hltStateCBox);
+        zStateLayout->addWidget(hltStateCBox);
 
-        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_7);
+        zStateLayout->addItem(zSpacer_9);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout->addLayout(zStateLayout);
 
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
-        changeBut = new QPushButton(centralwidget);
+        zButtonLayout = new QHBoxLayout();
+        zButtonLayout->setObjectName(QStringLiteral("zButtonLayout"));
+        changeBut = new QPushButton(zCentralwidget);
         changeBut->setObjectName(QStringLiteral("changeBut"));
         QFont font2;
         font2.setPointSize(12);
         changeBut->setFont(font2);
 
-        horizontalLayout_5->addWidget(changeBut);
+        zButtonLayout->addWidget(changeBut);
 
-        saveBut = new QPushButton(centralwidget);
+        saveBut = new QPushButton(zCentralwidget);
         saveBut->setObjectName(QStringLiteral("saveBut"));
         saveBut->setFont(font2);
 
-        horizontalLayout_5->addWidget(saveBut);
+        zButtonLayout->addWidget(saveBut);
 
 
-        verticalLayout->addLayout(horizontalLayout_5);
+        verticalLayout->addLayout(zButtonLayout);
 
-        EditMachines->setCentralWidget(centralwidget);
+        EditMachines->setCentralWidget(zCentralwidget);
 
         retranslateUi(EditMachines);
 
@@ -254,12 +254,12 @@ public:
     void retranslateUi(QMainWindow *EditMachines)
     {
         EditMachines->setWindowTitle(QApplication::translate("EditMachines", "MainWindow", nullptr));
-        label->setText(QApplication::translate("EditMachines", " Select the cells you want to edit ", nullptr));
-        writeLabel->setText(QApplication::translate("EditMachines", " Write Symbol ", nullptr));
-        moveLabel->setText(QApplication::translate("EditMachines", " Move Tape ", nullptr));
-        nextLabel->setText(QApplication::translate("EditMachines", " Next State ", nullptr));
-        inStateLabel->setText(QApplication::translate("EditMachines", " Initial State ", nullptr));
-        hltStateLabel->setText(QApplication::translate("EditMachines", " Halt State ", nullptr));
+        zLabel->setText(QApplication::translate("EditMachines", " Select the cells you want to edit ", nullptr));
+        zLabel_4->setText(QApplication::translate("EditMachines", " Write Symbol ", nullptr));
+        zLabel_3->setText(QApplication::translate("EditMachines", " Move Tape ", nullptr));
+        zLabel_2->setText(QApplication::translate("EditMachines", " Next State ", nullptr));
+        zLabel_6->setText(QApplication::translate("EditMachines", " Initial State ", nullptr));
+        zLabel_5->setText(QApplication::translate("EditMachines", " Halt State ", nullptr));
         changeBut->setText(QApplication::translate("EditMachines", "Change", nullptr));
         saveBut->setText(QApplication::translate("EditMachines", "Save", nullptr));
     } // retranslateUi

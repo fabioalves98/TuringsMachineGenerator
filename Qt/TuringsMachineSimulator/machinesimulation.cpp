@@ -74,7 +74,7 @@ void MachineSimulation::clearUi()
 void MachineSimulation::cont()
 {
     // Changes the signals to continue the simulation
-    state = "Sim";
+    state = "Simulating";
     pauseSim = false;
 }
 
@@ -123,7 +123,7 @@ void MachineSimulation::displayMachine()
     ui->tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    ui->tablePropList->clear();
+    ui->machPropList->clear();
     QStringList properties;
     properties << " Name: " << " Symbols: " << " States: " << " Inicial State: " << " Halt State: ";
     for (QString prop : properties) {
@@ -183,13 +183,13 @@ void MachineSimulation::displayMachine()
         newProW->setLayout(layout);
         newProI->setSizeHint(QSize(0, 25));
         newProI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-        ui->tablePropList->addItem(newProI);
-        ui->tablePropList->setItemWidget(newProI, newProW);
+        ui->machPropList->addItem(newProI);
+        ui->machPropList->setItemWidget(newProI, newProW);
     }
     displayTape();
-    tableIsLoaded = true;
+    machIsLoaded = true;
     resizeTable();
-    state = "TableLoaded";
+    state = "Machine Loaded";
     changeStatusSlt("Machine is Loaded");
 }
 
@@ -378,15 +378,15 @@ void MachineSimulation::insertStateSlt(QString state)
 void MachineSimulation::insertTapeSlt(QString toUpdate)
 {
     // Inserts the last iteration's tape into the tape history list
-    QListWidgetItem *tableTextI = new QListWidgetItem;
-    QLabel *tableText = new QLabel;
-    tableText->setText(toUpdate);
-    tableText->setFont(QFont("Courier", 12, QFont::Bold));
-    tableText->setAlignment(Qt::AlignCenter);
-    tableTextI->setSizeHint(tableText->sizeHint());
-    tableTextI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
-    ui->simList->addItem(tableTextI);
-    ui->simList->setItemWidget(tableTextI, tableText);
+    QListWidgetItem *simTextI = new QListWidgetItem;
+    QLabel *simText = new QLabel;
+    simText->setText(toUpdate);
+    simText->setFont(QFont("Courier", 12, QFont::Bold));
+    simText->setAlignment(Qt::AlignCenter);
+    simTextI->setSizeHint(simText->sizeHint());
+    simTextI->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEditable);
+    ui->simList->addItem(simTextI);
+    ui->simList->setItemWidget(simTextI, simText);
     ui->simList->scrollToBottom();
 
     QListWidgetItem *tapeTextI = new QListWidgetItem;
@@ -416,20 +416,20 @@ bool MachineSimulation::machHalted(int iterations)
     if (mach->halted())
     {
         emit changeStatusSgn("The machine halted after " + QString::number(iterations) + " iterations");
-        state = "TableLoaded";
+        state = "Machine Loaded";
         halts = true;
         return true;
     }
     else if (haltSim)
     {
         emit changeStatusSgn("The machine halted by user's order. Iterations: " + QString::number(iterations));
-        state = "TableLoaded";
+        state = "Machine Loaded";
         return true;
     }
     else if ((iterations > set->getIterTilHalt()) && set->getHaltInXIt())
     {
         emit changeStatusSgn("The machine reached maximum number of iterations: " + QString::number(iterations));
-        state = "TableLoaded";
+        state = "Machine Loaded";
         return true;
     }
     else
@@ -502,7 +502,7 @@ void MachineSimulation::resizeEvent(QResizeEvent *event)
 void MachineSimulation::resizeTable()
 {
 	// Resizes the table acording to the container dimenssions
-    if (tableIsLoaded)
+    if (machIsLoaded)
     {
         int rowHeigth = (ui->tableView->height() - ui->tableView->horizontalHeader()->height())/ui->tableView->rowCount();
         int columnWidth = (ui->tableView->width() - ui->tableView->verticalHeader()->width())/ui->tableView->columnCount();
@@ -543,7 +543,6 @@ void MachineSimulation::saveTape()
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text))
     {
-        qDebug() << "Error saving file";
         return;
     }
     QTextStream out(&file);
@@ -589,8 +588,8 @@ void MachineSimulation::setTape(Tape *tape)
 void MachineSimulation::simulate()
 {
 	// Starts the machine's simulation
-    if (!tableIsLoaded) return;
-    state = "Sim";
+    if (!machIsLoaded) return;
+    state = "Simulating";
     haltSim = false;
     pauseSim = false;
     halts = false;
@@ -684,14 +683,14 @@ void MachineSimulation::start()
 void MachineSimulation::stop()
 {
 	// Stops the simulation
-    state = "TableLoaded";
+    state = "Machine Loaded";
     haltSim = true;
 }
 
 void MachineSimulation::updateDelaySlt(int delay)
 {
 	// Changes the simulation delay if the machine is not simulating
-    if (state != "Sim")
+    if (state != "Simulating")
     {
         localDelayFormat = delay/10;
         emit delayChangedSgn(localDelayFormat);

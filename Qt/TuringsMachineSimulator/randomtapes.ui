@@ -13,14 +13,14 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="zCentralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="zTopLayout">
       <item>
        <layout class="QVBoxLayout" name="zLabels">
         <item>
-         <widget class="QLabel" name="zNameLabel">
+         <widget class="QLabel" name="zLabel_2">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -41,7 +41,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="zSymbolsLabel">
+         <widget class="QLabel" name="zLabel_4">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -62,7 +62,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="zSizeLabel">
+         <widget class="QLabel" name="zLabel_3">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -83,7 +83,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="zBSymLabel">
+         <widget class="QLabel" name="zLabel">
           <property name="font">
            <font>
             <pointsize>14</pointsize>
@@ -283,7 +283,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="zButtonLayout">
       <item>
        <widget class="QPushButton" name="randBt">
         <property name="font">

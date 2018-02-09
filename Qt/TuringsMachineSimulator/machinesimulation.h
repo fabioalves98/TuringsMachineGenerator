@@ -85,7 +85,7 @@ private:
     bool pauseSim;
     bool halts;
     double localDelayFormat;
-    bool tableIsLoaded = false;
+    bool machIsLoaded = false;
 };
 
 #endif // MACHINESIMULATION_H

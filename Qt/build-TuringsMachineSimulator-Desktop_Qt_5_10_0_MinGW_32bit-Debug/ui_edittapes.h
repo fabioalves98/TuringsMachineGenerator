@@ -29,19 +29,19 @@ QT_BEGIN_NAMESPACE
 class Ui_EditTapes
 {
 public:
-    QWidget *centralwidget;
+    QWidget *zCentralwidget;
     QVBoxLayout *verticalLayout;
-    QHBoxLayout *Title;
-    QSpacerItem *zSpacerL;
-    QLabel *zTitleLabel;
-    QSpacerItem *zSpacerR;
-    QHBoxLayout *Tape;
+    QHBoxLayout *zTitleLayout;
+    QSpacerItem *zSpacer_2;
+    QLabel *zLabel;
+    QSpacerItem *zSpacer_3;
+    QHBoxLayout *zTapeLayout;
     QPushButton *plusLeftBt;
     QPushButton *minusLeftBt;
     QListWidget *tapeList;
     QPushButton *minusRightBt;
     QPushButton *plusRightBt;
-    QHBoxLayout *BlackSymbol;
+    QHBoxLayout *zBSymLayout;
     QLabel *zBlanckSymLabel;
     QLineEdit *blanckSymLEdit;
     QSpacerItem *zSpacer;
@@ -53,41 +53,41 @@ public:
         if (EditTapes->objectName().isEmpty())
             EditTapes->setObjectName(QStringLiteral("EditTapes"));
         EditTapes->resize(800, 146);
-        centralwidget = new QWidget(EditTapes);
-        centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
+        zCentralwidget = new QWidget(EditTapes);
+        zCentralwidget->setObjectName(QStringLiteral("zCentralwidget"));
+        verticalLayout = new QVBoxLayout(zCentralwidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        Title = new QHBoxLayout();
-        Title->setObjectName(QStringLiteral("Title"));
-        zSpacerL = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zTitleLayout = new QHBoxLayout();
+        zTitleLayout->setObjectName(QStringLiteral("zTitleLayout"));
+        zSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        Title->addItem(zSpacerL);
+        zTitleLayout->addItem(zSpacer_2);
 
-        zTitleLabel = new QLabel(centralwidget);
-        zTitleLabel->setObjectName(QStringLiteral("zTitleLabel"));
+        zLabel = new QLabel(zCentralwidget);
+        zLabel->setObjectName(QStringLiteral("zLabel"));
         QFont font;
         font.setPointSize(16);
-        zTitleLabel->setFont(font);
-        zTitleLabel->setFrameShape(QFrame::Panel);
-        zTitleLabel->setFrameShadow(QFrame::Raised);
-        zTitleLabel->setLineWidth(1);
-        zTitleLabel->setMidLineWidth(0);
-        zTitleLabel->setAlignment(Qt::AlignCenter);
-        zTitleLabel->setWordWrap(false);
-        zTitleLabel->setMargin(0);
+        zLabel->setFont(font);
+        zLabel->setFrameShape(QFrame::Panel);
+        zLabel->setFrameShadow(QFrame::Raised);
+        zLabel->setLineWidth(1);
+        zLabel->setMidLineWidth(0);
+        zLabel->setAlignment(Qt::AlignCenter);
+        zLabel->setWordWrap(false);
+        zLabel->setMargin(0);
 
-        Title->addWidget(zTitleLabel);
+        zTitleLayout->addWidget(zLabel);
 
-        zSpacerR = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        zSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        Title->addItem(zSpacerR);
+        zTitleLayout->addItem(zSpacer_3);
 
 
-        verticalLayout->addLayout(Title);
+        verticalLayout->addLayout(zTitleLayout);
 
-        Tape = new QHBoxLayout();
-        Tape->setObjectName(QStringLiteral("Tape"));
-        plusLeftBt = new QPushButton(centralwidget);
+        zTapeLayout = new QHBoxLayout();
+        zTapeLayout->setObjectName(QStringLiteral("zTapeLayout"));
+        plusLeftBt = new QPushButton(zCentralwidget);
         plusLeftBt->setObjectName(QStringLiteral("plusLeftBt"));
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
         sizePolicy.setHorizontalStretch(0);
@@ -95,50 +95,50 @@ public:
         sizePolicy.setHeightForWidth(plusLeftBt->sizePolicy().hasHeightForWidth());
         plusLeftBt->setSizePolicy(sizePolicy);
 
-        Tape->addWidget(plusLeftBt);
+        zTapeLayout->addWidget(plusLeftBt);
 
-        minusLeftBt = new QPushButton(centralwidget);
+        minusLeftBt = new QPushButton(zCentralwidget);
         minusLeftBt->setObjectName(QStringLiteral("minusLeftBt"));
         sizePolicy.setHeightForWidth(minusLeftBt->sizePolicy().hasHeightForWidth());
         minusLeftBt->setSizePolicy(sizePolicy);
 
-        Tape->addWidget(minusLeftBt);
+        zTapeLayout->addWidget(minusLeftBt);
 
-        tapeList = new QListWidget(centralwidget);
+        tapeList = new QListWidget(zCentralwidget);
         tapeList->setObjectName(QStringLiteral("tapeList"));
         tapeList->setMaximumSize(QSize(16777215, 48));
 
-        Tape->addWidget(tapeList);
+        zTapeLayout->addWidget(tapeList);
 
-        minusRightBt = new QPushButton(centralwidget);
+        minusRightBt = new QPushButton(zCentralwidget);
         minusRightBt->setObjectName(QStringLiteral("minusRightBt"));
         sizePolicy.setHeightForWidth(minusRightBt->sizePolicy().hasHeightForWidth());
         minusRightBt->setSizePolicy(sizePolicy);
 
-        Tape->addWidget(minusRightBt);
+        zTapeLayout->addWidget(minusRightBt);
 
-        plusRightBt = new QPushButton(centralwidget);
+        plusRightBt = new QPushButton(zCentralwidget);
         plusRightBt->setObjectName(QStringLiteral("plusRightBt"));
         sizePolicy.setHeightForWidth(plusRightBt->sizePolicy().hasHeightForWidth());
         plusRightBt->setSizePolicy(sizePolicy);
 
-        Tape->addWidget(plusRightBt);
+        zTapeLayout->addWidget(plusRightBt);
 
 
-        verticalLayout->addLayout(Tape);
+        verticalLayout->addLayout(zTapeLayout);
 
-        BlackSymbol = new QHBoxLayout();
-        BlackSymbol->setObjectName(QStringLiteral("BlackSymbol"));
-        zBlanckSymLabel = new QLabel(centralwidget);
+        zBSymLayout = new QHBoxLayout();
+        zBSymLayout->setObjectName(QStringLiteral("zBSymLayout"));
+        zBlanckSymLabel = new QLabel(zCentralwidget);
         zBlanckSymLabel->setObjectName(QStringLiteral("zBlanckSymLabel"));
         zBlanckSymLabel->setFont(font);
         zBlanckSymLabel->setFrameShape(QFrame::Panel);
         zBlanckSymLabel->setFrameShadow(QFrame::Raised);
         zBlanckSymLabel->setMargin(1);
 
-        BlackSymbol->addWidget(zBlanckSymLabel);
+        zBSymLayout->addWidget(zBlanckSymLabel);
 
-        blanckSymLEdit = new QLineEdit(centralwidget);
+        blanckSymLEdit = new QLineEdit(zCentralwidget);
         blanckSymLEdit->setObjectName(QStringLiteral("blanckSymLEdit"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
@@ -152,28 +152,28 @@ public:
         blanckSymLEdit->setMaxLength(1);
         blanckSymLEdit->setAlignment(Qt::AlignCenter);
 
-        BlackSymbol->addWidget(blanckSymLEdit);
+        zBSymLayout->addWidget(blanckSymLEdit);
 
         zSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        BlackSymbol->addItem(zSpacer);
+        zBSymLayout->addItem(zSpacer);
 
-        restoreBt = new QPushButton(centralwidget);
+        restoreBt = new QPushButton(zCentralwidget);
         restoreBt->setObjectName(QStringLiteral("restoreBt"));
         restoreBt->setFont(font1);
 
-        BlackSymbol->addWidget(restoreBt);
+        zBSymLayout->addWidget(restoreBt);
 
-        saveBt = new QPushButton(centralwidget);
+        saveBt = new QPushButton(zCentralwidget);
         saveBt->setObjectName(QStringLiteral("saveBt"));
         saveBt->setFont(font1);
 
-        BlackSymbol->addWidget(saveBt);
+        zBSymLayout->addWidget(saveBt);
 
 
-        verticalLayout->addLayout(BlackSymbol);
+        verticalLayout->addLayout(zBSymLayout);
 
-        EditTapes->setCentralWidget(centralwidget);
+        EditTapes->setCentralWidget(zCentralwidget);
 
         retranslateUi(EditTapes);
 
@@ -183,7 +183,7 @@ public:
     void retranslateUi(QMainWindow *EditTapes)
     {
         EditTapes->setWindowTitle(QApplication::translate("EditTapes", "MainWindow", nullptr));
-        zTitleLabel->setText(QApplication::translate("EditTapes", " Edit the symbols of the Tape ", nullptr));
+        zLabel->setText(QApplication::translate("EditTapes", " Edit the symbols of the Tape ", nullptr));
         plusLeftBt->setText(QString());
         minusLeftBt->setText(QString());
         minusRightBt->setText(QString());

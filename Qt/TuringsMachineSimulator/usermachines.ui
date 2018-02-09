@@ -18,21 +18,21 @@
   padding: 3px;
 }</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="zCentralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <widget class="QSplitter" name="listSplit">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="zListsLayout">
         <item>
          <widget class="QSplitter" name="tapeSplit">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="zMachLayout">
             <property name="spacing">
              <number>2</number>
@@ -320,7 +320,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QStackedWidget" name="tableSim"/>
+      <widget class="QStackedWidget" name="machSim"/>
      </widget>
     </item>
     <item>

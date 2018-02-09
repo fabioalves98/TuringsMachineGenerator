@@ -30,14 +30,14 @@ QT_BEGIN_NAMESPACE
 class Ui_RandomTapes
 {
 public:
-    QWidget *centralwidget;
+    QWidget *zCentralwidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *zTopLayout;
     QVBoxLayout *zLabels;
-    QLabel *zNameLabel;
-    QLabel *zSymbolsLabel;
-    QLabel *zSizeLabel;
-    QLabel *zBSymLabel;
+    QLabel *zLabel_2;
+    QLabel *zLabel_4;
+    QLabel *zLabel_3;
+    QLabel *zLabel;
     QVBoxLayout *zValues;
     QHBoxLayout *zNameLayout;
     QLineEdit *nameEdit;
@@ -53,7 +53,7 @@ public:
     QLineEdit *bSymEdit;
     QSpacerItem *zSpacer_4;
     QListWidget *tapeList;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *zButtonLayout;
     QPushButton *randBt;
     QPushButton *saveBt;
 
@@ -62,51 +62,51 @@ public:
         if (RandomTapes->objectName().isEmpty())
             RandomTapes->setObjectName(QStringLiteral("RandomTapes"));
         RandomTapes->resize(800, 235);
-        centralwidget = new QWidget(RandomTapes);
-        centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
+        zCentralwidget = new QWidget(RandomTapes);
+        zCentralwidget->setObjectName(QStringLiteral("zCentralwidget"));
+        verticalLayout = new QVBoxLayout(zCentralwidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         zTopLayout = new QHBoxLayout();
         zTopLayout->setObjectName(QStringLiteral("zTopLayout"));
         zLabels = new QVBoxLayout();
         zLabels->setObjectName(QStringLiteral("zLabels"));
-        zNameLabel = new QLabel(centralwidget);
-        zNameLabel->setObjectName(QStringLiteral("zNameLabel"));
+        zLabel_2 = new QLabel(zCentralwidget);
+        zLabel_2->setObjectName(QStringLiteral("zLabel_2"));
         QFont font;
         font.setPointSize(14);
-        zNameLabel->setFont(font);
-        zNameLabel->setFrameShape(QFrame::Panel);
-        zNameLabel->setFrameShadow(QFrame::Raised);
-        zNameLabel->setMargin(0);
+        zLabel_2->setFont(font);
+        zLabel_2->setFrameShape(QFrame::Panel);
+        zLabel_2->setFrameShadow(QFrame::Raised);
+        zLabel_2->setMargin(0);
 
-        zLabels->addWidget(zNameLabel);
+        zLabels->addWidget(zLabel_2);
 
-        zSymbolsLabel = new QLabel(centralwidget);
-        zSymbolsLabel->setObjectName(QStringLiteral("zSymbolsLabel"));
-        zSymbolsLabel->setFont(font);
-        zSymbolsLabel->setFrameShape(QFrame::Panel);
-        zSymbolsLabel->setFrameShadow(QFrame::Raised);
-        zSymbolsLabel->setMargin(0);
+        zLabel_4 = new QLabel(zCentralwidget);
+        zLabel_4->setObjectName(QStringLiteral("zLabel_4"));
+        zLabel_4->setFont(font);
+        zLabel_4->setFrameShape(QFrame::Panel);
+        zLabel_4->setFrameShadow(QFrame::Raised);
+        zLabel_4->setMargin(0);
 
-        zLabels->addWidget(zSymbolsLabel);
+        zLabels->addWidget(zLabel_4);
 
-        zSizeLabel = new QLabel(centralwidget);
-        zSizeLabel->setObjectName(QStringLiteral("zSizeLabel"));
-        zSizeLabel->setFont(font);
-        zSizeLabel->setFrameShape(QFrame::Panel);
-        zSizeLabel->setFrameShadow(QFrame::Raised);
-        zSizeLabel->setMargin(0);
+        zLabel_3 = new QLabel(zCentralwidget);
+        zLabel_3->setObjectName(QStringLiteral("zLabel_3"));
+        zLabel_3->setFont(font);
+        zLabel_3->setFrameShape(QFrame::Panel);
+        zLabel_3->setFrameShadow(QFrame::Raised);
+        zLabel_3->setMargin(0);
 
-        zLabels->addWidget(zSizeLabel);
+        zLabels->addWidget(zLabel_3);
 
-        zBSymLabel = new QLabel(centralwidget);
-        zBSymLabel->setObjectName(QStringLiteral("zBSymLabel"));
-        zBSymLabel->setFont(font);
-        zBSymLabel->setFrameShape(QFrame::Panel);
-        zBSymLabel->setFrameShadow(QFrame::Raised);
-        zBSymLabel->setMargin(0);
+        zLabel = new QLabel(zCentralwidget);
+        zLabel->setObjectName(QStringLiteral("zLabel"));
+        zLabel->setFont(font);
+        zLabel->setFrameShape(QFrame::Panel);
+        zLabel->setFrameShadow(QFrame::Raised);
+        zLabel->setMargin(0);
 
-        zLabels->addWidget(zBSymLabel);
+        zLabels->addWidget(zLabel);
 
 
         zTopLayout->addLayout(zLabels);
@@ -115,7 +115,7 @@ public:
         zValues->setObjectName(QStringLiteral("zValues"));
         zNameLayout = new QHBoxLayout();
         zNameLayout->setObjectName(QStringLiteral("zNameLayout"));
-        nameEdit = new QLineEdit(centralwidget);
+        nameEdit = new QLineEdit(zCentralwidget);
         nameEdit->setObjectName(QStringLiteral("nameEdit"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
@@ -137,7 +137,7 @@ public:
 
         zSymbolsLayout = new QHBoxLayout();
         zSymbolsLayout->setObjectName(QStringLiteral("zSymbolsLayout"));
-        symSBox = new QSpinBox(centralwidget);
+        symSBox = new QSpinBox(zCentralwidget);
         symSBox->setObjectName(QStringLiteral("symSBox"));
         QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
@@ -165,7 +165,7 @@ public:
 
         zSizeLayout = new QHBoxLayout();
         zSizeLayout->setObjectName(QStringLiteral("zSizeLayout"));
-        sizeSBox = new QSpinBox(centralwidget);
+        sizeSBox = new QSpinBox(zCentralwidget);
         sizeSBox->setObjectName(QStringLiteral("sizeSBox"));
         sizePolicy1.setHeightForWidth(sizeSBox->sizePolicy().hasHeightForWidth());
         sizeSBox->setSizePolicy(sizePolicy1);
@@ -185,7 +185,7 @@ public:
 
         zBSymLayout = new QHBoxLayout();
         zBSymLayout->setObjectName(QStringLiteral("zBSymLayout"));
-        bSymEdit = new QLineEdit(centralwidget);
+        bSymEdit = new QLineEdit(zCentralwidget);
         bSymEdit->setObjectName(QStringLiteral("bSymEdit"));
         QSizePolicy sizePolicy2(QSizePolicy::Ignored, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
@@ -212,32 +212,32 @@ public:
 
         verticalLayout->addLayout(zTopLayout);
 
-        tapeList = new QListWidget(centralwidget);
+        tapeList = new QListWidget(zCentralwidget);
         tapeList->setObjectName(QStringLiteral("tapeList"));
         tapeList->setMaximumSize(QSize(16777215, 48));
 
         verticalLayout->addWidget(tapeList);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        randBt = new QPushButton(centralwidget);
+        zButtonLayout = new QHBoxLayout();
+        zButtonLayout->setObjectName(QStringLiteral("zButtonLayout"));
+        randBt = new QPushButton(zCentralwidget);
         randBt->setObjectName(QStringLiteral("randBt"));
         QFont font2;
         font2.setPointSize(12);
         randBt->setFont(font2);
 
-        horizontalLayout->addWidget(randBt);
+        zButtonLayout->addWidget(randBt);
 
-        saveBt = new QPushButton(centralwidget);
+        saveBt = new QPushButton(zCentralwidget);
         saveBt->setObjectName(QStringLiteral("saveBt"));
         saveBt->setFont(font2);
 
-        horizontalLayout->addWidget(saveBt);
+        zButtonLayout->addWidget(saveBt);
 
 
-        verticalLayout->addLayout(horizontalLayout);
+        verticalLayout->addLayout(zButtonLayout);
 
-        RandomTapes->setCentralWidget(centralwidget);
+        RandomTapes->setCentralWidget(zCentralwidget);
 
         retranslateUi(RandomTapes);
 
@@ -247,10 +247,10 @@ public:
     void retranslateUi(QMainWindow *RandomTapes)
     {
         RandomTapes->setWindowTitle(QApplication::translate("RandomTapes", "MainWindow", nullptr));
-        zNameLabel->setText(QApplication::translate("RandomTapes", "Name", nullptr));
-        zSymbolsLabel->setText(QApplication::translate("RandomTapes", "Symbols", nullptr));
-        zSizeLabel->setText(QApplication::translate("RandomTapes", "Size", nullptr));
-        zBSymLabel->setText(QApplication::translate("RandomTapes", "Blanck Symbol", nullptr));
+        zLabel_2->setText(QApplication::translate("RandomTapes", "Name", nullptr));
+        zLabel_4->setText(QApplication::translate("RandomTapes", "Symbols", nullptr));
+        zLabel_3->setText(QApplication::translate("RandomTapes", "Size", nullptr));
+        zLabel->setText(QApplication::translate("RandomTapes", "Blanck Symbol", nullptr));
         randBt->setText(QApplication::translate("RandomTapes", "Random", nullptr));
         saveBt->setText(QApplication::translate("RandomTapes", "Save Tape", nullptr));
     } // retranslateUi

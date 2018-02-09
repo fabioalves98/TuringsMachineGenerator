@@ -13,12 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="zCentralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="Title">
+     <layout class="QHBoxLayout" name="zTitleLayout">
       <item>
-       <spacer name="zSpacerL">
+       <spacer name="zSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -31,7 +31,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="zTitleLabel">
+       <widget class="QLabel" name="zLabel">
         <property name="font">
          <font>
           <pointsize>16</pointsize>
@@ -64,7 +64,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="zSpacerR">
+       <spacer name="zSpacer_3">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -79,7 +79,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="Tape">
+     <layout class="QHBoxLayout" name="zTapeLayout">
       <item>
        <widget class="QPushButton" name="plusLeftBt">
         <property name="sizePolicy">
@@ -145,7 +145,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="BlackSymbol">
+     <layout class="QHBoxLayout" name="zBSymLayout">
       <item>
        <widget class="QLabel" name="zBlanckSymLabel">
         <property name="font">

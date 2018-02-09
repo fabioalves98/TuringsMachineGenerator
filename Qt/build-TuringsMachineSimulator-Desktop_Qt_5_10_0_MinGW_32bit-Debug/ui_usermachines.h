@@ -30,13 +30,13 @@ QT_BEGIN_NAMESPACE
 class Ui_UserMachines
 {
 public:
-    QWidget *centralwidget;
+    QWidget *zCentralwidget;
     QVBoxLayout *verticalLayout_4;
     QSplitter *listSplit;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *zListsLayout;
     QSplitter *tapeSplit;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QVBoxLayout *zMachLayout;
     QVBoxLayout *zMachListLayout;
     QLabel *zMachLabel;
@@ -45,7 +45,7 @@ public:
     QPushButton *selAllBt;
     QPushButton *uSelAllBt;
     QPushButton *simBt;
-    QWidget *layoutWidget;
+    QWidget *layoutWidget2;
     QVBoxLayout *zTapeLayout;
     QVBoxLayout *zTapeListLayout;
     QLabel *zTapeLabel;
@@ -59,7 +59,7 @@ public:
     QPushButton *slowerBt;
     QPushButton *fasterBt;
     QLabel *delayLb;
-    QStackedWidget *tableSim;
+    QStackedWidget *machSim;
     QHBoxLayout *zControlLayout;
     QComboBox *buttonSelect;
     QPushButton *addBt;
@@ -77,31 +77,31 @@ public:
         UserMachines->setStyleSheet(QLatin1String("QListWidget::item {\n"
 "  padding: 3px;\n"
 "}"));
-        centralwidget = new QWidget(UserMachines);
-        centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout_4 = new QVBoxLayout(centralwidget);
+        zCentralwidget = new QWidget(UserMachines);
+        zCentralwidget->setObjectName(QStringLiteral("zCentralwidget"));
+        verticalLayout_4 = new QVBoxLayout(zCentralwidget);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        listSplit = new QSplitter(centralwidget);
+        listSplit = new QSplitter(zCentralwidget);
         listSplit->setObjectName(QStringLiteral("listSplit"));
         listSplit->setOrientation(Qt::Horizontal);
-        widget = new QWidget(listSplit);
-        widget->setObjectName(QStringLiteral("widget"));
-        zListsLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(listSplit);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        zListsLayout = new QVBoxLayout(layoutWidget);
         zListsLayout->setObjectName(QStringLiteral("zListsLayout"));
         zListsLayout->setContentsMargins(0, 0, 0, 0);
-        tapeSplit = new QSplitter(widget);
+        tapeSplit = new QSplitter(layoutWidget);
         tapeSplit->setObjectName(QStringLiteral("tapeSplit"));
         tapeSplit->setOrientation(Qt::Vertical);
-        widget1 = new QWidget(tapeSplit);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        zMachLayout = new QVBoxLayout(widget1);
+        layoutWidget1 = new QWidget(tapeSplit);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        zMachLayout = new QVBoxLayout(layoutWidget1);
         zMachLayout->setSpacing(2);
         zMachLayout->setObjectName(QStringLiteral("zMachLayout"));
         zMachLayout->setContentsMargins(0, 0, 0, 0);
         zMachListLayout = new QVBoxLayout();
         zMachListLayout->setSpacing(0);
         zMachListLayout->setObjectName(QStringLiteral("zMachListLayout"));
-        zMachLabel = new QLabel(widget1);
+        zMachLabel = new QLabel(layoutWidget1);
         zMachLabel->setObjectName(QStringLiteral("zMachLabel"));
         zMachLabel->setEnabled(true);
         zMachLabel->setMinimumSize(QSize(0, 33));
@@ -115,7 +115,7 @@ public:
 
         zMachListLayout->addWidget(zMachLabel);
 
-        machList = new QListWidget(widget1);
+        machList = new QListWidget(layoutWidget1);
         machList->setObjectName(QStringLiteral("machList"));
         machList->setStyleSheet(QStringLiteral(""));
 
@@ -126,7 +126,7 @@ public:
 
         zMachBtLayout = new QHBoxLayout();
         zMachBtLayout->setObjectName(QStringLiteral("zMachBtLayout"));
-        selAllBt = new QPushButton(widget1);
+        selAllBt = new QPushButton(layoutWidget1);
         selAllBt->setObjectName(QStringLiteral("selAllBt"));
         QFont font1;
         font1.setPointSize(10);
@@ -134,7 +134,7 @@ public:
 
         zMachBtLayout->addWidget(selAllBt);
 
-        uSelAllBt = new QPushButton(widget1);
+        uSelAllBt = new QPushButton(layoutWidget1);
         uSelAllBt->setObjectName(QStringLiteral("uSelAllBt"));
         uSelAllBt->setFont(font1);
 
@@ -143,7 +143,7 @@ public:
 
         zMachLayout->addLayout(zMachBtLayout);
 
-        simBt = new QPushButton(widget1);
+        simBt = new QPushButton(layoutWidget1);
         simBt->setObjectName(QStringLiteral("simBt"));
         simBt->setMinimumSize(QSize(0, 0));
         QFont font2;
@@ -152,17 +152,17 @@ public:
 
         zMachLayout->addWidget(simBt);
 
-        tapeSplit->addWidget(widget1);
-        layoutWidget = new QWidget(tapeSplit);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        zTapeLayout = new QVBoxLayout(layoutWidget);
+        tapeSplit->addWidget(layoutWidget1);
+        layoutWidget2 = new QWidget(tapeSplit);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        zTapeLayout = new QVBoxLayout(layoutWidget2);
         zTapeLayout->setSpacing(2);
         zTapeLayout->setObjectName(QStringLiteral("zTapeLayout"));
         zTapeLayout->setContentsMargins(0, 0, 0, 0);
         zTapeListLayout = new QVBoxLayout();
         zTapeListLayout->setSpacing(0);
         zTapeListLayout->setObjectName(QStringLiteral("zTapeListLayout"));
-        zTapeLabel = new QLabel(layoutWidget);
+        zTapeLabel = new QLabel(layoutWidget2);
         zTapeLabel->setObjectName(QStringLiteral("zTapeLabel"));
         zTapeLabel->setMinimumSize(QSize(0, 33));
         zTapeLabel->setFont(font);
@@ -172,7 +172,7 @@ public:
 
         zTapeListLayout->addWidget(zTapeLabel);
 
-        tapesList = new QListWidget(layoutWidget);
+        tapesList = new QListWidget(layoutWidget2);
         tapesList->setObjectName(QStringLiteral("tapesList"));
 
         zTapeListLayout->addWidget(tapesList);
@@ -182,7 +182,7 @@ public:
 
         zLoadBtLayout = new QHBoxLayout();
         zLoadBtLayout->setObjectName(QStringLiteral("zLoadBtLayout"));
-        loadTapeBt = new QPushButton(layoutWidget);
+        loadTapeBt = new QPushButton(layoutWidget2);
         loadTapeBt->setObjectName(QStringLiteral("loadTapeBt"));
         loadTapeBt->setFont(font1);
 
@@ -191,13 +191,13 @@ public:
 
         zTapeLayout->addLayout(zLoadBtLayout);
 
-        tapeSplit->addWidget(layoutWidget);
+        tapeSplit->addWidget(layoutWidget2);
 
         zListsLayout->addWidget(tapeSplit);
 
         zSimulationLayout = new QHBoxLayout();
         zSimulationLayout->setObjectName(QStringLiteral("zSimulationLayout"));
-        pauseBt = new QPushButton(widget);
+        pauseBt = new QPushButton(layoutWidget);
         pauseBt->setObjectName(QStringLiteral("pauseBt"));
         pauseBt->setMinimumSize(QSize(30, 27));
         pauseBt->setMaximumSize(QSize(16777215, 27));
@@ -207,7 +207,7 @@ public:
 
         zSimulationLayout->addWidget(pauseBt);
 
-        contBt = new QPushButton(widget);
+        contBt = new QPushButton(layoutWidget);
         contBt->setObjectName(QStringLiteral("contBt"));
         contBt->setMinimumSize(QSize(30, 27));
         contBt->setMaximumSize(QSize(16777215, 27));
@@ -215,7 +215,7 @@ public:
 
         zSimulationLayout->addWidget(contBt);
 
-        stopBt = new QPushButton(widget);
+        stopBt = new QPushButton(layoutWidget);
         stopBt->setObjectName(QStringLiteral("stopBt"));
         stopBt->setMinimumSize(QSize(30, 27));
         stopBt->setMaximumSize(QSize(16777215, 27));
@@ -223,21 +223,21 @@ public:
 
         zSimulationLayout->addWidget(stopBt);
 
-        slowerBt = new QPushButton(widget);
+        slowerBt = new QPushButton(layoutWidget);
         slowerBt->setObjectName(QStringLiteral("slowerBt"));
         slowerBt->setMinimumSize(QSize(30, 27));
         slowerBt->setMaximumSize(QSize(16777215, 27));
 
         zSimulationLayout->addWidget(slowerBt);
 
-        fasterBt = new QPushButton(widget);
+        fasterBt = new QPushButton(layoutWidget);
         fasterBt->setObjectName(QStringLiteral("fasterBt"));
         fasterBt->setMinimumSize(QSize(30, 27));
         fasterBt->setMaximumSize(QSize(16777215, 27));
 
         zSimulationLayout->addWidget(fasterBt);
 
-        delayLb = new QLabel(widget);
+        delayLb = new QLabel(layoutWidget);
         delayLb->setObjectName(QStringLiteral("delayLb"));
         delayLb->setAlignment(Qt::AlignCenter);
 
@@ -246,16 +246,16 @@ public:
 
         zListsLayout->addLayout(zSimulationLayout);
 
-        listSplit->addWidget(widget);
-        tableSim = new QStackedWidget(listSplit);
-        tableSim->setObjectName(QStringLiteral("tableSim"));
-        listSplit->addWidget(tableSim);
+        listSplit->addWidget(layoutWidget);
+        machSim = new QStackedWidget(listSplit);
+        machSim->setObjectName(QStringLiteral("machSim"));
+        listSplit->addWidget(machSim);
 
         verticalLayout_4->addWidget(listSplit);
 
         zControlLayout = new QHBoxLayout();
         zControlLayout->setObjectName(QStringLiteral("zControlLayout"));
-        buttonSelect = new QComboBox(centralwidget);
+        buttonSelect = new QComboBox(zCentralwidget);
         buttonSelect->addItem(QString());
         buttonSelect->addItem(QString());
         buttonSelect->setObjectName(QStringLiteral("buttonSelect"));
@@ -268,37 +268,37 @@ public:
 
         zControlLayout->addWidget(buttonSelect);
 
-        addBt = new QPushButton(centralwidget);
+        addBt = new QPushButton(zCentralwidget);
         addBt->setObjectName(QStringLiteral("addBt"));
         addBt->setFont(font3);
 
         zControlLayout->addWidget(addBt);
 
-        editBt = new QPushButton(centralwidget);
+        editBt = new QPushButton(zCentralwidget);
         editBt->setObjectName(QStringLiteral("editBt"));
         editBt->setFont(font3);
 
         zControlLayout->addWidget(editBt);
 
-        saveBt = new QPushButton(centralwidget);
+        saveBt = new QPushButton(zCentralwidget);
         saveBt->setObjectName(QStringLiteral("saveBt"));
         saveBt->setFont(font3);
 
         zControlLayout->addWidget(saveBt);
 
-        qRandBt = new QPushButton(centralwidget);
+        qRandBt = new QPushButton(zCentralwidget);
         qRandBt->setObjectName(QStringLiteral("qRandBt"));
         qRandBt->setFont(font3);
 
         zControlLayout->addWidget(qRandBt);
 
-        cRandBt = new QPushButton(centralwidget);
+        cRandBt = new QPushButton(zCentralwidget);
         cRandBt->setObjectName(QStringLiteral("cRandBt"));
         cRandBt->setFont(font3);
 
         zControlLayout->addWidget(cRandBt);
 
-        settingsBt = new QPushButton(centralwidget);
+        settingsBt = new QPushButton(zCentralwidget);
         settingsBt->setObjectName(QStringLiteral("settingsBt"));
         settingsBt->setFont(font3);
 
@@ -307,7 +307,7 @@ public:
 
         verticalLayout_4->addLayout(zControlLayout);
 
-        UserMachines->setCentralWidget(centralwidget);
+        UserMachines->setCentralWidget(zCentralwidget);
 
         retranslateUi(UserMachines);
 

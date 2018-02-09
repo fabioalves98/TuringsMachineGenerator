@@ -20,10 +20,10 @@ UserMachines::UserMachines(QWidget *parent) :
     connect(set, SIGNAL(loadPresetSgn(Machine*)), this, SLOT(loadPresetSlt(Machine*)));
 
     // Setting the possible states for the application
-    states << "Init" << "TableLoaded" << "Sim" << "Pause";
-    enSimButtons("Init");
+    states << "Initial" << "Machine Loaded" << "Simulating" << "Pause";
+    enSimButtons("Initial");
 
-    // Changing the machine view according to the table selected
+    // Changing the machine view according to the machine selected
     connect(ui->machList, SIGNAL(itemSelectionChanged()), this, SLOT(getMachToDispay()));
     connect(ui->machList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(getMachToDispay()));
 
@@ -77,9 +77,9 @@ bool UserMachines::addMachine(Machine *toAdd)
 
         selected = toAdd->getFileName();
 
-        QLabel *tableName = new QLabel(selected);
-        tableName->setFont(QFont("Meiryo", 11));
-        layout->addWidget(tableName);
+        QLabel *machName = new QLabel(selected);
+        machName->setFont(QFont("Meiryo", 11));
+        layout->addWidget(machName);
 
         QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(3)->widget())->pixmap());
         QLabel *tapeIcon = new QLabel;
@@ -191,10 +191,10 @@ void UserMachines::concurrentSimSlt()
 
 void UserMachines::closeEvent(QCloseEvent *event)
 {
-    // Halts all simulations
-    for (int i = 1; i < ui->tableSim->count(); i++)
+    // Clears all loaded machines
+    for (int i = 0; i < ui->machSim->count(); i++)
     {
-        dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->stop();
+        delete ui->machSim->widget(i);
     }
     QWidget::closeEvent(event);
 }
@@ -202,10 +202,7 @@ void UserMachines::closeEvent(QCloseEvent *event)
 void UserMachines::delayUpdatedSlt(int delay)
 {
     // Updates the delay label
-    if (dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState() != "Sim")
-    {
-        ui->delayLb->setText(QString::number(delay*10) + " ms");
-    }
+    ui->delayLb->setText(QString::number(delay*10) + " ms");
 }
 
 void UserMachines::enSimButtons(QString state)
@@ -282,7 +279,7 @@ void UserMachines::finishSim(QString machName)
             dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setEnabled(true);
             delete dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->movie();
             QPixmap icon;
-            if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->halted())
+            if (dynamic_cast<MachineSimulation*>(ui->machSim->widget(i+1))->halted())
             {
                 icon.load(":/rec/icons/check");
             }
@@ -309,10 +306,10 @@ void UserMachines::getMachToDispay()
     {
         if (ui->machList->item(i)->isSelected())
         {
-            ui->tableSim->setCurrentIndex(i + 1);
-            dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->resizeTable();
-            enSimButtons(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getState());
-            ui->delayLb->setText(QString::number(dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->getLocalDelay()*10) + " ms");
+            ui->machSim->setCurrentIndex(i + 1);
+            dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->resizeTable();
+            enSimButtons(dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->getState());
+            ui->delayLb->setText(QString::number(dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->getLocalDelay()*10) + " ms");
             break;
         }
     }
@@ -325,8 +322,8 @@ void UserMachines::loadPresetSlt(Machine* preset)
     {
         MachineSimulation *sim = new MachineSimulation(preset, listTape.at(0));
         connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
-        ui->tableSim->insertWidget(listMach.size(), sim);
-        ui->tableSim->setCurrentIndex(listMach.size());
+        ui->machSim->insertWidget(listMach.size(), sim);
+        ui->machSim->setCurrentIndex(listMach.size());
         sim->start();
         sim->displayMachine();
         enSimButtons(sim->getState());
@@ -354,8 +351,8 @@ void UserMachines::on_addBt_clicked()
                 {
                     MachineSimulation *sim = new MachineSimulation(mach, listTape.at(0));
                     connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
-                    ui->tableSim->insertWidget(listMach.size(), sim);
-                    ui->tableSim->setCurrentIndex(listMach.size());
+                    ui->machSim->insertWidget(listMach.size(), sim);
+                    ui->machSim->setCurrentIndex(listMach.size());
                     sim->start();
                     sim->displayMachine();
                     enSimButtons(sim->getState());
@@ -406,9 +403,9 @@ void UserMachines::on_buttonSelect_currentIndexChanged(int index)
 void UserMachines::on_contBt_clicked()
 {
     // Continues the simulation if paused
-    MachineSimulation *toCont = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    MachineSimulation *toCont = dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget());
     toCont->cont();
-    int index = ui->tableSim->currentIndex() - 1;
+    int index = ui->machSim->currentIndex() - 1;
     QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
     dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->clear();
     dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->setMovie(loading);
@@ -438,8 +435,8 @@ void UserMachines::on_cRandBt_clicked()
         addMachine(randMach);
         MachineSimulation *sim = new MachineSimulation(randMach, listTape.at(0));
         connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
-        ui->tableSim->insertWidget(listMach.size(), sim);
-        ui->tableSim->setCurrentIndex(listMach.size());
+        ui->machSim->insertWidget(listMach.size(), sim);
+        ui->machSim->setCurrentIndex(listMach.size());
         sim->start();
         sim->displayMachine();
         enSimButtons(sim->getState());
@@ -469,7 +466,7 @@ void UserMachines::on_editBt_clicked()
     if (machOrTape())
     {
         // Edits the selected machine
-        EditMachines *edit = new EditMachines(listMach.at(ui->tableSim->currentIndex() - 1));
+        EditMachines *edit = new EditMachines(listMach.at(ui->machSim->currentIndex() - 1));
         edit->show();
         edit->loadTable();
         while (!edit->isReady())
@@ -490,20 +487,20 @@ void UserMachines::on_editBt_clicked()
             }
         }
         edit->close();
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->setMachine(edited);
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->displayMachine();
+        dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->setMachine(edited);
+        dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->displayMachine();
     }
     else
     {
         // Edits the selected machine's tape
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->editTape();
+        dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->editTape();
     }
 }
 
 void UserMachines::on_fasterBt_clicked()
 {
     // Decreases the simulation's delay
-    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->increaseSpeed();
+    dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->increaseSpeed();
 }
 
 void UserMachines::on_loadTapeBt_clicked()
@@ -526,7 +523,7 @@ void UserMachines::on_loadTapeBt_clicked()
         {
             QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(tapeListIndex))->layout()->itemAt(3)->widget())->pixmap());
             dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(1)->widget())->setPixmap(pix);
-            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i + 1))->setTape(toLoad);
+            dynamic_cast<MachineSimulation*>(ui->machSim->widget(i + 1))->setTape(toLoad);
         }
     }
 }
@@ -534,9 +531,9 @@ void UserMachines::on_loadTapeBt_clicked()
 void UserMachines::on_pauseBt_clicked()
 {
     // Pauses the selected machine's simulation
-    MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    MachineSimulation *toPause = dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget());
     toPause->pause();
-    int index = ui->tableSim->currentIndex() - 1;
+    int index = ui->machSim->currentIndex() - 1;
     delete dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(4)->widget())->movie();
     QPixmap icon(":/rec/icons/pause");
     icon = icon.scaled(20, 20);
@@ -556,8 +553,8 @@ void UserMachines::on_qRandBt_clicked()
         addMachine(quick);
         MachineSimulation *sim = new MachineSimulation(quick, listTape.at(0));
         connect(sim, SIGNAL(delayChangedSgn(int)), this, SLOT(delayUpdatedSlt(int)));
-        ui->tableSim->insertWidget(listMach.size(), sim);
-        ui->tableSim->setCurrentIndex(listMach.size());
+        ui->machSim->insertWidget(listMach.size(), sim);
+        ui->machSim->setCurrentIndex(listMach.size());
         sim->start();
         sim->displayMachine();
         enSimButtons(sim->getState());
@@ -581,11 +578,10 @@ void UserMachines::on_saveBt_clicked()
         QFile file(fileName);
         if (!file.open(QFile::WriteOnly | QFile::Text))
         {
-                qDebug() << "Error saving file";
                 return;
         }
         QTextStream out(&file);
-        Machine *toSave = listMach.at(ui->tableSim->currentIndex() - 1);
+        Machine *toSave = listMach.at(ui->machSim->currentIndex() - 1);
         out << "is: " << toSave->getInitState() << endl;
         out << "fs: " << toSave->getHaltState() << endl;
         QVector<QChar> *states = toSave->getStates();
@@ -615,7 +611,7 @@ void UserMachines::on_saveBt_clicked()
     else
     {
         // Saves the selected machine's tape
-        dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->saveTape();
+        dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->saveTape();
     }
 }
 
@@ -640,10 +636,10 @@ void UserMachines::on_settingsBt_clicked()
 void UserMachines::on_simBt_clicked()
 {
     // Simulates the selected machines
-    int index = ui->tableSim->currentIndex() - 1;
+    int index = ui->machSim->currentIndex() - 1;
     if (dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(3)->widget())->isChecked())
     {
-        enSimButtons("Sim");
+        enSimButtons("Simulating");
     }
     for (int i = 0; i < ui->machList->count(); i++)
     {
@@ -651,7 +647,7 @@ void UserMachines::on_simBt_clicked()
         {
             dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setChecked(false);
             dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(3)->widget())->setEnabled(false);
-            dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1))->clearUi();
+            dynamic_cast<MachineSimulation*>(ui->machSim->widget(i+1))->clearUi();
 
             QMovie *loading = new QMovie(":/rec/icons/spinner.gif");
             dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(4)->widget())->clear();
@@ -659,7 +655,7 @@ void UserMachines::on_simBt_clicked()
             loading->setScaledSize(QSize(20, 20));
             loading->start();
 
-            MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i+1));
+            MachineSimulation *toSim = dynamic_cast<MachineSimulation*>(ui->machSim->widget(i+1));
 
             QFutureWatcher<void> *watcher = new QFutureWatcher<void>;
             QFuture<void> fut = QtConcurrent::run(toSim, &MachineSimulation::simulate);
@@ -667,8 +663,8 @@ void UserMachines::on_simBt_clicked()
 
             QSignalMapper *sigMap = new QSignalMapper(this);
             connect(watcher, SIGNAL(finished()), sigMap, SLOT(map()));
-            QString tableName = dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(0)->widget())->text();
-            sigMap->setMapping(watcher, tableName);
+            QString machName = dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i))->layout()->itemAt(0)->widget())->text();
+            sigMap->setMapping(watcher, machName);
             connect(sigMap, SIGNAL(mapped(QString)), this, SLOT(finishSim(QString)));
         }
     }
@@ -677,15 +673,15 @@ void UserMachines::on_simBt_clicked()
 void UserMachines::on_slowerBt_clicked()
 {
     // Increases the simulation's delay
-    dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget())->decreaseSpeed();
+    dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget())->decreaseSpeed();
 }
 
 void UserMachines::on_stopBt_clicked()
 {
     // Stops the selected machine's simulation
-    MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->tableSim->currentWidget());
+    MachineSimulation *toStop = dynamic_cast<MachineSimulation*>(ui->machSim->currentWidget());
     toStop->stop();
-    int index = ui->tableSim->currentIndex() - 1;
+    int index = ui->machSim->currentIndex() - 1;
     dynamic_cast<QCheckBox*>(ui->machList->itemWidget(ui->machList->item(index))->layout()->itemAt(3)->widget())->setEnabled(true);
     enSimButtons(toStop->getState());
 }
@@ -721,16 +717,16 @@ void UserMachines::showMachineContextMenu(const QPoint &pos)
     QModelIndex index = ui->machList->indexAt(pos);
     if (index.isValid()) {
         delete ui->machList->item(index.row());
-        delete ui->tableSim->widget(index.row() + 1);
+        delete ui->machSim->widget(index.row() + 1);
         listMach.remove(index.row());
         if (ui->machList->count() == 0)
         {
-            for (int i = 0; i < ui->tableSim->count(); i++)
+            for (int i = 0; i < ui->machSim->count(); i++)
             {
-                delete ui->tableSim->widget(i + 1);
+                delete ui->machSim->widget(i + 1);
             }
-            ui->tableSim->setCurrentIndex(0);
-            enSimButtons("Init");
+            ui->machSim->setCurrentIndex(0);
+            enSimButtons("Initial");
         }
     }
 }
@@ -744,11 +740,11 @@ void UserMachines::showTapeContextMenu(const QPoint &pos)
         Tape *toDel = listTape.at(index);
         if (toDel->getName() != "Default")
         {
-            for (int i = 1; i < ui->tableSim->count(); i++)
+            for (int i = 1; i < ui->machSim->count(); i++)
             {
-                if (dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->getTape()->getName() == toDel->getName())
+                if (dynamic_cast<MachineSimulation*>(ui->machSim->widget(i))->getTape()->getName() == toDel->getName())
                 {
-                    dynamic_cast<MachineSimulation*>(ui->tableSim->widget(i))->setTape(listTape.at(0));
+                    dynamic_cast<MachineSimulation*>(ui->machSim->widget(i))->setTape(listTape.at(0));
                     QPixmap pix(*dynamic_cast<QLabel*>(ui->tapesList->itemWidget(ui->tapesList->item(0))->layout()->itemAt(3)->widget())->pixmap());
                     dynamic_cast<QLabel*>(ui->machList->itemWidget(ui->machList->item(i - 1))->layout()->itemAt(1)->widget())->setPixmap(pix);
                 }
@@ -777,8 +773,8 @@ void UserMachines::start()
 
     // Setting the default display
     MachineSimulation *newMach = new MachineSimulation(nullptr, nullptr);
-    ui->tableSim->insertWidget(0, newMach);
-    ui->tableSim->setCurrentIndex(0);
+    ui->machSim->insertWidget(0, newMach);
+    ui->machSim->setCurrentIndex(0);
     newMach->start();
     newMach->setEnabled(false);
     ui->delayLb->setText("--- ms");
