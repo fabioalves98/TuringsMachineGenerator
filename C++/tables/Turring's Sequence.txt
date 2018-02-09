@@ -1,8 +1,0 @@
-is: A
-hs: Z
-  *    A    B    C    D    E    F    G    H    I    J    K    L    M    N    O    P    Q
-  .   eLB  eLC  0LD  .LE  0RF  .RG  .*G  xRI  .RJ  .RG  1RM  .LK  .RN  .RM  0RP  .RG  .LO
-  1   eLB  eLC  0LD  1LE  0RF  1RG  1LH  xRI  1RJ  1RG  1LL  1LK  1*M  1RM  1LQ  1RG  1LO
-  0   eLB  eLC  0LD  0LE  0RF  0RG  0*K  xRI  0RJ  0RG  0LL  0LK  0*M  0RM  0LQ  0RG  0LO
-  e   eLB  eLC  0LD  eLE  0RF  eRG  e*G  xRI  eRJ  eRG  eLL  eLK  eLO  eRM  eLQ  eRG  eLO
-  x   eLB  eLC  0LD  xLE  0RF  xRG  x*G  xRI  xRJ  xRG  xLL  xLK  .LK  xRM  xLQ  xRG  xLO
