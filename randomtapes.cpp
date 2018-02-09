@@ -23,7 +23,6 @@ RandomTapes::RandomTapes(QWidget *parent) :
     ui->randBt->setEnabled(false);
     ui->saveBt->setEnabled(false);
     ui->nameEdit->setPlaceholderText("Custom Random Tape - " + QString::number(qrand() % 100));
-    generated = false;
 }
 
 RandomTapes::~RandomTapes()

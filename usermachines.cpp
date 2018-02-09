@@ -107,6 +107,7 @@ bool UserMachines::addMachine(Machine *toAdd)
         ui->machList->addItem(machItem);
         ui->machList->setItemWidget(machItem, widget);
         ui->machList->setIconSize(QSize(20, 20));
+        ui->machList->scrollToBottom();
 
         ui->delayLb->setText(QString::number(set->getDelayTime()) + " ms");
 
@@ -175,6 +176,7 @@ bool UserMachines::addTape(Tape *toAdd)
         ui->tapesList->addItem(tapeItem);
         ui->tapesList->setItemWidget(tapeItem, widget);
         ui->tapesList->setIconSize(QSize(20, 20));
+        ui->tapesList->scrollToBottom();
         return true;
     }
     else
@@ -297,7 +299,7 @@ void UserMachines::finishSim(QString machName)
     }
     if (selected == machName)
     {
-        enSimButtons("TableLoaded");
+        enSimButtons("Machine Loaded");
     }
 }
 

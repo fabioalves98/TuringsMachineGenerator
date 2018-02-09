@@ -36,8 +36,8 @@ private:
     Settings *set;
     // Tape variables
     Tape *rand;
-    bool generated;
-    bool ready;
+    bool generated = false;
+    bool ready = false;
 };
 
 #endif // RANDOMTAPES_H
