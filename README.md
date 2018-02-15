@@ -18,6 +18,6 @@ This is a program written in C++, that reproduces the behavior of a Turing's Mac
 ## Build with CMake
 - git clone https://github.com/fabioalves98/TuringsMachineGenerator.git  -> Clones the repository
 - cd TuringsMachineGenerator/  -> Enters the project folder
-- cmake .  -> Generates Makefile
+- cmake .  -> Generates the Makefile
 - make  -> Compiles the source code
 - ./TuringsMachineGenerator  -> Executes the program
