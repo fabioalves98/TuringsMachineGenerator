@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTime>
 #include <QDebug>
+#include <QtMath>
 #include "tape.h"
 #include "settings.h"
 

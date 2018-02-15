@@ -15,8 +15,9 @@ This is a program written in C++, that reproduces the behavior of a Turing's Mac
 ## Executable
 [Windows](https://drive.google.com/open?id=162AiHEm7-ugQmCrp6abZ4_EKJGZ1K9BQ)  -  Extract and execute TuringsMachineGenerator.exe
 
-## Build
-- Clone the repository
-- Within Qt Creator (or other IDE with Qt build tools) select open project
-- Select TuringsMachineGenerator.pro
-- Build with your favourite compiler
+## Build with CMake
+- git clone https://github.com/fabioalves98/TuringsMachineGenerator.git  -> Clones the repository
+- cd TuringsMachineGenerator/  -> Enters the project folder
+- cmake .  -> Generates Makefile
+- make  -> Compiles the source code
+- ./TuringsMachineGenerator  -> Executes the program

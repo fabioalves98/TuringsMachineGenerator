@@ -1,2 +1,12 @@
 
 *.user
+
+release/
+
+Makefile\.Release
+
+Makefile
+
+\.qmake\.stash
+
+object_script\.TuringsMachineGenerator\.Release

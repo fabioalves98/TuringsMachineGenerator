@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QThread>
 #include <QScrollBar>
-#include <QtConcurrent>
 #include <QFileDialog>
 #include <QTimer>
 #include "machine.h"

@@ -47,9 +47,9 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 signals:
-    loadPresetSgn(Machine*);
-    delayChangedSgn(int);
-    concurrentSimSgn();
+    void loadPresetSgn(Machine*);
+    void delayChangedSgn(int);
+    void concurrentSimSgn();
 
 private slots:
     void on_maxStSpinBox_valueChanged(int arg1);

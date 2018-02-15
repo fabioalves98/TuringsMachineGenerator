@@ -16,6 +16,7 @@
 #include <QPixmap>
 #include <QMenu>
 #include <QMessageBox>
+#include <QtConcurrent/QtConcurrent>
 #include "machine.h"
 #include "tape.h"
 #include "settings.h"
