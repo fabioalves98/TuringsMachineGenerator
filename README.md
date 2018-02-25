@@ -1,5 +1,5 @@
 # Turing's Machine Generator
-This is a program written in C++, that reproduces the behavior of a Turing's Machine in a given tape filled with symbols. It accepts both machine's and tape's configurations as text files. It can also generate, edit and save them with the default configuration.
+This is a program written in C++, that reproduces the behavior of a Turing's Machine in a given tape filled with symbols. It accepts both machine's and tape's configurations as text files. It can also generate, edit and save them with the default configuration.  
 The program uses the Qt framework and the preferred way to edit it's source code, is importing the project into Qt Creator trought the .pro file. There is also the possibility to build the program with CMake.
 
 ## User Interface
